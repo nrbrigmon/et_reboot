@@ -1,0 +1,3 @@
+integrate with machine learning classifier....
+move from mouse interaction to a more tactile approach (ipads with stylus...)
+3d building enevelope
