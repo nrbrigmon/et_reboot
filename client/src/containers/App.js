@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Header from '../components/Header';
-import Welcome from '../components/Welcome';
+import Welcome from './Welcome';
 import CreateStart from './CreateStart';
 import DevTypeStart from './DevTypeStart';
 import MapStart from './MapStart';
@@ -14,7 +14,7 @@ import StartBuildingPrototype from '../components/create/buildings/startBuilding
 class App extends Component {
 	render() {
 		return (
-			<div className="container">
+			<div>
 				<BrowserRouter>
 					<div>
 						<Header />

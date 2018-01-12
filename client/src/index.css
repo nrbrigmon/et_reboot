@@ -3,31 +3,3 @@ body {
 	padding: 0;
 	font-family: sans-serif;
 }
-/* Step One: Create Library CSS*/
-.collection-item .title {
-	font-weight: bold;
-}
-.collection-item .location {
-	color: #666666;
-}
-ul.collection {
-	margin-top: 0;
-}
-
-.step-one-choices a{
-	width:100%;
-	margin-bottom: 25px;
-}
-
-.custom-act-btns a, .custom-act-btns button{
-	width: 150px;
-	margin: 10px;
-}
-
-form input{
-	margin-bottom: 15px !important;
-    margin-top: -8px !important;
-}
-select{
-	display: block !important;
-}

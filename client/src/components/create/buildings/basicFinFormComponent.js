@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 
+import TextField from 'material-ui/TextField';
+
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  textAlign: 'center',
+	}
+	// card: {
+	// 	// margin: '10px'
+	// },
+	// button: {
+	// 	width: '100%',
+	// 	margin: '10px 0 10px 0'
+	// }
+	});
 class BasicFinFormComponent extends Component {
 	constructor(props) {
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);		
-		console.log('updated entire building protoype')
+		// console.log('updated entire building protoype')
 
 	}
 
@@ -20,15 +41,15 @@ class BasicFinFormComponent extends Component {
 	};
 
 	render() {
-		console.log(this.props);
+		// console.log(this.props);
 		let bldgAttr = this.props.attributes.basicFinInfo;
-		
+		const { classes } = this.props;
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
-					<h4>Basic Financial Costs</h4>
-				</div>
-				<div className="col m6 center-align">
+			<Grid container >
+				<Grid item xs={12} className={classes.paper}>
+				<h4>Basic Financial Costs</h4>
+				</Grid>
+				<Grid item xs={6}> 
 					<form>
 						<input
 							placeholder="Residential Costs"
@@ -41,8 +62,8 @@ class BasicFinFormComponent extends Component {
 							onChange={event => this.handleChange(event)}
 						/>
 					</form>
-				</div>
-				<div className="col m6 center-align">
+					</Grid>
+					<Grid item xs={6}> 
 					<form>
 						<input
 							placeholder="Office Costs"
@@ -56,10 +77,10 @@ class BasicFinFormComponent extends Component {
 						/>
 						
 					</form>
-				</div>
-			</div>
+				</Grid>
+			</Grid>
 		);
 	}
 }
 
-export default BasicFinFormComponent;
+export default withStyles(styles)(BasicFinFormComponent);

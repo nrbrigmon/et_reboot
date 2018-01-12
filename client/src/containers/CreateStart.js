@@ -2,6 +2,32 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import Icon from 'material-ui/Icon';
+import IconButton from 'material-ui/IconButton';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  textAlign: 'center',
+	},
+	card: {
+		// margin: '10px'
+	},
+	button: {
+		width: '100%',
+		margin: '10px 0 10px 0'
+	}
+  });
+
 class CreateStart extends Component {
 	constructor(props) {
 		super(props);
@@ -29,82 +55,80 @@ class CreateStart extends Component {
 	renderLibrary(lib) {
 		return lib.map((item, idx) => {
 			return (
-				<li className="collection-item" key={idx}>
-					<div>
-						<span className="title">{item.buildingname}</span>
-						<a href="#!" className="secondary-content">
-							<i className="material-icons">remove_circle</i>
-						</a>
-						<a href="#!" className="secondary-content">
-							<i className="material-icons">edit</i>
-						</a>
-						<br />
-						<span className="location">{item.sitelocation}</span>
-					</div>
-				</li>
+					<ListItem button divider key={idx}>
+						<ListItemIcon>
+							<Icon >domain</Icon>
+						</ListItemIcon>
+						<ListItemText primary={item.buildingname} secondary={item.sitelocation} />
+					</ListItem>
 			);
 		});
 	}
-
+	handleNavigation = (destination) => {
+		this.props.history.push('/'+destination+'');
+	}
 	render() {
+		const { classes } = this.props;
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
+			<Grid container
+				className={classes.root}
+				alignItems='center'
+				direction='row'
+				justify='center'>
+					
+				<Grid item xs={12} className={classes.paper}>
 					<h2>Step One: Create Your Library</h2>
-				</div>
+				</Grid>
 				{/* COLUMN #1 */}
-				<div className="col s8 m8">
-					<ul className="collection with-header">
-						<li className="collection-header">
-							<h4>Your Library</h4>
-						</li>
-						{ /*
-							the proper loading pattern is using a ternary operator like this:
-							{ isEmpty ?
-									(isFetchingData ? <p>getting data/loading</p> : "empty list")
-									: <Building data={arrayData}/>
-							}
-						*/}
-						{this.renderLibrary(this.state.buildings)}
-
-						<li className="collection-item">
-							<div />
-						</li>
-					</ul>
-					<div className="center-align">
-						<Link
-							className="waves-effect waves-light btn"
-							to="/create/dev-types">
-							Step Two
-						</Link>
-					</div>
-				</div>
+				<Grid item sm={8} className={classes.card}>
+					<Card className={classes.card}>
+						<CardContent>
+							<Typography type="headline" component="h3">
+								Your Library
+							</Typography>
+							{ /*
+								the proper loading pattern is using a ternary operator like this:
+								{ isEmpty ?
+										(isFetchingData ? <p>getting data/loading</p> : "empty list")
+										: <Building data={arrayData}/>
+								}
+							*/}
+							<List>
+								{this.renderLibrary(this.state.buildings)}
+							</List>
+							
+							<CardActions>
+								<Button dense color="primary" onClick={()=>this.handleNavigation('create/dev-types')}>
+									Move to Step Two
+								</Button>	
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
 				{/* COLUMN #2 */}
-				<div className="col s4 m4">
-					<div className="center-align step-one-choices">
+				<Grid item sm={2} 
+					className={classes.card}>
+					<div className={classes.button}>
 						{/* if you click on either existing libary or building, it
 						should open a modal window with a filterable table 
 						to choose existing buildings and/or libraries.
 						maybe they open a modal but you aview a different
 						tab depending on the click?*/}
-						<Link className="waves-effect waves-light btn" to="/create">
-							Existing Library
-							<i className="material-icons left">arrow_drop_down</i>
-						</Link>
-
-						<Link className="waves-effect waves-light btn" to="/create">
-							Existing Building
-							<i className="material-icons left">arrow_drop_down</i>
-						</Link>
-
-						<Link to="/create/edit" className="waves-effect waves-light btn">
-							New Building <i className="material-icons left">add</i>
-						</Link>
+						
+						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create')}>
+							<Icon>add_circle</Icon> Existing Library
+						</Button>
+						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create')}>
+							<Icon>add_circle</Icon> Existing Building
+						</Button>
+						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create/edit')}>
+							<Icon>add_circle</Icon> NewNew Building
+						</Button>
 					</div>
-				</div>
-			</div>
+				</Grid>
+			</Grid>
 		);
 	}
 }
 
-export default CreateStart;
+export default  withStyles(styles)(CreateStart);

@@ -1,5 +1,25 @@
 import React, { Component } from 'react';
 import * as bm from './_buildingMathModule';
+ 
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  textAlign: 'center',
+	}
+	// card: {
+	// 	// margin: '10px'
+	// },
+	// button: {
+	// 	width: '100%',
+	// 	margin: '10px 0 10px 0'
+	// }
+  });
 
 class BuildingFormReviewComponent extends Component {
 	constructor(props) {
@@ -8,6 +28,7 @@ class BuildingFormReviewComponent extends Component {
 		this.state = {
 			rBuildingName: physicalInfo.buildingName,
 			rLotSize: physicalInfo.siteArea,
+			rLotLocation: physicalInfo.siteLocation,
 			rBuildingLotCoverage: bm.buildingLotCoverage(
 				physicalInfo.siteArea
 			),
@@ -40,7 +61,7 @@ class BuildingFormReviewComponent extends Component {
 			rMonthlyRent: (bm.getResidentialNetUnit(physicalInfo.residentialUnitSize) * basicFinInfo.monthlyRentPerSf),
 			rSalesPriceSf: (physicalInfo.occupancyType === 'Owner' ? basicFinInfo.salesPricePerSf : 0),
 			rSalesPrice: (bm.getResidentialNetUnit(physicalInfo.residentialUnitSize) * basicFinInfo.salesPricePerSf),
-			rJobsPerAcre: bm.getJobsPerAcre(physicalInfo),
+			rJobsPerSf: bm.getJobsPerSf(physicalInfo),
 			rRetailSf: bm.getTotalSf(advFinInfo)*physicalInfo.retailUsePerc,
 			rRetailLeaseRate: basicFinInfo.commercialRetailRentSf,
 			rRetailSpacePerEmp: physicalInfo.retailAreaPerEmp,
@@ -48,7 +69,43 @@ class BuildingFormReviewComponent extends Component {
 			rOfficeSf: bm.getTotalSf(advFinInfo)*physicalInfo.officeUsePerc,
 			rOfficeLeaseRate: basicFinInfo.commercialOfficeRentSf,
 			rOfficeSpacePerEmp: physicalInfo.officeAreaPerEmp,
-			rOfficeEmpPerSf: ( physicalInfo.officeAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.officeUsePerc)/physicalInfo.officeAreaPerEmp )			
+			rOfficeEmpPerSf: ( physicalInfo.officeAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.officeUsePerc)/physicalInfo.officeAreaPerEmp ),
+			rIndustrialSf: bm.getTotalSf(advFinInfo)*physicalInfo.industrialUsePerc,
+			rIndustrialLeaseRate: basicFinInfo.commercialIndustrialRentSf,
+			rIndustrialSpacePerEmp: physicalInfo.industrialAreaPerEmp,
+			rIndustrialEmpPerSf: ( physicalInfo.industrialAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.industrialUsePerc)/physicalInfo.industrialAreaPerEmp ),
+			rPublicSf: bm.getTotalSf(advFinInfo)*physicalInfo.publicUsePerc,
+			rPublicLeaseRate: basicFinInfo.commercialPublicRentSf,
+			rPublicSpacePerEmp: physicalInfo.publicAreaPerEmp,
+			rPublicEmpPerSf: ( physicalInfo.publicAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.publicUsePerc)/physicalInfo.publicAreaPerEmp ),			
+			rEducationSf: bm.getTotalSf(advFinInfo)*physicalInfo.educationUsePerc,
+			rEducationLeaseRate: basicFinInfo.commercialEducationRentSf,
+			rEducationSpacePerEmp: physicalInfo.educationAreaPerEmp,
+			rEducationEmpPerSf: ( physicalInfo.educationAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.educationUsePerc)/physicalInfo.educationAreaPerEmp ),
+			rHospitalitySf: bm.getTotalSf(advFinInfo)*physicalInfo.hotelUsePerc,
+			rHospitalityRateNight: basicFinInfo.commercialHotelRentRoom,
+			rHospitalitySpacePerEmp: physicalInfo.hotelAreaPerEmp,
+			rHospitalityEmpPerSf: bm.getHotelEmpPerSf(physicalInfo, advFinInfo),
+			rHospitalityNetPerRoom: bm.getHotelNetPerSf(physicalInfo, advFinInfo),
+			rHospitalityGrossPerRoom: bm.getHotelGrossPerSf(physicalInfo, advFinInfo),
+			rHospitalityRoomsPerSf: ( bm.getHotelGrossPerSf(physicalInfo, advFinInfo) === 0 ? 0 : ((bm.getTotalSf(advFinInfo)*physicalInfo.hotelUsePerc)/bm.getHotelGrossPerSf(physicalInfo, advFinInfo)) ),
+			rParkingGrossSf: bm.getTotalSf(advFinInfo)*physicalInfo.parkingUsePerc,
+			rParkingRateHour: basicFinInfo.commercialParkingRentSpace,
+			rParkingSpacePerEmp: physicalInfo.parkingAreaPerEmp,
+			rParkingEmpPerSf: (physicalInfo.parkingAreaPerEmp === 0 ? 0 : (bm.getTotalSf(advFinInfo)*physicalInfo.parkingUsePerc)/physicalInfo.parkingAreaPerEmp),
+			rParkingSpaces: bm.getParkingSpaces(),
+			rParkingSf: bm.getParkingSf(physicalInfo),
+			rInternalStructureParkingSf: bm.getInternalStructureParkingSf(),
+			rParkingCostSf: bm.getParkingCostSf(basicFinInfo), 
+			rLandCostSf: basicFinInfo.landImpCostsPerSf,
+			rTotalPrjValue: bm.getTotalPrjValue(),
+			rPropTaxRevenueYr: bm.getPropTaxRevenueYr(),
+			rTotalFees: bm.getTotalFees(), 
+			rSubsidy: bm.getSubsidy(basicFinInfo),
+			rRateOfReturn: bm.getRateOfReturn(),
+			rProjectReturn: bm.getProjectReturn(),
+			rYIntercept: bm.getYIntercept(),
+			rSlope: bm.getSlope()
 		};
 	}
 
@@ -56,16 +113,17 @@ class BuildingFormReviewComponent extends Component {
 		console.log('submission');
 	}
 
-	render() {
+	render() {		
+		const { classes } = this.props;
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
-					<h4> Review </h4>
-					
-				</div>
-				<div className="col s12">
+			<Grid container >
+				<Grid item xs={12} className={classes.paper}>
+					<h4>Review</h4>
+				</Grid>
+				<Grid item xs={6}> 
 					<div><strong>Building Name</strong>: {this.state.rBuildingName} </div>
 					<div><strong>Lot Size:</strong> {this.state.rLotSize}</div>
+					<div><strong>Lot Location:</strong> {this.state.rLotLocation}</div>
 					<div><strong>Building Lot Coverage:</strong> {this.state.rBuildingLotCoverage}</div>
 					<div><strong>Landscaping Lot Coverage:</strong> {this.state.rLanscapeLotCoverage}</div>
 					<div><strong>Parking Lot Coverage:</strong> {this.state.rParkingLotCoverage}</div>
@@ -94,133 +152,62 @@ class BuildingFormReviewComponent extends Component {
 					<div><strong>Avg Rent (/Mo.):</strong> {this.state.rMonthlyRent}</div>
 					<div><strong>Sales Price /sf:</strong> {this.state.rSalesPriceSf}</div>
 					<div><strong>Avg Sales Price:</strong> {this.state.rSalesPrice}</div>
-					<div><strong>Total Jobs / Acre:</strong> {this.state.rJobsPerAcre}			</div>
-					<div><strong>Retail Gross sf:</strong> 		{this.state.rRetailSf}		</div>
-					<div><strong>Retail Lease Rate / sf:</strong> 	{this.state.rRetailLeaseRate}				</div>
-					<div><strong>Space per Retail Employee:</strong> {this.state.rRetailSpacePerEmp}	</div>
-					<div><strong>Retail Employees / Acre:</strong> 	{this.state.rRetailEmpPerSf}</div>
+				</Grid>
+				<Grid item xs={6}> 
+					<div><strong>Total Jobs / sf:</strong> {this.state.rJobsPerSf}			</div>
+					<div><strong>Retail Gross sf:</strong> 		{this.state.rRetailSf} </div>
+					<div><strong>Retail Lease Rate / sf:</strong> 	{this.state.rRetailLeaseRate} </div>
+					<div><strong>Space per Retail Employee:</strong> {this.state.rRetailSpacePerEmp} </div>
+					<div><strong>Retail Employees / sf:</strong> 	{this.state.rRetailEmpPerSf} </div>
 					<div><strong>Office Gross sf:</strong> {this.state.rOfficeSf}</div>
 					<div><strong>Office Lease Rate /sf:</strong> {this.state.rOfficeLeaseRate}</div>
-					<div><strong>Space per Office Employee:</strong> {this.state.rOfficeSpacePerEmp}	</div>
-					<div><strong>Office Employees / Acre:</strong> {this.state.rOfficeEmpPerSf}	</div>
-					<div><strong>Industrial Gross sf:</strong> 			=L5*$H$5			</div>
-					<div><strong>Industrial Lease Rate /sf:</strong> 	=BF_IndRent					</div>
-					<div><strong>Space per Employee:</strong> 		=$'Physical Inputs'.B52				</div>
-					<div><strong>Industrial Employees / Acre:</strong> 		=IF(AP5=0,0,AN5/AP5)				</div>
-					<div><strong>Public / Civic Gross sf:</strong> 			=O5*$H$5			</div>
-					<div><strong>Public / Civic Lease Rate /sf:</strong> 		=BF_PubRent				</div>
-					<div><strong>Space per Employee:</strong> 				=$'Physical Inputs'.B53		</div>
-					<div><strong>Public / Civic Employees / Acre:</strong> 				=IF(AT5=0,0,AR5/AT5)		</div>
-					<div><strong>Educational Gross sf:</strong> =N5*$H$5</div>
-					<div><strong>Educational Lease Rate /sf:</strong> =BF_EduRent</div>
-					<div><strong>Space per Employee:</strong>=$'Physical Inputs'.B54 </div>
-					<div><strong>Educational Employees / Acre:</strong> =IF(AX5=0,0,AV5/AX5)</div>
-					<div><strong>Educational Gross sf:</strong> =O5*$H$5</div>
-					<div><strong>Hospitality Nightly Rate (per room):</strong>=BF_HotelRent </div>
-					<div><strong>Space per Employee:</strong>=$'Physical Inputs'.B55 </div>
-					<div><strong>Hospitality Employees / Acre:</strong> =$'Physical Outputs'.F34</div>
-					<div><strong>Net Space per Hotel Room:</strong>=IF($'Physical Outputs'.C34=0,0,($'Physical Outputs'.C34/$'Physical Outputs'.D34)) </div>
-					<div><strong>Gross Space per Hotel Room:</strong> =IF($'Physical Outputs'.B34=0,0,($'Physical Outputs'.B34/$'Physical Outputs'.D34))</div>
-					<div><strong>Hotel Rooms / Acre:</strong> =IF(BE5=0,0,AZ5/BE5)</div>
-					<div><strong>Shared Parking Gross sf:</strong> =P5*$H$5</div>
-					<div><strong>Parking Hourly Rate (per space):</strong> =BF_ParkingRent</div>
-					<div><strong>Space per Employee:</strong> =$'Physical Inputs'.B57</div>
-					<div><strong>Shared Parking Employees / Acre:</strong>=$'Physical Outputs'.E35 </div>
-					<div><strong>Parking Spaces:</strong> =$'Physical Outputs'.B52</div>
-					<div><strong>Parking sf:</strong> =$'Physical Outputs'.C52</div>
-					<div><strong>Internal / Structured Parking sf:</strong> =SUM($'Physical Outputs'.B36:B37)</div>
-					<div><strong>Parking Cost:</strong> =-$'Basic Financial'.B61</div>
-					<div><strong>Land Cost (per sf):</strong> =$'Basic Financial'.B30</div>
-					<div><strong>Total Project Value:</strong>=-$'Basic Financial'.B62 </div>
-					<div><strong>Annual Property Tax Revenue (Year 1):</strong> =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54</div>
-					<div><strong>Total Fees / SDCs:</strong> =-$'Development Costs'.E27</div>
-					<div><strong>Subsidy:</strong>=IF($'Basic Financial'.B33>0,$'Basic Financial'.B33,$'Basic Financial'.B34) </div>
-					<div><strong>Internal Rate of Return (Rental):</strong> =$'Mixed-Use Summary'.O6</div>
-					<div><strong>Project Return (Owner):</strong> =$'Mixed-Use Summary'.U5</div>
-					<div><strong>Y-Intercept:</strong> =INTERCEPT($'ROI Scenario'.B146:B147,$'ROI Scenario'.A146:A147)</div>
-					<div><strong>Slope:</strong> =LINEST($'ROI Scenario'.B146:B147,$'ROI Scenario'.A146:A147)</div>
-					<div><strong>Product Type:</strong> { 'Residential/Office/Mised Use Owner or Renter'} </div>
-					{/* more entries for green infrastructure*/}
-					
+					<div><strong>Space per Office Employee:</strong> {this.state.rOfficeSpacePerEmp} </div>
+					<div><strong>Office Employees / sf:</strong> {this.state.rOfficeEmpPerSf}	</div>
+					<div><strong>Industrial Gross sf:</strong> 	{this.state.rIndustrialSf}</div>
+					<div><strong>Industrial Lease Rate /sf:</strong> {this.state.rIndustrialLeaseRate}</div>
+					<div><strong>Space per Employee:</strong> 	{this.state.rIndustrialSpacePerEmp}</div>
+					<div><strong>Industrial Employees / sf:</strong> {this.state.rIndustrialEmpPerSf}	</div>
+					<div><strong>Public / Civic Gross sf:</strong> 	{this.state.rPublicSf}</div>
+					<div><strong>Public / Civic Lease Rate / sf:</strong> {this.state.rPublicLeaseRate}</div>
+					<div><strong>Space per Employee:</strong>{this.state.rPublicSpacePerEmp}</div>
+					<div><strong>Public / Civic Employees / sf:</strong> {this.state.rPublicEmpPerSf}</div>
+					<div><strong>Educational Gross sf:</strong>{this.state.rEducationSf}</div>
+					<div><strong>Educational Lease Rate /sf:</strong> {this.state.rEducationLeaseRate}</div>
+					<div><strong>Space per Employee:</strong>{this.state.rEducationSpacePerEmp}</div>
+					<div><strong>Educational Employees / sf:</strong>{this.state.rEducationEmpPerSf}</div>
+					<div><strong>Hospitality Gross sf:</strong>{this.state.rHospitalitySf}</div>
+					<div><strong>Hospitality Nightly Rate (per room):</strong>{this.state.rHospitalityRateNight} </div>
+					<div><strong>Space per Employee:</strong>{this.state.rHospitalitySpacePerEmp} </div>
+					<div><strong>Hospitality Employees / sf:</strong> {this.state.rHospitalityEmpPerSf}</div>
+					<div><strong>Net Space per Hotel Room:</strong> {this.state.rHospitalityNetPerRoom} </div>
+					<div><strong>Gross Space per Hotel Room:</strong>{this.state.rHospitalityGrossPerRoom}</div>
+					<div><strong>Hotel Rooms / sf:</strong> {this.state.rHospitalityRoomsPerSf}</div>
+					<div><strong>Shared Parking Gross sf:</strong> {this.state.rParkingGrossSf}</div>
+					<div><strong>Parking Hourly Rate (per space):</strong> {this.state.rParkingRateHour}</div>
+					<div><strong>Space per Employee:</strong>{this.state.rParkingSpacePerEmp}</div>
+					<div><strong>Shared Parking Employees / sf:</strong> {this.state.rParkingEmpPerSf} </div>
 
-				</div>
-				{/*
-				<div className="col s12">
-					<ul className="collection">
-						<li className="collection-item">
-							Building Height:  
-							{fullBuildingInfo.physicalInfo.buildingHeight}  
-						</li>
-						  
-						<li className="collection-item">
-							Lot Size: {this.state.rLotSize}  
-						</li>
-						  
-					</ul>
-					  
-				</div>
-				  
-				<div className="col s12 center-align">
-					<h6> Finances </h6>  
-				</div>
-				  
-				<div className="col s6">
-					<ul className="collection">
-						<li className="collection-item">
-							Residential Costs:  
-							{fullBuildingInfo.basicFinInfo.residentialConCosts} 
-							  
-						</li>
-						  
-						<li className="collection-item">
-							Retail Costs:  
-							{fullBuildingInfo.basicFinInfo.retailConCosts}  
-						</li>
-						  
-						<li className="collection-item">
-							Office Costs:  
-							{fullBuildingInfo.basicFinInfo.officeConCosts}  
-						</li>
-						  
-						<li className="collection-item">
-							Industrial Costs:  
-							{fullBuildingInfo.basicFinInfo.industrialConCosts}  
-						</li>
-						  
-					</ul>
-					  
-				</div>
-				  
-				<div className="col s6">
-					<ul className="collection">
-						<li className="collection-item">
-							Residential Rate:  
-							{fullBuildingInfo.advFinInfo.residentialRentalRate} 
-							  
-						</li>
-						  
-						<li className="collection-item">
-							Retail Rate:  
-							{fullBuildingInfo.advFinInfo.retailRentalRate}  
-						</li>
-						  
-						<li className="collection-item">
-							Office Rate:  
-							{fullBuildingInfo.advFinInfo.officeRentalRate}  
-						</li>
-						  
-						<li className="collection-item">
-							Industrial Rate:  
-							{fullBuildingInfo.advFinInfo.industrialRentalRate}  
-						</li>
-						  
-					</ul>
-					  
-				</div>
-				  */}
-			</div>
+					<div><strong>Parking Spaces:</strong>  {this.state.rParkingSpaces} </div>
+					<div><strong>Parking sf:</strong>  {this.state.rParkingSf} </div>
+					<div><strong>Internal / Structured Parking sf:</strong> {this.state.rInternalStructureParkingSf}  </div>
+					<div><strong>Parking Cost:</strong> {this.state.rParkingCostSf} </div>
+					<div><strong>Land Cost (per sf):</strong> {this.state.rLandCostSf} </div>
+					<div><strong>Total Project Value:</strong>{this.state.rTotalPrjValue}  </div>
+					<div><strong>Annual Property Tax Revenue (Year 1):</strong> {this.state.rPropTaxRevenueYr} </div>
+					<div><strong>Total Fees / SDCs:</strong> {this.state.rTotalFees} </div>
+					<div><strong>Subsidy:</strong>{this.state.rSubsidy}  </div>
+					<div><strong>Internal Rate of Return (Rental):</strong> {this.state.rRateOfReturn}</div>
+					<div><strong>Project Return (Owner):</strong>{this.state.rProjectReturn} </div>
+					<div><strong>Y-Intercept:</strong> {this.state.rYIntercept} </div>
+					<div><strong>Slope:</strong> {this.state.rSlope} </div>
+					{/* more entries for green infrastructure*/}
+					<div><strong>Product Type:</strong> { 'Residential/Office/Mised Use Owner or Renter'} </div>
+				
+				
+				</Grid>
+			</Grid>
 		);
 	}
 }
 
-export default BuildingFormReviewComponent;
+export default withStyles(styles)(BuildingFormReviewComponent);

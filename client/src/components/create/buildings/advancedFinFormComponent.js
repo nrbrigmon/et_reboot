@@ -1,11 +1,30 @@
 import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
 
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  textAlign: 'center',
+	}
+	// card: {
+	// 	// margin: '10px'
+	// },
+	// button: {
+	// 	width: '100%',
+	// 	margin: '10px 0 10px 0'
+	// }
+	});
+	
 class AdvancedFinFormComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);	
-		console.log('updated entire building protoype')
-
 
 	}
 
@@ -21,14 +40,15 @@ class AdvancedFinFormComponent extends Component {
 
 	render() {
 		let bldgAttr = this.props.attributes.advFinInfo;
+		const { classes } = this.props;
 		return (
 		
-			
-			<div className="row">
-				<div className="col s12 center-align">
+			<Grid container >
+				<Grid item xs={12} className={classes.paper}>
 					<h4>Advanced Financial Costs</h4>
-				</div>
-				<div className="col m6 center-align">
+				</Grid>
+				<Grid item xs={6}> 
+				
 					<form>
 						<input
 							className=""
@@ -43,8 +63,8 @@ class AdvancedFinFormComponent extends Component {
 							onChange={event => this.handleChange(event)}
 						/>
 					</form>
-				</div>
-				<div className="col m6 center-align">
+					</Grid>
+					<Grid item xs={6}> 
 					<form>
 						<input
 							className=""
@@ -72,10 +92,10 @@ class AdvancedFinFormComponent extends Component {
 							onChange={event => this.handleChange(event)}
 						/>*/}
 					</form>
-				</div>
-			</div>
+				</Grid>
+			</Grid>
 		);
 	}
 }
 
-export default AdvancedFinFormComponent;
+export default withStyles(styles)(AdvancedFinFormComponent);

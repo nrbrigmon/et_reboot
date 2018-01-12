@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
 import { updateMathModule } from './_buildingMathModule';
  
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+import TextField from 'material-ui/TextField';
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  textAlign: 'center',
+	},
+	textField: {
+	  marginLeft: theme.spacing.unit,
+	  marginRight: theme.spacing.unit
+	}
+  });
+
 class PhysicalFormComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -46,30 +64,52 @@ class PhysicalFormComponent extends Component {
 		}];
 		return fields.map((item, idx) => {
 			return (
-				<label key={idx}>
-					{item.name}
-					<input 	name={item.attr}
-							onChange={event => this.handleChange(event)}
-							value={obj[item.attr]}
-						/>
-				</label>
-					
+				<TextField
+					key={idx}
+					id={item.attr}
+					label={item.attr}
+					value={obj[item.attr]}
+					placeholder="Placeholder"
+					onChange={event => this.handleChange(event)}
+					margin="normal"
+				/>
 			);
 		});
 	}
+	state = {
+		name: 'Cat in the Hat',
+		age: '',
+		multiline: 'Controlled',
+		currency: 'EUR',
+	  };
+	
+	  handleChange = name => event => {
+		this.setState({
+		  [name]: event.target.value,
+		});
+	  };
+
 	render() {
 		let bldgAttr = this.props.attributes.physicalInfo;
-		
+		const { classes } = this.props;
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
+			<Grid container >
+				<Grid item xs={12} className={classes.paper}>
 					<h4>Physical Inputs</h4>
-				</div>
-				<div className="col s8 m6 left-align">
+				</Grid>
+				<Grid item xs={6}> 
 					<form>
-						{ this.renderInputFields(bldgAttr) }
 						
-					
+						{ this.renderInputFields(bldgAttr) }
+						<TextField
+						id="name"
+						label="Name"
+						placeholder="Placeholder"
+						className={classes.textField}
+						value={this.state.name || ''}
+						onChange={this.handleChange('name')}
+						margin="normal"
+						/>
 						<label>
 							Select Residential Type (If Applicable):
 							<select onChange={event => console.log(event.target.value)} value="Choose ">
@@ -141,8 +181,8 @@ class PhysicalFormComponent extends Component {
 						onChange={event => console.log(event)}
 					/>
 					</form>
-				</div>
-				<div className="col s4 m6 center-align">
+				</Grid> 
+				<Grid item xs={6}> 
 					<div style={{ border: '1px solid grey', height: '300px' }}>
 						threeJS 3D component goes here...
 					</div>
@@ -198,10 +238,10 @@ class PhysicalFormComponent extends Component {
 							<option value="none">Custom</option>
 						</select>
 					</label>
-				</div>
-			</div>
+				</Grid>
+			</Grid>
 		);
 	}
 }
 
-export default PhysicalFormComponent;
+export default withStyles(styles)(PhysicalFormComponent);

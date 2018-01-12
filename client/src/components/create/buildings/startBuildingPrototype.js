@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+// import SwipeableViews from 'react-swipeable-views';
+import AppBar from 'material-ui/AppBar';
+import Tabs, { Tab } from 'material-ui/Tabs';
+import Typography from 'material-ui/Typography';
+
 import axios from 'axios';
 import PhysicalFormComponent from './physicalFormComponent';
 import BasicFinFormComponent from './basicFinFormComponent';
@@ -7,11 +16,28 @@ import AdvancedFinFormComponent from './advancedFinFormComponent';
 import BuildingFormReviewComponent from './buildingFormReviewComponent';
 import BuildingPrintSummary from './buildingPrintSummary';
 
-class StartBuildingPrototype extends Component {
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	// },
+	// paper: {
+	//   textAlign: 'center',
+	// },
+	// card: {
+	// 	// margin: '10px'
+	// },
+	// button: {
+	// 	width: '100%',
+	// 	margin: '10px 0 10px 0'
+	}
+  });
+
+  class StartBuildingPrototype extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			pageChoice: 'sum',
+			tabValue: 'phys',
 			BP: {
 				physicalInfo: {
 					buildingName: "My first building",
@@ -58,6 +84,12 @@ class StartBuildingPrototype extends Component {
 					retailConCosts: 0,
 					officeConCosts: 0,
 					industrialConCosts: 0,
+					publicConCosts:0,
+					educationConCosts: 0,
+					hotelConCosts: 0,
+					parkingConCosts: 0,
+					landImpCostsPerSf: 0,
+					testSubsidy: 0,
 					monthlyRentPerSf: 1.4,
 					monthlyParkingCost: 0,
 					salesPricePerSf: 1000,
@@ -66,8 +98,13 @@ class StartBuildingPrototype extends Component {
 					commercialIndustrialRentSf: 0,
 					commercialPublicRentSf: 0,
 					commercialEducationRentSf: 0,
-					commercialHotelRentSf: 0,
-					commercialParkingRentSf: 0
+					commercialHotelRentRoom: 0,
+					commercialParkingRentSpace: 0,
+					surfaceParkingCostSpace: 0,
+					structureParkingCostSpace: 0,
+					undergroundParkingCostSpace: 0,
+					internalParkingCostSpace: 0,
+					mechanicalParkingCostSpace: 0
 				},
 				advFinInfo: {
 					residentialRentalPerc: 0,
@@ -77,7 +114,70 @@ class StartBuildingPrototype extends Component {
 					publicRentalPerc: 0,
 					educationRentalPerc: 0,
 					hotelRentalPerc: 0,
-					parkingRentalPerc: 0
+					parkingRentalPerc: 0,
+					occupancy1YrResidential: 0,
+					occupancy1YrRetail: 0,
+					occupancy1YrOfficential: 0,
+					occupancy1YrIndustrial: 0,
+					occupancyLongTermResidential: 0,
+					occupancyLongTermRetail: 0,
+					occupancyLongTermOffice: 0,
+					occupancyLongTermIndustrial: 0,
+					occupancyLongTermPublic: 0,
+					occupancyLongTermHotel: 0,
+					occupancyLongTermParking: 0,
+					preDevDueDiligence: 0,
+					preDevLandCarry: 0,
+					preDevLandEntitlement: 0,
+					preDevProfessionalFees: 0,
+					devDevelopmentCosts: 0,
+					devDemolitionCosts: 0,
+					devSiteDevelopmentCosts: 0,
+					devBrownfieldRemediationCosts: 0,
+					devAdditionalInfraEnhancement: 0,
+					impactFeesPerUnit: 0,
+					impactFeesPerJob: 0,
+					impactFeesPerSf: 0,
+					additonalImpactFees: 0,
+					buildingPermitFees: 0,
+					taxesDuringConstruction: 0,
+					insuranceDuringConstruction: 0,
+					developerFee: 0,
+					contingency: 0
+			// 					Property Taxes
+				// Property Tax Rate (% of project value: building + land)
+				// Assessment Ratio (Assessment Value / Market Value)
+
+				// Financial Targets
+				// Cash-on-Cash (After Year 3)
+				// IRR on Project Cost (Unleveraged Return)
+				// IRR on Investor Equity (Leveraged Return Before Tax)
+				// Debt Service Coverage Ratio (Year 3)
+				// IRR on Public Participation
+
+
+				// Project Rate of Return
+				// Return to Equity
+
+				// Financial Assumptions
+				// Projected retail sales per sf (retail only)
+				// % of sales to rent (retail only)
+				// Other income (vending, fines)
+				// Concessions and bad debt
+				// Operating costs (per unit, % of GPI, or per space) ◊
+				// Going in cap rate
+				// Gross potential income - escalation
+				// Operating costs - escalation
+				// Property value - annual appreciation
+				// Terminal cap rate, gross sales price
+				// Net sales = price less sales cost
+
+				// Primary Debt
+				// Maximum LTV
+				// Interest rate
+				// Amortization period - years
+
+
 				}
 			}
 		};
@@ -116,12 +216,14 @@ class StartBuildingPrototype extends Component {
 		buildingCopy.advFinInfo[key] = val;
 		this.setState(buildingCopy);
 	}
-	componentSelection(choice) {
+	
+	componentSelection = (e, value) => {
+		// console.log(value)
+		// console.log(this.state.pageChoice)
 		this.setState({
-			pageChoice: choice
+			tabValue: value
 		});
 	}
-
 	handleSubmit() {
 		axios.post('/api/buildings', this.state.BP).then(function(res) {
 			alert('new row added...');
@@ -129,8 +231,7 @@ class StartBuildingPrototype extends Component {
 		this.props.history.push('/create');
 	}
 
-	renderContent() {
-		let pg = this.state.pageChoice;
+	renderChildContent(pg){
 		if (pg === 'phys') {
 			return (
 				<PhysicalFormComponent
@@ -163,11 +264,35 @@ class StartBuildingPrototype extends Component {
 			);
 		}
 	}
-
 	render() {
+		const { classes } = this.props;
+		const { tabValue } = this.state;
 		return (
-			<div>
-				<nav className="nav-extended">
+				<Grid container
+					className={classes.root}
+					alignItems='center'
+					direction='row'
+					justify='center'>
+				<AppBar position="static" color="default">
+				<Tabs
+					value={tabValue}
+					onChange={this.componentSelection}
+					indicatorColor="primary"
+					textColor="primary"
+					fullWidth
+					centered
+				>
+					<Tab value="phys" label="Physical Inputs" />
+					<Tab value="fin1" label="Basic Financial" />
+					<Tab value="fin2" label="Advanced Financial" />
+					<Tab value="rev" label="Review" />
+					<Tab value="print" label="Print" />
+				</Tabs>
+				</AppBar>
+				<Grid item sm={8} xs={12}>
+					{this.renderChildContent(this.state.tabValue)}
+				</Grid>
+				{/* <nav className="nav-extended">
 					<div className="nav-content">
 						<ul className="tabs tabs-transparent">
 							<li	className={
@@ -234,7 +359,6 @@ class StartBuildingPrototype extends Component {
 					</div>
 					
 				</nav>
-				
 				<div className="row">
 					<div className="col s12">
 						<div> {this.renderContent()} </div> 
@@ -262,9 +386,9 @@ class StartBuildingPrototype extends Component {
 					</div>
 					
 				</div>
-				
-			</div>
+				 */}
+			</Grid>
 		);
 	}
 }
-export default StartBuildingPrototype;
+export default withStyles(styles)(StartBuildingPrototype);

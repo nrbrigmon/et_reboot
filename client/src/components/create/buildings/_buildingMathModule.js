@@ -1,6 +1,3 @@
-import physicalFormComponent from "./physicalFormComponent";
-
-
 let landUses = {
 	streets: 0,				//b4
 	landscaping: 0,			//b5
@@ -550,7 +547,7 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	preUnderbuild["parkingFootprint"] = (optionCHelper2>0) ? parkingOptionC["parkingFootprint"] : parkingOptionB["parkingFootprint"]; //b153
 	preUnderbuild["unusedFootprint"] = (optionCHelper2>0) ? parkingOptionC["unusedFootprint"] : parkingOptionB["unusedFootprint"]; //b154
 	
-//Adjustment Factors
+	//Adjustment Factors
 	parkingOptionC_Aid5["unusedFootprint"] = preUnderbuild["unusedFootprint"]; //b127
 	parkingOptionC_Aid5["bldgFootprint"] = 1000/physObj["buildingHeight"]/physObj["underbuildPerc"]; //b128
 	parkingOptionC_Aid5["bldgParkingFootprint"] = parkingOptionC_Aid5["bldgFootprint"]+parkingOptionC["parkingMaxB"] //b129
@@ -564,19 +561,19 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	//Square Footage by Use (Adjusted)
 	parkingOptionC_Aid4["residentialSf"] = parkingOptionC_Aid3["residentialSf"]*(optionCHelper4) //b138
 	parkingOptionC_Aid4["residentialSpaces"] = parkingOptionC_Aid3["residentialSpaces"]*(optionCHelper4) //c138
-	parkingOptionC_Aid4["retailSf"] = parkingOptionC_Aid3["retailSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["retailSf"] = parkingOptionC_Aid3["retailSf"]*(optionCHelper4) //b139
 	parkingOptionC_Aid4["retailSpaces"] = parkingOptionC_Aid3["retailSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["officeSf"] = parkingOptionC_Aid3["officeSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["officeSf"] = parkingOptionC_Aid3["officeSf"]*(optionCHelper4) //b140
 	parkingOptionC_Aid4["officeSpaces"] = parkingOptionC_Aid3["officeSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["industrialSf"] = parkingOptionC_Aid3["industrialSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["industrialSf"] = parkingOptionC_Aid3["industrialSf"]*(optionCHelper4) //b141
 	parkingOptionC_Aid4["industrialSpaces"] = parkingOptionC_Aid3["industrialSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["publicSf"] = parkingOptionC_Aid3["publicSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["publicSf"] = parkingOptionC_Aid3["publicSf"]*(optionCHelper4) //b142
 	parkingOptionC_Aid4["publicSpaces"] = parkingOptionC_Aid3["publicSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["educationalSf"] = parkingOptionC_Aid3["educationalSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["educationalSf"] = parkingOptionC_Aid3["educationalSf"]*(optionCHelper4) //b143
 	parkingOptionC_Aid4["educationalSpaces"] = parkingOptionC_Aid3["educationalSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["hotelSf"] = parkingOptionC_Aid3["hotelSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["hotelSf"] = parkingOptionC_Aid3["hotelSf"]*(optionCHelper4) //b144
 	parkingOptionC_Aid4["hotelSpaces"] = parkingOptionC_Aid3["hotelSpaces"]*(optionCHelper4)
-	parkingOptionC_Aid4["commercialParkingSf"] = parkingOptionC_Aid3["commercialParkingSf"]*(optionCHelper4)
+	parkingOptionC_Aid4["commercialParkingSf"] = parkingOptionC_Aid3["commercialParkingSf"]*(optionCHelper4) //b145
 	parkingOptionC_Aid4["commercialParkingSpaces"] = parkingOptionC_Aid3["commercialParkingSpaces"]*(optionCHelper4)
 	parkingOptionC_Aid4["internalParkingSf"] = parkingOptionC_Aid3["internalParkingSf"]*(optionCHelper4)
 	parkingOptionC_Aid4["internalParkingSpaces"] = parkingOptionC_Aid3["internalParkingSpaces"]*(optionCHelper4)
@@ -622,21 +619,23 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	adjustedSpaces["internal"] = parkingOptionC_Aid4["internalParkingSpaces"]  //b173
 	adjustedSpaces["surface"] = (adjustedParkingSpaces["totalRequired"]>(adjustedSpaces["underground"] + adjustedSpaces["internal"])) ? (adjustedParkingSpaces["totalRequired"]-(adjustedSpaces["underground"] + adjustedSpaces["internal"])) : 0 //b170
 	
-
-	adjustedParkingFootprint["surfaceArea"] = adjustedSpaces["surface"]*physObj["parkingAreaPerSf"]
+	
+	adjustedParkingFootprint["surfaceArea"] = adjustedSpaces["surface"]*physObj["parkingAreaPerSf"] //b192
 	adjustedParkingFootprint["surfaceFootprint"] = (adjustedParkingFootprint["surfaceArea"] < physObj["parkingAreaPerSf"]) ? 0 : (adjustedParkingFootprint["surfaceArea"] / physObj["surfaceParkingLvls"])
-	adjustedParkingFootprint["undergroundArea"] = 0;
-	adjustedParkingFootprint["undergroundFootprint"] = (adjustedSpaces["underground"]*physObj["parkingAreaPerSf"])/landUses["totalLotSize"]
+	adjustedParkingFootprint["undergroundArea"] = 0;	//b193
+	adjustedParkingFootprint["undergroundFootprint"] = (adjustedSpaces["underground"]*physObj["parkingAreaPerSf"])/landUses["totalLotSize"] //c193
 
 
 }
 
 export const updateMathModule = (obj) => {
 	updateBuildingEnvelope( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
+	updatePhysicalOutputs(obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
+	updateDevelopmentCosts( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
 }
 export const buildingLotCoverage = (siteArea) => {
-	console.log(siteArea);
-	console.log(adjustedSummary['buildingFootprint']);
+	// console.log(siteArea);
+	// console.log(adjustedSummary['buildingFootprint']);
 	let finalLotCoverage = adjustedSummary['buildingFootprint'] / siteArea;
 	return (isNaN(finalLotCoverage) ? 0 : finalLotCoverage);
 };
@@ -648,6 +647,7 @@ export const parkingLotCoverage = (siteArea) => {
 	let finalParkingCoverage = adjustedSummary["parkingFootprint"]/siteArea;
 	return finalParkingCoverage;
 };
+
 let grossSfTotal = 0;
 export const getFAR = (siteArea, advFinInfo) => {
 	let { retailRentalPerc, officeRentalPerc, industrialRentalPerc, publicRentalPerc, educationRentalPerc, hotelRentalPerc, parkingRentalPerc } = advFinInfo;
@@ -661,26 +661,12 @@ export const getFAR = (siteArea, advFinInfo) => {
 		(parkingOptionC_Aid4["educationalSf"]*educationRentalPerc)	+
 		(parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc)	+
 		(parkingOptionC_Aid4["commercialParkingSf"]*parkingRentalPerc)	+
-		(adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"])	+
+		(adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"]);
 		// parkingOptionC_Aid4["internalParkingSf"];
-	console.log(grossSfTotal, siteArea);
+
 	return grossSfTotal/siteArea;
 }
-export const getTotalSf = ( advFinInfo) => {
-	// let { retailRentalPerc, officeRentalPerc, industrialRentalPerc, publicRentalPerc, educationRentalPerc, hotelRentalPerc, parkingRentalPerc } = advFinInfo;
-
-	// let grossSfTotal = 
-	// 	(parkingOptionC_Aid4["residentialSf"]*maxBuildingEnvelope["residentialUnderbuild"])	+
-	// 	(parkingOptionC_Aid4["retailSf"]*retailRentalPerc)	+
-	// 	(parkingOptionC_Aid4["officeSf"]*officeRentalPerc)	+
-	// 	(parkingOptionC_Aid4["industrialSf"]*industrialRentalPerc) 	+
-	// 	(parkingOptionC_Aid4["publicSf"]*publicRentalPerc)	+
-	// 	(parkingOptionC_Aid4["educationalSf"]*educationRentalPerc)	+
-	// 	(parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc)	+
-	// 	(parkingOptionC_Aid4["commercialParkingSf"]*parkingRentalPerc)	+
-	// 	(adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"])	+
-	// 	parkingOptionC_Aid4["internalParkingSf"];
-	
+export const getTotalSf = ( ) => {
 	return grossSfTotal;
 }
 export const getResidentialSfMix = () => {
@@ -725,7 +711,6 @@ export const getResidentialGrossUnit = (residentialUnitSize) => {
 	return ( (b28 === 0) ? 0 :b28/d28)
 }
 export const getResidentialDwellUnit = (physicalInfo, advFinInfo) => {
-	console.log(physicalInfo);
 	let { siteArea, residentialUnitSize, hotelAreaPerRoom, parkingAreaPerEmp } = physicalInfo;
 	let { hotelRentalPerc, parkingRentalPerc } = advFinInfo;
 
@@ -763,7 +748,7 @@ export const getHouseholdEstIncome = (physicalInfo, basicFinInfo) =>{
 
 }
 
-export const getJobsPerAcre = (physicalInfo) => {
+export const getJobsPerSf = (physicalInfo) => {
 	let { siteArea, retailAreaPerEmp, officeAreaPerEmp, industrialAreaPerEmp, publicAreaPerEmp, educationAreaPerEmp, hotelAreaPerEmp, parkingAreaPerEmp } = physicalInfo; 
 	let g29 = (retailAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["retailSf"]/retailAreaPerEmp)/siteArea);
 	let g30 = (officeAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["officeSf"]/officeAreaPerEmp)/siteArea);
@@ -777,3 +762,373 @@ export const getJobsPerAcre = (physicalInfo) => {
 	return jpa;
 }
 
+export const getHotelEmpPerSf = (physicalInfo, advFinInfo) => {
+	let { hotelAreaPerRoom } = physicalInfo;
+	let { hotelRentalPerc } = advFinInfo;
+	return ( hotelAreaPerRoom === 0 ? 0 : (parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc)/hotelAreaPerRoom);
+}
+
+export const getHotelNetPerSf = (physicalInfo, advFinInfo) => {
+	let { hotelAreaPerRoom } = physicalInfo;
+	let { hotelRentalPerc } = advFinInfo;
+	let c34 = parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc;
+	let d34 = (hotelAreaPerRoom === 0) ? 0 : c34/hotelAreaPerRoom;
+	if ( c34 === 0 ){
+		return 0;
+	} else {
+		return (c34 / d34);
+	}
+}
+
+export const getHotelGrossPerSf = (physicalInfo, advFinInfo) => {
+	let { hotelAreaPerRoom } = physicalInfo;	
+	let { hotelRentalPerc } = advFinInfo;
+	let c34 = parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc;	
+	let d34 = (hotelAreaPerRoom === 0) ? 0 : c34/hotelAreaPerRoom;
+	if ( parkingOptionC_Aid4["hotelSf"] === 0 ){
+		return 0;
+	} else {
+		return (parkingOptionC_Aid4["hotelSf"] / d34);
+	}
+}
+
+export const getParkingSpaces = () => {
+	return parkingOptionC_Aid4["totalSpaces"];
+}
+
+export const getParkingSf = (physicalInfo) =>{
+	let { parkingAreaPerSf } = physicalInfo;
+	
+	return parkingOptionC_Aid4["totalSpaces"]*parkingAreaPerSf;	
+}
+
+export const getInternalStructureParkingSf = () => {
+	let b36 = adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"];
+	let b37 = parkingOptionC_Aid4["internalParkingSf"];
+	return b36+b37;
+}
+
+let siteLevelOutputs = {
+	buildingFootprintSf: 0,
+	landscapingFootprintSf: 0,
+	parkingByBuildingSf: 0,
+	netToGrossReductionSf: 0,
+	useableBuildingTotalSf: 0,
+	buildingFootprintPerc: 0,
+	landscapingFootprintPerc: 0,
+	parkingByBuildingPerc: 0,
+	netToGrossReductionPerc: 0
+}
+
+let totalGrossSf = {
+	residential: 0,
+	retail: 0,
+	office: 0,
+	industrial: 0,
+	public: 0,
+	educational: 0,
+	hotel: 0,
+	commercialParking: 0,
+	structuredParking: 0,
+	internalParking: 0,
+	total: 0
+}
+let totalNetSf = {
+	residential: 0,
+	retail: 0,
+	office: 0,
+	industrial: 0,
+	public: 0,
+	educational: 0,
+	hotel: 0,
+	commercialParking: 0,
+	structuredParking: 0,
+	internalParking: 0,
+	total: 0
+}
+let totalDwellingOrHotelUnits = {
+	residential: 0,
+	hotel: 0,
+	commercialParking: 0,
+	total: 0
+}
+
+let totalJobsByLandUse = {
+	retail: 0,
+	office: 0,
+	industrial: 0,
+	public: 0,
+	educational: 0,
+	hotel: 0,
+	commercialParking: 0,
+	total: 0
+}
+
+let parkingSpacesByLandUse = {
+	residentialSpaces: 0,
+	retailSpaces: 0,
+	officeSpaces: 0,
+	industrialSpaces: 0,
+	publicSpaces: 0,
+	educationalSpaces: 0,
+	hotelSpaces: 0,
+	commercialParkingSpaces: 0,
+	totalSpaces: 0,
+	residentialSf: 0,
+	retailSf: 0,
+	officeSf: 0,
+	industrialSf: 0,
+	publicSf: 0,
+	educationalSf: 0,
+	hotelSf: 0,
+	commercialParkingSf: 0,
+	totalSf: 0
+	}
+
+let parkingSpacesByType = {
+	surface: 0,
+	structure: 0,
+	underground: 0,
+	commercial: 0,
+	internal: 0
+}
+
+export const updatePhysicalOutputs = ( physicalInfo, basicFinInfo, advFinInfo ) => {
+	let { siteArea, siteNetToGross } = physicalInfo;
+	
+	siteLevelOutputs["buildingFootprintSf"] = adjustedSummary["buildingFootprint"];
+	siteLevelOutputs["landscapingFootprintSf"] = adjustedSummary["lanscapeFootprint"];
+	siteLevelOutputs["parkingByBuildingSf"] = adjustedSummary["parkingFootprint"];
+	siteLevelOutputs["netToGrossReductionSf"] = siteArea*(1 - siteNetToGross);
+
+	let siteTotal = siteLevelOutputs["buildingFootprintSf"] + siteLevelOutputs["landscapingFootprintSf"] + siteLevelOutputs["parkingByBuildingSf"] + siteLevelOutputs["netToGrossReductionSf"];
+	siteLevelOutputs["buildingFootprintPerc"] = siteLevelOutputs["buildingFootprintSf"]/siteTotal;
+	siteLevelOutputs["landscapingFootprintPerc"] = siteLevelOutputs["landscapingFootprintSf"]/siteTotal;
+	siteLevelOutputs["parkingByBuildingPerc"] = siteLevelOutputs["parkingByBuildingSf"]/siteTotal;
+	siteLevelOutputs["netToGrossReductionPerc"] = siteLevelOutputs["netToGrossReductionSf"]/siteTotal;
+
+	totalGrossSf["residential"] = parkingOptionC_Aid4["residentialSf"];
+	totalGrossSf["retail"] = parkingOptionC_Aid4["retailSf"];
+	totalGrossSf["office"] = parkingOptionC_Aid4["officeSf"];
+	totalGrossSf["industrial"] = parkingOptionC_Aid4["industrialSf"];
+	totalGrossSf["public"] = parkingOptionC_Aid4["publicSf"];
+	totalGrossSf["educational"] = parkingOptionC_Aid4["educationalSf"];
+	totalGrossSf["hotel"] = parkingOptionC_Aid4["hotelSf"];
+	totalGrossSf["commercialParking"] = parkingOptionC_Aid4["commercialParkingSf"];
+	totalGrossSf["structuredParking"] = adjustedParkingFootprint["surfaceArea"] - adjustedParkingFootprint["surfaceFootprint"];
+	totalGrossSf["internalParking"] = parkingOptionC_Aid4["internalParkingSf"];
+
+	let { retailRentalPerc, officeRentalPerc, industrialRentalPerc, 
+		publicRentalPerc, educationRentalPerc, hotelRentalPerc, parkingRentalPerc } = advFinInfo;
+	totalNetSf["residential"] = totalGrossSf["residential"]*maxBuildingEnvelope["residentialUnderbuild"];
+	totalNetSf["retail"] = totalGrossSf["retail"]*retailRentalPerc;
+	totalNetSf["office"] = totalGrossSf["office"]*officeRentalPerc;
+	totalNetSf["industrial"] = totalGrossSf["industrial"]*industrialRentalPerc;
+	totalNetSf["public"] = totalGrossSf["public"]*publicRentalPerc;
+	totalNetSf["educational"] = totalGrossSf["educational"]*educationRentalPerc;
+	totalNetSf["hotel"] = totalGrossSf["hotel"]*hotelRentalPerc;
+	totalNetSf["commercialParking"] = totalGrossSf["commercialParking"]*parkingRentalPerc;
+	totalNetSf["structuredParking"] = totalGrossSf["structuredParking"];
+	totalNetSf["internalParking"] = totalGrossSf["internalParking"];
+	
+	let { residentialUnitSize, hotelAreaPerRoom, parkingAreaPerEmp,
+		retailAreaPerEmp, officeAreaPerEmp, industrialAreaPerEmp, publicAreaPerEmp, 
+		educationAreaPerEmp, hotelAreaPerEmp, parkingAreaPerSf } = physicalInfo;
+	totalDwellingOrHotelUnits["residential"] = (residentialUnitSize === 0 ? 0 : totalNetSf["residential"]/residentialUnitSize);
+	totalDwellingOrHotelUnits["hotel"] = (hotelAreaPerRoom === 0 ? 0 : totalNetSf["hotel"]/hotelAreaPerRoom);
+	totalDwellingOrHotelUnits["commercialParking"] = (parkingAreaPerEmp === 0 ? 0 : totalNetSf["commercialParking"]/parkingAreaPerEmp);
+	totalDwellingOrHotelUnits["total"] = totalDwellingOrHotelUnits["residential"]+totalDwellingOrHotelUnits["hotel"]+totalDwellingOrHotelUnits["commercialParking"];
+
+	totalJobsByLandUse["retail"] = (retailAreaPerEmp === 0 ? 0 : totalGrossSf["retail"]/retailAreaPerEmp);
+	totalJobsByLandUse["office"] = (officeAreaPerEmp === 0 ? 0 : totalGrossSf["office"]/officeAreaPerEmp);
+	totalJobsByLandUse["industrial"] = (industrialAreaPerEmp === 0 ? 0 : totalGrossSf["industrial"]/industrialAreaPerEmp);
+	totalJobsByLandUse["public"] = (publicAreaPerEmp === 0 ? 0 : totalGrossSf["public"]/publicAreaPerEmp);
+	totalJobsByLandUse["educational"] = (educationAreaPerEmp === 0 ? 0 : totalGrossSf["educational"]/educationAreaPerEmp);
+	totalJobsByLandUse["hotel"] = (hotelAreaPerEmp === 0 ? 0 : totalGrossSf["hotel"]/hotelAreaPerEmp);
+	totalJobsByLandUse["commercialParking"] = (parkingAreaPerEmp === 0 ? 0 : totalGrossSf["commercialParking"]/parkingAreaPerEmp);
+	totalJobsByLandUse["total"] = totalJobsByLandUse["retail"] +totalJobsByLandUse["office"]+totalJobsByLandUse["industrial"]+totalJobsByLandUse["public"]+totalJobsByLandUse["educational"] +totalJobsByLandUse["hotel"]+totalJobsByLandUse["commercialParking"]
+	
+	let b36 = adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"];
+	let z3 = adjustedSpaces["surface"]*adjustedParkingFootprint["surfaceFootprint"]/adjustedParkingFootprint["surfaceArea"];;
+	let z2 = adjustedSpaces["surface"]*b36/adjustedParkingFootprint["surfaceArea"];
+	parkingSpacesByType["surface"] = ( z3 === 0 ? 0 : z3);
+	parkingSpacesByType["structure"] = ( z2 === 0 ? 0 : z2);
+	parkingSpacesByType["underground"] = adjustedSpaces["underground"]
+	parkingSpacesByType["commercial"] = adjustedSpaces["commercialParking"]
+	parkingSpacesByType["internal"] = adjustedSpaces["internal"]
+
+	
+	parkingSpacesByLandUse["residentialSpaces"] = parkingOptionC_Aid4["residentialSpaces"];
+	parkingSpacesByLandUse["retailSpaces"] = parkingOptionC_Aid4["retailSpaces"];
+	parkingSpacesByLandUse["officeSpaces"] = parkingOptionC_Aid4["officeSpaces"];
+	parkingSpacesByLandUse["industrialSpaces"] = parkingOptionC_Aid4["industrialSpaces"];
+	parkingSpacesByLandUse["publicSpaces"] = parkingOptionC_Aid4["publicSpaces"];
+	parkingSpacesByLandUse["educationalSpaces"] = parkingOptionC_Aid4["educationalSpaces"];
+	parkingSpacesByLandUse["hotelSpaces"] = parkingOptionC_Aid4["hotelSpaces"];
+	parkingSpacesByLandUse["commercialParkingSpaces"] = parkingOptionC_Aid4["commercialParkingSpaces"];
+	parkingSpacesByLandUse["totalSpaces"] = parkingSpacesByLandUse["residentialSpaces"] + parkingSpacesByLandUse["retailSpaces"] + parkingSpacesByLandUse["officeSpaces"] + parkingSpacesByLandUse["industrialSpaces"] + parkingSpacesByLandUse["publicSpaces"] + parkingSpacesByLandUse["educationalSpaces"] + parkingSpacesByLandUse["hotelSpaces"] + parkingSpacesByLandUse["commercialParkingSpaces"]
+
+
+
+	parkingSpacesByLandUse["residentialSf"] = parkingAreaPerSf*parkingSpacesByLandUse["residentialSpaces"]
+	parkingSpacesByLandUse["retailSf"] = parkingAreaPerSf*parkingSpacesByLandUse["retailSpaces"]
+	parkingSpacesByLandUse["officeSf"] = parkingAreaPerSf*parkingSpacesByLandUse["officeSpaces"]
+	parkingSpacesByLandUse["industrialSf"] = parkingAreaPerSf*parkingSpacesByLandUse["industrialSpaces"]
+	parkingSpacesByLandUse["publicSf"] = parkingAreaPerSf*parkingSpacesByLandUse["publicSpaces"]
+	parkingSpacesByLandUse["educationalSf"] = parkingAreaPerSf*parkingSpacesByLandUse["educationalSpaces"]
+	parkingSpacesByLandUse["hotelSf"] = parkingAreaPerSf*parkingSpacesByLandUse["hotelSpaces"]
+	parkingSpacesByLandUse["commercialParkingSf"] = parkingAreaPerSf*parkingSpacesByLandUse["commercialParkingSpaces"]
+	parkingSpacesByLandUse["totalSf"] = parkingSpacesByLandUse["residentialSf"] + parkingSpacesByLandUse["retailSf"] + parkingSpacesByLandUse["officeSf"] + parkingSpacesByLandUse["industrialSf"] + parkingSpacesByLandUse["publicSf"] + parkingSpacesByLandUse["educationalSf"] + parkingSpacesByLandUse["hotelSf"] + parkingSpacesByLandUse["commercialParkingSf"];
+
+}
+
+// PROJECT DEVELOPMENT COSTS		
+// Pre Development Costs	
+let preDevelopmentCosts = {
+	dueDiligence: 0,
+	landCarry: 0,
+	landEntitlement: 0,
+	professionalFees: 0,
+	rawLand: 0
+}
+
+// Development Costs
+let developmentCosts = {
+	demolition: 0,
+	siteDevelopment: 0,
+	brownfieldRemediation: 0,
+	residentialConstruction: 0,
+	retailConstruction: 0,
+	officeConstruction: 0,
+	industrialConstruction: 0,
+	publicConstruction: 0,
+	educationConstruction: 0,
+	hotelConstruction: 0,
+	additionalInfrastructure: 0,
+	parkingConstruction: 0,
+	waterQualityControls: 0,
+	impactFees: 0,
+	buildingPermits: 0,
+	insuranceDuringConstruction: 0,
+	taxesDuringConstruction: 0
+}
+	
+// Developer Fee	
+// Contingency	
+let develpomentFees = {
+	developer: 0,
+	contigency: 0
+}
+
+let developmentTotals = {
+	buildingConstruction: 0,
+	parkingConstruction: 0,
+	totalProjectCosts: 0
+}
+export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) => {
+	let { devBrownfieldRemediationCosts, devDemolitionCosts, devSiteDevelopmentCosts, devAdditionalInfraEnhancement, additonalImpactFees } = advFinInfo;
+	let { siteArea } = physicalInfo;
+	let { residentialConCosts, retailConCosts, officeConCosts,	industrialConCosts,	publicConCosts,	educationConCosts,	hotelConCosts } = basicFinInfo;
+	developmentCosts["demolition"] = -1 * devDemolitionCosts; //=-$'Advanced Financial'.B45
+	developmentCosts["siteDevelopment"] = -1 * (siteArea*devSiteDevelopmentCosts);
+	developmentCosts["brownfieldRemediation"] = -1 * (devBrownfieldRemediationCosts*siteArea) //=-$'Advanced Financial'.B47*$'Physical Inputs'.B26
+	developmentCosts["residentialConstruction"] = -1 * (residentialConCosts* parkingOptionC_Aid4["residentialSpaces"]);
+	developmentCosts["retailConstruction"] = -1 * (retailConCosts* parkingOptionC_Aid4["retailSpaces"])
+	developmentCosts["officeConstruction"] = -1 * (officeConCosts* parkingOptionC_Aid4["officeSpaces"])
+	developmentCosts["industrialConstruction"] = -1 * (industrialConCosts* parkingOptionC_Aid4["industrialSpaces"])
+	developmentCosts["publicConstruction"] = -1 * (publicConCosts* parkingOptionC_Aid4["publicSpaces"])
+	developmentCosts["educationConstruction"] = -1 * (educationConCosts* parkingOptionC_Aid4["educationalSpaces"])
+	developmentCosts["hotelConstruction"] = -1 * (hotelConCosts* parkingOptionC_Aid4["hotelSpaces"])
+	developmentCosts["additionalInfrastructure"] = devAdditionalInfraEnhancement;
+	
+
+	let { surfaceParkingCostSpace, landImpCostsPerSf } = basicFinInfo;
+	developmentCosts["parkingConstruction"] = (-1 * surfaceParkingCostSpace*parkingSpacesByType["surface"]) + 
+			(-1 * basicFinInfo["structureParkingCostSpace"]*parkingSpacesByType["structure"]) + 
+			(-1 * basicFinInfo["undergroundParkingCostSpace"]*parkingSpacesByType["underground"]) + 
+			(-1 * basicFinInfo["internalParkingCostSpace"]*parkingSpacesByType["commercial"]) + 
+			(-1 * basicFinInfo["parkingConCosts"]*parkingSpacesByType["internal"]);
+	let totalDevelopmentCosts = developmentCosts["demolition"] + developmentCosts["siteDevelopment"] + developmentCosts["brownfieldRemediation"] + developmentCosts["residentialConstruction"] + developmentCosts["retailConstruction"] + developmentCosts["officeConstruction"] + developmentCosts["industrialConstruction"] + developmentCosts["publicConstruction"] + developmentCosts["educationConstruction"] + developmentCosts["hotelConstruction"] + developmentCosts["additionalInfrastructure"] + developmentCosts["parkingConstruction"]
+	
+	let { impactFeesPerUnit, impactFeesPerJob, impactFeesPerSf, buildingPermitFees, preDevDueDiligence,
+		taxesDuringConstruction, insuranceDuringConstruction, developerFee, contingency	} = advFinInfo;
+	developmentCosts["waterQualityControls"] = 0; //=-$'Green Infrastructure'.C68
+	
+	let impactFeeHelp = totalGrossSf["retail"] + totalGrossSf["office"] + totalGrossSf["industrial"] + totalGrossSf["public"] + totalGrossSf["educational"] + totalGrossSf["hotel"]
+	developmentCosts["impactFees"] = (-1 * additonalImpactFees) + 
+					(-1 * (impactFeesPerUnit*totalDwellingOrHotelUnits["total"])) +
+					(-1 * (impactFeesPerJob*totalJobsByLandUse["total"])) +
+					(-1 * (impactFeesPerSf*impactFeeHelp));
+	
+	developmentCosts["buildingPermits"] = buildingPermitFees;
+	developmentCosts["taxesDuringConstruction"] = -1 * (taxesDuringConstruction*landImpCostsPerSf)
+
+	preDevelopmentCosts["dueDiligence"] = preDevDueDiligence;
+	preDevelopmentCosts["rawLand"] = -1 * landImpCostsPerSf;
+	preDevelopmentCosts["landCarry"] =  advFinInfo.preDevLandCarry * preDevelopmentCosts["rawLand"];
+	preDevelopmentCosts["landEntitlement"] =  advFinInfo.preDevLandEntitlement * preDevelopmentCosts["rawLand"];
+	preDevelopmentCosts["professionalFees"] =  advFinInfo.preDevProfessionalFees*totalDevelopmentCosts
+	let totalPreDevelopmentCosts = preDevelopmentCosts["dueDiligence"] + preDevelopmentCosts["rawLand"] + preDevelopmentCosts["landCarry"] + preDevelopmentCosts["landEntitlement"] + preDevelopmentCosts["professionalFees"]
+
+	developmentCosts["insuranceDuringConstruction"] = insuranceDuringConstruction*(totalPreDevelopmentCosts+totalDevelopmentCosts);
+
+	let totalIndirectCosts = developmentCosts["impactFees"] + developmentCosts["buildingPermits"] + developmentCosts["taxesDuringConstruction"] + developmentCosts["insuranceDuringConstruction"];
+	
+	develpomentFees["developer"] = developerFee*(totalIndirectCosts+totalDevelopmentCosts);
+	develpomentFees["contigency"] = contingency*(totalDevelopmentCosts);
+
+	developmentTotals["buildingConstruction"] = totalDevelopmentCosts - developmentCosts["parkingConstruction"];
+	developmentTotals["parkingConstruction"] = developmentCosts["parkingConstruction"];
+	developmentTotals["totalProjectCosts"] = totalDevelopmentCosts + totalPreDevelopmentCosts + totalIndirectCosts;
+	
+}
+export const getParkingCostSf = () => {
+	
+	return -1 * developmentTotals["parkingConstruction"];
+}
+
+
+export const getTotalPrjValue = () => {
+
+	let solution = -1 * developmentTotals["totalProjectCosts"]
+	return solution;
+}
+
+export const getPropTaxRevenueYr = () => {
+	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+	return 0;
+}
+
+export const getTotalFees = () => {
+	let solution = -1 * developmentCosts["impactFees"]
+	return solution;
+}
+
+export const getSubsidy = (basicFinInfo) => {
+	let { testSubsidy } = basicFinInfo;
+	// let detailedSubsidy = =$'Mixed-Use Summary'.J17+$'Mixed-Use Summary'.H66+IF(OR(testSubsidy=0,testSubsidy=""),SUM($'Mixed-Use Summary'.C96:L100),0)
+	let detailedSubsidy = 0;
+	let solution = ( testSubsidy > 0 ? testSubsidy : detailedSubsidy)
+	return solution;
+}
+
+export const getRateOfReturn = () => {
+	//=$'Mixed-Use Summary'.O6,
+	return 0;
+} 
+export const getProjectReturn = () => {
+	//=$'Mixed-Use Summary'.U5,
+	return 0;
+} 
+export const getYIntercept = () => {
+	//=INTERCEPT($'ROI Scenario'.B146:B147,$'ROI Scenario'.A146:A147),
+	return 0;
+} 
+export const getSlope = () => {
+	//=LINEST($'ROI Scenario'.B146:B147,$'ROI Scenario'.A146:A147)
+	return 0;
+} 
