@@ -3,3 +3,9 @@ body {
 	padding: 0;
 	font-family: sans-serif;
 }
+hr {
+	border:none;
+	height: 2px;
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}

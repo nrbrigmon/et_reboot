@@ -1,38 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
-// import SwipeableViews from 'react-swipeable-views';
+
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 import axios from 'axios';
-import PhysicalFormComponent from './physicalFormComponent';
-import BasicFinFormComponent from './basicFinFormComponent';
-import AdvancedFinFormComponent from './advancedFinFormComponent';
-import BuildingFormReviewComponent from './buildingFormReviewComponent';
-import BuildingPrintSummary from './buildingPrintSummary';
+import PhysicalFormComponent from './PhysicalFormComponent';
+import BasicFinFormComponent from './BasicFinFormComponent';
+import AdvancedFinFormComponent from './AdvancedFinFormComponent';
+import BuildingFormReviewComponent from './BuildingFormReviewComponent';
+import BuildingPrintSummary from './BuildingPrintSummary';
 
 const styles = theme => ({
 	root: {
 	  flexGrow: 1,
-	// },
-	// paper: {
-	//   textAlign: 'center',
-	// },
-	// card: {
-	// 	// margin: '10px'
-	// },
-	// button: {
-	// 	width: '100%',
-	// 	margin: '10px 0 10px 0'
+	},
+	paper: {
+	  textAlign: 'center',
 	}
   });
 
-  class StartBuildingPrototype extends Component {
+  class BuildingPrototypeStart extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -77,6 +68,7 @@ const styles = theme => ({
 					internalParkingLvls: 0,
 					undergroundParkingLvls: 0,
 					mechanicalParking: "no",
+					parkingLayout: '',
 					parkingAreaPerSf: 300
 				},
 				basicFinInfo: {
@@ -117,8 +109,11 @@ const styles = theme => ({
 					parkingRentalPerc: 0,
 					occupancy1YrResidential: 0,
 					occupancy1YrRetail: 0,
-					occupancy1YrOfficential: 0,
+					occupancy1YrOffice: 0,
 					occupancy1YrIndustrial: 0,
+					occupancy1YrPublic: 0,
+					occupancy1YrHotel: 0,
+					occupancy1YrParking: 0,
 					occupancyLongTermResidential: 0,
 					occupancyLongTermRetail: 0,
 					occupancyLongTermOffice: 0,
@@ -130,7 +125,6 @@ const styles = theme => ({
 					preDevLandCarry: 0,
 					preDevLandEntitlement: 0,
 					preDevProfessionalFees: 0,
-					devDevelopmentCosts: 0,
 					devDemolitionCosts: 0,
 					devSiteDevelopmentCosts: 0,
 					devBrownfieldRemediationCosts: 0,
@@ -143,41 +137,129 @@ const styles = theme => ({
 					taxesDuringConstruction: 0,
 					insuranceDuringConstruction: 0,
 					developerFee: 0,
-					contingency: 0
-			// 					Property Taxes
-				// Property Tax Rate (% of project value: building + land)
-				// Assessment Ratio (Assessment Value / Market Value)
-
-				// Financial Targets
-				// Cash-on-Cash (After Year 3)
-				// IRR on Project Cost (Unleveraged Return)
-				// IRR on Investor Equity (Leveraged Return Before Tax)
-				// Debt Service Coverage Ratio (Year 3)
-				// IRR on Public Participation
-
-
-				// Project Rate of Return
-				// Return to Equity
-
-				// Financial Assumptions
-				// Projected retail sales per sf (retail only)
-				// % of sales to rent (retail only)
-				// Other income (vending, fines)
-				// Concessions and bad debt
-				// Operating costs (per unit, % of GPI, or per space) ◊
-				// Going in cap rate
-				// Gross potential income - escalation
-				// Operating costs - escalation
-				// Property value - annual appreciation
-				// Terminal cap rate, gross sales price
-				// Net sales = price less sales cost
-
-				// Primary Debt
-				// Maximum LTV
-				// Interest rate
-				// Amortization period - years
-
-
+					contingency: 0,
+					propTaxOwner: 0,
+					propTaxRenter: 0,
+					propTaxRetail: 0,
+					propTaxOffice: 0,
+					propTaxIndustrial: 0,
+					propTaxHotel: 0,
+					propTaxParking: 0,
+					assessRatioTaxOwner: 0,
+					assessRatioTaxRenter: 0,
+					assessRatioTaxRetail: 0,
+					assessRatioTaxOffice: 0,
+					assessRatioTaxIndustrial: 0,
+					assessRatioTaxHotel: 0,
+					assessRatioTaxParking: 0,
+					cash3YrRenter: 0,
+					cash3YrRetail: 0,
+					cash3YrOffice: 0,
+					cash3YrIndustrial: 0,
+					cash3YrHotel: 0,
+					cash3YrParking: 0,
+					iRRCostRenter: 0,
+					iRRCostRetail: 0,
+					iRRCostOffice: 0,
+					iRRCostIndustrial: 0,
+					iRRCostHotel: 0,
+					iRRCostParking: 0,
+					iRREquityRenter: 0,
+					iRREquityRetail: 0,
+					iRREquityOffice: 0,
+					iRREquityIndustrial: 0,
+					iRREquityHotel: 0,
+					iRREquityParking: 0,
+					debServRatioRenter: 0,
+					debServRatioRetail: 0,
+					debServRatioOffice: 0,
+					debServRatioIndustrial: 0,
+					debServRatioHotel: 0,
+					debServRatioParking: 0,
+					iRRParticipationRenter: 0,
+					iRRParticipationRetail: 0,
+					iRRParticipationOffice: 0,
+					iRRParticipationIndustrial: 0,
+					iRRParticipationHotel: 0,
+					iRRParticipationParking: 0,
+					projectReturnRateOwner: 0,
+					returnToEquityOwner: 0,
+					projRetailSales: 0,
+					percRetailSalestoRent: 0,
+					otherIncomeRenter: 0,
+					otherIncomeRetail: 0,
+					otherIncomeOffice: 0,
+					otherIncomeIndustrial: 0,
+					otherIncomeHotel: 0,
+					otherIncomeParking: 0,
+					percConcessionsRenter: 0,
+					percConcessionsRetail: 0,
+					percConcessionsOffice: 0,
+					percConcessionsIndustrial: 0,
+					percConcessionsHotel: 0,
+					percConcessionsParking: 0,
+					operatingCostsPercRenter: 0,
+					operatingCostsPercRetail: 0,
+					operatingCostsPercOffice: 0,
+					operatingCostsPercIndustrial: 0,
+					operatingCostsPercHotel: 0,
+					operatingCostsPerSpaceParking: 0,
+					percCapRateRenter: 0,
+					percCapRateRetail: 0,
+					percCapRateOffice: 0,
+					percCapRateIndustrial: 0,
+					percCapRateHotel: 0,
+					percCapRateParking: 0,
+					grossPotentIncomeRenter: 0,
+					grossPotentIncomeRetail: 0,
+					grossPotentIncomeOffice: 0,
+					grossPotentIncomeIndustrial: 0,
+					grossPotentIncomeHotel: 0,
+					grossPotentIncomeParking: 0,
+					operateCostsRenter: 0,
+					operateCostsRetail: 0,
+					operateCostsOffice: 0,
+					operateCostsIndustrial: 0,
+					operateCostsHotel: 0,
+					operateCostsParking: 0,
+					propValueApprecOwner: 0,
+					propValueApprecRenter: 0,
+					propValueApprecRetail: 0,
+					propValueApprecOffice: 0,
+					propValueApprecIndustrial: 0,
+					propValueApprecHotel: 0,
+					propValueApprecParking: 0,
+					terminalCapRateRenter: 0,
+					terminalCapRateRetail: 0,
+					terminalCapRateOffice: 0,
+					terminalCapRateIndustrial: 0,
+					terminalCapRateHotel: 0,
+					terminalCapRateParking: 0,
+					percNetSalesRenter: 0,
+					percNetSalesRetail: 0,
+					percNetSalesOffice: 0,
+					percNetSalesIndustrial: 0,
+					percNetSalesHotel: 0,
+					percNetSalesParking: 0,
+					maxLTVOwner: 0,
+					maxLTVRenter: 0,
+					maxLTVRetail: 0,
+					maxLTVOffice: 0,
+					maxLTVIndustrial: 0,
+					maxLTVHotel: 0,
+					maxLTVParking: 0,
+					debtInterestRateRenter: 0,
+					debtInterestRateRetail: 0,
+					debtInterestRateOffice: 0,
+					debtInterestRateIndustrial: 0,
+					debtInterestRateHotel: 0,
+					debtInterestRateParking: 0,
+					debtAmortPeriodRenter: 0,
+					debtAmortPeriodRetail: 0,
+					debtAmortPeriodOffice: 0,
+					debtAmortPeriodIndustrial: 0,
+					debtAmortPeriodHotel: 0,
+					debtAmortPeriodParking: 0
 				}
 			}
 		};
@@ -218,16 +300,16 @@ const styles = theme => ({
 	}
 	
 	componentSelection = (e, value) => {
-		// console.log(value)
-		// console.log(this.state.pageChoice)
 		this.setState({
 			tabValue: value
 		});
 	}
-	handleSubmit() {
-		axios.post('/api/buildings', this.state.BP).then(function(res) {
-			alert('new row added...');
-		});
+	handleSubmit(choice) {
+		if (choice === 'save') {
+			axios.post('/api/buildings', this.state.BP).then(function(res) {
+				alert('new row added...');
+			});
+		}
 		this.props.history.push('/create');
 	}
 
@@ -273,122 +355,36 @@ const styles = theme => ({
 					alignItems='center'
 					direction='row'
 					justify='center'>
-				<AppBar position="static" color="default">
-				<Tabs
-					value={tabValue}
-					onChange={this.componentSelection}
-					indicatorColor="primary"
-					textColor="primary"
-					fullWidth
-					centered
-				>
-					<Tab value="phys" label="Physical Inputs" />
-					<Tab value="fin1" label="Basic Financial" />
-					<Tab value="fin2" label="Advanced Financial" />
-					<Tab value="rev" label="Review" />
-					<Tab value="print" label="Print" />
-				</Tabs>
-				</AppBar>
-				<Grid item sm={8} xs={12}>
-					{this.renderChildContent(this.state.tabValue)}
+					<AppBar position="static" color="default">
+						<Tabs
+							value={tabValue}
+							onChange={this.componentSelection}
+							indicatorColor="primary"
+							textColor="primary"
+							fullWidth
+							centered
+						>
+							<Tab value="phys" label="Physical Inputs" />
+							<Tab value="fin1" label="Basic Financial" />
+							<Tab value="fin2" label="Advanced Financial" />
+							<Tab value="rev" label="Review" />
+							<Tab value="print" label="Print" />
+						</Tabs>
+					</AppBar>
+					<Grid item md={8} sm={12}>
+						{this.renderChildContent(this.state.tabValue)}
+					</Grid>
+					<Grid item className={classes.paper} xs={12}>
+						<Button raised color="primary" onClick={()=>this.handleSubmit('save')}>
+							Save
+						</Button>	
+						
+						<Button raised color="accent" onClick={()=>this.handleSubmit('create')}>
+							Cancel
+						</Button>	
 				</Grid>
-				{/* <nav className="nav-extended">
-					<div className="nav-content">
-						<ul className="tabs tabs-transparent">
-							<li	className={
-									this.state.pageChoice === 'phys'
-										? 'tab active'
-										: 'tab'
-								}
-								onClick={() =>
-									this.setState({
-										pageChoice: 'phys'
-									})}>
-								<a> Physical Inputs </a>
-							</li>
-							<li className={
-									this.state.pageChoice === 'fin1'
-										? 'tab active'
-										: 'tab'
-								}
-								onClick={() =>
-									this.setState({
-										pageChoice: 'fin1'
-									})}>
-								<a> Basic Financial </a> 
-							</li>
-							
-							<li className={
-									this.state.pageChoice === 'fin2'
-										? 'tab active'
-										: 'tab'
-								}
-								onClick={() =>
-									this.setState({
-										pageChoice: 'fin2'
-									})}>
-								<a> Advanced Financial </a> 
-							</li>
-							
-							<li className={
-									this.state.pageChoice === 'sum'
-										? 'tab active'
-										: 'tab'
-								}
-								onClick={() =>
-									this.setState({
-										pageChoice: 'sum'
-									})}>
-								<a> Review </a> 
-							</li>
-							
-							<li className={
-									this.state.pageChoice === 'print'
-										? 'tab active'
-										: 'tab'
-								}
-								onClick={() =>
-									this.setState({
-										pageChoice: 'print'
-									})}>
-								<a> Print </a> 
-							</li>
-							
-						</ul>
-						
-					</div>
-					
-				</nav>
-				<div className="row">
-					<div className="col s12">
-						<div> {this.renderContent()} </div> 
-
-						<div className="row">
-
-							<div className="col s8 offset-s2 center-align custom-act-btns">
-								
-								<button 
-									className="waves-effect waves-light btn"
-									onClick={() =>
-										this.handleSubmit()}>
-									Save									
-								</button>
-								<Link
-									to="/create"
-									className="waves-effect waves-light btn">
-									Cancel 
-								</Link>
-								
-							</div>
-							
-						</div>
-						
-					</div>
-					
-				</div>
-				 */}
 			</Grid>
 		);
 	}
 }
-export default withStyles(styles)(StartBuildingPrototype);
+export default withStyles(styles)(BuildingPrototypeStart);

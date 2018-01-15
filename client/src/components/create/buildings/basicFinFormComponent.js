@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { updateMathModule } from './_buildingMathModule';
 
-import TextField from 'material-ui/TextField';
-
-import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+
+import inputFields from './inputs/basicFinancialInputs';
+import InputFieldsComponent from './inputs/InputFieldsComponent';
 
 const styles = theme => ({
 	root: {
@@ -12,19 +13,21 @@ const styles = theme => ({
 	},
 	paper: {
 	  textAlign: 'center',
+	},
+	textField: {
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+		width: '80%'
 	}
-	// card: {
-	// 	// margin: '10px'
-	// },
-	// button: {
-	// 	width: '100%',
-	// 	margin: '10px 0 10px 0'
-	// }
-	});
+});
+
 class BasicFinFormComponent extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			localBP: this.props.attributes
+		}
 		this.handleChange = this.handleChange.bind(this);		
 		// console.log('updated entire building protoype')
 
@@ -34,50 +37,64 @@ class BasicFinFormComponent extends Component {
 		let buildingCopy = {};
 		buildingCopy[e.target.name] = e.target.value;
 		this.props.buildingUpdate(buildingCopy);
+		updateMathModule(this.state.localBP);
+
 	};
 
-	changePage = e => {
-		this.props.pageChange(e.target.value);
-	};
 
 	render() {
 		// console.log(this.props);
 		let bldgAttr = this.props.attributes.basicFinInfo;
 		const { classes } = this.props;
+		const { section1,section2,section3,section4 } = inputFields;
+
 		return (
 			<Grid container >
-				<Grid item xs={12} className={classes.paper}>
-				<h4>Basic Financial Costs</h4>
+				
+				<Grid item xs={6}> 
+					<h5>Construction Costs (Core, Shell and Improvements)</h5>
+					<InputFieldsComponent 
+							inputUpdate={this.handleChange}
+							attributes={{bldgAttr, classes, section: section1}} />
 				</Grid>
 				<Grid item xs={6}> 
-					<form>
-						<input
-							placeholder="Residential Costs"
-							name="residentialConCosts"
-							onChange={event => this.handleChange(event)}
-						/>
-						<input
-							placeholder="Retail Costs"
-							name="retailConCosts"
-							onChange={event => this.handleChange(event)}
-						/>
-					</form>
-					</Grid>
-					<Grid item xs={6}> 
-					<form>
-						<input
-							placeholder="Office Costs"
-							name="officeConCosts"
-							onChange={event => this.handleChange(event)}
-						/>
-						<input
-							placeholder="Industrial Costs"
-							name="industrialConCosts"
-							onChange={event => this.handleChange(event)}
-						/>
-						
-					</form>
+					<div style={{ border: '1px solid grey', height: '300px' }}>
+						cool chart component goes here...
+					</div>
 				</Grid>
+				
+				<Grid item xs={12}>
+					<hr />
+				</Grid>
+
+				<Grid item xs={6}> 
+					<h5>Construction Costs (Core, Shell and Improvements)</h5>
+					<InputFieldsComponent 
+							inputUpdate={this.handleChange}
+							attributes={{bldgAttr, classes, section: section2}} />
+				</Grid>
+				<Grid item xs={6}> 
+					<h5>Construction Costs (Core, Shell and Improvements)</h5>
+					<InputFieldsComponent 
+							inputUpdate={this.handleChange}
+							attributes={{bldgAttr, classes, section: section3}} />
+				</Grid>
+				
+				<Grid item xs={12}>
+					<hr />
+				</Grid>
+				<Grid item xs={6}> 
+					<h5>Construction Costs (Core, Shell and Improvements)</h5>
+					<InputFieldsComponent 
+							inputUpdate={this.handleChange}
+							attributes={{bldgAttr, classes, section: section4}} />
+				</Grid>
+				<Grid item xs={6}> 
+					<div style={{ border: '1px solid grey', height: '300px' }}>
+						cool chart component goes here...
+					</div>
+				</Grid>
+				
 			</Grid>
 		);
 	}

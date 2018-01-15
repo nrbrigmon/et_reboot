@@ -1,3 +1,6 @@
 integrate with machine learning classifier....
 move from mouse interaction to a more tactile approach (ipads with stylus...)
 3d building enevelope
+
+when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
+add switch/toggle for US vs Metric System

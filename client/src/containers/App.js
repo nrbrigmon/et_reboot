@@ -8,8 +8,8 @@ import DevTypeStart from './DevTypeStart';
 import MapStart from './MapStart';
 import MetricStart from './MetricStart';
 import GalleryStart from './GalleryStart';
-import BusinessCase from '../components/thePitchComponent';
-import StartBuildingPrototype from '../components/create/buildings/startBuildingPrototype';
+import BusinessCase from '../components/ThePitchComponent';
+import BuildingPrototypeStart from '../components/create/buildings/BuildingPrototypeStart';
 
 class App extends Component {
 	render() {
@@ -20,7 +20,7 @@ class App extends Component {
 						<Header />
 						<Route exact path="/" component={Welcome} />
 						<Route exact path="/create" component={CreateStart} />
-						<Route path="/create/edit" component={StartBuildingPrototype} />
+						<Route path="/create/edit" component={BuildingPrototypeStart} />
 						<Route path="/create/dev-types" component={DevTypeStart} />
 						<Route path="/map" component={MapStart} />
 						<Route path="/metrics" component={MetricStart} />
