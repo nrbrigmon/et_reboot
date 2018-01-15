@@ -1025,10 +1025,53 @@ let developmentTotals = {
 	parkingConstruction: 0,
 	totalProjectCosts: 0
 }
+
+let costAllocation = {
+	residential: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	retail: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	office: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	industrial: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	public: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	educational: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	hotel: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	},
+	parking: {
+		devAndLand: 0,
+		parking: 0,
+		total: 0
+	}
+}
 export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) => {
 	let { devBrownfieldRemediationCosts, devDemolitionCosts, devSiteDevelopmentCosts, devAdditionalInfraEnhancement, additonalImpactFees } = advFinInfo;
 	let { siteArea } = physicalInfo;
-	let { residentialConCosts, retailConCosts, officeConCosts,	industrialConCosts,	publicConCosts,	educationConCosts,	hotelConCosts } = basicFinInfo;
+	let { residentialConCosts, retailConCosts, officeConCosts,	industrialConCosts,	publicConCosts,	educationConCosts,	hotelConCosts, parkingConCosts } = basicFinInfo;
 	developmentCosts["demolition"] = -1 * devDemolitionCosts; //=-$'Advanced Financial'.B45
 	developmentCosts["siteDevelopment"] = -1 * (siteArea*devSiteDevelopmentCosts);
 	developmentCosts["brownfieldRemediation"] = -1 * (devBrownfieldRemediationCosts*siteArea) //=-$'Advanced Financial'.B47*$'Physical Inputs'.B26
@@ -1039,9 +1082,9 @@ export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) =
 	developmentCosts["publicConstruction"] = -1 * (publicConCosts* parkingOptionC_Aid4["publicSpaces"])
 	developmentCosts["educationConstruction"] = -1 * (educationConCosts* parkingOptionC_Aid4["educationalSpaces"])
 	developmentCosts["hotelConstruction"] = -1 * (hotelConCosts* parkingOptionC_Aid4["hotelSpaces"])
-	developmentCosts["additionalInfrastructure"] = devAdditionalInfraEnhancement;
+	developmentCosts["additionalInfrastructure"] = -1 * devAdditionalInfraEnhancement;
 	
-
+	
 	let { surfaceParkingCostSpace, landImpCostsPerSf } = basicFinInfo;
 	developmentCosts["parkingConstruction"] = (-1 * surfaceParkingCostSpace*parkingSpacesByType["surface"]) + 
 			(-1 * basicFinInfo["structureParkingCostSpace"]*parkingSpacesByType["structure"]) + 
@@ -1081,25 +1124,88 @@ export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) =
 	developmentTotals["parkingConstruction"] = developmentCosts["parkingConstruction"];
 	developmentTotals["totalProjectCosts"] = totalDevelopmentCosts + totalPreDevelopmentCosts + totalIndirectCosts;
 	
+	let { sitresidentialUsePerc,
+		retailUsePerc,
+		officeUsePerc,
+		industrialUsePerc,
+		publicUsePerc,
+		educationUsePerc,
+		hotelUsePerc,
+		parkingUsePerceArea } = physicalInfo;
+	
+	let costAllocationVar = totalIndirectCosts + develpomentFees["developer"] + develpomentFees["contigency"] + developmentCosts["waterQualityControls"] + developmentCosts["additionalInfrastructure"]
+	costAllocation["residential"]["devAndLand"] = developmentCosts["residentialConstruction"] + (costAllocationVar*sitresidentialUsePerc)
+	costAllocation["retail"]["devAndLand"] = developmentCosts["retailConstruction"] + (costAllocationVar*retailUsePerc)
+	costAllocation["office"]["devAndLand"] = developmentCosts["officeConstruction"] + (costAllocationVar*officeUsePerc)
+	costAllocation["industrial"]["devAndLand"] = developmentCosts["industrialConstruction"] + (costAllocationVar*industrialUsePerc)
+	costAllocation["public"]["devAndLand"] = developmentCosts["publicConstruction"] + (costAllocationVar*publicUsePerc)
+	costAllocation["educational"]["devAndLand"] = developmentCosts["educationConstruction"] + (costAllocationVar*educationUsePerc)
+	costAllocation["hotel"]["devAndLand"] = developmentCosts["hotelConstruction"] + (costAllocationVar*hotelUsePerc)
+	costAllocation["parking"]["devAndLand"] = developmentCosts["additionalInfrastructure"] + (costAllocationVar*parkingUsePerceArea)
+	
+	let costAllocationVar2 = parkingOptionC_Aid4["residentialSpaces"] + parkingOptionC_Aid4["retailSpaces"] + parkingOptionC_Aid4["officeSpaces"] + parkingOptionC_Aid4["industrialSpaces"] + parkingOptionC_Aid4["publicSpaces"] + parkingOptionC_Aid4["educationalSpaces"] + parkingOptionC_Aid4["hotelSpaces"];
+	let costAllocationVar3 = developmentCosts["parkingConstruction"] - (-1 * parkingOptionC_Aid4["commercialParkingSpaces"] * parkingConCosts)
+	function getParkingCostAllocation(x){
+		let solution = (costAllocationVar3)*(  x /costAllocationVar2);
+		return ( solution === null ? 0 : solution);
+	}
+	costAllocation["residential"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["residentialSpaces"]);
+	costAllocation["retail"]["parking"] =  getParkingCostAllocation(parkingOptionC_Aid4["retailSpaces"])
+	costAllocation["office"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["officeSpaces"])
+	costAllocation["industrial"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["industrialSpaces"])
+	costAllocation["public"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["publicSpaces"])
+	costAllocation["educational"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["educationalSpaces"])
+	costAllocation["hotel"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["hotelSpaces"])
+	costAllocation["parking"]["parking"] = (-1 * parkingOptionC_Aid4["commercialParkingSpaces"] * parkingConCosts)
+	
+	costAllocation["parking"]["total"] = costAllocation["parking"]["devAndLand"] + costAllocation["parking"]["parking"]
+	costAllocation["residential"]["total"] = costAllocation["residential"]["devAndLand"] + costAllocation["residential"]["parking"]
+	costAllocation["retail"]["total"] = costAllocation["retail"]["devAndLand"] + costAllocation["retail"]["parking"]
+	costAllocation["office"]["total"] = costAllocation["office"]["devAndLand"] + costAllocation["office"]["parking"]
+	costAllocation["industrial"]["total"] = costAllocation["industrial"]["devAndLand"] + costAllocation["industrial"]["parking"]
+	costAllocation["public"]["total"] = costAllocation["public"]["devAndLand"] + costAllocation["public"]["parking"]
+	costAllocation["educational"]["total"] = costAllocation["educational"]["devAndLand"] + costAllocation["educational"]["parking"]
+	costAllocation["hotel"]["total"] = costAllocation["hotel"]["devAndLand"] + costAllocation["hotel"]["parking"]
 }
 export const getParkingCostSf = () => {
-	
 	return -1 * developmentTotals["parkingConstruction"];
 }
 
 
 export const getTotalPrjValue = () => {
-
 	let solution = -1 * developmentTotals["totalProjectCosts"]
 	return solution;
 }
 
+let residentialOwnerROI = {}
+let residentialRenterROI = {}
+let retailROI = {}
+let officeROI = {}
+let industrialROI = {}
+let hotelROI = {}
+let commercialParking = {}
+let mixedUseSummary = {}
+
 export const getPropTaxRevenueYr = () => {
 	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
-	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
-	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
-	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
-	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
+								//=B19		*$'Advanced Financial'.C63 * =$'Advanced Financial'.B62
+								//b17*b18
+								//=IF($'Physical Inputs'.B35="Owner",$'Physical Inputs'.B2,0) =$'Basic Financial'.D41
+
+
+
+	//, =$'Mixed-Use Summary'.C95+
+	//=SUM($'Residential Rental'.E121,
+			//=$D16*$D121*$'Advanced Financial'.$C63*(1+$'Advanced Financial'.C85)^4
+			//d121 = $'Advanced Financial'.C62
+			//d16 = =IF($'Physical Inputs'.B35="Renter",-$'Development Costs'.D40,0)
+			//=$D16*$D121*$'Advanced Financial'.$C63*(1+$'Advanced Financial'.C85)^4
+			
+	//$Office.E121,
+	//$Retail.E124,
+	//$Hotel.E124,
+	//$Industrial.E121,
+	//$'Commercial Parking'.E124)
 	return 0;
 }
 

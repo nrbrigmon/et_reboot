@@ -238,7 +238,7 @@ export default {
         placeholder: '65%',
         input: 'text'
     }],
-    section6: [{
+    section7: [{
         name: 'Residential (Owner)',
         attr: 'assessRatioTaxOwner',
         placeholder: '65%',

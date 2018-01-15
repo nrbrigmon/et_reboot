@@ -99,13 +99,18 @@ class BuildingFormReviewComponent extends Component {
 			rParkingCostSf: bm.getParkingCostSf(basicFinInfo), 
 			rLandCostSf: basicFinInfo.landImpCostsPerSf,
 			rTotalPrjValue: bm.getTotalPrjValue(),
-			rPropTaxRevenueYr: bm.getPropTaxRevenueYr(),
-			rTotalFees: bm.getTotalFees(), 
-			rSubsidy: bm.getSubsidy(basicFinInfo),
-			rRateOfReturn: bm.getRateOfReturn(),
-			rProjectReturn: bm.getProjectReturn(),
-			rYIntercept: bm.getYIntercept(),
-			rSlope: bm.getSlope()
+			rPropTaxRevenueYr: bm.getPropTaxRevenueYr(), //need to fix
+			rTotalFees: bm.getTotalFees(), //need to fix
+			rSubsidy: bm.getSubsidy(basicFinInfo),  //need to fix
+			rRateOfReturn: bm.getRateOfReturn(), //need to fix
+			rProjectReturn: bm.getProjectReturn(), //need to fix
+			rYIntercept: bm.getYIntercept(), //need to fix
+			rSlope: bm.getSlope() //need to fix
+			/** 
+			 * next are 31 metrics that revolve around
+				* Stormwater/ Green Infrastructure/ Water Quality 
+			 	* Trip Generation
+			 * **/
 		};
 	}
 
