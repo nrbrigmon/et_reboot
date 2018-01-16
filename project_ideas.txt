@@ -1,6 +1,48 @@
-integrate with machine learning classifier....
-move from mouse interaction to a more tactile approach (ipads with stylus...)
-3d building enevelope
+NEXT STEPS:
+1. Enable save button to load finished results to database (new table)
+2. enable delete action to remove from database
+    2a. enable user to create templist for building library
+    2b. enable user to add/remove from templist
+    2c. enable user to save templist
+    2d. enable to user to delete templist
 
-when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
-add switch/toggle for US vs Metric System
+3. create devType database for saving finished building prototypes....
+4. create dev type pages
+
+5. create regEx form-input validations
+
+
+
+
+1. integrate with machine learning classifier....
+2. move from mouse interaction to a more tactile approach (ipads with stylus...)
+3. 3d building enevelope
+    -   give basic options: U-shape, L-shape, Block, Rectangle
+    -   zoom in, zoom out automatically based on height or building size.
+4. integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
+4. when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
+5. add switch/toggle for US vs Metric System
+6. create PowerUser excel editing interface for updating formulas OR SQL(?)
+7. import Old excel ROIs function
+8. export excel ROIs
+9. import geojson | shp
+10. export CAD | BIM | 3D stuff
+11. message board for questions about the data or the tool?
+
+
+services
+FREE        |       BUSINESS        |       ENTERPRISE
+
+1. tiered support
+2. tiered metrics
+3. trusted advisor AI
+4. tiered data storage
+5. tiered use of tools (fishnet cut, import custom data)
+6. tiered access to data library
+7. paypal donate button.
+
+
+TODO
+1. integrate authentication
+2. integrate redux for stateful app
+3. new SQL tables for drop and reload

@@ -632,6 +632,7 @@ export const updateMathModule = (obj) => {
 	updateBuildingEnvelope( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
 	updatePhysicalOutputs(obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
 	updateDevelopmentCosts( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
+	updateMixedUseSummary( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
 }
 export const buildingLotCoverage = (siteArea) => {
 	// console.log(siteArea);
@@ -1066,6 +1067,19 @@ let costAllocation = {
 		devAndLand: 0,
 		parking: 0,
 		total: 0
+	},
+	percent : {
+		residential: 0,
+		retail: 0,
+		office: 0,
+		industrial: 0,
+		public: 0,
+		educational: 0,
+		hotel: 0,
+		parking: 0,
+	},
+	grand: {
+		total: 0
 	}
 }
 export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) => {
@@ -1158,14 +1172,24 @@ export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) =
 	costAllocation["hotel"]["parking"] = getParkingCostAllocation(parkingOptionC_Aid4["hotelSpaces"])
 	costAllocation["parking"]["parking"] = (-1 * parkingOptionC_Aid4["commercialParkingSpaces"] * parkingConCosts)
 	
-	costAllocation["parking"]["total"] = costAllocation["parking"]["devAndLand"] + costAllocation["parking"]["parking"]
-	costAllocation["residential"]["total"] = costAllocation["residential"]["devAndLand"] + costAllocation["residential"]["parking"]
-	costAllocation["retail"]["total"] = costAllocation["retail"]["devAndLand"] + costAllocation["retail"]["parking"]
-	costAllocation["office"]["total"] = costAllocation["office"]["devAndLand"] + costAllocation["office"]["parking"]
-	costAllocation["industrial"]["total"] = costAllocation["industrial"]["devAndLand"] + costAllocation["industrial"]["parking"]
-	costAllocation["public"]["total"] = costAllocation["public"]["devAndLand"] + costAllocation["public"]["parking"]
-	costAllocation["educational"]["total"] = costAllocation["educational"]["devAndLand"] + costAllocation["educational"]["parking"]
-	costAllocation["hotel"]["total"] = costAllocation["hotel"]["devAndLand"] + costAllocation["hotel"]["parking"]
+	costAllocation["residential"]["total"] = costAllocation["residential"]["devAndLand"] + costAllocation["residential"]["parking"];
+	costAllocation["retail"]["total"] = costAllocation["retail"]["devAndLand"] + costAllocation["retail"]["parking"];
+	costAllocation["office"]["total"] = costAllocation["office"]["devAndLand"] + costAllocation["office"]["parking"];
+	costAllocation["industrial"]["total"] = costAllocation["industrial"]["devAndLand"] + costAllocation["industrial"]["parking"];
+	costAllocation["public"]["total"] = costAllocation["public"]["devAndLand"] + costAllocation["public"]["parking"];
+	costAllocation["educational"]["total"] = costAllocation["educational"]["devAndLand"] + costAllocation["educational"]["parking"];
+	costAllocation["hotel"]["total"] = costAllocation["hotel"]["devAndLand"] + costAllocation["hotel"]["parking"];
+	costAllocation["parking"]["total"] = costAllocation["parking"]["devAndLand"] + costAllocation["parking"]["parking"];
+	costAllocation["grand"]["total"] = costAllocation["residential"]["total"] + costAllocation["retail"]["total"] + costAllocation["office"]["total"] + costAllocation["industrial"]["total"] + costAllocation["public"]["total"] + costAllocation["educational"]["total"] + costAllocation["hotel"]["total"] + costAllocation["parking"]["total"];
+
+	costAllocation["percent"]["residential"] = costAllocation["residential"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["retail"] = costAllocation["retail"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["office"] = costAllocation["office"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["industrial"] = costAllocation["industrial"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["public"] = costAllocation["public"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["educational"] = costAllocation["educational"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["hotel"] = costAllocation["hotel"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["parking"] = costAllocation["parking"]["total"]/costAllocation["grand"]["total"]
 }
 export const getParkingCostSf = () => {
 	return -1 * developmentTotals["parkingConstruction"];
@@ -1177,36 +1201,243 @@ export const getTotalPrjValue = () => {
 	return solution;
 }
 
-let residentialOwnerROI = {}
-let residentialRenterROI = {}
-let retailROI = {}
-let officeROI = {}
-let industrialROI = {}
-let hotelROI = {}
-let commercialParking = {}
-let mixedUseSummary = {}
+let residentialOwnerROI = {
+	// investment: {
+	// 	targetReturn,
+	// 	actualReturn,
+	// }
+	// publicLeveraging: {
+	// 	taxCredits,
+	// 	feeReductions,
+	// 	grants,
+	// }
+	baseline: {
+		projectCost: 0,
+		interimFinancing: 0,
+		developerEquity: 0,
+		residentialUnits: 0,
+		avgMarketPrice: 0,
+		netSaleProceeds: 0,
+		netProjectReturn: 0
+	},
+	performanceAssess: {
+		projectReturn: 0,
+		projectProfit: 0,
+		netProjectReturn: 0,
+		returnToEquity: 0,
+		projectNetProfit: 0
+	},
+	leveragedPerformance: {
+		publicLeveraging: 0,
+		adjustedProjectCost: 0,
+		developerEquity: 0,
+		netProjectReturn: 0,
+		projectRateReturn: 0,
+		projectProfit: 0,
+		returnToEquity: 0,
+		equityProfit: 0
+	},
+	propTax: {
+		projectMarketValue: 0,
+		projectAssessedValue: 0,
+		estimatedPropertyTaxes: 0
+	}
+}
+let residentialRenterROI = {
+	leveragingTools: {
+		taxCreditsNetToProject: 0,
+		feeReductions: 0,
+		grants: 0,
+		totalDevelopmentOffsets: 0, 
+		netDevelopmentCosts: 0
+	},
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}
+}
+let retailROI = {
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}
+}
+let officeROI = {
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}
+}
+let industrialROI = {
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}
+}
+let hotelROI = {
+	leveragingTools: {
+		taxCreditsNetToProject: 0,
+		feeReductions: 0,
+		grants: 0,
+		totalDevelopmentOffsets: 0, 
+		netDevelopmentCosts: 0
+	},
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}
+}
+let commercialParking = {
+	netOperatingIncome: {
+		totalDevelopmentCosts: 0,
+		developmentCostsUnit: 0,
+		numberOfUnits: 0,
+		monthlyRent: 0,
+		totalProjectSize: 0,
+		otherIncome: 0,
+		lessVacancy: 0,
+		lessConcessions: 0,
+		lessOperatingCostsRent: 0,
+		lessOperatingCostsProject: 0
+	},
+	operatingStatement: {
+		lessPropertyTaxes: 0
+	}}
+export const updateMixedUseSummary = (physicalInfo, basicFinInfo, advFinInfo) => {
+	let { occupancyType, residentialUnitSize } = physicalInfo;
+	let { salesPricePerSf, testSubsidy, monthlyRentPerSf, monthlyParkingCost } = basicFinInfo;
+	let { maxLTVOwner, projectReturnRateOwner, returnToEquityOwner, assessRatioTaxOwner, assessRatioTaxRenter, propTaxOwner,
+		 propTaxRenter, poperatingCostsPercRenter, assessRatioTaxRetail, propTaxOffice, assessRatioTaxOffice,
+		 propTaxIndustrial, assessRatioTaxIndustrial, propTaxHotel, assessRatioTaxHotel, propTaxParking, assessRatioTaxParking } = advFinInfo;
+	//update residentialOwnerROI = {}
+	residentialOwnerROI["baseline"]["projectCost"] = (occupancyType === 'Owner' ? (-1*costAllocation["residential"]["total"]) : 0);
+	residentialOwnerROI["baseline"]["interimFinancing"] = (1-maxLTVOwner)*residentialOwnerROI["baseline"]["projectCost"];
+	residentialOwnerROI["baseline"]["developerEquity"] = residentialOwnerROI["baseline"]["projectCost"] - residentialOwnerROI["baseline"]["interimFinancing"]; 
+	residentialOwnerROI["baseline"]["residentialUnits"] = (occupancyType === 'Owner' ? totalDwellingOrHotelUnits["total"] : 0);
+	residentialOwnerROI["baseline"]["avgMarketPrice"] = residentialUnitSize*salesPricePerSf;
+	residentialOwnerROI["baseline"]["netSaleProceeds"] = residentialOwnerROI["baseline"]["avgMarketPrice"]*residentialOwnerROI["baseline"]["residentialUnits"] //=B17*B18
+	residentialOwnerROI["baseline"]["netProjectReturn"] = residentialOwnerROI["baseline"]["netSaleProceeds"]-residentialOwnerROI["baseline"]["projectCost"]; //=B19-B14
+
+	residentialOwnerROI["performanceAssess"]["projectReturn"] = residentialOwnerROI["baseline"]["netProjectReturn"];
+	residentialOwnerROI["performanceAssess"]["projectProfit"] = ( residentialOwnerROI["baseline"]["projectCost"] === 0 ? 0 : residentialOwnerROI["performanceAssess"]["projectReturn"]/residentialOwnerROI["baseline"]["projectCost"] )//=IF(B23=0,0,B24/B23)
+	residentialOwnerROI["performanceAssess"]["netProjectReturn"] = residentialOwnerROI["performanceAssess"]["projectReturn"] - (residentialOwnerROI["baseline"]["projectCost"]*projectReturnRateOwner) //=B24-(B14*B3)
+	residentialOwnerROI["performanceAssess"]["returnToEquity"] = (residentialOwnerROI["baseline"]["developerEquity"] === 0 ? 0 : residentialOwnerROI["performanceAssess"]["projectReturn"]/residentialOwnerROI["baseline"]["developerEquity"]);
+	residentialOwnerROI["performanceAssess"]["projectNetProfit"] = residentialOwnerROI["baseline"]["netSaleProceeds"] - (returnToEquityOwner*residentialOwnerROI["baseline"]["developerEquity"]);	//=B27-(B4*B28)
+
+	let publicFunds = 0 //taxCredits+ feeReductions+ grants
+	residentialOwnerROI["leveragedPerformance"]["publicLeveraging"] = ( occupancyType === 'Renter' ? 0 : ( testSubsidy === 0 ? publicFunds : (testSubsidy*costAllocation["percent"]["residential"]) ))
+	residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"] = residentialOwnerROI["baseline"]["projectCost"] - residentialOwnerROI["leveragedPerformance"]["publicLeveraging"];
+	residentialOwnerROI["leveragedPerformance"]["developerEquity"] = (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]-residentialOwnerROI["baseline"]["interimFinancing"] < 0 ? 1 : residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]-residentialOwnerROI["baseline"]["interimFinancing"])
+
+	residentialOwnerROI["leveragedPerformance"]["netProjectReturn"] = residentialOwnerROI["baseline"]["netSaleProceeds"]-residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"];
+	residentialOwnerROI["leveragedPerformance"]["projectRateReturn"] = (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"] === 0 ? 0 : residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]/residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"])
+	residentialOwnerROI["leveragedPerformance"]["projectProfit"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"] - (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]*projectReturnRateOwner);
+	residentialOwnerROI["leveragedPerformance"]["returnToEquity"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]/residentialOwnerROI["leveragedPerformance"]["developerEquity"];
+	residentialOwnerROI["leveragedPerformance"]["equityProfit"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]-(residentialOwnerROI["leveragedPerformance"]["developerEquity"]*returnToEquityOwner);
+	
+	//Year1
+	residentialOwnerROI["propTax"]["projectMarketValue"] = residentialOwnerROI["baseline"]["netSaleProceeds"];
+	residentialOwnerROI["propTax"]["projectAssessedValue"] = residentialOwnerROI["baseline"]["netSaleProceeds"]*assessRatioTaxOwner;
+	residentialOwnerROI["propTax"]["estimatedPropertyTaxes"] = residentialOwnerROI["propTax"]["projectAssessedValue"]*propTaxOwner;
+
+	//update residentialRenterROI = {}
+	residentialRenterROI["leveragingTools"]["taxCreditsNetToProject"] = testSubsidy; //gap-financing
+	residentialRenterROI["leveragingTools"]["feeReductions"] = testSubsidy; //gap-financing
+	residentialRenterROI["leveragingTools"]["grants"] = testSubsidy*costAllocation["percent"]["residential"]; //gap-financing=IF($'Basic Financial'.$B$33=0,D6,IF($'Physical Inputs'.B35="Renter",$'Basic Financial'.$B$33*$'Development Costs'.E40,0))
+	residentialRenterROI["leveragingTools"]["totalDevelopmentOffsets"] = residentialRenterROI["leveragingTools"]["taxCreditsNetToProject"]+residentialRenterROI["leveragingTools"]["feeReductions"]+residentialRenterROI["leveragingTools"]["grants"];
+	
+	residentialRenterROI["netOperatingIncome"]["numberOfUnits"] = ( occupancyType === 'Renter' ? totalDwellingOrHotelUnits["residential"] : 0)
+	residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"] = ( occupancyType === 'Renter' ? (-1 * costAllocation["residential"]["total"] ) : 0) / residentialRenterROI["netOperatingIncome"]["numberOfUnits"]
+	residentialRenterROI["leveragingTools"]["netDevelopmentCosts"] = residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"] - residentialRenterROI["leveragingTools"]["totalDevelopmentOffsets"]
+	let monthlyRentCalc = (monthlyRentPerSf*residentialUnitSize)+monthlyParkingCost;
+	residentialRenterROI["netOperatingIncome"]["monthlyRent"] = ( occupancyType === 'Renter' ? monthlyRentCalc : 0);
+	// residentialRenterROI["netOperatingIncome"]["lessOperatingCostsProject"] = 
+	residentialRenterROI["netOperatingIncome"]["lessOperatingCostsRent"] = residentialRenterROI["netOperatingIncome"]["lessOperatingCostsProject"]*residentialRenterROI["netOperatingIncome"]["numberOfUnits"]
+	residentialRenterROI["operatingStatement"]["lessPropertyTaxes"] = residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"]*propTaxRenter*assessRatioTaxRenter
+
+		
+	//update retailROI = {}
+	retailROI["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["retail"]["total"];
+	retailROI["operatingStatement"]["lessPropertyTaxes"] = retailROI["operatingStatement"]["totalDevelopmentCosts"] * propTaxRenter * assessRatioTaxRetail;
+
+	//update officeROI = {}
+	officeROI["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["office"]["total"];
+	officeROI["operatingStatement"]["lessPropertyTaxes"] = officeROI["operatingStatement"]["totalDevelopmentCosts"] * propTaxOffice * assessRatioTaxOffice;
+
+	//update industrialROI = {}
+	industrialROI["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["industrial"]["total"];
+	industrialROI["operatingStatement"]["lessPropertyTaxes"] = industrialROI["operatingStatement"]["totalDevelopmentCosts"] * propTaxIndustrial * assessRatioTaxIndustrial;
+
+	//update hotelROI = {}
+	hotelROI["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["hotel"]["total"];
+	hotelROI["netOperatingIncome"]["netDevelopmentCosts"] = hotelROI["netOperatingIncome"]["totalDevelopmentCosts"] - hotelROI["leveragingTools"]["totalDevelopmentOffsets"];
+	hotelROI["operatingStatement"]["lessPropertyTaxes"] = hotelROI["operatingStatement"]["netDevelopmentCosts"] * propTaxHotel * assessRatioTaxHotel;
+
+	//update commercialParking = {}
+	commercialParking["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["parking"]["total"];
+	commercialParking["operatingStatement"]["lessPropertyTaxes"] = commercialParking["operatingStatement"]["totalDevelopmentCosts"] * propTaxParking * assessRatioTaxParking;
+
+}
 
 export const getPropTaxRevenueYr = () => {
+	let mixedUseSummaryC95 = commercialParking["operatingStatement"]["lessPropertyTaxes"]+retailROI["operatingStatement"]["lessPropertyTaxes"]+officeROI["operatingStatement"]["lessPropertyTaxes"]+industrialROI["operatingStatement"]["lessPropertyTaxes"]+hotelROI["operatingStatement"]["lessPropertyTaxes"]
 	//, =$'Mixed-Use Summary'.C95+$'Residential Owner'.E54,
-								//=B19		*$'Advanced Financial'.C63 * =$'Advanced Financial'.B62
-								//b17*b18
-								//=IF($'Physical Inputs'.B35="Owner",$'Physical Inputs'.B2,0) =$'Basic Financial'.D41
-
-
-
-	//, =$'Mixed-Use Summary'.C95+
-	//=SUM($'Residential Rental'.E121,
-			//=$D16*$D121*$'Advanced Financial'.$C63*(1+$'Advanced Financial'.C85)^4
-			//d121 = $'Advanced Financial'.C62
-			//d16 = =IF($'Physical Inputs'.B35="Renter",-$'Development Costs'.D40,0)
-			//=$D16*$D121*$'Advanced Financial'.$C63*(1+$'Advanced Financial'.C85)^4
-			
-	//$Office.E121,
-	//$Retail.E124,
-	//$Hotel.E124,
-	//$Industrial.E121,
-	//$'Commercial Parking'.E124)
-	return 0;
+	return mixedUseSummaryC95 + residentialOwnerROI["propTax"]["estimatedPropertyTaxes"];
 }
 
 export const getTotalFees = () => {
@@ -1224,6 +1455,8 @@ export const getSubsidy = (basicFinInfo) => {
 
 export const getRateOfReturn = () => {
 	//=$'Mixed-Use Summary'.O6,
+		//=IFERROR(L122,0)
+			//=IFERROR(IRR(B121:L121),0)
 	return 0;
 } 
 export const getProjectReturn = () => {

@@ -2,6 +2,7 @@
 
 # private
 /keys
+/bin/config_db.py
 
 # dependencies
 /node_modules

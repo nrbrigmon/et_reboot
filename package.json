@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"server": "nodemon ./bin/www",
-		"configure": "python ./bin/configuredb.py",
+		"config": "python ./bin/config_db.py",
 		"client": "npm run start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\" "
 	},

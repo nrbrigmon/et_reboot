@@ -22,8 +22,12 @@ const styles = theme => ({
 	},
 	button: {
 		width: '100%',
-		margin: '10px 0 10px 0'
-	}
+		margin: '10px 0 10px 0',
+		maxWidth: '150px'
+	},
+	leftIcon: {
+	  marginRight: theme.spacing.unit,
+	},
   });
 
 class CreateStart extends Component {
@@ -114,13 +118,13 @@ class CreateStart extends Component {
 						tab depending on the click?*/}
 						
 						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create')}>
-							<Icon>add_circle</Icon> Existing Library
+							<Icon className={classes.leftIcon}>add_circle</Icon> Existing Library
 						</Button>
 						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create')}>
-							<Icon>add_circle</Icon> Existing Building
+							<Icon className={classes.leftIcon}>add_circle</Icon> Existing Building
 						</Button>
 						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create/edit')}>
-							<Icon>add_circle</Icon> NewNew Building
+							<Icon className={classes.leftIcon}>add_circle</Icon> New Building
 						</Button>
 					</div>
 				</Grid>

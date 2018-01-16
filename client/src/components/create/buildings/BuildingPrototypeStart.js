@@ -13,6 +13,7 @@ import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingPrintSummary from './BuildingPrintSummary';
+import * as bm from './_buildingMathModule';
 
 const styles = theme => ({
 	root: {
@@ -20,6 +21,10 @@ const styles = theme => ({
 	},
 	paper: {
 	  textAlign: 'center',
+	},
+	button: {
+		margin: '10px 10px 10px 10px',
+		width: '150px'
 	}
   });
 
@@ -27,7 +32,6 @@ const styles = theme => ({
 	constructor(props) {
 		super(props);
 		this.state = {
-			pageChoice: 'sum',
 			tabValue: 'phys',
 			BP: {
 				physicalInfo: {
@@ -261,12 +265,14 @@ const styles = theme => ({
 					debtAmortPeriodHotel: 0,
 					debtAmortPeriodParking: 0
 				}
-			}
+			},
+			forDevType: {	}
 		};
 		this.componentSelection = this.componentSelection.bind(this);
 		this.updatePrototypePhys = this.updatePrototypePhys.bind(this);
 		this.updateBasicFinInfo = this.updateBasicFinInfo.bind(this);
 		this.updateAdvFinInfo = this.updateAdvFinInfo.bind(this);
+		this.updateForDevType = this.updateForDevType.bind(this);
 	}
 
 	updatePrototypePhys(newState) {
@@ -277,6 +283,7 @@ const styles = theme => ({
 		let val = Object.values(newState)[0];
 		buildingCopy.physicalInfo[key] = val;
 		this.setState(buildingCopy);
+		this.updateForDevType(buildingCopy);
 	}
 
 	updateBasicFinInfo(newState) {
@@ -287,6 +294,7 @@ const styles = theme => ({
 		let val = Object.values(newState)[0];
 		buildingCopy.basicFinInfo[key] = val;
 		this.setState(buildingCopy);
+		this.updateForDevType(buildingCopy);
 	}
 
 	updateAdvFinInfo(newState) {
@@ -297,6 +305,7 @@ const styles = theme => ({
 		let val = Object.values(newState)[0];
 		buildingCopy.advFinInfo[key] = val;
 		this.setState(buildingCopy);
+		this.updateForDevType(buildingCopy);
 	}
 	
 	componentSelection = (e, value) => {
@@ -304,13 +313,103 @@ const styles = theme => ({
 			tabValue: value
 		});
 	}
-	handleSubmit(choice) {
-		if (choice === 'save') {
-			axios.post('/api/buildings', this.state.BP).then(function(res) {
-				alert('new row added...');
-			});
-		}
-		this.props.history.push('/create');
+	updateForDevType(buildingCopy){
+		let { physicalInfo, basicFinInfo, advFinInfo } = buildingCopy;
+		this.setState({
+			forDevType: {
+				rBuildingID: '0',
+				rBuildingName: physicalInfo.buildingName,
+				rLotSize: physicalInfo.siteArea,
+				rLotLocation: physicalInfo.siteLocation,
+				rBuildingLotCoverage: bm.buildingLotCoverage( physicalInfo.siteArea ),
+				rLanscapeLotCoverage: bm.landscapeLotCoverage( physicalInfo.siteArea ),
+				rParkingLotCoverage: bm.parkingLotCoverage( physicalInfo.siteArea ),
+				rBuildingHeight: physicalInfo.buildingHeight,
+				rFAR: bm.getFAR(physicalInfo.siteArea, advFinInfo),
+				rTotalSf: bm.getTotalSf(advFinInfo),
+				rResidentialSfMix: bm.getResidentialSfMix(),
+				rRetailSfMix: bm.getRetailSfMix(),
+				rOfficeSfMix: bm.getOfficeSfMix(),
+				rIndustrialSfMix: bm.getIndustrialSfMix(),
+				rPublicSfMix: bm.getPublicSfMix(),
+				rEducationalSfMix: bm.getEducationalSfMix(),
+				rHotelSfMix: bm.getHotelSfMix(),
+				rCommercialParkingSfMix: bm.getCommercialParkingSfMix(),
+				rInternalParkingSfMix: bm.getInternalParkingSfMix(),
+				rResidentialSf: (bm.getTotalSf(advFinInfo)*bm.getResidentialSfMix()),
+				rResidentialNetUnit: bm.getResidentialNetUnit(physicalInfo.residentialUnitSize),
+				rResidentialGrossUnit: bm.getResidentialGrossUnit(physicalInfo.residentialUnitSize),
+				rResidentialDwellUnit: bm.getResidentialDwellUnit(physicalInfo, advFinInfo),
+				rHouseholdType: physicalInfo.residentialType,
+				rHouseholdOwnerPerc: (physicalInfo.occupancyType === 'Renter' ? 0 : 1),
+				rHouseholdRenterPerc: (physicalInfo.occupancyType === 'Owner' ? 0 : 1),
+				rHouseholdAffordPerc: bm.getHouseholdAffordability(physicalInfo, basicFinInfo),
+				rHouseholdEstIncome: bm.getHouseholdEstIncome(physicalInfo, basicFinInfo),
+				rMonthlyRentSf: (physicalInfo.occupancyType === 'Renter' ? basicFinInfo.monthlyRentPerSf : 0),
+				rMonthlyRent: (bm.getResidentialNetUnit(physicalInfo.residentialUnitSize) * basicFinInfo.monthlyRentPerSf),
+				rSalesPriceSf: (physicalInfo.occupancyType === 'Owner' ? basicFinInfo.salesPricePerSf : 0),
+				rSalesPrice: (bm.getResidentialNetUnit(physicalInfo.residentialUnitSize) * basicFinInfo.salesPricePerSf),
+				rJobsPerSf: bm.getJobsPerSf(physicalInfo),
+				rRetailSf: bm.getTotalSf(advFinInfo)*physicalInfo.retailUsePerc,
+				rRetailLeaseRate: basicFinInfo.commercialRetailRentSf,
+				rRetailSpacePerEmp: physicalInfo.retailAreaPerEmp,
+				rRetailEmpPerSf: ( physicalInfo.retailAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.retailUsePerc)/physicalInfo.retailAreaPerEmp ),
+				rOfficeSf: bm.getTotalSf(advFinInfo)*physicalInfo.officeUsePerc,
+				rOfficeLeaseRate: basicFinInfo.commercialOfficeRentSf,
+				rOfficeSpacePerEmp: physicalInfo.officeAreaPerEmp,
+				rOfficeEmpPerSf: ( physicalInfo.officeAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.officeUsePerc)/physicalInfo.officeAreaPerEmp ),
+				rIndustrialSf: bm.getTotalSf(advFinInfo)*physicalInfo.industrialUsePerc,
+				rIndustrialLeaseRate: basicFinInfo.commercialIndustrialRentSf,
+				rIndustrialSpacePerEmp: physicalInfo.industrialAreaPerEmp,
+				rIndustrialEmpPerSf: ( physicalInfo.industrialAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.industrialUsePerc)/physicalInfo.industrialAreaPerEmp ),
+				rPublicSf: bm.getTotalSf(advFinInfo)*physicalInfo.publicUsePerc,
+				rPublicLeaseRate: basicFinInfo.commercialPublicRentSf,
+				rPublicSpacePerEmp: physicalInfo.publicAreaPerEmp,
+				rPublicEmpPerSf: ( physicalInfo.publicAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.publicUsePerc)/physicalInfo.publicAreaPerEmp ),			
+				rEducationSf: bm.getTotalSf(advFinInfo)*physicalInfo.educationUsePerc,
+				rEducationLeaseRate: basicFinInfo.commercialEducationRentSf,
+				rEducationSpacePerEmp: physicalInfo.educationAreaPerEmp,
+				rEducationEmpPerSf: ( physicalInfo.educationAreaPerEmp === 0 ? 0: (bm.getTotalSf(advFinInfo)*physicalInfo.educationUsePerc)/physicalInfo.educationAreaPerEmp ),
+				rHospitalitySf: bm.getTotalSf(advFinInfo)*physicalInfo.hotelUsePerc,
+				rHospitalityRateNight: basicFinInfo.commercialHotelRentRoom,
+				rHospitalitySpacePerEmp: physicalInfo.hotelAreaPerEmp,
+				rHospitalityEmpPerSf: bm.getHotelEmpPerSf(physicalInfo, advFinInfo),
+				rHospitalityNetPerRoom: bm.getHotelNetPerSf(physicalInfo, advFinInfo),
+				rHospitalityGrossPerRoom: bm.getHotelGrossPerSf(physicalInfo, advFinInfo),
+				rHospitalityRoomsPerSf: ( bm.getHotelGrossPerSf(physicalInfo, advFinInfo) === 0 ? 0 : ((bm.getTotalSf(advFinInfo)*physicalInfo.hotelUsePerc)/bm.getHotelGrossPerSf(physicalInfo, advFinInfo)) ),
+				rParkingGrossSf: bm.getTotalSf(advFinInfo)*physicalInfo.parkingUsePerc,
+				rParkingRateHour: basicFinInfo.commercialParkingRentSpace,
+				rParkingSpacePerEmp: physicalInfo.parkingAreaPerEmp,
+				rParkingEmpPerSf: (physicalInfo.parkingAreaPerEmp === 0 ? 0 : (bm.getTotalSf(advFinInfo)*physicalInfo.parkingUsePerc)/physicalInfo.parkingAreaPerEmp),
+				rParkingSpaces: bm.getParkingSpaces(),
+				rParkingSf: bm.getParkingSf(physicalInfo),
+				rInternalStructureParkingSf: bm.getInternalStructureParkingSf(),
+				rParkingCostSf: bm.getParkingCostSf(basicFinInfo), 
+				rLandCostSf: basicFinInfo.landImpCostsPerSf,
+				rTotalPrjValue: bm.getTotalPrjValue(),
+				rPropTaxRevenueYr: bm.getPropTaxRevenueYr(),
+				rTotalFees: bm.getTotalFees(),
+				rSubsidy: bm.getSubsidy(basicFinInfo),  //need to fix
+				rRateOfReturn: bm.getRateOfReturn(), //need to fix
+				rProjectReturn: bm.getProjectReturn(), //need to fix
+				rYIntercept: bm.getYIntercept(), //need to fix
+				rSlope: bm.getSlope() //need to fix
+				/** 
+				 * next are 31 metrics that revolve around
+					* Stormwater/ Green Infrastructure/ Water Quality 
+					* Trip Generation
+				* **/
+			}
+		});
+	}
+	saveBuilding() {
+		console.log(this.state.forDevType);
+		// if (choice === 'save') {
+		// 	axios.post('/api/buildings', this.state.BP).then(function(res) {
+		// 		alert('new row added...');
+		// 	});
+		// }
+		// this.props.history.push('/create');
 	}
 
 	renderChildContent(pg){
@@ -341,7 +440,7 @@ const styles = theme => ({
 			return (
 				<BuildingFormReviewComponent
 					pageChange={this.changePage}
-					attributes={this.state.BP}
+					attributes={this.state.forDevType}
 				/>
 			);
 		}
@@ -375,11 +474,11 @@ const styles = theme => ({
 						{this.renderChildContent(this.state.tabValue)}
 					</Grid>
 					<Grid item className={classes.paper} xs={12}>
-						<Button raised color="primary" onClick={()=>this.handleSubmit('save')}>
+						<Button raised color="primary"  className={classes.button} onClick={()=>this.saveBuilding}>
 							Save
 						</Button>	
 						
-						<Button raised color="accent" onClick={()=>this.handleSubmit('create')}>
+						<Button raised color="accent"  className={classes.button} onClick={()=>this.handleSubmit('create')}>
 							Cancel
 						</Button>	
 				</Grid>
