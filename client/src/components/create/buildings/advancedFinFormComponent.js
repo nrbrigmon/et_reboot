@@ -43,7 +43,7 @@ class AdvancedFinFormComponent extends Component {
 		let bldgAttr = this.props.attributes.advFinInfo;
 		const { classes } = this.props;
 		const { section1, section2, section3,
-			section4, section5, section6 } = inputFields;
+			section4, section5, section6, section7 } = inputFields;
 		return (
 			<Grid container >
 				<Grid item xs={6}> 
@@ -93,14 +93,14 @@ class AdvancedFinFormComponent extends Component {
 					<h5>Property Taxes</h5>
 					<InputFieldsComponent 
 							inputUpdate={this.handleChange}
-							attributes={{bldgAttr, classes, section: section2}} />
+							attributes={{bldgAttr, classes, section: section6}} />
 				</Grid>
 
 				<Grid item xs={6}> 
 					<h5>Financial Targets</h5>
 					<InputFieldsComponent 
 							inputUpdate={this.handleChange}
-							attributes={{bldgAttr, classes, section: section2}} />
+							attributes={{bldgAttr, classes, section: section7}} />
 				</Grid>
 			</Grid>
 		);

@@ -1,12 +1,13 @@
 NEXT STEPS:
-1. Enable save button to load finished results to database (new table)
-2. enable delete action to remove from database
-    2a. enable user to create templist for building library
-    2b. enable user to add/remove from templist
-    2c. enable user to save templist
-    2d. enable to user to delete templist
+1. enable user to create templist for building library
+    ----saving animation
+    ----save notification popup
+2b. enable user to add/remove from templist
+2c. enable user to save templist
+2d. enable to user to delete templist
 
 3. create devType database for saving finished building prototypes....
+
 4. create dev type pages
 
 5. create regEx form-input validations

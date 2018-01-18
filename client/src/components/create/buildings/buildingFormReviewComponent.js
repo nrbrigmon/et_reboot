@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import * as bm from './_buildingMathModule';
- 
-import PropTypes from 'prop-types';
+
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
@@ -18,7 +16,7 @@ class BuildingFormReviewComponent extends Component {
 
 	render() {		
 		const { classes } = this.props;
-		console.log(this.props.attributes);
+		// console.log(this.props.attributes);
 		let reviewObj = this.props.attributes;
 		return (
 			<Grid container >

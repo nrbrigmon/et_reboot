@@ -1362,7 +1362,7 @@ export const updateMixedUseSummary = (physicalInfo, basicFinInfo, advFinInfo) =>
 	let { occupancyType, residentialUnitSize } = physicalInfo;
 	let { salesPricePerSf, testSubsidy, monthlyRentPerSf, monthlyParkingCost } = basicFinInfo;
 	let { maxLTVOwner, projectReturnRateOwner, returnToEquityOwner, assessRatioTaxOwner, assessRatioTaxRenter, propTaxOwner,
-		 propTaxRenter, poperatingCostsPercRenter, assessRatioTaxRetail, propTaxOffice, assessRatioTaxOffice,
+		 propTaxRenter, assessRatioTaxRetail, propTaxOffice, assessRatioTaxOffice,
 		 propTaxIndustrial, assessRatioTaxIndustrial, propTaxHotel, assessRatioTaxHotel, propTaxParking, assessRatioTaxParking } = advFinInfo;
 	//update residentialOwnerROI = {}
 	residentialOwnerROI["baseline"]["projectCost"] = (occupancyType === 'Owner' ? (-1*costAllocation["residential"]["total"]) : 0);

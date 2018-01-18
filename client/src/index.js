@@ -5,12 +5,12 @@ import { Reboot } from 'material-ui';
 
 import registerServiceWorker from './registerServiceWorker';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import 'materialize-css/dist/css/materialize.min.css';
 import './index.css';
+//         {/*Reboot is like normalize in that it makes CSS equal across all browsers*/}
 
 ReactDOM.render(
         <div>
-            <Reboot />
+            <Reboot /> 
             <App />
         </div>, document.getElementById('root'));
 registerServiceWorker();

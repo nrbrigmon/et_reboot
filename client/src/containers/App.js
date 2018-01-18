@@ -20,7 +20,8 @@ class App extends Component {
 						<Header />
 						<Route exact path="/" component={Welcome} />
 						<Route exact path="/create" component={CreateStart} />
-						<Route path="/create/edit" component={BuildingPrototypeStart} />
+						<Route path="/create/new/:id" component={BuildingPrototypeStart} />
+						<Route path="/create/edit/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/dev-types" component={DevTypeStart} />
 						<Route path="/map" component={MapStart} />
 						<Route path="/metrics" component={MetricStart} />

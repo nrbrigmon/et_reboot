@@ -1,26 +1,16 @@
-CREATE TABLE physical_inputs (
-    id serial,
-    buildingname character varying(50),
-    buildingheight float,
-    sitearea real,
-    sitelocation character varying(50)
-);
-
 CREATE TABLE building_prototype_inputs (
     id serial,
-    buildingname character varying(50),
-    buildingheight float,
-    sitearea real,
-    sitelocation character varying(50)
+    attributes jsonb
 );
 
 CREATE TABLE building_prototype_outputs (
-    linked_ids integer[]
+    linked_id character varying(50),
+    attributes jsonb
 );
 
 CREATE TABLE development_type_inputs (
     id serial,
-    building_ids integer[]
+    attributes jsonb
     
 );
 
@@ -30,8 +20,10 @@ CREATE TABLE envision_users (
     date_started date
 );
 
+
 /* insert process */
 
+/*
 INSERT INTO physical_inputs (buildingname, buildingheight, sitearea, sitelocation)
     VALUES 
         ('first building', 23, 23.432, 'Austin, TX'),
@@ -49,3 +41,5 @@ INSERT INTO development_type_inputs (building_ids)
 INSERT INTO envision_users (building_library_ids)
     VALUES
         ('{1, 2, 3,6,7,8,0,1}');
+
+        */
