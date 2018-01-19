@@ -1,10 +1,10 @@
 NEXT STEPS:
-1. enable user to create templist for building library
+1. on building creation, add to database AND add to templist
     ----saving animation
     ----save notification popup
-2b. enable user to add/remove from templist
+
 2c. enable user to save templist
-2d. enable to user to delete templist
+2d. enable user to load templist
 
 3. create devType database for saving finished building prototypes....
 
@@ -12,6 +12,8 @@ NEXT STEPS:
 
 5. create regEx form-input validations
 
+6. install robot font
+7. install gooogle auth from passport.js
 
 
 

@@ -1,3 +1,5 @@
+/* create process */
+/*
 CREATE TABLE building_prototype_inputs (
     id serial,
     attributes jsonb
@@ -13,17 +15,21 @@ CREATE TABLE development_type_inputs (
     attributes jsonb
     
 );
-
+*/
 CREATE TABLE envision_users (
     id serial,
-    building_library_ids integer[],
+    google_id character varying(100),
+    building_library_ids text[],
+    google_prof jsonb,
     date_started date
 );
 
-
 /* insert process */
-
 /*
+INSERT INTO envision_users (google_id, building_library_ids, date_started)
+    VALUES 
+        ('bbbg_sdfgsg', ARRAY[], CURRENT_TIMESTAMP);
+
 INSERT INTO physical_inputs (buildingname, buildingheight, sitearea, sitelocation)
     VALUES 
         ('first building', 23, 23.432, 'Austin, TX'),

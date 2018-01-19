@@ -1,13 +1,11 @@
 const { Router } = require('express');
 
-// const monsters = require('./monsters');
-// const habitats = require('./habitats');
 const buildings = require('./building_prototypes');
+const users = require('./active_users');
 
 const router = Router();
 
 router.use('/api/buildings', buildings);
-// router.use('/habitats', habitats);
-// router.use('/lives', lives);
+router.use('/api/users', users);
 
 module.exports = router;
