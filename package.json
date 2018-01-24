@@ -1,7 +1,7 @@
 {
-	"name": "pg2",
+	"name": "envision_reboot",
 	"version": "1.0.0",
-	"description": "an app to learn postgres...so hard",
+	"description": "moving envision tomorrow like land use planning apps to javascript",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",

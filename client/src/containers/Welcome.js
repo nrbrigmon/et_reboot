@@ -8,14 +8,16 @@ import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
 	root: {
-	  flexGrow: 1,
+		flexGrow: 1,
+		width: '100%'
 	},
 	paper: {
 	  textAlign: 'center',
 	},
 	card: {
-		maxWidth: 345,
-		margin: '20px'
+		// maxWidth: 345,
+		margin: '20px',
+		justify: 'center'
 	}
   });
 

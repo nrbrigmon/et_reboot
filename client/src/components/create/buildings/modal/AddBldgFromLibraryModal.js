@@ -4,6 +4,8 @@ import Button from 'material-ui/Button';
 import AddBldgTabModal from './AddBldgTabModal';
 import { withStyles } from 'material-ui/styles';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
 
 const styles = theme => ({
 	paper: {
@@ -34,65 +36,48 @@ function getModalStyle() {
 }
 
 class AddBldgFromLibraryModal extends Component {
-	constructor(props) {
-        super(props);
-        
-		this.state = {
-            allBuildings: []
-        }
-        
-		this.libraryUpdate = this.libraryUpdate.bind(this);
+    saveBuildings = () =>{
+        this.props.addBuildingToLibrary(this.props.modList);
+        this.props.buildingSelection(null);
     }
-    handleClose = (e) => {
-        ///building selection will send the results back to the parent component
-        
-    }
-    saveBuilding = () =>{
-        this.props.buildingSelection(this.state.allBuildings);
-        this.setState({
-            allBuildings: []
-        });
-    }
-    libraryUpdate = (selection) => {
-        console.log(selection);
-        this.setState({
-            allBuildings: selection
-        });
-    }
+
     cancelModal = () => {
         this.props.buildingSelection(null)
-        this.setState({
-            allBuildings: []
-        });
     }
+
 	render() {
         const { modalOpen } = this.props.modalState;
         const { tab } = this.props.modalState;
         const { classes } = this.props;
+        // console.log(this.props);
 		return (
             <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 open={modalOpen}
-                onClose={this.handleClose}
                 >
                 <div style={getModalStyle()}>
                     <AddBldgTabModal attr={tab} libSelection={this.libraryUpdate} />
                     <div className={classes.paper}>
-                        <Button raised color="primary" className={classes.button} onClick={()=>this.saveBuilding()}>
+                        <Button raised color="primary" className={classes.button} 
+                        onClick={()=>this.saveBuildings()}>
                             Save
                         </Button>	
                         
-                        <Button raised color="accent" className={classes.button} onClick={()=>this.cancelModal()}>
+                        <Button raised color="accent" className={classes.button} 
+                        onClick={()=>this.cancelModal()}>
                             Cancel
                         </Button>
                     </div>
                 </div>
-                
                 
             </Modal>)
     };
                 
 }
 
-export default withStyles(styles)(AddBldgFromLibraryModal);
+function mapStateToProps(state) {
+    return { modList: state.modList  };
+}
+const styledApp = withStyles(styles)(AddBldgFromLibraryModal);
+export default connect(mapStateToProps, actions)(styledApp);

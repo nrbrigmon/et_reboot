@@ -7,16 +7,17 @@ const auth = require('../keys/auth');
 const pool = require('../db');
 
 passport.serializeUser((user, done) => {
-	console.log('serializaing user...');
-	done(null, user.google_id);
+	console.log('serializing user...');
+	// console.log(user);
+	done(null, user);
 });
 
-passport.deserializeUser((google_id, done) => {
-	console.log('de__serializaing user...');
-	// let id = 
-	pool.query("SELECT * FROM envision_users WHERE google_id = '"+ google_id +"' ", (err, res) =>{
+passport.deserializeUser((user, done) => {
+	console.log('de__serializing user...');
+	// console.log(user);
+	pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [user.google_id], (err, res) =>{
 		if (err) return done(err);
-		console.log(res.rows);
+		// console.log(res.rows);
 		let user = res.rows[0];
 		// response.json(res.rows);
 		done(null, user);
@@ -33,12 +34,14 @@ passport.use(
 			proxy: true
 		},
 		async (accessToken, refreshToken, profile, done) => {
-			let { id } = profile;
-			console.log(profile);
-			console.log('using google strategy with ', id);
-			pool.query("SELECT * FROM envision_users WHERE google_id = '"+ id +"' ", (err, res) =>{
+			// console.log(profile[id]);
+			let google_id = profile[id];
+			// console.log(profile);
+			// console.log(profile[0]);			
+			console.log('using google strategy with ', google_id);
+			pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [google_id], (err, res) =>{
 				if (err) return done(err);
-				console.log('existing user search: ', res.rows[0]);
+				// console.log('existing user search: ', res.rows[0]);
 				let existingUser = res.rows[0];
 				
 				if (existingUser) {
@@ -46,15 +49,16 @@ passport.use(
 					console.log('user already exists');
 					done(null, existingUser);
 				} else {
-					console.log('user doesnt exist');
-					pool.query(
-						" INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ('"+id+"', ARRAY[]::integer[], CURRENT_TIMESTAMP);", (err, res) => {
+					console.log('user doesnt exist, creating new user');
+					let profileObj = JSON.stringify(profile);
+					let { google_id } = profileObj
+					pool.query('INSERT INTO envision_users (google_id, building_library_ids, google_prof, date_started)'+
+						'VALUES ($1, $2, $3, CURRENT_TIMESTAMP);',[profileObj.google_id, [], profileObj ], (err, res) => {
 					    if (err) return done(err);
 						
-						let user = res.rows[0];
-						console.log(user);
+						let newUser = res.rows[0];
 						// response.json(res.rows);
-						done(null, user);
+						done(null, newUser);
 					});			
 				}
 			});

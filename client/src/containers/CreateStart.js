@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -16,6 +19,7 @@ import * as shortid from 'shortid';
 const styles = theme => ({
 	root: {
 	  flexGrow: 1,
+	  width: '100%'
 	},
 	paper: {
 	  textAlign: 'center',
@@ -35,7 +39,6 @@ class CreateStart extends Component {
 		super(props);
 		this.state = {
 			pageChoice: 'start',
-			myLibrary: [],
 			modalOptions: {
 				modalOpen: false,
 				tab: 'bldg'
@@ -46,20 +49,19 @@ class CreateStart extends Component {
 		this.handleNavigation = this.handleNavigation.bind(this);
 		this.removeItemFromList = this.removeItemFromList.bind(this);
 	}
-
-	addBuildingToMyLibrary = (newBldgs) => {
-		console.log(newBldgs);
-
-		let oldLib = this.state.myLibrary;
-		let newLib = oldLib.concat(newBldgs);
+	componentDidMount(){
+		//load all available buildings in the database
+		this.props.fetchAllBuildings();
+	}
+	addBuildingToMyLibrary = (a) => {
+		// console.log('dummy: ', a);
 		this.setState({
-			myLibrary: newLib,
 			modalOptions: {modalOpen: false} 
 		})
 	}
 	
 	openBldgLibraryModal = (tabChoice) => {
-		console.log(tabChoice);
+		// console.log(tabChoice);
 		this.setState({ 
 			modalOptions: 
 			{
@@ -72,33 +74,44 @@ class CreateStart extends Component {
 	handleNavigation = (destination) => {
 		this.props.history.push('/'+destination+'');
 	}
-	  
-	removeItemFromList = (id) =>{
-		let newState = this.state.myLibrary.filter( elem => elem.id !== id )
-		this.setState({
-			myLibrary: newState
-		})
+	
+	editItemInList = (selection) => {
+		let _id = selection.uniqueId;
+		this.handleNavigation('create/edit/'+_id+'')
+		this.props.editBuildingPrototype(true, selection);
+	}
+	removeItemFromList = (selection) =>{
+		this.props.removeBuildingFromLibrary(selection);
 	}
 	
 	resetList(){
-		this.setState({
-			myLibrary: []
-		})
+		this.props.resetMyBuildingLibrary();
 	}
 	
 	renderMyLibrary = (lib) => {
+		console.log('lib ',lib);
 		return lib.map((item, idx) => {
+			let name = item.physicalInfo.buildingName;
+			if (name === undefined){
+			  name = 'err';
+			}
+			let siteLocation = item.physicalInfo.siteLocation;
+			if (siteLocation === undefined){
+			  siteLocation = 'err';
+			}
+			// console.log(item)
 			return (
-					<ListItem button divider key={idx} onClick={()=>this.handleNavigation('create/edit/'+item.id+'')}>
+					<ListItem button divider key={idx} 
+						onClick={()=>this.editItemInList(item)}>
 						<ListItemIcon>
 							<Icon >domain</Icon>
 						</ListItemIcon>
-						<ListItemText primary={item.info.buildingName} secondary={item.info.siteLocation} />
+						<ListItemText primary={name} secondary={siteLocation}/>
 						
-						<ListItemSecondaryAction  onClick={()=>this.removeItemFromList(item.id)}>
+						<ListItemSecondaryAction  onClick={()=>this.removeItemFromList(item)}>
 							<Tooltip id="tooltip-icon" title="Delete">
 									<ListItemIcon aria-label="Delete">
-									<Icon >delete</Icon>
+										<Icon >delete</Icon>
 									</ListItemIcon>
 							</Tooltip>
 						</ListItemSecondaryAction>
@@ -109,6 +122,8 @@ class CreateStart extends Component {
 
 	render() {
 		const { classes } = this.props;
+		const { myLib } = this.props;
+		// console.log( myLib );
 		return (
 			<Grid container
 				className={classes.root}
@@ -134,7 +149,7 @@ class CreateStart extends Component {
 								}
 							*/}
 							<List>
-								{this.renderMyLibrary(this.state.myLibrary)}
+								{this.renderMyLibrary(myLib)}
 							</List>
 							
 							<CardActions>
@@ -154,16 +169,20 @@ class CreateStart extends Component {
 						maybe they open a modal but you aview a different
 						tab depending on the click?*/}
 						
-						<Button raised color="primary" className={classes.button} onClick={() => this.openBldgLibraryModal('lib')}>
+						<Button raised color="primary" className={classes.button} 
+							onClick={() => this.openBldgLibraryModal('lib')}>
 							<Icon className={classes.leftIcon}>cloud_download</Icon> Load Existing Library
 						</Button>
-						<Button raised color="primary" className={classes.button} onClick={() => this.openBldgLibraryModal('bldg')}>
+						<Button raised color="primary" className={classes.button} 
+							onClick={() => this.openBldgLibraryModal('bldg')}>
 							<Icon className={classes.leftIcon}>cloud_download</Icon> Add Existing Building
 						</Button>
-						<Button raised color="primary" className={classes.button} onClick={()=>this.handleNavigation('create/new/'+this.state.uniqueId+'')}>
+						<Button raised color="primary" className={classes.button} 
+							onClick={()=>this.handleNavigation('create/new/'+this.state.uniqueId+'')}>
 							<Icon className={classes.leftIcon}>add_circle</Icon> Create New Building
 						</Button>
-						<Button raised color="primary" className={classes.button} onClick={()=>this.resetList()}>
+						<Button raised color="primary" className={classes.button} 
+							onClick={()=>this.resetList()}>
 							<Icon className={classes.leftIcon}>clear</Icon> Reset/Empty List
 						</Button>
 					</div>
@@ -177,4 +196,9 @@ class CreateStart extends Component {
 	}
 }
 
-export default  withStyles(styles)(CreateStart);
+function mapStateToProps(state) {
+	  return { myLib: state.myLib };
+}
+  
+const styledApp = withStyles(styles)(CreateStart);
+export default connect(mapStateToProps, actions)(styledApp);

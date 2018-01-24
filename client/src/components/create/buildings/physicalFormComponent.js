@@ -39,7 +39,7 @@ class PhysicalFormComponent extends Component {
 	};
 
 	render() {
-		let bldgAttr = this.props.attributes.physicalInfo;
+		let bldgAttr = this.props.physicalInfo;
 		const { classes } = this.props;
 		const { section1, section2, section3, section4, section5, section6 } = inputFields;
 		return (

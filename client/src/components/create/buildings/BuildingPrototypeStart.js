@@ -4,21 +4,24 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
 import Button from 'material-ui/Button';
+import Tabs, { Tab } from 'material-ui/Tabs';
 
-import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
+
 import PhysicalFormComponent from './PhysicalFormComponent';
 import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingPrintSummary from './BuildingPrintSummary';
 import * as devFunc from './_updateForDevType';
-import sampleFields from './inputs/sampleBuildingInput';
 
 const styles = theme => ({
 	root: {
-	  flexGrow: 1,
+		flexGrow: 1,
+		width: '100%',
+		margin:0
 	},
 	paper: {
 	  textAlign: 'center',
@@ -40,7 +43,7 @@ const styles = theme => ({
 			tabValue: 'phys',
 			editing: ( (props.match.path).indexOf("edit") >= 0 ? true : false), 
 			BP: {
-				uniqueId: props.match.params.id,
+				uniqueId: '',
 				physicalInfo: {},
 				basicFinInfo: {},
 				advFinInfo: {}
@@ -57,36 +60,36 @@ const styles = theme => ({
 		//we load default attributes
 	}
 	componentDidMount = () => {
-		if (this.state.editing){
-			//load attributes
-			// console.log(this.state.BP);
-			axios.get('/api/buildings/'+this.state.BP.uniqueId).then( (res) => {
-				// console.log(res);
-				let { physicalInfo, basicFinInfo, advFinInfo } = res["data"][0].attributes;
-				// console.log(res["data"][0].attributes)
-				this.setState({
-					BP: {
-						uniqueId: this.state.BP.uniqueId,
-						physicalInfo,
-						basicFinInfo,
-						advFinInfo
-					}
-				});
-			});
-
-		} else { 
-			// console.log('this is new')
-			//load default attributes for new building type
-			let { physicalInfo, basicFinInfo, advFinInfo } = sampleFields;
-			this.setState({
-				BP: {
-					uniqueId: this.state.BP.uniqueId,
-					physicalInfo,
-					basicFinInfo,
-					advFinInfo
-				}
+		console.log(this.props.bldgType)
+		let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
+		this.setState({
+			BP: {
+				uniqueId: this.props.match.params.id,
+				physicalInfo,
+				basicFinInfo,
+				advFinInfo
+			}
+		});
+		if (this.props.bldgType.length === 0 ){
+			console.log('no props, getting new ones')
+			let _id = this.props.match.params.id
+			let status = this.state.editing;
+			fetch(this.props.fetchBuildingPrototypeAttributes(status, _id))
+				.then(res => {
+					// console.log('post featch ', res)
+					let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
+					this.setState({
+						BP: {
+							uniqueId: _id,
+							physicalInfo,
+							basicFinInfo,
+							advFinInfo
+						}
+					});
 			});
 		}
+		
+		// console.log(this.props.bldgType);
 	}
 	updatePrototypePhys(newState) {
 		let buildingCopy = {
@@ -133,44 +136,35 @@ const styles = theme => ({
 		});
 	}
 
-	saveBuilding = () => {
-		if (this.state.editing){
-			axios.put('/api/buildings/'+this.state.BP.uniqueId+'', this.state.BP).then( (res) => {
-				// alert('new row added...');
-				console.log(res.data.name);
-				// create "saved! animation, unobstrusive and passive"
-			});
-			this.props.history.push('/create');
-		} else {
-			axios.post('/api/buildings', this.state.BP).then( (res) => {
-				// alert('new row added...');
-				console.log(res);
-				// create "saved! animation, unobstrusive and passive"
-			});
-			this.props.history.push('/create');
-		}
+	saveBuilding = () => {	
+		let status = this.state.editing;
+		// let _id = this.state.BP.uniqueId;
+		this.props.saveBuilding(status, this.state.BP);
+        this.props.addBuildingToLibrary([this.state.BP]);
+		this.props.history.push('/create');
 	}
 
-	renderChildContent = (pg) => {
+	renderChildContent = (pg, newState) => {
+		// console.log('newstate', newState["physicalInfo"].buildingName);
 		if (pg === 'phys') {
 			return (
 				<PhysicalFormComponent
 					buildingUpdate={this.updatePrototypePhys}
-					attributes={this.state.BP}
+					attributes={newState}
 				/>
 			);
 		} else if (pg === 'fin1') {
 			return (
 				<BasicFinFormComponent
 					buildingUpdate={this.updateBasicFinInfo}
-					attributes={this.state.BP}
+					attributes={newState}
 				/>
 			);
 		} else if (pg === 'fin2') {
 			return (
 				<AdvancedFinFormComponent
 					buildingUpdate={this.updateAdvFinInfo}
-					attributes={this.state.BP}
+					attributes={newState}
 				/>
 			);
 		} else if (pg === 'print') {
@@ -187,6 +181,7 @@ const styles = theme => ({
 	render() {
 		const { classes } = this.props;
 		const { tabValue } = this.state;
+		// console.log('render props ',this.props.bldgType);
 		return (
 				<Grid container
 					className={classes.root}
@@ -209,20 +204,31 @@ const styles = theme => ({
 							<Tab value="print" label="Print" />
 						</Tabs>
 					</AppBar>
-					<Grid item md={8} sm={12}>
-						{this.renderChildContent(this.state.tabValue)}
-					</Grid>
+					
 					<Grid item className={classes.paper} xs={12}>
-						<Button raised color="primary"  className={classes.button} onClick={()=>this.saveBuilding()}>
+						<Button raised color="primary"  className={classes.button} 
+							onClick={()=>this.saveBuilding()}>
 							Save
 						</Button>	
 						
-						<Button raised color="accent"  className={classes.button} onClick={()=>this.props.history.push('/create')}>
+						<Button raised color="accent"  className={classes.button} 
+							onClick={()=>this.props.history.push('/create')}>
 							Cancel
 						</Button>	
-				</Grid>
+					</Grid>
+					<Grid item md={8} sm={12}>
+						{this.renderChildContent(this.state.tabValue, this.state.BP)}
+					</Grid>
 			</Grid>
 		);
 	}
 }
-export default withStyles(styles)(BuildingPrototypeStart);
+
+function mapStateToProps(state) {
+		// console.log(state.bldgType);
+	  return { bldgType: state.bldgType };
+}
+
+const styledApp = withStyles(styles)(BuildingPrototypeStart);
+export default connect(mapStateToProps, actions)(styledApp);
+

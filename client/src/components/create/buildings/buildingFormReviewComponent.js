@@ -17,7 +17,7 @@ class BuildingFormReviewComponent extends Component {
 	render() {		
 		const { classes } = this.props;
 		// console.log(this.props.attributes);
-		let reviewObj = this.props.attributes;
+		let reviewObj = this.props;
 		return (
 			<Grid container >
 				<Grid item xs={12} className={classes.paper}>

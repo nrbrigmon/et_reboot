@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Header from '../components/Header';
-import Welcome from './Welcome';
-import CreateStart from './CreateStart';
-import DevTypeStart from './DevTypeStart';
-import MapStart from './MapStart';
-import MetricStart from './MetricStart';
-import GalleryStart from './GalleryStart';
-import BusinessCase from '../components/ThePitchComponent';
-import BuildingPrototypeStart from '../components/create/buildings/BuildingPrototypeStart';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+
+import { Reboot } from 'material-ui';
+
+import Header from './Header';
+import Welcome from '../containers/Welcome';
+import CreateStart from '../containers/CreateStart';
+import DevTypeStart from '../containers/DevTypeStart';
+import MapStart from '../containers/MapStart';
+import MetricStart from '../containers/MetricStart';
+import GalleryStart from '../containers/GalleryStart';
+import BusinessCase from './ThePitchComponent';
+import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 
 class App extends Component {
+	componentDidMount() {
+		this.props.fetchUser();
+	}
 	render() {
 		return (
 			<div>
+            	<Reboot /> 
 				<BrowserRouter>
 					<div>
 						<Header />
@@ -34,4 +43,5 @@ class App extends Component {
 	}
 }
 
-export default App;
+
+export default connect(null, actions)(App);;

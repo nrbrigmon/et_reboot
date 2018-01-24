@@ -5,30 +5,26 @@ const router = Router();
  
 //get all buildings in table
 router.get('/', (request, response, next) =>{
-    pool.query("SELECT * FROM building_prototype_inputs ORDER BY id ASC", (err, res) =>{
+    pool.query("SELECT attributes FROM building_prototype_inputs ORDER BY id ASC", (err, res) =>{
         if (err) return next(err);
         
-        response.json(res.rows);
+        //destructuring to make up for silly db design
+        let payload = res.rows.map( row => row.attributes);
+        // console.log(payload);
+        // console.log(res.rows);
+        response.json(payload);
     });
 
 });
 
-//get all buildings in table
-router.get('/ids', (request, response, next) =>{
-    // console.log('getting all ids..')
-    pool.query("SELECT attributes -> 'uniqueId' AS id, attributes -> 'physicalInfo' as info FROM building_prototype_inputs", (err, res) =>{
-        if (err) return next(err);
-        response.json(res.rows);
-    });
-
-});
+/* VERY IMPORTATNT TO UPDATE FOR FEAR OF SQL INJECTION */
 
 //get specific id attributes
 router.get('/:id', (request, response, next) =>{
     // console.log(request.params);    
-    const { id } = request.params;
-    console.log('incoming specific request..', id)
-    pool.query("SELECT * FROM building_prototype_inputs where (attributes ->> 'uniqueId') = '"+ id +"' ", (err, res) =>{
+    const { uniqueId } = request.params;
+    console.log('incoming specific request..', uniqueId)
+    pool.query("SELECT * FROM building_prototype_inputs where (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) =>{
         if (err) return next(err);
         // console.log(res.rows);
         response.json(res.rows);
@@ -38,24 +34,28 @@ router.get('/:id', (request, response, next) =>{
 
 //get specific id attributes
 router.delete('/:id', (request, response, next) =>{
-    const { id } = request.params;
-    console.log('incoming specific request..', id)
-    pool.query("DELETE FROM building_prototype_inputs WHERE (attributes ->> 'uniqueId') = '"+ id +"' ", (err, res) =>{
+    const { uniqueId } = request.params;
+    console.log('deleting building from database..', uniqueId)
+    pool.query("DELETE FROM building_prototype_inputs WHERE (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) =>{
         if (err) return next(err);
         console.log(res.rows);
+        console.log('successful delete');
         response.json(res.rows);
     });
 
 });
+
 //post new building into table
 router.post('/', (request, response, next) =>{
-    // console.log('posting...')
+    // console.log('posting new building on backend...')
     // let { physicalInfo, basicFinInfo, advFinInfo} = request.body;
     let values = JSON.stringify(request.body)
-    // console.log(values)
+    
+    console.log('adding new building to database..', uniqueId)
     pool.query(
         "INSERT INTO building_prototype_inputs (attributes) VALUES ('" + values + "'::jsonb)", (err, res) => {
         if (err) return next(err);
+        console.log('successfully added');
         response.json(res.rows);
         // response.redirect('/api/buildings');
     });
@@ -63,11 +63,10 @@ router.post('/', (request, response, next) =>{
 })
 
 router.put('/:id', (request, response, next) =>{
-    const { id } = request.params;
     let values = JSON.stringify(request.body)
-    console.log('update ', id);
-    // console.log(values);
-    pool.query("UPDATE building_prototype_inputs SET attributes = '" + values + "' WHERE (attributes ->> 'uniqueId') = '"+ id +"' ", (err, res) => {
+    const { uniqueId } = request.params;
+    console.log('updating building in database..', uniqueId)
+    pool.query("UPDATE building_prototype_inputs SET attributes = '" + values + "' WHERE (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) => {
         if (err) {
             console.log(err)
             return next(err);

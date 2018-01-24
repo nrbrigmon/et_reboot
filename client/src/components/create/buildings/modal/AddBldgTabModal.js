@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
@@ -20,59 +22,59 @@ class AddBldgTabModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: [],
-      tab: 'bldg',
-      availableBuildings: []
+      tab: 'bldg'
     };
 		this.componentSelection = this.componentSelection.bind(this);
   
   }
-
   handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked,
-    });
-    this.props.libSelection(newChecked);
+    // console.log(value);
+    this.props.toggleBuildingModalList(value);
   };
 
 	componentSelection = (e, value) => {
-    console.log(value)
+    //change the tab between bldg and lib
 		this.setState({
 			tab: value
 		});
   }
   
 	renderTabContainer = (pg, classes) => {
-    let bldgLib = this.state.availableBuildings;
-		if (pg === 'bldg') {
-			return (
+    if (pg === 'bldg') {
+      //duplicate component, should be destructured later --nate
+      return (
         <List>
-          {bldgLib.map( (item, idx) => (
-            <ListItem
-              key={idx}
-              dense
-              button
-              onClick={this.handleToggle(item)}
-              className={classes.listItem}
-            >
-              <Checkbox
-                checked={this.state.checked.indexOf(item) !== -1}
-                tabIndex={-1}
-                disableRipple
-              />
-              <ListItemText primary={item.info.buildingName} secondary={item.info.siteLocation}/>
-            </ListItem>
-          ))}
+          {this.props.bldgLib.map( (item, idx) => {
+              // console.log(item.attributes["physicalInfo"])
+              let name = item.attributes.physicalInfo.buildingName;
+              if (name === undefined){
+                name = 'err';
+              }
+              let siteLocation = item.attributes.physicalInfo.siteLocation;
+              if (siteLocation === undefined){
+                siteLocation = 'err';
+              }
+              return (
+                <ListItem
+                  key={idx}
+                  dense
+                  button
+                  onClick={this.handleToggle(item.attributes)}
+                  className={classes.listItem}
+                >
+                  <Checkbox
+                    checked={this.props.modList.indexOf(item.attributes) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                  />
+                  <ListItemText primary={name} secondary={siteLocation}/>
+                </ListItem>
+                )
+              
+
+            }
+          
+          )}
         </List>
 			);
 		} else {
@@ -87,7 +89,7 @@ class AddBldgTabModal extends React.Component {
               className={classes.listItem}
             >
               <Checkbox
-                checked={this.state.checked.indexOf(value) !== -1}
+                checked={this.props.modList.indexOf(value) !== -1}
                 tabIndex={-1}
                 disableRipple
               />
@@ -105,21 +107,9 @@ class AddBldgTabModal extends React.Component {
         tab: 'lib'
       });
     }
-    //load all available buildings to easy access array
-		axios.get('/api/buildings/ids')
-      .then(res => {
-        // console.log(res);
-        // let tempList = res["data"].map(obj => {return obj});
-        this.setState({ 
-          availableBuildings: res["data"].map(obj => {return obj})
-        });
-      });
   }
   componentWillUnmount(){
-		this.setState({
-			checked: [],
-      availableBuildings: []
-		});
+		this.props.resetBuildingModalList();
   }
   render() {
     const { classes } = this.props;
@@ -152,4 +142,14 @@ class AddBldgTabModal extends React.Component {
   }
 }
 
-export default withStyles(styles)(AddBldgTabModal);
+
+function mapStateToProps(state) {
+  // console.log(state);
+  return { 
+        bldgLib: state.bldgLib,
+        modList: state.modList 
+        };
+}
+
+const styledApp = withStyles(styles)(AddBldgTabModal);
+export default connect(mapStateToProps, actions)(styledApp);

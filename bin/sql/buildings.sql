@@ -1,5 +1,5 @@
 /* create process */
-/*
+
 CREATE TABLE building_prototype_inputs (
     id serial,
     attributes jsonb
@@ -15,7 +15,7 @@ CREATE TABLE development_type_inputs (
     attributes jsonb
     
 );
-*/
+
 CREATE TABLE envision_users (
     id serial,
     google_id character varying(100),
@@ -41,10 +41,6 @@ INSERT INTO building_prototype_outputs (linked_ids)
         ('{1, 2, 3,6,7,8,0,1}');
 
 INSERT INTO development_type_inputs (building_ids)
-    VALUES
-        ('{1, 2, 3,6,7,8,0,1}');
-
-INSERT INTO envision_users (building_library_ids)
     VALUES
         ('{1, 2, 3,6,7,8,0,1}');
 

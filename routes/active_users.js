@@ -13,21 +13,11 @@ router.get('/', (request, response, next) =>{
 
 });
 
-//get all users in table
-// router.get('/ids', (request, response, next) =>{
-//     // console.log('getting all ids..')
-//     pool.query("SELECT googleID AS id FROM building_prototype_inputs", (err, res) =>{
-//         if (err) return next(err);
-//         response.json(res.rows);
-//     });
-
-// });
-
 //get specific user by googleid 
 router.get('/:id', (request, response, next) =>{
     // console.log(request.params);    
     const { id } = request.params;
-    console.log('incoming specific request..', id)
+    console.log('incoming specific request..active_users.get', id)
     pool.query("SELECT * FROM envision_users WHERE google_id = '"+ id +"' ", (err, res) =>{
         if (err) return next(err);
         // console.log(res.rows);
@@ -47,11 +37,11 @@ router.delete('/:id', (request, response, next) =>{
     });
 
 });
-//post new building into table
+//post new user into table
 router.post('/:id', (request, response, next) =>{
     const { id } = request.params;
     // let values = JSON.stringify(request.body)
-    console.log('update ', id);
+    // console.log('update ', id);
     // console.log(values);
     pool.query(
         " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ('"+id+"', ARRAY[]::integer[], CURRENT_TIMESTAMP);", (err, res) => {
@@ -68,7 +58,7 @@ router.post('/:id', (request, response, next) =>{
 router.put('/:id', (request, response, next) =>{
     const { id } = request.params;
     // let values = JSON.stringify(request.body)
-    console.log('update ', id);
+    // console.log('update ', id);
     // console.log(values);
     pool.query(
         " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ('"+id+"', ARRAY[]::integer[], CURRENT_TIMESTAMP);", (err, res) => {
