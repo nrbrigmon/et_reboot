@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ThreeBuildingPrototype from './create/threeModels/three-building-prototype';
 
 const TARGET_AUDIENCES = (
 	<div>
@@ -59,7 +60,9 @@ class Welcome extends Component {
 				<div className="col s12 center-align">
 					<h2>Why this app?</h2>
 				</div>
-
+				<div>
+					<ThreeBuildingPrototype />
+				</div>
 				<div className="row">
 					<div className="col s6 offset-s3">
 						<p>

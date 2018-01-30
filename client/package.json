@@ -27,7 +27,8 @@
 		"redux": "^3.7.2",
 		"redux-thunk": "^2.2.0",
 		"sfcookies": "^1.0.2",
-		"shortid": "^2.2.8"
+		"shortid": "^2.2.8",
+		"three": "^0.89.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
