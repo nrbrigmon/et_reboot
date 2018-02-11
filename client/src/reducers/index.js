@@ -7,7 +7,6 @@ import modalListReducer from './modalListReducer';
 import bldgPrototypeReducer from './bldgPrototypeReducer';
 
 import * as shortid from 'shortid';
-import { resetMyBuildingLibrary, editBuildingPrototype } from '../actions/index';
 
 const sampleDev = (state = [], action) => {
 	// console.log('sample')
@@ -44,16 +43,7 @@ function updateItemInArray(array, key, itemId, updateItemCallback) {
     });
     return updatedItems;
 }
-function updateItemInObject(object, key, itemId, updateItemCallback) {
-	if(object[key] !== itemId) {
-		// Since we only want to update one item, preserve all others as they are now
-		return object;
-	}
-	
-	// Use the provided callback to create an updated item
-	const updatedItem = updateItemCallback(object);
-	return updatedItem;
-}
+
 // Case reducer
 function editDevelopmentTypeMixer(state, {value, rowId, cellId} ) {
     const newDevMixer = updateItemInArray(state, "devTypeId", rowId, row => {
@@ -64,6 +54,19 @@ function editDevelopmentTypeMixer(state, {value, rowId, cellId} ) {
 					// debugger;
 					return updateCellValue(cell, {percVal : value});
 				})
+		}
+	});
+	// console.log(newDevMixer);
+	// debugger;
+    return newDevMixer;
+}
+
+function editDevelopemntTypeName(state, {value, rowId} ) {
+    const newDevMixer = updateItemInArray(state, "devTypeId", rowId, row => {
+		//after we have the right row, use the callback to find the right cell
+		// console.log(row);
+		return { ...row, 
+				devTypeName: value
 		}
 	});
 	// console.log(newDevMixer);
@@ -91,7 +94,8 @@ const devTypeRow = (myLib) => {
 	}
 	return {
 		cellData: tableCells,
-		devTypeId: shortid.generate()
+		devTypeId: shortid.generate(),
+		devTypeName: ''
 	};
 };
 
@@ -105,6 +109,8 @@ const DevTypeReducer = (state = [], action) => {
 			return action.payload || false;
 		case 'UPDATE_DEV_TYPE_ROW': 
 			return editDevelopmentTypeMixer(state, action);
+		case 'UPDATE_DEV_TYPE_NAME':
+			return editDevelopemntTypeName(state, action);
 		case 'FETCH_DEV_TYPE_INIT':
 			state = [];
 			for (let i = 0; i < action.rows; i++){
@@ -119,7 +125,7 @@ const DevTypeReducer = (state = [], action) => {
 
 //// sample
 function getDevTypeTotals ( table ) {
-	console.log('calc table: ',table)
+	// console.log('calc table: ',table)
 	return _(_.flatMap(table, item => {
 						return item["cellData"]
 					}))
@@ -133,7 +139,7 @@ function getDevTypeTotals ( table ) {
 
 
 const DevTypeTotalReducer = (state = [], action) => {
-	console.log('action called');
+	// console.log('action called');
 	switch (action.type) {
 		case 'FETCH_DEV_TYPE_TOTAL':
 			console.log('fettching total...')

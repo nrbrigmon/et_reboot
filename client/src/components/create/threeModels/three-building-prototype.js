@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ThreeBuildingPrototypeScene from './three-building-prototype-scene';
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 // Inline styles applied in the HTML you build here
 class ThreeBuildingPrototype extends Component {

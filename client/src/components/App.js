@@ -7,13 +7,13 @@ import * as actions from '../actions';
 import { Reboot } from 'material-ui';
 
 import Header from './Header';
-import Welcome from '../containers/Welcome';
-import CreateStart from '../containers/CreateStart';
-import DevTypeStart from '../containers/DevTypeStart';
-import MapStart from '../containers/MapStart';
-import MetricStart from '../containers/MetricStart';
-import GalleryStart from '../containers/GalleryStart';
-import BusinessCase from './ThePitchComponent';
+import Welcome from './Welcome';
+import CreateStart from './create/CreateStart';
+import DevTypeStart from './create/developments/DevTypeStart';
+import MapStart from './create/mapping/MapStart';
+import MetricStart from './create/metrics/MetricStart';
+import GalleryStart from './gallery/GalleryStart';
+import ThePitch from './ThePitchComponent';
 import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 
 class App extends Component {
@@ -35,7 +35,7 @@ class App extends Component {
 						<Route path="/map" component={MapStart} />
 						<Route path="/metrics" component={MetricStart} />
 						<Route path="/gallery" component={GalleryStart} />
-						<Route path="/pitch" component={BusinessCase} />
+						<Route path="/pitch" component={ThePitch} />
 					</div>
 				</BrowserRouter>
 			</div>

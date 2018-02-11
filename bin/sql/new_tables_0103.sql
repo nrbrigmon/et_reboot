@@ -1,3 +1,4 @@
+/* v1 process for creating tables and inserting new values*/
 CREATE TABLE building_inputs(
     id serial unique,
     buildingname character varying(50),

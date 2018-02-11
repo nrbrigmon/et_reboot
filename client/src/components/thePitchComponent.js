@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ThreeBuildingPrototype from './create/threeModels/three-building-prototype';
+
+import Grid from 'material-ui/Grid';
+
+import Card, { CardContent } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
+import { withStyles } from 'material-ui/styles';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+
+const styles = theme => ({
+	root: {
+	  flexGrow: 1,
+	  width: '100%',
+	  backgroundColor: theme.palette.background.paper
+	},
+	paper: {
+	  padding: '0px 20px 20px 20px',
+	  margin: '40px 20px 20px 20px',
+	  width: '80%'
+	}
+  });
 
 const TARGET_AUDIENCES = (
 	<div>
@@ -14,7 +33,7 @@ const PRODUCTS = <div>products</div>;
 const ADVANTAGE = <div>advantage</div>;
 const BENEFITS = <div>benefits</div>;
 
-class Welcome extends Component {
+class ThePitch extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -55,77 +74,107 @@ class Welcome extends Component {
 	};
 
 	render() {
+		const { classes } = this.props;
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
-					<h2>Why this app?</h2>
-				</div>
-				<div>
-					<ThreeBuildingPrototype />
-				</div>
-				<div className="row">
-					<div className="col s6 offset-s3">
-						<p>
-							For{' '}
-							<a onClick={() => this.handleClick('target')}>
-								[TARGET AUDIENCES]
-							</a>,{' '}
-							<a onClick={() => this.handleClick('org')}>[ORGANIZATION]</a>{' '}
-							offers{' '}
-							<a onClick={() => this.handleClick('products')}>
-								[WHAT PRODUCTS/SERVICES]
-							</a>{' '}
-							that{' '}
-							<a onClick={() => this.handleClick('advantage')}>
-								[DISTINCTIVE ADVANTAGE]
-							</a>{' '}
-							to achieve{' '}
-							<a onClick={() => this.handleClick('bene')}>[END BENEFITS]</a>.
-						</p>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col s6 offset-s3">
+			<Grid container
+				className={classes.root}
+				alignItems='flex-start'
+				direction='row'
+				justify='center'>
+				<Paper className={classes.paper}>
+					
+					<Grid item xs={12}>
+						<h2>Why this app?</h2>
+					</Grid>
+					
+					<Grid item xs={12}>
+						<Card>
+							<CardContent>
+								<p>
+									For{' '}
+									<a onClick={() => this.handleClick('target')}>
+										[TARGET AUDIENCES]
+									</a>,{' '}
+									<a onClick={() => this.handleClick('org')}>[ORGANIZATION]</a>{' '}
+									offers{' '}
+									<a onClick={() => this.handleClick('products')}>
+										[WHAT PRODUCTS/SERVICES]
+									</a>{' '}
+									that{' '}
+									<a onClick={() => this.handleClick('advantage')}>
+										[DISTINCTIVE ADVANTAGE]
+									</a>{' '}
+									to achieve{' '}
+									<a onClick={() => this.handleClick('bene')}>[END BENEFITS]</a>.
+								</p>
+							</CardContent>
+						</Card>
+					</Grid>
+					
+					<Grid item xs={12}>
 						{this.renderContentSelection(this.state.selection)}
-					</div>
-				</div>
+					</Grid>
+							
+			
 
-				<div className="col s12 center-align">
-					<h5>
-						What are the issues with the current Scenario Planning Software?
-					</h5>
-					<div className="row">
-						<div className="col s6 offset-s3 left-align">
-							<ul>
-								<li>Overly complicated spreadsheets and files</li>
-								<li>Lack of visualizations (espcially three-dimensional)</li>
-								<li>Requirement of private, desktop software</li>
-								<li>De-centralized; isolated data collection</li>
-								<li>Difficult to share results</li>
-							</ul>
-						</div>
-					</div>
+					<Grid item xs={12}>
+						<h5>
+							What are the issues with the current Scenario Planning Software?
+						</h5>
+						<List>
+							<ListItem>
+								<ListItemText 
+									primary="Overly complicated spreadsheets and files" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="Lack of visualizations (espcially three-dimensional)" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="Requirement of private, desktop software" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="De-centralized; isolated data collection" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="Difficult to share results" />
+							</ListItem>
+						</List>
+						<h5>What are the solutions offered by this application?</h5>
+						<List>
+							<ListItem>
+								<ListItemText 
+									primary="Centralized database" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="Web-application with simple UI" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="3D visuals" />
+							</ListItem>
+							<ListItem>						
+								<ListItemText 
+									primary="Shareable and interactive results" />
+							</ListItem>
+						</List>
+					</Grid>
 
-					<h5>What are the solutions offered by this application?</h5>
-					<div className="row">
-						<div className="col s6 offset-s3 left-align">
-							<ul>
-								<li>Centralized database</li>
-								<li>Web-application with simple UI</li>
-								<li>3D visuals</li>
-								<li>Shareable and interactive results</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<Link className="waves-effect waves-light btn" to="/">
-					Back to Homepage
-				</Link>
-			</div>
+					<Grid item xs={12}>
+						<Link className="waves-effect waves-light btn" to="/">
+							Back to Homepage
+						</Link>
+					</Grid>
+				</Paper>
+			</Grid>
 		);
 	}
 }
 
-export default Welcome;
+
+const styledApp = withStyles(styles)(ThePitch);
+export default styledApp;

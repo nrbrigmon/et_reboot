@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../../actions';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
@@ -12,7 +12,7 @@ import Icon from 'material-ui/Icon';
 import List, { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import Tooltip from 'material-ui/Tooltip';
 
-import AddBldgFromLibraryModal from '../components/create/buildings/modal/AddBldgFromLibraryModal';
+import AddBldgFromLibraryModal from './buildings/modal/AddBldgFromLibraryModal';
 
 import * as shortid from 'shortid';
 
@@ -89,7 +89,7 @@ class CreateStart extends Component {
 	}
 	
 	renderMyLibrary = (lib) => {
-		console.log('lib ',lib);
+		// console.log('lib ',lib);
 		return lib.map((item, idx) => {
 			let name = item.physicalInfo.buildingName;
 			if (name === undefined){

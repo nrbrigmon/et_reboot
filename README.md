@@ -1,5 +1,13 @@
 ﻿Headers
-# This is an <h1> tag
+# ComuniDADOS v3
+Built using the following libraries/frameworks
+* PostgreSQL
+* Node JS
+* React JS
+* Material-UI 
+* Three JS
+... just look at the package.json
+
 ## This is an <h2> tag
 ###### This is an <h6> tag
 

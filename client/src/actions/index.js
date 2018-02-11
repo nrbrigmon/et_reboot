@@ -48,7 +48,14 @@ export const updateDevTypeRow = (value, rowId, cellId) => {
 	}
 	return action;
 }
-
+export const updateDevName = (value, rowId) => {
+	const action = {
+		type: 'UPDATE_DEV_TYPE_NAME',
+		value,
+		rowId
+	}
+	return action;
+}
 /* BUILDING ACTIONS */
 export const addBuildingToLibrary = (bldgArray) => {
 	// console.log(action);
@@ -136,8 +143,8 @@ export const fetchBuildingPrototypeAttributes = (status, id) => async dispatch =
 		// console.log(res);
 		dispatch({ type: 'FETCH_BLDG_PROTOTYPE', payload: res["data"][0] });
 	} else {
-		// console.log('loading template');
-
+		console.log('loading sample building template');
+		
 		dispatch({ type: 'FETCH_BLDG_PROTOTYPE', payload: sampleFields});
 	}
 };

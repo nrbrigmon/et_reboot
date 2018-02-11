@@ -60,7 +60,7 @@ const styles = theme => ({
 		//we load default attributes
 	}
 	componentDidMount = () => {
-		console.log(this.props.bldgType)
+		// console.log(this.props.bldgType)
 		let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
 		this.setState({
 			BP: {
@@ -76,8 +76,9 @@ const styles = theme => ({
 			let status = this.state.editing;
 			fetch(this.props.fetchBuildingPrototypeAttributes(status, _id))
 				.then(res => {
-					// console.log('post featch ', res)
+					// console.log('res fetch ', res)
 					let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
+					// console.log(this.props);
 					this.setState({
 						BP: {
 							uniqueId: _id,
@@ -216,8 +217,21 @@ const styles = theme => ({
 							Cancel
 						</Button>	
 					</Grid>
+
 					<Grid item md={8} sm={12}>
 						{this.renderChildContent(this.state.tabValue, this.state.BP)}
+					</Grid>
+					
+					<Grid item className={classes.paper} xs={12}>
+						<Button raised color="primary"  className={classes.button} 
+							onClick={()=>this.saveBuilding()}>
+							Save
+						</Button>	
+						
+						<Button raised color="accent"  className={classes.button} 
+							onClick={()=>this.props.history.push('/create')}>
+							Cancel
+						</Button>	
 					</Grid>
 			</Grid>
 		);

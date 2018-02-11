@@ -1,4 +1,7 @@
-/* create process */
+/* v2.0 process for creating tables and inserting new values
+these are the latest schemas. i went with jsonb because i
+can pack much more without a schema.... easier for testing
+easier for development...*/
 
 CREATE TABLE building_prototype_inputs (
     id serial,

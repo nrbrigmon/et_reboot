@@ -40,7 +40,7 @@ class AdvancedFinFormComponent extends Component {
 	};
 
 	render() {
-		let bldgAttr = this.props.advFinInfo;
+		let bldgAttr = this.props.attributes.advFinInfo;
 		const { classes } = this.props;
 		const { section1, section2, section3,
 			section4, section5, section6, section7 } = inputFields;

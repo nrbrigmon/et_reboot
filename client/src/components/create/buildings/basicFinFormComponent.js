@@ -44,7 +44,7 @@ class BasicFinFormComponent extends Component {
 
 	render() {
 		// console.log(this.props);
-		let bldgAttr = this.props.basicFinInfo;
+		let bldgAttr = this.props.attributes.basicFinInfo;
 		const { classes } = this.props;
 		const { section1,section2,section3,section4 } = inputFields;
 

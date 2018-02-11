@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../../../actions';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
@@ -10,21 +10,24 @@ import Table, { TableBody, TableCell, TableHead, TableFooter, TableRow } from 'm
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 
 import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import Typography from 'material-ui/Typography';
 
-import DevTypeTableRow from '../components/create/developments/DevTypeTableRow';
+import DevTypeTableRow from './DevTypeTableRow';
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		width: '100%',
-	  marginTop: theme.spacing.unit * 3,
-	  overflowX: 'auto',
+		marginTop: theme.spacing.unit * 3,
+		overflowX: 'auto',
+		padding: '20px'
 	},
 	table: {
 	  minWidth: 700,
 	},
+	card: {
+		padding: '20px'
+	}
   });
 
 
@@ -62,7 +65,7 @@ function BasicTable(props) {
 					<TableCell>Totals</TableCell>
 					{
 						devPercTotals.map((n, idx) => {
-							console.log(n);
+							// console.log(n);
 							return <TableCell key={idx} numeric> {n.totals} </TableCell>
 						})
 					}
@@ -79,7 +82,7 @@ class DevTypeStart extends Component {
 		// this.props.fetchDevTypeTotals();
 	}
 	shouldComponentUpdate(nextProps, nextState) {
-		console.log('update');
+		// console.log('update');
 		if (nextProps.myLib.length !== this.props.myLib.length){
 			//initialize app with dev type row
 			this.props.fetchDevTypeInit(1, nextProps.myLib);
@@ -93,7 +96,7 @@ class DevTypeStart extends Component {
 	}
 		
 	addDevTypeRow(){
-		console.log('add row')
+		// console.log('add row')
 		this.props.addNewDevTypeRow(this.props.myLib);
 	}
 	render() {
@@ -107,7 +110,7 @@ class DevTypeStart extends Component {
 				direction='row'
 				justify='center'>
 				
-				<Grid item xs={12} className={classes.paper}>
+				<Grid item xs={12} className={classes.card}>
 					<h2>Step Two: Create Developments Type Mix</h2>
 				</Grid>
 				<Grid item sm={12} className={classes.card}>
@@ -125,6 +128,12 @@ class DevTypeStart extends Component {
 							</Button>	
 							<Button dense color="primary" onClick={()=>this.handleNavigation('create/dev-types')}>
 								Move to Step Three
+							</Button>	
+							<Button dense color="primary" onClick={()=>alert("saved!... later...")}>
+								Save
+							</Button>	
+							<Button dense color="primary" onClick={()=>this.props.history.push('/create')}>
+								Go Back
 							</Button>	
 						</CardActions>
 					</CardContent>
