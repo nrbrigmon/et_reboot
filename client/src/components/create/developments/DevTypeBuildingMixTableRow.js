@@ -8,37 +8,52 @@ import TextField from 'material-ui/TextField';
 
 import './devCell.css';
 
-class DevTypeTableRow extends Component {
-    handleChange = (e, devTypeId) => {
-        const targetValue = e.target.value;
-        const targetId = e.target.id;
-        fetch(this.props.updateDevTypeRow(targetValue, devTypeId, targetId)).then( ()=>{
-            console.log('then...')
-            this.props.fetchDevTypeTotals(this.props.devTypes);
-        });
+class DevTypeBuildingMixTableRow extends Component {
+    handleChange = (e, rowId) => {
+        const value = e.target.value;
+        const cellId = e.target.id;
+        // console.log(targetValue, targetId);
+        this.props.updateDevTypeRow(value, rowId, cellId);
     } 
     updateDevName = (e) => {
         const targetValue = e.target.value;
         const targetId = e.target.id;
         this.props.updateDevName(targetValue, targetId);
     }
+    getTotal = (cells) => {
+        let sum = cells.reduce( (acc, curr, idx) => {
+            // console.log(acc, curr, idx);
+            if (idx === 1) {
+                return Number(acc.percVal) + Number(curr.percVal);
+            }
+            return Number(acc) + Number(curr.percVal);
+        });
+        return (<p>{sum}</p>);
+    }
+
     render(){
         const { cellData } = this.props;
-        const { devTypeId } = this.props;
+        const { uniqueId } = this.props;
         const { devTypeName } = this.props;
-        // const { myLib } = this.props;
-        // console.log(cellData)
-        // console.log('current props ',this.props);
+        // console.log(cellData);
+        // console.log(this.props);
         return (
             <TableRow>
                 <TableCell>
                     <TextField
-                        id={devTypeId}
+                        id={uniqueId}
                         placeholder={"Development Type Name"}
                         value={devTypeName}
                         onChange={(e) => this.updateDevName(e) }
-                        margin="normal"
+                        margin="dense"
+                        
                     />
+                </TableCell>
+                <TableCell>
+                
+                   { this.getTotal(cellData) }
+                    
+                
                 </TableCell>
                 {
                     cellData.map((cell, idx) => {
@@ -46,15 +61,14 @@ class DevTypeTableRow extends Component {
                             <TableCell key={idx} numeric>
                                 <TextField
                                     id={cell.bldgId}
-                                    placeholder={"0 (%)"}
+                                    placeholder={"0%"}
                                     value={cell.percVal}
-                                    onChange={(e) => this.handleChange(e, devTypeId) }
-                                    margin="normal"
+                                    onChange={(e) => this.handleChange(e, uniqueId) }
+                                    margin="dense"
                                 />
                             </TableCell>
                         )
                     })
-                    
                 }
             </TableRow>
         )
@@ -68,4 +82,4 @@ function mapStateToProps(state) {
        };
 }
 
-export default connect(mapStateToProps, actions)(DevTypeTableRow);
+export default connect(mapStateToProps, actions)(DevTypeBuildingMixTableRow);

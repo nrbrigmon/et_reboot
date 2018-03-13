@@ -27,6 +27,13 @@ CREATE TABLE envision_users (
     date_started date
 );
 
+CREATE TABLE building_libraries (
+    id serial,
+    library_id text,
+    library_name character varying(50),
+    building_library_ids text[]
+);
+
 /* insert process */
 /*
 INSERT INTO envision_users (google_id, building_library_ids, date_started)

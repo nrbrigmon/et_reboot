@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import './_tableCSS.css';
+
+import { VictoryPie } from 'victory';
+import Stop from 'material-ui-icons/Stop';
+import NumberFormat from 'react-number-format';
 
 const styles = theme => ({
 	root: {
@@ -12,100 +17,135 @@ const styles = theme => ({
 	}
   });
 
+let placeholderCSS = {
+	border: '1px solid black',
+	margin: '20px',
+	padding: '100px'
+};
+let legendCSS = {
+	fontSize: '10px',
+	margin: '0px',
+	padding: '0px'
+};
+
 class BuildingFormReviewComponent extends Component {
 
 	render() {		
 		const { classes } = this.props;
-		// console.log(this.props.attributes);
-		let reviewObj = this.props;
+		let bldg = this.props.attributes;
 		return (
 			<Grid container >
 				<Grid item xs={12} className={classes.paper}>
 					<h4>Review</h4>
+					<h4>{bldg.rBuildingName} | {bldg.rLotLocation}</h4>
 				</Grid>
-				<Grid item xs={6}> 
-					<div><strong>Building Name</strong>: {reviewObj.rBuildingName} </div>
-					<div><strong>Lot Size:</strong> {reviewObj.rLotSize}</div>
-					<div><strong>Lot Location:</strong> {reviewObj.rLotLocation}</div>
-					<div><strong>Building Lot Coverage:</strong> {reviewObj.rBuildingLotCoverage}</div>
-					<div><strong>Landscaping Lot Coverage:</strong> {reviewObj.rLanscapeLotCoverage}</div>
-					<div><strong>Parking Lot Coverage:</strong> {reviewObj.rParkingLotCoverage}</div>
-					<div><strong>Height (Stories):</strong> {reviewObj.rBuildingHeight}</div>
-					<div><strong>Floor Area Ratio (FAR):</strong> {reviewObj.rFAR}</div>
-					<div><strong>Total Bldg Square Footage:</strong> {reviewObj.rTotalSf}</div>
-					<div><strong>Residential:</strong> {reviewObj.getResidentialSf} </div>
-					<div><strong>Retail:</strong> {reviewObj.getRetailSf} </div>
-					<div><strong>Office:</strong> {reviewObj.getOfficeSf} </div>
-					<div><strong>Industrial:</strong> {reviewObj.getIndustrialSf} </div>
-					<div><strong>Public/Civic:</strong> {reviewObj.getPublicSf} </div>
-					<div><strong>Educational:</strong> {reviewObj.getEducationalSf} </div>
-					<div><strong>Hotel / Hospitality:</strong> {reviewObj.getHotelSf} </div>
-					<div><strong>Commercial Parking:</strong> {reviewObj.getCommercialParkingSf} </div>
-					<div><strong>Internal / Structured Parking:</strong> {reviewObj.getInternalParkingSf} </div>
-					<div><strong>Residential sf:</strong> {reviewObj.rResidentialSf}</div>
-					<div><strong>Net sf per Unit:</strong> {reviewObj.rResidentialNetUnit} </div>
-					<div><strong>Gross sf per Unit:</strong> {reviewObj.rResidentialGrossUnit} </div>
-					<div><strong>Dwelling Units / Acre:</strong> {reviewObj.rResidentialDwellUnit} </div>
-					<div><strong>Type of Housing:</strong> {reviewObj.rHouseholdType}</div>
-					<div><strong>Percent Renter:</strong>{reviewObj.rHouseholdRenterPerc }  </div>
-					<div><strong>Percent Owner:</strong> {reviewObj.rHouseholdOwnerPerc } </div>
-					<div><strong>Percent Affordable:</strong>{reviewObj.rHouseholdAffordPerc } </div>
-					<div><strong>Estimated Household Income:</strong> {reviewObj.rHouseholdEstIncome }</div>
-					<div><strong>Rent / sf:</strong> {reviewObj.rMonthlyRentSf}</div>
-					<div><strong>Avg Rent (/Mo.):</strong> {reviewObj.rMonthlyRent}</div>
-					<div><strong>Sales Price /sf:</strong> {reviewObj.rSalesPriceSf}</div>
-					<div><strong>Avg Sales Price:</strong> {reviewObj.rSalesPrice}</div>
+				
+				<Grid item xs={4}>
+					<div style={legendCSS}>
+						Building,
+						Parking, and
+						Landscaping Footprints
+					</div>
+					<VictoryPie
+						animate={{duration: 1000}} 
+						innerRadius={75}
+						colorScale={["tomato", "orange", "gold"]} 
+						data={[
+							{ x: "Building", y: bldg.rBuildingLotCoverage },
+							{ x: "Landscaping", y: bldg.rLanscapeLotCoverage },
+							{ x: "Parking", y: bldg.rParkingLotCoverage }
+						]} />
 				</Grid>
-				<Grid item xs={6}> 
-					<div><strong>Total Jobs / sf:</strong> {reviewObj.rJobsPerSf}			</div>
-					<div><strong>Retail Gross sf:</strong> 		{reviewObj.rRetailSf} </div>
-					<div><strong>Retail Lease Rate / sf:</strong> 	{reviewObj.rRetailLeaseRate} </div>
-					<div><strong>Space per Retail Employee:</strong> {reviewObj.rRetailSpacePerEmp} </div>
-					<div><strong>Retail Employees / sf:</strong> 	{reviewObj.rRetailEmpPerSf} </div>
-					<div><strong>Office Gross sf:</strong> {reviewObj.rOfficeSf}</div>
-					<div><strong>Office Lease Rate /sf:</strong> {reviewObj.rOfficeLeaseRate}</div>
-					<div><strong>Space per Office Employee:</strong> {reviewObj.rOfficeSpacePerEmp} </div>
-					<div><strong>Office Employees / sf:</strong> {reviewObj.rOfficeEmpPerSf}	</div>
-					<div><strong>Industrial Gross sf:</strong> 	{reviewObj.rIndustrialSf}</div>
-					<div><strong>Industrial Lease Rate /sf:</strong> {reviewObj.rIndustrialLeaseRate}</div>
-					<div><strong>Space per Employee:</strong> 	{reviewObj.rIndustrialSpacePerEmp}</div>
-					<div><strong>Industrial Employees / sf:</strong> {reviewObj.rIndustrialEmpPerSf}	</div>
-					<div><strong>Public / Civic Gross sf:</strong> 	{reviewObj.rPublicSf}</div>
-					<div><strong>Public / Civic Lease Rate / sf:</strong> {reviewObj.rPublicLeaseRate}</div>
-					<div><strong>Space per Employee:</strong>{reviewObj.rPublicSpacePerEmp}</div>
-					<div><strong>Public / Civic Employees / sf:</strong> {reviewObj.rPublicEmpPerSf}</div>
-					<div><strong>Educational Gross sf:</strong>{reviewObj.rEducationSf}</div>
-					<div><strong>Educational Lease Rate /sf:</strong> {reviewObj.rEducationLeaseRate}</div>
-					<div><strong>Space per Employee:</strong>{reviewObj.rEducationSpacePerEmp}</div>
-					<div><strong>Educational Employees / sf:</strong>{reviewObj.rEducationEmpPerSf}</div>
-					<div><strong>Hospitality Gross sf:</strong>{reviewObj.rHospitalitySf}</div>
-					<div><strong>Hospitality Nightly Rate (per room):</strong>{reviewObj.rHospitalityRateNight} </div>
-					<div><strong>Space per Employee:</strong>{reviewObj.rHospitalitySpacePerEmp} </div>
-					<div><strong>Hospitality Employees / sf:</strong> {reviewObj.rHospitalityEmpPerSf}</div>
-					<div><strong>Net Space per Hotel Room:</strong> {reviewObj.rHospitalityNetPerRoom} </div>
-					<div><strong>Gross Space per Hotel Room:</strong>{reviewObj.rHospitalityGrossPerRoom}</div>
-					<div><strong>Hotel Rooms / sf:</strong> {reviewObj.rHospitalityRoomsPerSf}</div>
-					<div><strong>Shared Parking Gross sf:</strong> {reviewObj.rParkingGrossSf}</div>
-					<div><strong>Parking Hourly Rate (per space):</strong> {reviewObj.rParkingRateHour}</div>
-					<div><strong>Space per Employee:</strong>{reviewObj.rParkingSpacePerEmp}</div>
-					<div><strong>Shared Parking Employees / sf:</strong> {reviewObj.rParkingEmpPerSf} </div>
-
-					<div><strong>Parking Spaces:</strong>  {reviewObj.rParkingSpaces} </div>
-					<div><strong>Parking sf:</strong>  {reviewObj.rParkingSf} </div>
-					<div><strong>Internal / Structured Parking sf:</strong> {reviewObj.rInternalStructureParkingSf}  </div>
-					<div><strong>Parking Cost:</strong> {reviewObj.rParkingCostSf} </div>
-					<div><strong>Land Cost (per sf):</strong> {reviewObj.rLandCostSf} </div>
-					<div><strong>Total Project Value:</strong>{reviewObj.rTotalPrjValue}  </div>
-					<div><strong>Annual Property Tax Revenue (Year 1):</strong> {reviewObj.rPropTaxRevenueYr} </div>
-					<div><strong>Total Fees / SDCs:</strong> {reviewObj.rTotalFees} </div>
-					<div><strong>Subsidy:</strong>{reviewObj.rSubsidy}  </div>
-					<div><strong>Internal Rate of Return (Rental):</strong> {reviewObj.rRateOfReturn}</div>
-					<div><strong>Project Return (Owner):</strong>{reviewObj.rProjectReturn} </div>
-					<div><strong>Y-Intercept:</strong> {reviewObj.rYIntercept} </div>
-					<div><strong>Slope:</strong> {reviewObj.rSlope} </div>
-					{/* more entries for green infrastructure*/}
-					<div><strong>Product Type:</strong> { 'Residential/Office/Mised Use Owner or Renter'} </div>
 	
+				<Grid item xs={4} >
+					<div style={legendCSS}>
+						Lot Area
+					</div>
+					<p>{bldg.rLotSize} sq ft</p>
+					<p><NumberFormat value={bldg.rLotSize / 43560} displayType={'text'} thousandSeparator={true} decimalScale={2} /> acres</p>
+				</Grid>
+				<Grid item xs={4}>
+					<div style={legendCSS}>
+						Building Dimensions
+					</div>
+					<p>Height: {bldg.rBuildingHeight} stories</p>
+					<p>FAR: <NumberFormat value={bldg.rFAR} displayType={'text'} thousandSeparator={true} decimalScale={2} /> </p>
+					<p>Total Sq Ft: <NumberFormat value={bldg.rTotalSf} displayType={'text'} thousandSeparator={true} decimalScale={2} /> sq ft</p>
+				</Grid>
+				
+				<Grid item xs={12}>	
+					<div style={placeholderCSS}>3d image</div>
+				</Grid>
+
+				<Grid item xs={12}>	
+					<div><strong>Residential:</strong> {bldg.getResidentialSf} </div>
+					<div><strong>Retail:</strong> {bldg.getRetailSf} </div>
+					<div><strong>Office:</strong> {bldg.getOfficeSf} </div>
+					<div><strong>Industrial:</strong> {bldg.getIndustrialSf} </div>
+					<div><strong>Public/Civic:</strong> {bldg.getPublicSf} </div>
+					<div><strong>Educational:</strong> {bldg.getEducationalSf} </div>
+					<div><strong>Hotel / Hospitality:</strong> {bldg.getHotelSf} </div>
+					<div><strong>Commercial Parking:</strong> {bldg.getCommercialParkingSf} </div>
+					<div><strong>Internal / Structured Parking:</strong> {bldg.getInternalParkingSf} </div>
+					<div><strong>Residential sf:</strong> {bldg.rResidentialSf}</div>
+					<div><strong>Net sf per Unit:</strong> {bldg.rResidentialNetUnit} </div>
+					<div><strong>Gross sf per Unit:</strong> {bldg.rResidentialGrossUnit} </div>
+					<div><strong>Dwelling Units / Acre:</strong> {bldg.rResidentialDwellUnit} </div>
+					<div><strong>Type of Housing:</strong> {bldg.rHouseholdType}</div>
+					<div><strong>Percent Renter:</strong>{bldg.rHouseholdRenterPerc }  </div>
+					<div><strong>Percent Owner:</strong> {bldg.rHouseholdOwnerPerc } </div>
+					<div><strong>Percent Affordable:</strong>{bldg.rHouseholdAffordPerc } </div>
+					<div><strong>Estimated Household Income:</strong> {bldg.rHouseholdEstIncome }</div>
+					<div><strong>Rent / sf:</strong> {bldg.rMonthlyRentSf}</div>
+					<div><strong>Avg Rent (/Mo.):</strong> {bldg.rMonthlyRent}</div>
+					<div><strong>Sales Price /sf:</strong> {bldg.rSalesPriceSf}</div>
+					<div><strong>Avg Sales Price:</strong> {bldg.rSalesPrice}</div>
+					<div><strong>Total Jobs / sf:</strong> {bldg.rJobsPerSf}			</div>
+					<div><strong>Retail Gross sf:</strong> 		{bldg.rRetailSf} </div>
+					<div><strong>Retail Lease Rate / sf:</strong> 	{bldg.rRetailLeaseRate} </div>
+					<div><strong>Space per Retail Employee:</strong> {bldg.rRetailSpacePerEmp} </div>
+					<div><strong>Retail Employees / sf:</strong> 	{bldg.rRetailEmpPerSf} </div>
+					<div><strong>Office Gross sf:</strong> {bldg.rOfficeSf}</div>
+					<div><strong>Office Lease Rate /sf:</strong> {bldg.rOfficeLeaseRate}</div>
+					<div><strong>Space per Office Employee:</strong> {bldg.rOfficeSpacePerEmp} </div>
+					<div><strong>Office Employees / sf:</strong> {bldg.rOfficeEmpPerSf}	</div>
+					<div><strong>Industrial Gross sf:</strong> 	{bldg.rIndustrialSf}</div>
+					<div><strong>Industrial Lease Rate /sf:</strong> {bldg.rIndustrialLeaseRate}</div>
+					<div><strong>Space per Employee:</strong> 	{bldg.rIndustrialSpacePerEmp}</div>
+					<div><strong>Industrial Employees / sf:</strong> {bldg.rIndustrialEmpPerSf}	</div>
+					<div><strong>Public / Civic Gross sf:</strong> 	{bldg.rPublicSf}</div>
+					<div><strong>Public / Civic Lease Rate / sf:</strong> {bldg.rPublicLeaseRate}</div>
+					<div><strong>Space per Employee:</strong>{bldg.rPublicSpacePerEmp}</div>
+					<div><strong>Public / Civic Employees / sf:</strong> {bldg.rPublicEmpPerSf}</div>
+					<div><strong>Educational Gross sf:</strong>{bldg.rEducationSf}</div>
+					<div><strong>Educational Lease Rate /sf:</strong> {bldg.rEducationLeaseRate}</div>
+					<div><strong>Space per Employee:</strong>{bldg.rEducationSpacePerEmp}</div>
+					<div><strong>Educational Employees / sf:</strong>{bldg.rEducationEmpPerSf}</div>
+					<div><strong>Hospitality Gross sf:</strong>{bldg.rHospitalitySf}</div>
+					<div><strong>Hospitality Nightly Rate (per room):</strong>{bldg.rHospitalityRateNight} </div>
+					<div><strong>Space per Employee:</strong>{bldg.rHospitalitySpacePerEmp} </div>
+					<div><strong>Hospitality Employees / sf:</strong> {bldg.rHospitalityEmpPerSf}</div>
+					<div><strong>Net Space per Hotel Room:</strong> {bldg.rHospitalityNetPerRoom} </div>
+					<div><strong>Gross Space per Hotel Room:</strong>{bldg.rHospitalityGrossPerRoom}</div>
+					<div><strong>Hotel Rooms / sf:</strong> {bldg.rHospitalityRoomsPerSf}</div>
+					<div><strong>Shared Parking Gross sf:</strong> {bldg.rParkingGrossSf}</div>
+					<div><strong>Parking Hourly Rate (per space):</strong> {bldg.rParkingRateHour}</div>
+					<div><strong>Space per Employee:</strong>{bldg.rParkingSpacePerEmp}</div>
+					<div><strong>Shared Parking Employees / sf:</strong> {bldg.rParkingEmpPerSf} </div>
+
+					<div><strong>Parking Spaces:</strong>  {bldg.rParkingSpaces} </div>
+					<div><strong>Parking sf:</strong>  {bldg.rParkingSf} </div>
+					<div><strong>Internal / Structured Parking sf:</strong> {bldg.rInternalStructureParkingSf}  </div>
+					<div><strong>Parking Cost:</strong> {bldg.rParkingCostSf} </div>
+					<div><strong>Land Cost (per sf):</strong> {bldg.rLandCostSf} </div>
+					<div><strong>Total Project Value:</strong>{bldg.rTotalPrjValue}  </div>
+					<div><strong>Annual Property Tax Revenue (Year 1):</strong> {bldg.rPropTaxRevenueYr} </div>
+					<div><strong>Total Fees / SDCs:</strong> {bldg.rTotalFees} </div>
+					<div><strong>Subsidy:</strong>{bldg.rSubsidy}  </div>
+					<div><strong>Internal Rate of Return (Rental):</strong> {bldg.rRateOfReturn}</div>
+					<div><strong>Project Return (Owner):</strong>{bldg.rProjectReturn} </div>
+					<div><strong>Y-Intercept:</strong> {bldg.rYIntercept} </div>
+					<div><strong>Slope:</strong> {bldg.rSlope} </div>
 				</Grid>
 			</Grid>
 		);

@@ -14,7 +14,6 @@ import PhysicalFormComponent from './PhysicalFormComponent';
 import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
-import BuildingPrintSummary from './BuildingPrintSummary';
 import * as devFunc from './_updateForDevType';
 
 const styles = theme => ({
@@ -35,12 +34,10 @@ const styles = theme => ({
   class BuildingPrototypeStart extends Component {
 	constructor(props) {
 		super(props);
-		// console.log(shortid.generate());
 		// if new building shortid.generate
 		// else get shortid from exinput
-	
 		this.state = {
-			tabValue: 'phys',
+			tabValue: 'review',
 			editing: ( (props.match.path).indexOf("edit") >= 0 ? true : false), 
 			BP: {
 				uniqueId: '',
@@ -59,8 +56,9 @@ const styles = theme => ({
 		//decide whether we are here to edit or not. if not
 		//we load default attributes
 	}
-	componentDidMount = () => {
-		// console.log(this.props.bldgType)
+
+	componentDidMount(){
+		console.log('mounted...')
 		let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
 		this.setState({
 			BP: {
@@ -70,13 +68,14 @@ const styles = theme => ({
 				advFinInfo
 			}
 		});
+		this.updateForDevType(this.props.bldgType);
 		if (this.props.bldgType.length === 0 ){
 			console.log('no props, getting new ones')
 			let _id = this.props.match.params.id
 			let status = this.state.editing;
 			fetch(this.props.fetchBuildingPrototypeAttributes(status, _id))
 				.then(res => {
-					// console.log('res fetch ', res)
+					console.log('then pt 1...')
 					let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
 					// console.log(this.props);
 					this.setState({
@@ -87,11 +86,17 @@ const styles = theme => ({
 							advFinInfo
 						}
 					});
+					// console.log(this.state.BP);
+				console.log('fetched...')
+					
+			}).then( () => {
+				console.log('then pt 2...')				
+				this.updateForDevType(...this.state.BP);
 			});
 		}
-		
-		// console.log(this.props.bldgType);
+		console.log(this.state.BP.forDevType);
 	}
+	
 	updatePrototypePhys(newState) {
 		let buildingCopy = {
 			...this.state.BP
@@ -104,6 +109,7 @@ const styles = theme => ({
 	}
 
 	updateBasicFinInfo(newState) {
+		console.log(newState);
 		let buildingCopy = {
 			...this.state.BP
 		};
@@ -135,18 +141,26 @@ const styles = theme => ({
 		this.setState({
 			forDevType: devFunc.main(buildingCopy) 
 		});
+		console.log('update for dev type func');
 	}
 
 	saveBuilding = () => {	
-		let status = this.state.editing;
-		// let _id = this.state.BP.uniqueId;
-		this.props.saveBuilding(status, this.state.BP);
-        this.props.addBuildingToLibrary([this.state.BP]);
+		let editing = this.state.editing;
+		//if it is new tale the following actions
+		if (editing === false){
+			//add building to available library modal list
+			this.props.newAvailableBuilding(this.state.BP)
+			//add building to my library
+			this.props.addBuildingToLibrary(this.state.BP);
+		}
+		this.props.updateBuildingInLibrary(editing, this.state.BP);
+		this.props.saveBuildingToDb(editing, this.state.BP);
 		this.props.history.push('/create');
 	}
 
-	renderChildContent = (pg, newState) => {
+	renderChildContent = (pg, newState, forDevType) => {
 		// console.log('newstate', newState["physicalInfo"].buildingName);
+		// console.log(newState);
 		if (pg === 'phys') {
 			return (
 				<PhysicalFormComponent
@@ -168,13 +182,11 @@ const styles = theme => ({
 					attributes={newState}
 				/>
 			);
-		} else if (pg === 'print') {
-			return <BuildingPrintSummary />;
 		} else {
 			return (
 				<BuildingFormReviewComponent
 					pageChange={this.changePage}
-					attributes={this.state.forDevType}
+					attributes={forDevType}
 				/>
 			);
 		}
@@ -182,65 +194,69 @@ const styles = theme => ({
 	render() {
 		const { classes } = this.props;
 		const { tabValue } = this.state;
+		const { BP } = this.state;
+		const { forDevType } = this.state;
 		// console.log('render props ',this.props.bldgType);
+		// console.log(forDevType);
 		return (
-				<Grid container
-					className={classes.root}
-					alignItems='center'
-					direction='row'
-					justify='center'>
-					<AppBar position="static" color="default">
-						<Tabs
-							value={tabValue}
-							onChange={this.componentSelection}
-							indicatorColor="primary"
-							textColor="primary"
-							fullWidth
-							centered
-						>
-							<Tab value="phys" label="Physical Inputs" />
-							<Tab value="fin1" label="Basic Financial" />
-							<Tab value="fin2" label="Advanced Financial" />
-							<Tab value="rev" label="Review" />
-							<Tab value="print" label="Print" />
-						</Tabs>
-					</AppBar>
+			<Grid container
+				className={classes.root}
+				alignItems='center'
+				direction='row'
+				justify='center'>
+				<AppBar position="static" color="default">
+					<Tabs
+						value={tabValue}
+						onChange={this.componentSelection}
+						indicatorColor="primary"
+						textColor="primary"
+						fullWidth
+						centered
+					>
+						<Tab value="phys" label="Physical Inputs" />
+						<Tab value="fin1" label="Basic Financial" />
+						<Tab value="fin2" label="Advanced Financial" />
+						<Tab value="review" label="Review" />
+					</Tabs>
+				</AppBar>
+				
+				<Grid item className={classes.paper} xs={12}>
+					<Button raised color="primary"  className={classes.button} 
+						onClick={()=>this.saveBuilding()}>
+						Save
+					</Button>	
 					
-					<Grid item className={classes.paper} xs={12}>
-						<Button raised color="primary"  className={classes.button} 
-							onClick={()=>this.saveBuilding()}>
-							Save
-						</Button>	
-						
-						<Button raised color="accent"  className={classes.button} 
-							onClick={()=>this.props.history.push('/create')}>
-							Cancel
-						</Button>	
-					</Grid>
+					<Button raised color="accent"  className={classes.button} 
+						onClick={()=>this.props.history.push('/create')}>
+						Cancel
+					</Button>	
+				</Grid>
 
-					<Grid item md={8} sm={12}>
-						{this.renderChildContent(this.state.tabValue, this.state.BP)}
-					</Grid>
+				<Grid item md={8} sm={12}>
+					{this.renderChildContent(this.state.tabValue, BP, forDevType)}
+				</Grid>
+				
+				<Grid item className={classes.paper} xs={12}>
+					<Button raised color="primary"  className={classes.button} 
+						onClick={()=>this.saveBuilding()}>
+						Save
+					</Button>	
 					
-					<Grid item className={classes.paper} xs={12}>
-						<Button raised color="primary"  className={classes.button} 
-							onClick={()=>this.saveBuilding()}>
-							Save
-						</Button>	
-						
-						<Button raised color="accent"  className={classes.button} 
-							onClick={()=>this.props.history.push('/create')}>
-							Cancel
-						</Button>	
-					</Grid>
+					<Button raised color="accent"  className={classes.button} 
+						onClick={()=>this.props.history.push('/create')}>
+						Cancel
+					</Button>	
+				</Grid>
 			</Grid>
 		);
 	}
 }
 
 function mapStateToProps(state) {
-		// console.log(state.bldgType);
-	  return { bldgType: state.bldgType };
+	return { 
+		bldgType: state.bldgType,
+		availableBldgs: state.availableBldgs
+	};
 }
 
 const styledApp = withStyles(styles)(BuildingPrototypeStart);

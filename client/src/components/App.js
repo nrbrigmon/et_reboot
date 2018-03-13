@@ -18,6 +18,7 @@ import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 
 class App extends Component {
 	componentDidMount() {
+		//fetchUser will get name, info, if exists
 		this.props.fetchUser();
 	}
 	render() {
@@ -44,4 +45,4 @@ class App extends Component {
 }
 
 
-export default connect(null, actions)(App);;
+export default connect(null, actions)(App);

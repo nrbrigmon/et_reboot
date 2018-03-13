@@ -24,7 +24,6 @@ const styles = theme => ({
 class BasicFinFormComponent extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			localBP: this.props.attributes
 		}
@@ -35,7 +34,7 @@ class BasicFinFormComponent extends Component {
 
 	handleChange = e => {
 		let buildingCopy = {};
-		buildingCopy[e.target.name] = e.target.value;
+		buildingCopy[e.target.id] = e.target.value;
 		this.props.buildingUpdate(buildingCopy);
 		updateMathModule(this.state.localBP);
 

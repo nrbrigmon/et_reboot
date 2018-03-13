@@ -12,9 +12,6 @@ NEXT STEPS:
 
 5. create regEx form-input validations
 
-6. install robot font
-7. install gooogle auth from passport.js
-
 
 
 1. integrate with machine learning classifier....

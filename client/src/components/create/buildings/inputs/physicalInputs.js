@@ -12,7 +12,7 @@ export default {
     },{
         name: 'Site Area',
         attr: 'siteArea',
-        placeholder: 'ex. 5 (acres)',
+        placeholder: 'ex. 1500 (square feet)',
         input: 'text'
     },{
         name: 'Number of Stories',

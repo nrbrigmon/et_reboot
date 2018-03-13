@@ -34,10 +34,10 @@ class Welcome extends Component {
 				direction='row'
 				justify='center'>
 				
-				<Grid item xs={12} className={classes.paper}>
+				<Grid item sm={12} className={classes.paper}>
 					<h2>Be a Developer</h2>
 				</Grid>
-				<Grid item sm={4} xs={12}>
+				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
 						<Typography type="headline" component="h2">
@@ -56,7 +56,7 @@ class Welcome extends Component {
 						</CardActions>
 					</Card>
 				</Grid>
-				<Grid item sm={4} xs={12}>
+				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
 						<Typography type="headline" component="h2">
@@ -74,7 +74,7 @@ class Welcome extends Component {
 						</CardActions>
 					</Card>
 				</Grid>
-				<Grid item sm={4} xs={12}>
+				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
 						<Typography type="headline" component="h2">

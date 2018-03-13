@@ -9,42 +9,44 @@ export const fetchUser = () => async dispatch => {
 };
 
 /* DEVELOPMENT TYPE ACTIONS */
-export const addNewDevTypeRow = (myLib) => {
+export const addNewDevTypeRow = (selectedBldgs) => {
 	const action = {
 		type: 'ADD_DEV_TYPE_ROW',
-		myLib
+		selectedBldgs
 	}
 	return action;
 };
-export const removeDevTypeRow = (myLib) => {
+export const removeDevTypeRow = (selectedBldgs) => {
 	const action = {
 		type: 'REMOVE_DEV_TYPE_ROW',
-		myLib
+		selectedBldgs
 	}
 	return action;
 };
-export const fetchDevTypeInit = (rows, myLib) => {
+export const fetchDevTypeInit = (rows, selectedBldgs) => {
 	const action = {
 		type: 'FETCH_DEV_TYPE_INIT',
 		rows,
-		myLib
+		selectedBldgs
 	}
 	return action;
 }
-export const fetchDevTypeTotals = (devTypes) => {
-	console.log('action for ', devTypes)
-	const action = {
-		type: 'FETCH_DEV_TYPE_TOTAL',
-		devTypes
-	}
-	return action;
-}
+
 export const updateDevTypeRow = (value, rowId, cellId) => {
 	const action = {
 		type: 'UPDATE_DEV_TYPE_ROW',
 		value,
 		rowId,
 		cellId
+	}
+	return action;
+}
+export const updateDevTypeAttr = (value, rowId, attrId) => {
+	const action = {
+		type: 'UPDATE_DEV_TYPE_ATTR',
+		value,
+		rowId,
+		attrId
 	}
 	return action;
 }
@@ -57,36 +59,101 @@ export const updateDevName = (value, rowId) => {
 	return action;
 }
 /* BUILDING ACTIONS */
-export const addBuildingToLibrary = (bldgArray) => {
+export const fetchRandomId = () => {
+	const action = {
+		type: 'FETCH_RANDOM_ID'
+	}
+	return action;
+}
+export const addBuildingToLibrary = (bldg) => {
 	// console.log(action);
+	let bldgId = bldg.uniqueId;
 	const action = {
 		type: 'ADD_BUILDING',
-		bldgArray
+		bldgId,
+		bldg
 	}
 	return action;
 };
-
-export const removeBuildingFromLibrary = (selection) => {
+export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
+	const action = {
+		type: 'ADD_BUILDING_ARRAY',
+		bldgArray,
+		availableBldgs
+	}
+	return action;
+}
+export const removeBuildingFromLibrary = (bldgId) => {
 	// console.log(action);
 	
 	const action = {
 		type: 'REMOVE_BUILDING',
-		item: selection
+		bldgId
 	}
 	// console.log(action);
 	return action;
 };
 
-export const toggleBuildingModalList = (selection) => {
+export const saveBuildingLibrary = (myLibrary, status) => async dispatch => {
+	//does it already exist? if so put, else post	
+	if (status === true){
+		const res = await axios.put('/api/libraries/'+myLibrary.library_id+'', myLibrary)
+		// console.log(res);
+		dispatch({ type: 'UPDATE_BUILDING_LIBRARY', payload: res.data });
+	} else {
+		const res = await axios.post('/api/libraries', myLibrary)
+		// console.log(res);
+		dispatch({ type: 'POST_BUILDING_LIBRARY', payload: res.data });
+	}
+};
+
+export const updateBuildingInLibrary = (editing, building) => {
+	// console.log(action);
+	const action = {
+		type: 'UPDATE_BUILDING',
+		editing,
+		building
+	}
+	return action;
+};
+/* BUIILDING LIBRARY ACTIONS */
+export const fetchAllBuildingLibraries = () => async dispatch => {
+	const res = await axios.get('/api/libraries');
+	dispatch({ type: 'FETCH_BUILDINGS_LIBRARIES', payload: res.data });
+};
+
+export const toggleBuildingModalList = (id) => {
 	// console.log(selection)
 	const action = {
 		type: 'TOGGLE_BUILDING',
-		id: selection.id,
-		item: selection
+		id
 	}
 	return action;
 };
 
+export const updateLibraryName = (library_name) => {
+	const action = {
+		type: 'UPDATE_LIBRARY_NAME',
+		library_name
+	}
+	return action;
+}
+
+export const updateLibraryId = (library_id) => {
+	const action = {
+		type: 'UPDATE_LIBRARY_ID',
+		library_id
+	}
+	return action;
+}
+export const toggleDevModalList = (id) => {
+	// console.log(selection)
+	const action = {
+		type: 'RADIO_TOGGLE_BUILDING',
+		id
+	}
+	return action;
+};
 export const resetMyBuildingLibrary = () => {
 	const action = {
 		type: 'RESET_LIBRARY'
@@ -101,27 +168,59 @@ export const resetBuildingModalList = () => {
 	return action;
 };
 
-export const saveBuilding = (status, bldg) => async dispatch => {
+export const newAvailableBuilding = (bldg) => {
+	const action = {
+		type: 'NEW_AVAIL_BUILDING',
+		payload: bldg
+	}
+	return action;
+};
+
+export const saveBuildingToDb = (status, bldg) => async dispatch => {
+	//does it already exist? if so put, else post	
+	console.log(bldg);
 	if (status === true){
 		const res = await axios.put('/api/buildings/'+bldg.uniqueId+'', bldg)
 		// console.log(res);
-		dispatch({ type: 'UPDATE_BUILDING', payload: res.data });
+		dispatch({ type: 'UPDATE_BUILDING_TOAST', payload: res.data });
 	} else {
+		// axios.post('/api/buildings', bldg)
 		const res = await axios.post('/api/buildings', bldg)
 		// console.log(res);
-		dispatch({ type: 'NEW_BUILDING', payload: res.data });
+		dispatch({ type: 'POST_BUILDING_TOAST', payload: res.data });
 	}
 };
+
+export const saveDevelopmentType = (status, devType) => async dispatch => {
+	//does it already exist? if so put, else post
+	if (status === true){
+		const res = await axios.put('/api/devtypes/'+devType.uniqueId+'', devType)
+		// console.log(res);
+		dispatch({ type: 'UPDATE_DEV_TYPES', payload: res.data });
+	} else {
+		const res = await axios.post('/api/devtypes', devType)
+		// console.log(res);
+		dispatch({ type: 'NEW_DEV_TYPES', payload: res.data });
+	}
+};
+
+export const closeToast = () => {
+	let action = {
+		type: 'CLOSE_TOAST'
+	}
+	return action;
+}
+
 export const editBuildingPrototype = (status, selection) => {
 	let action;
 	if (status === true){
 		action = {
-			type: 'EDIT_BUILDING_PROTOTYPE',
+			type: 'UPDATE_BLDG_PROTOTYPE',
 			payload: selection
 		}
 	} else {
 		action = {
-			type: 'EDIT_BUILDING_PROTOTYPE',
+			type: 'UPDATE_BLDG_PROTOTYPE',
 			payload: sampleFields
 		}
 	}
@@ -157,3 +256,20 @@ export const updateFormFieldInput = (page, update) => {
 	}
 	return action;
 }
+
+
+/* MODAL SELECTIONS */
+export const openModal = (selection) => {
+	const action = {
+		type: 'OPEN_MODAL',
+		selection
+	}
+	return action;
+};
+export const closeModal = () => {
+	// console.log('closemodal fired...');
+	const action = {
+		type: 'CLOSE_MODAL'
+	}
+	return action;
+};

@@ -16,6 +16,7 @@ class InputFieldsComponent extends Component {
 		if (event.target.name){
 			event.target.id = event.target.name
 		}
+		
 		this.props.inputUpdate(event);
 	};
 	
@@ -36,7 +37,7 @@ class InputFieldsComponent extends Component {
 							className={classes.textField}
 							value={bldgAttr[item.attr] || ''}
 							onChange={ this.handleChange }
-							margin="normal"
+							margin="dense"
 							helperText={item.helperText}
 						/>
 					);
@@ -53,7 +54,7 @@ class InputFieldsComponent extends Component {
 							onChange={this.handleChange}
 							value={bldgAttr[item.attr] || ''}
 							helperText={item.helperText}
-							margin="normal"
+							margin="dense"
 						>
 							{
 								item.values.map( (subItem, subIdx) => {

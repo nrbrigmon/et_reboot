@@ -7,13 +7,13 @@ const auth = require('../keys/auth');
 const pool = require('../db');
 
 passport.serializeUser((user, done) => {
-	console.log('serializing user...');
+	// console.log('serializing user...');
 	// console.log(user);
 	done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-	console.log('de__serializing user...');
+	// console.log('de__serializing user...');
 	// console.log(user);
 	pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [user.google_id], (err, res) =>{
 		if (err) return done(err);

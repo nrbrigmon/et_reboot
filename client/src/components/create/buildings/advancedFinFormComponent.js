@@ -33,7 +33,7 @@ class AdvancedFinFormComponent extends Component {
 
 	handleChange = e => {
 		let buildingCopy = {};
-		buildingCopy[e.target.name] = e.target.value;
+		buildingCopy[e.target.id] = e.target.value;
 		this.props.buildingUpdate(buildingCopy);		
 		updateMathModule(this.state.localBP);
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Modal from 'material-ui/Modal';
 import Button from 'material-ui/Button';
-import AddBldgTabModal from './AddBldgTabModal';
 import { withStyles } from 'material-ui/styles';
+import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
@@ -35,37 +36,52 @@ function getModalStyle() {
     };
 }
 
-class AddBldgFromLibraryModal extends Component {
-    saveBuildings = () =>{
-        this.props.addBuildingToLibrary(this.props.modList);
-        this.props.buildingSelection(null);
+class SaveBldgLibraryModal extends Component {
+
+    myHandleChange = (e) => {
+        this.props.updateLibraryName(e.target.value);
+    }
+
+    saveLibrary= () => {
+        console.log(this.props.myLibrary);
+        // this.props.saveBuildingLibrary(saveObj, false);
+        // this.props.buildingLibSelection(null);
+        this.props.closeModal()
     }
 
     cancelModal = () => {
-        this.props.buildingSelection(null)
+        this.props.closeModal()
     }
 
 	render() {
-        const { modalOpen } = this.props.modalState;
-        const { tab } = this.props.modalState;
         const { classes } = this.props;
-        // console.log(this.props);
+        const { library_name } = this.props.myLibrary
 		return (
             <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-                open={modalOpen}
+                open={this.props.modal === 'saveLibrary'}
+                onClose={this.cancelModal}
                 >
                 <div style={getModalStyle()}>
-                    <AddBldgTabModal attr={tab} libSelection={this.libraryUpdate} />
                     <div className={classes.paper}>
+                        <Typography type="headline" component="h4">
+                            Library Name:
+                        </Typography>
+
+                        <TextField
+                            placeholder={'ex. D\'s Waco Library'}
+                            value={library_name}
+                            onChange={(e) => this.myHandleChange(e) }
+                            margin="normal"
+                        />
                         <Button raised color="primary" className={classes.button} 
-                        onClick={()=>this.saveBuildings()}>
-                            Save
+                            onClick={()=>this.saveLibrary()}>
+                            Confirm
                         </Button>	
                         
                         <Button raised color="accent" className={classes.button} 
-                        onClick={()=>this.cancelModal()}>
+                            onClick={()=>this.cancelModal()}>
                             Cancel
                         </Button>
                     </div>
@@ -77,7 +93,10 @@ class AddBldgFromLibraryModal extends Component {
 }
 
 function mapStateToProps(state) {
-    return { modList: state.modList  };
+    return { 
+        myLibrary: state.myLibrary,
+        modal: state.modal
+     };
 }
-const styledApp = withStyles(styles)(AddBldgFromLibraryModal);
+const styledApp = withStyles(styles)(SaveBldgLibraryModal);
 export default connect(mapStateToProps, actions)(styledApp);
