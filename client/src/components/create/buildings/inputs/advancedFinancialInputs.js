@@ -3,83 +3,83 @@ export default {
         name: 'Residential',
         attr: 'residentialRentalPerc',
         placeholder: '100%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Retail',
         attr: 'retailRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Office',
         attr: 'officeRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Industrial',
         attr: 'industrialRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Public',
         attr: 'publicRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Education',
         attr: 'educationRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Hotel/Motel',
         attr: 'hotelRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Commercial Parking',
         attr: 'parkingRentalPerc',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     }],
     section2: [{
         name: 'Residential Year 1',
         attr: 'occupancy1YrResidential',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Residential Long Term',
         attr: 'occupancyLongTermResidential',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Retail Year 1',
         attr: 'occupancy1YrRetail',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Retail Long Term',
         attr: 'occupancyLongTermRetail',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Office Year 1',
         attr: 'occupancy1YrOffice',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Office Long Term',
         attr: 'occupancyLongTermOffice',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Industrial Year 1',
         attr: 'occupancy1YrIndustrial',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Industrial Long Term',
         attr: 'occupancyLongTermIndustrial',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Public Year 1',
         attr: 'occupancy1YrPublic',
@@ -90,7 +90,7 @@ export default {
         name: 'Public Long Term',
         attr: 'occupancyLongTermPublic',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Hotel/Motel Year 1',
         attr: 'occupancy1YrHotel',
@@ -101,7 +101,7 @@ export default {
         name: 'Hotel/Motel Long Term',
         attr: 'occupancyLongTermHotel',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Commercial Parking Year 1',
         attr: 'occupancy1YrParking',
@@ -112,18 +112,18 @@ export default {
         name: 'Commercial Parking Long Term',
         attr: 'occupancyLongTermParking',
         placeholder: '75%',
-        input: 'text'
+        input: 'text-perc'
     }],
     section3: [{
         name: 'Due Diligence',
         attr: 'preDevDueDiligence',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Land Carry',
         attr: 'preDevLandCarry',
         placeholder: '% of raw land cost',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Land entitlement',
         attr: 'preDevLandEntitlement',
@@ -133,39 +133,39 @@ export default {
         name: 'Professional Fees',
         attr: 'preDevProfessionalFees',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'text-perc'
     }],
     section4: [{
         name: 'Demolition Costs',
         attr: 'devDemolitionCosts',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Site Development Costs',
         attr: 'devSiteDevelopmentCosts',
         placeholder: '% of raw land cost',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Brownfield Remediation Costs',
         attr: 'devBrownfieldRemediationCosts',
         placeholder: '',
-        input: 'text'
+        input: 'number'
     },{
         name: 'Additional Infrastructure Enhancement',
         attr: 'devAdditionalInfraEnhancement',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'text-perc'
     }],
     section5: [{
         name: 'Impact Fees (per Unit)',
         attr: 'impactFeesPerUnit',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Impact Fees (per Job)',
         attr: 'impactFeesPerJob',
         placeholder: '% of raw land cost',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Impact Fees (per sqft of Emp Area)',
         attr: 'impactFeesPerSf',
@@ -175,104 +175,104 @@ export default {
         name: 'Additional Total Impact Fees',
         attr: 'additonalImpactFees',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'number'
     },{
         name: 'Building Permit Fees',
         attr: 'buildingPermitFees',
         placeholder: '',
-        input: 'text'
+        input: 'number'
     },{
         name: 'Taxes During Construction',
         attr: 'taxesDuringConstruction',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Insurance During Construction',
         attr: 'insuranceDuringConstruction',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Developer Fee',
         attr: 'developerFee',
         placeholder: '',
-        input: 'text'
+        input: 'number'
     },{
         name: 'Contigency',
         attr: 'contingency',
         placeholder: '% of hard costs',
-        input: 'text'
+        input: 'text-perc'
     }],
     section6: [{
         name: 'Residential (Owner)',
         attr: 'propTaxOwner',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Residential (Renter)',
         attr: 'propTaxRenter',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Retail',
         attr: 'propTaxRetail',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Office',
         attr: 'propTaxOffice',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Industrial',
         attr: 'propTaxIndustrial',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Hotel/Motel',
         attr: 'propTaxHotel',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Commercial Parking',
         attr: 'propTaxParking',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     }],
     section7: [{
         name: 'Residential (Owner)',
         attr: 'assessRatioTaxOwner',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Residential (Renter)',
         attr: 'assessRatioTaxRenter',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Retail',
         attr: 'assessRatioTaxRetail',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Office',
         attr: 'assessRatioTaxOffice',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Industrial',
         attr: 'assessRatioTaxIndustrial',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Hotel/Motel',
         attr: 'assessRatioTaxHotel',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     },{
         name: 'Commercial Parking',
         attr: 'assessRatioTaxParking',
         placeholder: '65%',
-        input: 'text'
+        input: 'text-perc'
     }]
     
 }

@@ -3,24 +3,32 @@ import * as _ from 'lodash';
 
 function addBuilding(state, action){
     //get index to check if building already exists in library
-    let existingArray = [...state.selected_buildings];
-    let buildingIdIndex = [...state.selected_buildings].indexOf(action.bldgId);
-    if (buildingIdIndex < 0){
-        //doesn't exist in array
-        existingArray.concat(action.bldgId)
+    let currentIds = _.map(state.selected_buildings, 'uniqueId'); //create array of existing IDs
+    let keepID = currentIds.indexOf(action.bldg['uniqueId']);
+    //if already exists in array..
+    // console.log(currentIds, keepID, state, action)
+    if (keepID >= 0){
+        return {
+            ...state
+        }
+    } else {
+        return {
+            ...state,
+            selected_buildings: [...state.selected_buildings].concat(action.bldg)
+        } 
     }
-    return {
-        ...state,
-        selected_buildings: existingArray
-    };
+ 
 }
 function removeBuilding(state, action){
-    let buildingIdIndex = [...state.selected_buildings].indexOf(action.bldg);
-    let existingArray = [...state.selected_buildings];
-    existingArray.splice(buildingIdIndex, 1);
+    
+    let existingBldgArray = [...state.selected_buildings];
+    let currentIds = _.map(state.selected_buildings, 'uniqueId'); //create array of existing IDs
+    let deleteID = currentIds.indexOf(action.bldgId);
+
+    existingBldgArray.splice(deleteID, 1);
     return {
         ...state,
-        selected_buildings: existingArray
+        selected_buildings: existingBldgArray
     } 
 }
 
@@ -87,6 +95,7 @@ export default function(state = starterLibrary, action ) {
     if (localStorage.getItem('myLibrary')){
         state = JSON.parse(localStorage.getItem('myLibrary'));
     }
+   
 	switch (action.type) {
         case 'ADD_BUILDING':
             //if a building already exists in array... it should not be added!!!!

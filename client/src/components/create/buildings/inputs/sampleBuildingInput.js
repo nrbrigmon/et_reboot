@@ -1,15 +1,18 @@
+import * as shortid from 'shortid';
+
 export default {
+    uniqueId: shortid.generate(),
     physicalInfo: {
         buildingName: "My first building",
         buildingHeight: 2,
-        siteArea: 10,
+        siteArea: 1500,
         siteLocation: 'Austin, TX',
-        siteNetToGross: 10,
-        landscapingPerc: 10,
-        underbuildPerc: 10,
+        siteNetToGross: 1,
+        landscapingPerc: .10,
+        underbuildPerc: .80,
         residentialType: 'Single Family',
         occupancyType: 'Renter',
-        residentialUsePerc: 10,
+        residentialUsePerc: .10,
         retailUsePerc: .20,
         officeUsePerc: .30,
         industrialUsePerc: .20,

@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
+
 class AddLibraryModalContents extends React.Component {
 
   handleToggle = bldgs => () => {
@@ -15,12 +16,12 @@ class AddLibraryModalContents extends React.Component {
     // this.props.toggleDevModalList(id);
     this.props.toggleBuildingModalList(bldgs);
   };
-  
+
 	renderTabContainer = (libraries, modList) => {
       // console.log(modList);
       // console.log(libraries);
 			return (
-        <List>
+        <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
           {
             libraries.map( (item, idx) => {
               // let id = item.library_id;
@@ -55,8 +56,8 @@ class AddLibraryModalContents extends React.Component {
   componentWillUnmount(){
 		this.props.resetBuildingModalList();
   }
+
   render() {
-    
     return (
       <Grid container
 					alignItems='center'

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { updateMathModule } from './_buildingMathModule';
  
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
+
 import inputFields from './inputs/physicalInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
+import PercentStatusCheck from '../../PercentStatusCheck';
 
 const styles = theme => ({
 		root: {
@@ -25,25 +28,27 @@ const styles = theme => ({
 class PhysicalFormComponent extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			localBP: this.props.attributes
-		}
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleChange = e => {
-		let buildingCopy = {};
-		buildingCopy[e.target.id] = e.target.value;
-		this.props.buildingUpdate(buildingCopy);
-		updateMathModule(this.state.localBP);
+	handleChange = (e, valueSub) => {
+		// console.log(e, percentSub);
+		let updateCopy = {};
+		if (valueSub){
+			updateCopy[e.target.id] = Number(valueSub);
+		} else {
+			updateCopy[e.target.id] = e.target.value;
+		}
+		// console.log(updateCopy);
+		this.props.updateBuildingPrototypeField('physicalInfo', updateCopy);
 	};
-
+	
 	render() {
 		let bldgAttr = this.props.attributes.physicalInfo;
+		let { residentialUsePerc, retailUsePerc, officeUsePerc, industrialUsePerc, publicUsePerc, educationUsePerc, hotelUsePerc, parkingUsePerc } = bldgAttr;
 		const { classes } = this.props;
 		const { section1, section2, section3, section4, section5, section6 } = inputFields;
-		// console.log(this.props);
-
+		// console.log(bldgAttr)
 		return (
 			<Grid container >
 				<Grid item xs={6}> 
@@ -64,7 +69,7 @@ class PhysicalFormComponent extends Component {
 					<InputFieldsComponent 
 							inputUpdate={this.handleChange}
 							attributes={{bldgAttr, classes, section: section2}} />
-					<p>Building Check: xxx%</p>
+					<p>{ PercentStatusCheck([residentialUsePerc, retailUsePerc, officeUsePerc, industrialUsePerc, publicUsePerc, educationUsePerc, hotelUsePerc, parkingUsePerc], "Building Check: ")}</p>
 
 				</Grid>
 				<Grid item xs={6}> 
@@ -103,4 +108,5 @@ class PhysicalFormComponent extends Component {
 	}
 }
 
-export default withStyles(styles)(PhysicalFormComponent);
+const styledApp = withStyles(styles)(PhysicalFormComponent);
+export default connect(null, actions)(styledApp);

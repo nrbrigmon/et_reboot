@@ -40,18 +40,18 @@ class Welcome extends Component {
 				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
-						<Typography type="headline" component="h2">
-							Build and Analyze
-						</Typography>
-						<Typography component="p">
-							Build a development from scratch or use existing data
-							approved by others.
-						</Typography>
-						</CardContent>
-						<CardActions>
-						<Button dense color="primary" onClick={()=>this.handleNavigation('create')}>
-							Start here
-						</Button>
+							<Typography variant="headline" component="h2">
+								Build and Analyze
+							</Typography>
+							<Typography component="p">
+								Build a development from scratch or use existing data
+								approved by others.
+							</Typography>
+							</CardContent>
+							<CardActions>
+							<Button size="small" variant="raised" color="primary" onClick={()=>this.handleNavigation('create')}>
+								Start here
+							</Button>
 							
 						</CardActions>
 					</Card>
@@ -59,36 +59,36 @@ class Welcome extends Component {
 				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
-						<Typography type="headline" component="h2">
-							Explore the Gallery
-						</Typography>
-						<Typography component="p">
-							Explore datasets, maps, ideas, and designs created by the
-							community.
-						</Typography>
-						</CardContent>
-						<CardActions>
-						<Button dense color="primary" onClick={()=>this.handleNavigation('gallery')}>
-							Start here
-						</Button>
+							<Typography variant="headline" component="h2">
+								Explore the Gallery
+							</Typography>
+							<Typography component="p">
+								Explore datasets, maps, ideas, and designs created by the
+								community.
+							</Typography>
+							</CardContent>
+							<CardActions>
+							<Button size="small" variant="raised" color="primary" onClick={()=>this.handleNavigation('gallery')}>
+								Start here
+							</Button>
 						</CardActions>
 					</Card>
 				</Grid>
 				<Grid item md={4} sm={12}>
 					<Card className={classes.card}>
 						<CardContent>
-						<Typography type="headline" component="h2">
-							The Business Case
-						</Typography>
-						<Typography component="p">
-							Why this application? What problems does it solve and to
-							whom is it targeted?
-						</Typography>
-						</CardContent>
-						<CardActions>
-						<Button dense color="primary" onClick={()=>this.handleNavigation('pitch')}>
-							Start here
-						</Button>
+							<Typography variant="headline" component="h2">
+								The Business Case
+							</Typography>
+							<Typography component="p">
+								Why this application? What problems does it solve and to
+								whom is it targeted?
+							</Typography>
+							</CardContent>
+							<CardActions>
+							<Button size="small" variant="raised" color="primary" onClick={()=>this.handleNavigation('pitch')}>
+								Start here
+							</Button>
 						</CardActions>
 					</Card>
 				</Grid>

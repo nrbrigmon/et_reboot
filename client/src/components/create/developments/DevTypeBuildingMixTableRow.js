@@ -6,6 +6,8 @@ import * as actions from '../../../actions';
 
 import TextField from 'material-ui/TextField';
 
+import PercentStatusCheck from '../../PercentStatusCheck';
+
 import './devCell.css';
 
 class DevTypeBuildingMixTableRow extends Component {
@@ -15,10 +17,12 @@ class DevTypeBuildingMixTableRow extends Component {
         // console.log(targetValue, targetId);
         this.props.updateDevTypeRow(value, rowId, cellId);
     } 
-    updateDevName = (e) => {
-        const targetValue = e.target.value;
-        const targetId = e.target.id;
-        this.props.updateDevName(targetValue, targetId);
+    updateDevName = (e, uniqueId) => {
+        // const targetValue = e.target.value;
+        // const targetId = e.target.id;
+        // this.props.updateDevName(targetValue, targetId);
+        // console.log(e);
+        this.props.updateDevTypeAttr(e.target.value, e.target.id, "devTypeName");
     }
     getTotal = (cells) => {
         let sum = cells.reduce( (acc, curr, idx) => {
@@ -28,7 +32,8 @@ class DevTypeBuildingMixTableRow extends Component {
             }
             return Number(acc) + Number(curr.percVal);
         });
-        return (<p>{sum}</p>);
+
+        return [sum * 0.01]; //PercentStatusCheck requires an array, also we need percent values
     }
 
     render(){
@@ -36,22 +41,22 @@ class DevTypeBuildingMixTableRow extends Component {
         const { uniqueId } = this.props;
         const { devTypeName } = this.props;
         // console.log(cellData);
-        // console.log(this.props);
+        // console.log(this.props); 
         return (
             <TableRow>
-                <TableCell>
+                <TableCell style={{width:'300px'}}>
                     <TextField
                         id={uniqueId}
                         placeholder={"Development Type Name"}
                         value={devTypeName}
-                        onChange={(e) => this.updateDevName(e) }
+                        onChange={(e) => this.updateDevName(e, uniqueId) }
                         margin="dense"
-                        
+                        padding="dense"
                     />
                 </TableCell>
                 <TableCell>
                 
-                   { this.getTotal(cellData) }
+                   { PercentStatusCheck( this.getTotal(cellData)) }
                     
                 
                 </TableCell>
@@ -65,6 +70,7 @@ class DevTypeBuildingMixTableRow extends Component {
                                     value={cell.percVal}
                                     onChange={(e) => this.handleChange(e, uniqueId) }
                                     margin="dense"
+                                    padding="dense"                                    
                                 />
                             </TableCell>
                         )

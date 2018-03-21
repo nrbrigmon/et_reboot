@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { updateMathModule } from './_buildingMathModule';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 
 import inputFields from './inputs/advancedFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
@@ -31,19 +33,26 @@ class AdvancedFinFormComponent extends Component {
 
 	}
 
-	handleChange = e => {
-		let buildingCopy = {};
-		buildingCopy[e.target.id] = e.target.value;
-		this.props.buildingUpdate(buildingCopy);		
-		updateMathModule(this.state.localBP);
-
+	handleChange = (e, valueSub) => {
+		// console.log(e, percentSub);
+		let updateCopy = {};
+		if (valueSub){
+			updateCopy[e.target.id] = valueSub;
+		} else {
+			updateCopy[e.target.id] = e.target.value;
+		}
+		console.log(updateCopy);
+		this.props.updateBuildingPrototypeField('advFinInfo', updateCopy);
 	};
+
 
 	render() {
 		let bldgAttr = this.props.attributes.advFinInfo;
 		const { classes } = this.props;
 		const { section1, section2, section3,
 			section4, section5, section6, section7 } = inputFields;
+		console.log(bldgAttr);
+			
 		return (
 			<Grid container >
 				<Grid item xs={6}> 
@@ -107,4 +116,5 @@ class AdvancedFinFormComponent extends Component {
 	}
 }
 
-export default withStyles(styles)(AdvancedFinFormComponent);
+const styledApp = withStyles(styles)(AdvancedFinFormComponent);
+export default connect(null, actions)(styledApp);

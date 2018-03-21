@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter} from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
@@ -21,6 +22,9 @@ const styles = theme => ({
 	},
 	cardAction: {
 		margin: '0 auto'
+	},
+	cardButton: {
+		margin: '0 1px 0 1px'
 	}
   });
 
@@ -52,16 +56,16 @@ class DevTypeReview extends Component {
 							TIME TO REVIEW!!!!!
 							<CardActions>
 								<div className={classes.cardAction}>
-									<Button dense raised color="accent" onClick={()=>this.handleNavigation('attributes')}>
+									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('attributes')}>
 										Go Back
 									</Button>	
-									<Button dense raised color="accent" onClick={()=>alert("saved!... later...")}>
+									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>alert("saved!... later...")}>
 										Save
 									</Button>
-									<Button dense raised color="accent" onClick={()=>this.props.history.push('/metrics')}>
+									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/metrics')}>
 										Test Metrics
 									</Button>		
-									<Button dense raised color="accent" onClick={()=>this.props.history.push('/map')}>
+									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/map')}>
 										Start Mapping
 									</Button>	
 								</div>
@@ -76,9 +80,9 @@ class DevTypeReview extends Component {
 
 function mapStateToProps(state) {  
 	  return { 
-			devTypes: state.devTypes
+			devWorkbook: state.devWorkbook
 		 };
 }
   
 const styledApp = withStyles(styles)(DevTypeReview);
-export default connect(mapStateToProps, actions)(styledApp);
+export default withRouter(connect(mapStateToProps, actions)(styledApp));

@@ -1,14 +1,19 @@
 import * as bm from './_buildingMathModule';
 
-export const main = (buildingCopy) => {
+export const getBldgOutputs = (buildingCopy) => {
     let { physicalInfo, basicFinInfo, advFinInfo, uniqueId } = buildingCopy;
+    
+    // console.log('firing updateMathModule..?', buildingCopy);
+    bm.updateMathModule(buildingCopy);
+    // console.log('update math module done...', buildingCopy);
+
     return    {
         rBuildingID: uniqueId,
         rBuildingName: physicalInfo.buildingName,
         rLotSize: physicalInfo.siteArea,
         rLotLocation: physicalInfo.siteLocation,
         rBuildingLotCoverage: bm.buildingLotCoverage( physicalInfo.siteArea ),
-        rLanscapeLotCoverage: bm.landscapeLotCoverage( physicalInfo.siteArea ),
+        rLandscapeLotCoverage: bm.landscapeLotCoverage( physicalInfo.siteArea ),
         rParkingLotCoverage: bm.parkingLotCoverage( physicalInfo.siteArea ),
         rBuildingHeight: physicalInfo.buildingHeight,
         rFAR: bm.getFAR(physicalInfo.siteArea, advFinInfo),

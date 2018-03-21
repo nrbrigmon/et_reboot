@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { updateMathModule } from './_buildingMathModule';
 
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 
 import inputFields from './inputs/basicFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
@@ -32,21 +34,24 @@ class BasicFinFormComponent extends Component {
 
 	}
 
-	handleChange = e => {
-		let buildingCopy = {};
-		buildingCopy[e.target.id] = e.target.value;
-		this.props.buildingUpdate(buildingCopy);
-		updateMathModule(this.state.localBP);
-
+	handleChange = (e, valueSub) => {
+		// console.log(e, percentSub);
+		let updateCopy = {};
+		if (valueSub){
+			updateCopy[e.target.id] = valueSub;
+		} else {
+			updateCopy[e.target.id] = e.target.value;
+		}
+		console.log(updateCopy);
+		this.props.updateBuildingPrototypeField('basicFinInfo', updateCopy);
 	};
-
 
 	render() {
 		// console.log(this.props);
 		let bldgAttr = this.props.attributes.basicFinInfo;
 		const { classes } = this.props;
 		const { section1,section2,section3,section4 } = inputFields;
-
+		console.log(bldgAttr);
 		return (
 			<Grid container >
 				
@@ -99,4 +104,5 @@ class BasicFinFormComponent extends Component {
 	}
 }
 
-export default withStyles(styles)(BasicFinFormComponent);
+const styledApp = withStyles(styles)(BasicFinFormComponent);
+export default connect(null, actions)(styledApp);

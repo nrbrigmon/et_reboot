@@ -14,3 +14,10 @@ hr {
 input {
 	font-size: '12px';
 }
+/* css addition for leaflet-draw*/
+.sr-only {
+    display: none;
+}
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: 1px solid rgba(0,0,0,0.2);
+}

@@ -20,6 +20,9 @@ const styles = theme => ({
 	},
 	cardAction: {
 		margin: '0 auto'
+	},
+	cardButton: {
+		margin: '0 1px 0 1px'
 	}
   });
 
@@ -52,16 +55,16 @@ class DevTypeBuildingMix extends Component {
                             
                             <CardActions>
                                 <div className={classes.cardAction}>
-                                    <Button dense color="primary" onClick={()=>this.handleNavigation('back')}>
+                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('back')}>
                                         Go Back
                                     </Button>	
-                                    <Button dense color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
+                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
                                         Add Row
                                     </Button>	
-                                    <Button dense color="primary" onClick={()=>alert("saved!... later...")}>
+                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
                                         Save Progress
                                     </Button>	
-                                    <Button dense color="primary" onClick={()=>this.handleNavigation('attributes')}>
+                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('attributes')}>
                                         Move to Step Three
                                     </Button>	
                                 </div>

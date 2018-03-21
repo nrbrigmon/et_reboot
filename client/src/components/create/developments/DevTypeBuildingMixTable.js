@@ -32,7 +32,7 @@ class DevTypeBuildingMixTable extends Component {
     render(){
 
         const { classes } = this.props;
-        const { devTypes } = this.props;		
+        const devTypes = this.props.devWorkbook.workbook_devtypes;	
         const selectedBldgs = this.props.myLibrary.selected_buildings;
         return (
             <Table className={classes.table}>
@@ -78,7 +78,7 @@ class DevTypeBuildingMixTable extends Component {
 function mapStateToProps(state) {  
     return { 
             // myLib: state.myLib,
-            devTypes: state.devTypes,
+            devWorkbook: state.devWorkbook,
 			myLibrary: state.myLibrary
             // devPercTotals: state.devPercTotals
        };

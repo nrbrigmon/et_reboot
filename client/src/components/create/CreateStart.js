@@ -40,6 +40,9 @@ const styles = theme => ({
 	},
 	cardAction: {
 		margin: '0 auto'
+	},
+	cardButton: {
+		margin: '0 1px 0 1px'
 	}
   });
 
@@ -70,7 +73,10 @@ class CreateStart extends Component {
 	handleNavigation = (destination) => {
 		this.props.history.push('/'+destination+'');
 	}
-	
+	newItemInList = (uniqueId) => {
+		this.handleNavigation('create/new/'+uniqueId+'');
+		this.props.editBuildingPrototype(false);
+	}
 	editItemInList = (selection) => {
 		let _id = selection.uniqueId;
 		this.handleNavigation('create/edit/'+_id+'')
@@ -121,7 +127,6 @@ class CreateStart extends Component {
 	render() {
 		const { classes } = this.props;
 		const { uniqueId } = this.props;
-		// console.log(this.props.selectedBldgs);
 		return (
 			<Grid container
 				className={classes.root}
@@ -152,10 +157,10 @@ class CreateStart extends Component {
 							
 							<CardActions >
                                 <div className={classes.cardAction}>
-									<Button dense color="primary" onClick={() => this.openSaveLibraryModal()}>
+									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.openSaveLibraryModal()}>
 										Save Library
 									</Button>
-									<Button dense color="primary" onClick={() => this.handleNavigation('create/dev-types')}>
+									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types')}>
 										Move to Step Two
 									</Button>	
 								</div>
@@ -172,19 +177,19 @@ class CreateStart extends Component {
 						maybe they open a modal but you aview a different
 						tab depending on the click?*/}
 						
-						<Button raised color="primary" className={classes.button} 
+						<Button variant="raised" color="primary" className={classes.button} 
 							onClick={() => this.props.openModal('library')}>
 							<CloudDownload className={classes.leftIcon}/>  Load Existing Library
 						</Button>
-						<Button raised color="primary" className={classes.button} 
+						<Button variant="raised" color="primary" className={classes.button} 
 							onClick={() => this.props.openModal('buildings')}>
 							<CloudDownload className={classes.leftIcon}/>  Add Existing Building
 						</Button>
-						<Button raised color="primary" className={classes.button} 
-							onClick={() => this.handleNavigation('create/new/'+uniqueId+'')}>
+						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.newItemInList(uniqueId)}>
 							<AddCircle className={classes.leftIcon}/> Create New Building
 						</Button>
-						<Button raised color="primary" className={classes.button} 
+						<Button variant="raised" color="primary" className={classes.button} 
 							onClick={() => this.resetList()}>
 							<Clear className={classes.leftIcon}/> Reset/Empty List
 						</Button>

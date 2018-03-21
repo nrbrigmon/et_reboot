@@ -23,6 +23,9 @@ const styles = theme => ({
 	},
 	cardAction: {
 		margin: '0 auto'
+	},
+	cardButton: {
+		margin: '0 1px 0 1px'
 	}
   });
 
@@ -73,13 +76,13 @@ class DevTypeAttributes extends Component {
 
 						<CardActions>
 							<div className={classes.cardAction}>
-								<Button dense color="primary" onClick={()=>this.handleNavigation('mix')}>
+								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('mix')}>
 									Go Back
 								</Button>	
-								<Button dense color="primary" onClick={()=>alert("saved!... later...")}>
+								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
 									Save Progress
 								</Button>	
-								<Button dense color="primary" onClick={()=>this.handleNavigation('review')}>
+								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('review')}>
 									Review 
 								</Button>	
 							</div>
@@ -94,7 +97,7 @@ class DevTypeAttributes extends Component {
 
 function mapStateToProps(state) {  
 	  return { 
-			devTypes: state.devTypes
+			devWorkbook: state.devWorkbook
 		 };
 }
   

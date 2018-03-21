@@ -60,12 +60,12 @@ class AddLibraryModal extends Component {
                     <AddLibraryModalContents  />
 
                     <div className={classes.paper}>
-                        <Button raised color="primary" className={classes.button} 
+                        <Button variant="raised" color="primary" className={classes.button} 
                         onClick={()=>this.saveBuildings()}>
                             Save
                         </Button>	
                         
-                        <Button raised color="accent" className={classes.button} 
+                        <Button variant="raised" color="secondary" className={classes.button} 
                         onClick={()=>this.props.closeModal()}>
                             Cancel
                         </Button>

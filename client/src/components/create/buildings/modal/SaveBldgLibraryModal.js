@@ -75,12 +75,12 @@ class SaveBldgLibraryModal extends Component {
                             onChange={(e) => this.myHandleChange(e) }
                             margin="normal"
                         />
-                        <Button raised color="primary" className={classes.button} 
+                        <Button variant="raised" color="primary" className={classes.button} 
                             onClick={()=>this.saveLibrary()}>
                             Confirm
                         </Button>	
                         
-                        <Button raised color="accent" className={classes.button} 
+                        <Button variant="raised" color="secondary" className={classes.button} 
                             onClick={()=>this.cancelModal()}>
                             Cancel
                         </Button>

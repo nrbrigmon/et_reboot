@@ -4,11 +4,11 @@ import authReducer from './authReducer';
 import bldgPrototypeReducer from './bldgPrototypeReducer';
 import buildingLibReducer from './buildingLibReducer';
 import buildingReducer from './buildingReducer';
-import devTypeReducer from './devTypeReducer';
+import devWorkbookReducer from './devWorkbookReducer';
 import modalListReducer from './modalListReducer';
 import modalReducer from './modalReducer';
 import myLibraryReducer from './myLibraryReducer';
-// import selectedBldgReducer from './selectedBldgReducer';
+import baseMapLayerReducer from './baseMapLayerReducer';
 import toastReducer from './toastReducer';
 
 
@@ -30,9 +30,9 @@ export default combineReducers({
 	// devPercTotals: DevTypeBottomLineReducer,
 	modList: modalListReducer,					//the list inside the modal
 	bldgType: bldgPrototypeReducer,				//the current building being edited
-	devTypes: devTypeReducer,					//the current development type being edited
+	devWorkbook: devWorkbookReducer,					//the current development type being edited
 	myLibrary: myLibraryReducer,				//the name and properties of my building list
-	// selectedBldgs: selectedBldgReducer,			//the array of building list being edited
+	baseMapLayer: baseMapLayerReducer,			//the baseLayer for scenario planning
 	modal: modalReducer,						//open or close modal state
 	toast: toastReducer							//open or close toast state
 });

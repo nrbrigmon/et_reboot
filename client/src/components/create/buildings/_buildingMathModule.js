@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 let landUses = {
 	streets: 0,				//b4
 	landscaping: 0,			//b5
@@ -334,18 +336,21 @@ Affordable	 $1.05 	 975 	 $- 	 $1,020
 Studio	$1.80 	 575 	 $- 	 $1,035 
 Calculated Average Monthly Rent	 $1.63 	 783 	 $- 	 $1,276 
 */
-
+let errorChecking = (answer) => {
+	return ( isNaN(answer) ? 0 : answer );
+};
 export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
-
+	
 	landUses["streets"] = physObj.siteArea*(1-physObj.siteNetToGross);
-	landUses["landscaping"] = physObj.siteArea - physObj.landscapingPerc;
+	landUses["landscaping"] = physObj.siteArea*physObj.landscapingPerc;
 	landUses["buildingNParking"] = physObj.siteArea - landUses["landscaping"] - landUses["streets"];
 	landUses["totalLotSize"] = landUses["buildingNParking"] + landUses["landscaping"] + landUses["streets"]; //b7
-
+	// console.log(landUses);
+	// console.log(landUses["buildingNParking"], physObj.buildingHeight)
 	maxBuildingEnvelope['squareFootage'] = landUses["buildingNParking"] * physObj.buildingHeight;
-	maxBuildingEnvelope['buildingFootprint'] = maxBuildingEnvelope['squareFootage'] / physObj.buildingHeight;
+	maxBuildingEnvelope['buildingFootprint'] = errorChecking(maxBuildingEnvelope['squareFootage'] / physObj.buildingHeight);
 	maxBuildingEnvelope['residentialUnderbuild'] = ((physObj.residentialType === 'Multifamily') ? advObj.residentialRentalPerc : 1);
-	
+
 	//If Underground or Internal Parking Only  - No Surface/Structured
 	parkingOptionA["internalParkingMaxSf"] = physObj.internalParkingLvls*maxBuildingEnvelope['buildingFootprint'];
 	let maxMinusInternal = maxBuildingEnvelope['squareFootage'] - parkingOptionA["internalParkingMaxSf"];
@@ -359,46 +364,43 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionA["commercialParkingMaxSf"] = (maxMinusInternal)*physObj["parkingUsePerc"];
 	parkingOptionA["totalMaxSf"] = physObj["residentialUsePerc"] + physObj["retailUsePerc"] + physObj["officeUsePerc"] + physObj["industrialUsePerc"] + physObj["publicUsePerc"] + physObj["educationUsePerc"] + physObj["hotelUsePerc"] + physObj["parkingUsePerc"];
 
-
-	parkingOptionA["residentialSpacesPoss"] = ((physObj["residentialUnitSize"] === 0) ? 0 : ((parkingOptionA["residentialMaxSf"]/(physObj["residentialUnitSize"] / maxBuildingEnvelope['residentialUnderbuild'] ))*physObj["residentialParkPerUnit"]) );
-	parkingOptionA["retailSpacesPoss"] = parkingOptionA["retailMaxSf"] / physObj["retailParkPerArea"]
-	parkingOptionA["officeSpacesPoss"] = parkingOptionA["officeMaxSf"] / physObj["officeParkPerArea"]
-	parkingOptionA["industrialSpacesPoss"] = parkingOptionA["industrialMaxSf"] / physObj["industrialParkPerArea"]
-	parkingOptionA["publicSpacesPoss"] = parkingOptionA["publicMaxSf"] / physObj["publicParkPerArea"]
-	parkingOptionA["educationalSpacesPoss"] = parkingOptionA["educationalMaxSf"] / physObj["educationParkPerArea"]
-	parkingOptionA["hotelSpacesPoss"] = ((physObj["hotelAreaPerRoom"] === 0) ? 0 : ( (parkingOptionA["hotelMaxSf"] /(physObj["hotelAreaPerRoom"]/advObj["hotelRentalPerc"]))*physObj["hotelParkPerRoom"]) );
-	parkingOptionA["commercialParkingSpacesPoss"] = parkingOptionA["commercialParkingMaxSf"] / physObj["parkingAreaPerSf"];
-	parkingOptionA["internalParkingSpacesPoss"] = parkingOptionA["internalParkingMaxSf"] / physObj["parkingAreaPerSf"];
+	parkingOptionA["residentialSpacesPoss"] = errorChecking(((physObj["residentialUnitSize"] === 0) ? 0 : ((parkingOptionA["residentialMaxSf"]/(physObj["residentialUnitSize"] / maxBuildingEnvelope['residentialUnderbuild'] ))*physObj["residentialParkPerUnit"]) ))
+	parkingOptionA["retailSpacesPoss"] = errorChecking(parkingOptionA["retailMaxSf"] / physObj["retailParkPerArea"])
+	parkingOptionA["officeSpacesPoss"] = errorChecking(parkingOptionA["officeMaxSf"] / physObj["officeParkPerArea"])
+	parkingOptionA["industrialSpacesPoss"] = errorChecking(parkingOptionA["industrialMaxSf"] / physObj["industrialParkPerArea"])
+	parkingOptionA["publicSpacesPoss"] = errorChecking(parkingOptionA["publicMaxSf"] / physObj["publicParkPerArea"])
+	parkingOptionA["educationalSpacesPoss"] = errorChecking(parkingOptionA["educationalMaxSf"] / physObj["educationParkPerArea"])
+	parkingOptionA["hotelSpacesPoss"] = errorChecking(((physObj["hotelAreaPerRoom"] === 0) ? 0 : ( (parkingOptionA["hotelMaxSf"] /(physObj["hotelAreaPerRoom"]/advObj["hotelRentalPerc"]))*physObj["hotelParkPerRoom"]) ))
+	parkingOptionA["commercialParkingSpacesPoss"] = errorChecking(parkingOptionA["commercialParkingMaxSf"] / physObj["parkingAreaPerSf"])
+	parkingOptionA["internalParkingSpacesPoss"] = errorChecking(parkingOptionA["internalParkingMaxSf"] / physObj["parkingAreaPerSf"])
 	parkingOptionA["totalSpacesPoss"] = parkingOptionA["residentialSpacesPoss"] + parkingOptionA["retailSpacesPoss"] + parkingOptionA["officeSpacesPoss"] + parkingOptionA["industrialSpacesPoss"] + parkingOptionA["publicSpacesPoss"] + parkingOptionA["educationalSpacesPoss"] + parkingOptionA["hotelSpacesPoss"] + parkingOptionA["commercialParkingSpacesPoss"] + parkingOptionA["internalParkingSpacesPoss"];
 	parkingOptionA["lessInternalParking"] = parkingOptionA["internalParkingSpacesPoss"] - parkingOptionA["residentialSpacesPoss"] + parkingOptionA["retailSpacesPoss"] + parkingOptionA["officeSpacesPoss"] + parkingOptionA["industrialSpacesPoss"] + parkingOptionA["publicSpacesPoss"] + parkingOptionA["educationalSpacesPoss"] + parkingOptionA["hotelSpacesPoss"];
 	
-
 	parkingOptionA_Aids["maxParkingRequired"] = parkingOptionA["residentialSpacesPoss"] + parkingOptionA["retailSpacesPoss"] + parkingOptionA["officeSpacesPoss"] + parkingOptionA["industrialSpacesPoss"] + parkingOptionA["publicSpacesPoss"] + parkingOptionA["educationalSpacesPoss"] + parkingOptionA["hotelSpacesPoss"];
-	parkingOptionA_Aids["undergroundParkingProvided"] = (
+
+	parkingOptionA_Aids["undergroundParkingProvided"] = errorChecking((
 		( physObj["undergroundParkingLvls"] > 0 && physObj["mechanicalParkingb76"] === "Yes") ? (physObj["siteArea"]*physObj["undergroundParkingLvls"])/125 : ( (physObj["undergroundParkingLvls"] > 0) ? (physObj["siteArea"]*physObj["undergroundParkingLvls"])/physObj["parkingAreaPerSf"] : 0)
-	);
+	) );
 	parkingOptionA_Aids["internalParkingProvided"] = parkingOptionA["internalParkingSpacesPoss"];
 	parkingOptionA_Aids["surplusOrDeficit"] = parkingOptionA_Aids["undergroundParkingProvided"] + parkingOptionA_Aids["internalParkingProvided"] - parkingOptionA_Aids["maxParkingRequired"];
-
-	parkingOptionA_Aids["externalSpacesPer1000"] = parkingOptionA["lessInternalParking"] / (parkingOptionA["totalMaxSf"] / 1000);
-	parkingOptionA_Aids["maxSpacesUnderground"] = (landUses["totalLotSize"]/physObj["parkingAreaPerSf"])*physObj["undergroundParkingLvls"];
-	parkingOptionA_Aids["adjustedSpacesUnderground"] = ((parkingOptionA["lessInternalParking"] < parkingOptionA_Aids["maxSpacesUnderground"]) ?parkingOptionA["lessInternalParking"] : parkingOptionA_Aids["maxSpacesUnderground"]); 
+	
+	parkingOptionA_Aids["externalSpacesPer1000"] = errorChecking(parkingOptionA["lessInternalParking"] / (parkingOptionA["totalMaxSf"] / 1000));
+	parkingOptionA_Aids["maxSpacesUnderground"] = errorChecking((landUses["totalLotSize"]/physObj["parkingAreaPerSf"])*physObj["undergroundParkingLvls"]);
+	parkingOptionA_Aids["adjustedSpacesUnderground"] = ((parkingOptionA["lessInternalParking"] < parkingOptionA_Aids["maxSpacesUnderground"]) ? parkingOptionA["lessInternalParking"] : parkingOptionA_Aids["maxSpacesUnderground"]); 
 	parkingOptionA_Aids["remainderExternalSpacesRequired"] = ( (parkingOptionA_Aids["externalSpacesPer1000"] < 0) ? 0: parkingOptionA_Aids["externalSpacesPer1000"]);
-
+	
 	parkingOptionA_Aids["totalParkBuildFootprint"] = landUses["buildingNParking"];
 	parkingOptionA_Aids["internalSfEnvelope"] = (parkingOptionA_Aids["externalSpacesPer1000"] === 0) ? 0 : ((1000/parkingOptionA_Aids["externalSpacesPer1000"])*parkingOptionA_Aids["adjustedSpacesUnderground"]);
 	parkingOptionA_Aids["adjustmentIfOverEnvelope"] = ( (parkingOptionA_Aids["internalSfEnvelope"]>maxBuildingEnvelope['squareFootage']) ? maxBuildingEnvelope['squareFootage'] :parkingOptionA_Aids["internalSfEnvelope"])
-	parkingOptionA_Aids["internalFootprint"] = parkingOptionA_Aids["adjustmentIfOverEnvelope"] / physObj["buildingHeight"];
+	parkingOptionA_Aids["internalFootprint"] = errorChecking(parkingOptionA_Aids["adjustmentIfOverEnvelope"] / physObj["buildingHeight"]);
 	parkingOptionA_Aids["adjustmentIfOverFootprint"] = ( (parkingOptionA_Aids["internalFootprint"]>parkingOptionA_Aids["totalParkBuildFootprint"]) ? parkingOptionA_Aids["totalParkBuildFootprint"] : parkingOptionA_Aids["internalFootprint"]);
 	parkingOptionA_Aids["aboveGradeParking"] = parkingOptionA_Aids["totalParkBuildFootprint"]-parkingOptionA_Aids["adjustmentIfOverFootprint"];
-
-	
 	
 	//If Underground or Internal Parking Only AND additional Surface/Structured Parking Required
 	
-	parkingOptionB["internalParkingMaxSfPerc"] = (
+	parkingOptionB["internalParkingMaxSfPerc"] = errorChecking((
 		(physObj["internalParkingLvls"] === 0) ? 0 : 1/(physObj["buildingHeight"]/physObj["internalParkingLvls"])
-	);
+	));
 	parkingOptionB["residentialMaxSfPerc"] = (1-parkingOptionB["internalParkingMaxSfPerc"])*physObj["residentialUsePerc"];
 	parkingOptionB["retailMaxSfPerc"] = (1-parkingOptionB["internalParkingMaxSfPerc"])*physObj["retailUsePerc"];
 	parkingOptionB["officeMaxSfPerc"] = (1-parkingOptionB["internalParkingMaxSfPerc"])*physObj["officeUsePerc"];
@@ -421,34 +423,32 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionB["commercialParkingMaxSf"] = (parkingOptionA_Aids["maxParkingRequired"]>=optionBHelper ? (optionBHelper2*parkingOptionB["commercialParkingMaxSfPerc"]) : parkingOptionA["commercialParkingMaxSfPerc"]);
 	parkingOptionB["totalMaxSf"] = parkingOptionB["internalParkingMaxSf"] + parkingOptionB["residentialMaxSf"] + parkingOptionB["retailMaxSf"] + parkingOptionB["officeMaxSf"] + parkingOptionB["industrialMaxSf"] + parkingOptionB["publicMaxSf"] + parkingOptionB["educationalMaxSf"] + parkingOptionB["hotelMaxSf"] + parkingOptionB["commercialParkingMaxSf"];
 	
-	parkingOptionB["internalParkingSpacesPoss"] = parkingOptionB["internalParkingMaxSf"]/physObj["parkingAreaPerSf"];
-	parkingOptionB["residentialSpacesPoss"] = (
+	parkingOptionB["internalParkingSpacesPoss"] = errorChecking(parkingOptionB["internalParkingMaxSf"]/physObj["parkingAreaPerSf"]);
+	parkingOptionB["residentialSpacesPoss"] = errorChecking((
 		(physObj["residentialUnitSize"]===0) ? 0 : (parkingOptionB["residentialMaxSf"]/(physObj["residentialUnitSize"]/maxBuildingEnvelope["residentialUnderbuild"]))*physObj["residentialParkPerUnit"]
-	)		
-	parkingOptionB["retailSpacesPoss"] = (parkingOptionB["retailMaxSf"]/1000)*physObj["retailParkPerArea"]
-	parkingOptionB["officeSpacesPoss"] = (parkingOptionB["officeMaxSf"]/1000)*physObj["officeParkPerArea"]
-	parkingOptionB["industrialSpacesPoss"] = (parkingOptionB["industrialMaxSf"]/1000)*physObj["industrialParkPerArea"]
-	parkingOptionB["publicSpacesPoss"] = (parkingOptionB["publicMaxSf"]/1000)*physObj["publicParkPerArea"]
-	parkingOptionB["educationalSpacesPoss"] = (parkingOptionB["educationalMaxSf"]/1000)*physObj["educationParkPerArea"]
-	parkingOptionB["hotelSpacesPoss"] = (physObj["hotelAreaPerRoom"] === 0 ? 0 :(parkingOptionB["hotelMaxSf"]/(physObj["hotelAreaPerRoom"]/advObj["hotelRentalPerc"]))*physObj["hotelParkPerRoom"]);
-	parkingOptionB["commercialParkingSpacesPoss"] = (parkingOptionB["commercialParkingMaxSf"]/1000)*physObj["retailParkPerArea"]
+	))
+	parkingOptionB["retailSpacesPoss"] = errorChecking((parkingOptionB["retailMaxSf"]/1000)*physObj["retailParkPerArea"])
+	parkingOptionB["officeSpacesPoss"] = errorChecking((parkingOptionB["officeMaxSf"]/1000)*physObj["officeParkPerArea"])
+	parkingOptionB["industrialSpacesPoss"] = errorChecking((parkingOptionB["industrialMaxSf"]/1000)*physObj["industrialParkPerArea"])
+	parkingOptionB["publicSpacesPoss"] = errorChecking((parkingOptionB["publicMaxSf"]/1000)*physObj["publicParkPerArea"])
+	parkingOptionB["educationalSpacesPoss"] = errorChecking((parkingOptionB["educationalMaxSf"]/1000)*physObj["educationParkPerArea"])
+	parkingOptionB["hotelSpacesPoss"] = errorChecking((physObj["hotelAreaPerRoom"] === 0 ? 0 :(parkingOptionB["hotelMaxSf"]/(physObj["hotelAreaPerRoom"]/advObj["hotelRentalPerc"]))*physObj["hotelParkPerRoom"]));
+	parkingOptionB["commercialParkingSpacesPoss"] = errorChecking((parkingOptionB["commercialParkingMaxSf"]/1000)*physObj["retailParkPerArea"])
 	parkingOptionB["totalSpaces"] = parkingOptionB["residentialSpacesPoss"] + parkingOptionB["retailSpacesPoss"] + parkingOptionB["officeSpacesPoss"] + parkingOptionB["industrialSpacesPoss"] + parkingOptionB["publicSpacesPoss"] + parkingOptionB["educationalSpacesPoss"] + parkingOptionB["hotelSpacesPoss"] + parkingOptionB["commercialParkingSpacesPoss"];
 	parkingOptionB["lessInternalParking"] = parkingOptionB["totalSpaces"] - parkingOptionB["commercialParkingSpacesPoss"] - parkingOptionB["internalParkingSpacesPoss"];
 	
 	
-	parkingOptionB["buildingFootprint"] = parkingOptionA_Aids["adjustmentIfOverEnvelope"]/physObj["buildingHeight"];	
+	parkingOptionB["buildingFootprint"] = errorChecking(parkingOptionA_Aids["adjustmentIfOverEnvelope"]/physObj["buildingHeight"]);	
 	parkingOptionB["lanscapeFootprint"] = landUses["landscaping"];
 	parkingOptionB["parkingFootprint"] = 0;
 	parkingOptionB["unusedFootprint"] = landUses["totalLotSize"] - parkingOptionB["parkingFootprint"]+parkingOptionB["lanscapeFootprint"]+parkingOptionB["buildingFootprint"];
-	
 	//end parkingOptionB
 	
 	//If Surface/Structured Parking
-	
 	parkingOptionC["parkingMaxA"] = parkingOptionA_Aids["adjustedSpacesUnderground"]*physObj["parkingAreaPerSf"];
-	parkingOptionC["parkingMaxB"] = ( (physObj["surfaceParkingLvls"]===0) ? 0 : (parkingOptionC["parkingMaxA"]/physObj["surfaceParkingLvls"]) );
-	parkingOptionC["parkingMaxB_2"] = (1000/physObj["buildingHeight"]);
-	parkingOptionC["buildingAvailable"] = parkingOptionA_Aids["aboveGradeParking"]/(parkingOptionC["parkingMaxB"]+parkingOptionC["parkingMaxB_2"]);
+	parkingOptionC["parkingMaxB"] = errorChecking(( (physObj["surfaceParkingLvls"]===0) ? 0 : (parkingOptionC["parkingMaxA"]/physObj["surfaceParkingLvls"]) ));
+	parkingOptionC["parkingMaxB_2"] = errorChecking((1000/physObj["buildingHeight"]));
+	parkingOptionC["buildingAvailable"] = errorChecking(parkingOptionA_Aids["aboveGradeParking"]/(parkingOptionC["parkingMaxB"]+parkingOptionC["parkingMaxB_2"]));
 	parkingOptionC["parkingAvailable"] = parkingOptionC["parkingMaxB"]*parkingOptionC["buildingAvailable"];
 	parkingOptionC["parkingAvailable_2"] = parkingOptionC["parkingMaxB_2"]*parkingOptionC["buildingAvailable"];
 	parkingOptionC["aboveGrade"] =  (( physObj["surfaceParkingLvls"]>0 || (physObj["surfaceParkingLvls"]+physObj["undergroundParkingLvls"]+physObj["internalParkingLvls"]) === 0) ? 1 : 0);
@@ -464,11 +464,12 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionC["parkingFootprint"] = parkingOptionC["aboveGradeFootprint"];
 	parkingOptionC["unusedFootprint"] = parkingOptionC["unusedSpace"];
 	
-	parkingOptionC_Aid1["internalParkingSf"] = (parkingOptionC["adjustedMaxBuilding"]/physObj["buildingHeight"])*physObj["internalParkingLvls"];
+	parkingOptionC_Aid1["internalParkingSf"] = errorChecking((parkingOptionC["adjustedMaxBuilding"]/physObj["buildingHeight"])*physObj["internalParkingLvls"]);
 	
 	let optionCHelper = parkingOptionC["adjustedMaxBuilding"]-parkingOptionC_Aid1["internalParkingSf"];
 	let optionCHelper2 = parkingOptionC["aboveGrade"];
 	let optionCHelper3 = parkingOptionA_Aids["surplusOrDeficit"];
+	
 	
 	//Square Footage by Use (if surface/structured parking)
 	parkingOptionC_Aid1["residentialSf"] = (optionCHelper)*physObj["residentialUsePerc"];
@@ -481,20 +482,21 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionC_Aid1["commercialParkingSf"] = (optionCHelper)*physObj["parkingUsePerc"];
 	parkingOptionC_Aid1["totalSf"] = parkingOptionC_Aid1["internalParkingSf"] + parkingOptionC_Aid1["residentialSf"] + parkingOptionC_Aid1["retailSf"] + parkingOptionC_Aid1["officeSf"] + parkingOptionC_Aid1["industrialSf"] + parkingOptionC_Aid1["publicSf"] + parkingOptionC_Aid1["educationalSf"] + parkingOptionC_Aid1["hotelSf"] + parkingOptionC_Aid1["commercialParkingSf"];
 	
-	parkingOptionC_Aid1["internalParkingSpaces"] = parkingOptionC_Aid1["internalParkingSf"]/physObj["parkingAreaPerSf"];
-	parkingOptionC_Aid1["residentialSpaces"] = (physObj["residentialUnitSize"]=== 0) ? 0 : (parkingOptionC_Aid1["residentialSf"]/(physObj["residentialUnitSize"]/maxBuildingEnvelope['residentialUnderbuild']))*physObj["residentialParkPerUnit"];
-	parkingOptionC_Aid1["retailSpaces"] = (parkingOptionC_Aid1["retailSf"]/1000)*physObj["retailParkPerArea"];
-	parkingOptionC_Aid1["officeSpaces"] = (parkingOptionC_Aid1["officeSf"]/1000)*physObj["officeParkPerArea"];
-	parkingOptionC_Aid1["industrialSpaces"] = (parkingOptionC_Aid1["industrialSf"]/1000)*physObj["industrialParkPerArea"];
-	parkingOptionC_Aid1["publicSpaces"] = (parkingOptionC_Aid1["publicSf"]/1000)*physObj["publicParkPerArea"];
-	parkingOptionC_Aid1["educationalSpaces"] = (parkingOptionC_Aid1["educationalSf"]/1000)*physObj["educationParkPerArea"]
-	parkingOptionC_Aid1["hotelSpaces"] = (
+	parkingOptionC_Aid1["internalParkingSpaces"] = errorChecking(parkingOptionC_Aid1["internalParkingSf"]/physObj["parkingAreaPerSf"]);
+	parkingOptionC_Aid1["residentialSpaces"] = errorChecking((physObj["residentialUnitSize"]=== 0) ? 0 : (parkingOptionC_Aid1["residentialSf"]/(physObj["residentialUnitSize"]/maxBuildingEnvelope['residentialUnderbuild']))*physObj["residentialParkPerUnit"]);
+	parkingOptionC_Aid1["retailSpaces"] = errorChecking((parkingOptionC_Aid1["retailSf"]/1000)*physObj["retailParkPerArea"]);
+	parkingOptionC_Aid1["officeSpaces"] = errorChecking((parkingOptionC_Aid1["officeSf"]/1000)*physObj["officeParkPerArea"]);
+	parkingOptionC_Aid1["industrialSpaces"] = errorChecking((parkingOptionC_Aid1["industrialSf"]/1000)*physObj["industrialParkPerArea"]);
+	parkingOptionC_Aid1["publicSpaces"] = errorChecking((parkingOptionC_Aid1["publicSf"]/1000)*physObj["publicParkPerArea"]);
+	parkingOptionC_Aid1["educationalSpaces"] = errorChecking((parkingOptionC_Aid1["educationalSf"]/1000)*physObj["educationParkPerArea"])
+	parkingOptionC_Aid1["hotelSpaces"] = errorChecking((
 		(physObj["hotelAreaPerRoom"]===0) ? 0 : (parkingOptionC_Aid1["hotelSf"]/(physObj["hotelAreaPerRoom"]/advObj["hotelRentalPerc"]))*physObj["hotelParkPerRoom"]
-	);
-	parkingOptionC_Aid1["commercialParkingSpaces"] = parkingOptionC_Aid1["commercialParkingSf"]/physObj["parkingAreaPerSf"]
+	));
+	parkingOptionC_Aid1["commercialParkingSpaces"] = errorChecking(parkingOptionC_Aid1["commercialParkingSf"]/physObj["parkingAreaPerSf"])
 	parkingOptionC_Aid1["totalSpaces"] = parkingOptionC_Aid1["residentialSpaces"] + parkingOptionC_Aid1["retailSpaces"] + parkingOptionC_Aid1["officeSpaces"] + parkingOptionC_Aid1["industrialSpaces"] + parkingOptionC_Aid1["publicSpaces"] + parkingOptionC_Aid1["educationalSpaces"] + parkingOptionC_Aid1["hotelSpaces"] + parkingOptionC_Aid1["commercialParkingSpaces"] + parkingOptionC_Aid1["internalParkingSpaces"];
 	parkingOptionC_Aid1["lessInternalParking"] = parkingOptionC_Aid1["totalSpaces"] - parkingOptionC_Aid1["internalParkingSpaces"] - parkingOptionC_Aid1["commercialParkingSpaces"];
-	
+
+
 	//Square Footage by Use (without Underbuild)
 	parkingOptionC_Aid2["residentialSf"] = (optionCHelper2 >0) ? parkingOptionC_Aid1["residentialSf"] : parkingOptionB["residentialMaxSf"]
 	parkingOptionC_Aid2["residentialSpaces"] = (optionCHelper3 >=0) ? parkingOptionA["residentialSpacesPoss"] : parkingOptionC_Aid1["residentialSpaces"];
@@ -535,10 +537,10 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionC_Aid3["commercialParkingSf"] = parkingOptionC_Aid2["commercialParkingSf"] *physObj["underbuildPerc"];
 	parkingOptionC_Aid3["commercialParkingSpaces"] = parkingOptionC_Aid2["commercialParkingSpaces"] *physObj["underbuildPerc"];
 	parkingOptionC_Aid3["internalParkingSf"] = parkingOptionC_Aid2["internalParkingSf"]*physObj["underbuildPerc"];
-	parkingOptionC_Aid3["internalParkingSpaces"] = parkingOptionC_Aid3["internalParkingSf"]/physObj["parkingAreaPerSf"];
+	parkingOptionC_Aid3["internalParkingSpaces"] = errorChecking(parkingOptionC_Aid3["internalParkingSf"]/physObj["parkingAreaPerSf"]);
 	parkingOptionC_Aid3["totalSf"] = parkingOptionC_Aid3["residentialSf"] + parkingOptionC_Aid3["retailSf"] + parkingOptionC_Aid3["officeSf"] + parkingOptionC_Aid3["industrialSf"] + parkingOptionC_Aid3["publicSf"] + parkingOptionC_Aid3["educationalSf"] + parkingOptionC_Aid3["hotelSf"] + parkingOptionC_Aid3["commercialParkingSf"] + parkingOptionC_Aid3["internalParkingSf"];
 	parkingOptionC_Aid3["totalSpaces"] = parkingOptionC_Aid3["residentialSpaces"] + parkingOptionC_Aid3["retailSpaces"] + parkingOptionC_Aid3["officeSpaces"] + parkingOptionC_Aid3["industrialSpaces"] + parkingOptionC_Aid3["publicSpaces"] + parkingOptionC_Aid3["educationalSpaces"] + parkingOptionC_Aid3["hotelSpaces"];
-
+	
 	
 	// Site Summary
 	// Pre-Underbuild
@@ -549,15 +551,15 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	
 	//Adjustment Factors
 	parkingOptionC_Aid5["unusedFootprint"] = preUnderbuild["unusedFootprint"]; //b127
-	parkingOptionC_Aid5["bldgFootprint"] = 1000/physObj["buildingHeight"]/physObj["underbuildPerc"]; //b128
+	parkingOptionC_Aid5["bldgFootprint"] = errorChecking(1000/physObj["buildingHeight"]/physObj["underbuildPerc"]); //b128
 	parkingOptionC_Aid5["bldgParkingFootprint"] = parkingOptionC_Aid5["bldgFootprint"]+parkingOptionC["parkingMaxB"] //b129
-	parkingOptionC_Aid5["additionalArea"] = 1000*parkingOptionC_Aid5["unusedFootprint"]/parkingOptionC_Aid5["bldgParkingFootprint"] //b130
-	parkingOptionC_Aid5["additionalFootprint"] = parkingOptionC_Aid5["bldgFootprint"]*(parkingOptionC_Aid5["additionalArea"]/1000) //b131
-	parkingOptionC_Aid5["additionalParking"] = parkingOptionC["parkingMaxB"]*parkingOptionC_Aid5["additionalArea"]/1000 //b132
+	parkingOptionC_Aid5["additionalArea"] = errorChecking(1000*parkingOptionC_Aid5["unusedFootprint"]/parkingOptionC_Aid5["bldgParkingFootprint"]) //b130
+	parkingOptionC_Aid5["additionalFootprint"] = errorChecking(parkingOptionC_Aid5["bldgFootprint"]*(parkingOptionC_Aid5["additionalArea"]/1000)) //b131
+	parkingOptionC_Aid5["additionalParking"] = errorChecking(parkingOptionC["parkingMaxB"]*parkingOptionC_Aid5["additionalArea"]/1000) //b132
 	parkingOptionC_Aid5["adjustedVolume"] = parkingOptionC_Aid3["totalSf"]+parkingOptionC_Aid5["additionalArea"] //b133
-	parkingOptionC_Aid5["adjustedSpaces"] = parkingOptionC_Aid3["totalSpaces"]+(parkingOptionC_Aid5["additionalParking"]/physObj["parkingAreaPerSf"]) //b134
-
-	let optionCHelper4 = parkingOptionC_Aid5["adjustedVolume"]/parkingOptionC_Aid3["totalSf"];
+	parkingOptionC_Aid5["adjustedSpaces"] = errorChecking(parkingOptionC_Aid3["totalSpaces"]+(parkingOptionC_Aid5["additionalParking"]/physObj["parkingAreaPerSf"])) //b134
+	
+	let optionCHelper4 = errorChecking(parkingOptionC_Aid5["adjustedVolume"]/parkingOptionC_Aid3["totalSf"]);
 	//Square Footage by Use (Adjusted)
 	parkingOptionC_Aid4["residentialSf"] = parkingOptionC_Aid3["residentialSf"]*(optionCHelper4) //b138
 	parkingOptionC_Aid4["residentialSpaces"] = parkingOptionC_Aid3["residentialSpaces"]*(optionCHelper4) //c138
@@ -581,7 +583,7 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	parkingOptionC_Aid4["totalSpaces"] = parkingOptionC_Aid4["residentialSpaces"] + parkingOptionC_Aid4["officeSpaces"] + parkingOptionC_Aid4["retailSpaces"] + parkingOptionC_Aid4["industrialSpaces"] + parkingOptionC_Aid4["publicSpaces"] + parkingOptionC_Aid4["educationalSpaces"] + parkingOptionC_Aid4["hotelSpaces"];
 	
 	//end parkingOptionC
-	
+
 	// Site Summary
 	// Post-Underbuild
 	postUnderbuild["buildingFootprint"] = preUnderbuild["buildingFootprint"] //b158
@@ -596,7 +598,7 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	adjustedSummary["unusedFootprint"] = 0; //b167
 	
 	let optionCHelper5 = parkingOptionC_Aid4["residentialSpaces"] + parkingOptionC_Aid4["retailSpaces"] + parkingOptionC_Aid4["officeSpaces"] + parkingOptionC_Aid4["industrialSpaces"] + parkingOptionC_Aid4["publicSpaces"] + parkingOptionC_Aid4["educationalSpaces"] + parkingOptionC_Aid4["hotelSpaces"];
-
+	
 	//Parking Space Adjustments
 	adjustedParkingSpaces["residentialRequired"] = parkingOptionC_Aid4["residentialSpaces"]
 	adjustedParkingSpaces["retailRequired"] = parkingOptionC_Aid4["retailSpaces"]
@@ -605,7 +607,7 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	adjustedParkingSpaces["publicRequired"] = parkingOptionC_Aid4["publicSpaces"]
 	adjustedParkingSpaces["educationalRequired"] = parkingOptionC_Aid4["educationalSpaces"]
 	adjustedParkingSpaces["hotelRequired"] = parkingOptionC_Aid4["hotelSpaces"] 
-	adjustedParkingSpaces["structuredProvided"] = (parkingOptionC["aboveGrade"]>0) ? ((adjustedSummary["parkingFootprint"]*physObj["surfaceParkingLvls"])/physObj["parkingAreaPerSf"]) : 0;
+	adjustedParkingSpaces["structuredProvided"] = errorChecking((parkingOptionC["aboveGrade"]>0) ? ((adjustedSummary["parkingFootprint"]*physObj["surfaceParkingLvls"])/physObj["parkingAreaPerSf"]) : 0 );
 	adjustedParkingSpaces["undergroundProvided"] = parkingOptionA_Aids["undergroundParkingProvided"]
 	adjustedParkingSpaces["commercialProvided"] = parkingOptionC_Aid4["commercialParkingSpaces"]
 	adjustedParkingSpaces["commercialRequired"] = parkingOptionC_Aid4["commercialParkingSpaces"]
@@ -621,38 +623,44 @@ export const updateBuildingEnvelope = (physObj, basObj, advObj) => {
 	
 	
 	adjustedParkingFootprint["surfaceArea"] = adjustedSpaces["surface"]*physObj["parkingAreaPerSf"] //b192
-	adjustedParkingFootprint["surfaceFootprint"] = (adjustedParkingFootprint["surfaceArea"] < physObj["parkingAreaPerSf"]) ? 0 : (adjustedParkingFootprint["surfaceArea"] / physObj["surfaceParkingLvls"])
+	adjustedParkingFootprint["surfaceFootprint"] = errorChecking((adjustedParkingFootprint["surfaceArea"] < physObj["parkingAreaPerSf"]) ? 0 : (adjustedParkingFootprint["surfaceArea"] / physObj["surfaceParkingLvls"]))
 	adjustedParkingFootprint["undergroundArea"] = 0;	//b193
-	adjustedParkingFootprint["undergroundFootprint"] = (adjustedSpaces["underground"]*physObj["parkingAreaPerSf"])/landUses["totalLotSize"] //c193
+	adjustedParkingFootprint["undergroundFootprint"] = errorChecking((adjustedSpaces["underground"]*physObj["parkingAreaPerSf"])/landUses["totalLotSize"]) //c193
 
+	updateDevelopmentCosts( physObj, basObj, advObj );
 
 }
 
 export const updateMathModule = (obj) => {
-	updateBuildingEnvelope( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
-	updatePhysicalOutputs(obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
-	updateDevelopmentCosts( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
-	updateMixedUseSummary( obj.physicalInfo, obj.basicFinInfo, obj.advFinInfo );
+	let physObj = _.mapValues(obj.physicalInfo, function(o) { return ( isNaN(o) ? o : Number(o) ) });
+	let basObj = _.mapValues(obj.basicFinInfo, function(o) { return  ( isNaN(o) ? o : Number(o) ) });
+	let advObj = _.mapValues(obj.advFinInfo, function(o) { return  ( isNaN(o) ? o : Number(o) ) });
+	// console.log(physObj);
+	updateBuildingEnvelope( physObj, basObj, advObj );
+	// updateDevelopmentCosts( physObj, basObj, advObj );
+	// updateMixedUseSummary( physObj, basObj, advObj );
+	// updatePhysicalOutputs(physObj, basObj, advObj );
 }
 export const buildingLotCoverage = (siteArea) => {
-	// console.log(siteArea);
 	// console.log(adjustedSummary['buildingFootprint']);
-	let finalLotCoverage = adjustedSummary['buildingFootprint'] / siteArea;
-	return (isNaN(finalLotCoverage) ? 0 : finalLotCoverage);
+	let finalLotCoverage = errorChecking(adjustedSummary['buildingFootprint'] / siteArea);
+	return finalLotCoverage;
 };
 export const landscapeLotCoverage = (siteArea) => {
-	let finalLandscapeCoverage = adjustedSummary["lanscapeFootprint"]/siteArea;
-	return (isNaN(finalLandscapeCoverage) ? 0 : finalLandscapeCoverage);
+	let finalLandscapeCoverage = errorChecking(adjustedSummary["lanscapeFootprint"]/siteArea);
+	return finalLandscapeCoverage;
 };
 export const parkingLotCoverage = (siteArea) => {
-	let finalParkingCoverage = adjustedSummary["parkingFootprint"]/siteArea;
+	let finalParkingCoverage = errorChecking(adjustedSummary["parkingFootprint"]/siteArea);
 	return finalParkingCoverage;
 };
 
 let grossSfTotal = 0;
 export const getFAR = (siteArea, advFinInfo) => {
 	let { retailRentalPerc, officeRentalPerc, industrialRentalPerc, publicRentalPerc, educationRentalPerc, hotelRentalPerc, parkingRentalPerc } = advFinInfo;
-
+	// console.log(parkingOptionC_Aid4);
+	// console.log(maxBuildingEnvelope["residentialUnderbuild"]);
+	// console.log(retailRentalPerc, officeRentalPerc, industrialRentalPerc, publicRentalPerc, educationRentalPerc, hotelRentalPerc, parkingRentalPerc);
 	grossSfTotal = 
 		(parkingOptionC_Aid4["residentialSf"]*maxBuildingEnvelope["residentialUnderbuild"])	+
 		(parkingOptionC_Aid4["retailSf"]*retailRentalPerc)	+
@@ -663,44 +671,47 @@ export const getFAR = (siteArea, advFinInfo) => {
 		(parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc)	+
 		(parkingOptionC_Aid4["commercialParkingSf"]*parkingRentalPerc)	+
 		(adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"]);
-		// parkingOptionC_Aid4["internalParkingSf"];
+	
 
-	return grossSfTotal/siteArea;
+	// console.log("grossSfTotal ", grossSfTotal)
+	// console.log("siteArea ", siteArea)
+
+	return errorChecking(grossSfTotal/siteArea);
 }
 export const getTotalSf = ( ) => {
 	return grossSfTotal;
 }
 export const getResidentialSfMix = () => {
-	return parkingOptionC_Aid4["residentialSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["residentialSf"]/grossSfTotal);
 }
 export const getRetailSfMix = () => {
 
-	return parkingOptionC_Aid4["retailSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["retailSf"]/grossSfTotal);
 }
 export const getOfficeSfMix = () => {
-	return parkingOptionC_Aid4["officeSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["officeSf"]/grossSfTotal);
 }
 export const getIndustrialSfMix = () => {
-	return parkingOptionC_Aid4["industrialSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["industrialSf"]/grossSfTotal);
 }
 export const getPublicSfMix = () => {
-	return parkingOptionC_Aid4["publicSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["publicSf"]/grossSfTotal);
 }
 export const getEducationalSfMix = () => {
-	return parkingOptionC_Aid4["educationalSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["educationalSf"]/grossSfTotal);
 }
 export const getHotelSfMix = () => {
-	return parkingOptionC_Aid4["hotelSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["hotelSf"]/grossSfTotal);
 }
 export const getCommercialParkingSfMix = () => {
-	return parkingOptionC_Aid4["commercialParkingSf"]/grossSfTotal;
+	return errorChecking(parkingOptionC_Aid4["commercialParkingSf"]/grossSfTotal);
 }
 export const getInternalParkingSfMix = () => {
-	return (adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"]+parkingOptionC_Aid4["internalParkingSf"])/grossSfTotal;
+	return errorChecking((adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"]+parkingOptionC_Aid4["internalParkingSf"])/grossSfTotal);
 }
 export const getResidentialNetUnit = (residentialUnitSize) => {
 	let c28 = parkingOptionC_Aid4["residentialSf"]*maxBuildingEnvelope["residentialUnderbuild"];
-	let d28 = (residentialUnitSize === 0) ? 0 : c28/residentialUnitSize;
+	let d28 = errorChecking((residentialUnitSize === 0) ? 0 : c28/residentialUnitSize);
 
 	return ( (c28 === 0) ? 0 : c28/d28 );
 }
@@ -719,10 +730,10 @@ export const getResidentialDwellUnit = (physicalInfo, advFinInfo) => {
 	let c34 = parkingOptionC_Aid4["hotelSf"]*hotelRentalPerc;
 	let c35 = parkingOptionC_Aid4["commercialParkingSf"]*parkingRentalPerc;
 	let siteAreaAcre = siteArea / 43560;
-	let total = 
+	let total = errorChecking(
 		(((residentialUnitSize === 0) ? 0 : c28/residentialUnitSize) / siteAreaAcre) +
 		(((hotelAreaPerRoom === 0) ? 0 : c34/residentialUnitSize) / siteAreaAcre) +
-		(((parkingAreaPerEmp === 0) ? 0 : c35/residentialUnitSize) / siteAreaAcre);
+		(((parkingAreaPerEmp === 0) ? 0 : c35/residentialUnitSize) / siteAreaAcre) );
 	return total;
 }
 
@@ -804,8 +815,10 @@ export const getParkingSf = (physicalInfo) =>{
 }
 
 export const getInternalStructureParkingSf = () => {
+	// console.log(adjustedParkingFootprint["surfaceArea"],adjustedParkingFootprint["surfaceFootprint"],parkingOptionC_Aid4["internalParkingSf"]);
 	let b36 = adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"];
 	let b37 = parkingOptionC_Aid4["internalParkingSf"];
+	// console.log(b36+b37)
 	return b36+b37;
 }
 
@@ -903,10 +916,10 @@ export const updatePhysicalOutputs = ( physicalInfo, basicFinInfo, advFinInfo ) 
 	siteLevelOutputs["netToGrossReductionSf"] = siteArea*(1 - siteNetToGross);
 
 	let siteTotal = siteLevelOutputs["buildingFootprintSf"] + siteLevelOutputs["landscapingFootprintSf"] + siteLevelOutputs["parkingByBuildingSf"] + siteLevelOutputs["netToGrossReductionSf"];
-	siteLevelOutputs["buildingFootprintPerc"] = siteLevelOutputs["buildingFootprintSf"]/siteTotal;
-	siteLevelOutputs["landscapingFootprintPerc"] = siteLevelOutputs["landscapingFootprintSf"]/siteTotal;
-	siteLevelOutputs["parkingByBuildingPerc"] = siteLevelOutputs["parkingByBuildingSf"]/siteTotal;
-	siteLevelOutputs["netToGrossReductionPerc"] = siteLevelOutputs["netToGrossReductionSf"]/siteTotal;
+	siteLevelOutputs["buildingFootprintPerc"] = errorChecking(siteLevelOutputs["buildingFootprintSf"]/siteTotal);
+	siteLevelOutputs["landscapingFootprintPerc"] = errorChecking(siteLevelOutputs["landscapingFootprintSf"]/siteTotal);
+	siteLevelOutputs["parkingByBuildingPerc"] = errorChecking(siteLevelOutputs["parkingByBuildingSf"]/siteTotal);
+	siteLevelOutputs["netToGrossReductionPerc"] = errorChecking(siteLevelOutputs["netToGrossReductionSf"]/siteTotal);
 
 	totalGrossSf["residential"] = parkingOptionC_Aid4["residentialSf"];
 	totalGrossSf["retail"] = parkingOptionC_Aid4["retailSf"];
@@ -935,23 +948,23 @@ export const updatePhysicalOutputs = ( physicalInfo, basicFinInfo, advFinInfo ) 
 	let { residentialUnitSize, hotelAreaPerRoom, parkingAreaPerEmp,
 		retailAreaPerEmp, officeAreaPerEmp, industrialAreaPerEmp, publicAreaPerEmp, 
 		educationAreaPerEmp, hotelAreaPerEmp, parkingAreaPerSf } = physicalInfo;
-	totalDwellingOrHotelUnits["residential"] = (residentialUnitSize === 0 ? 0 : totalNetSf["residential"]/residentialUnitSize);
-	totalDwellingOrHotelUnits["hotel"] = (hotelAreaPerRoom === 0 ? 0 : totalNetSf["hotel"]/hotelAreaPerRoom);
-	totalDwellingOrHotelUnits["commercialParking"] = (parkingAreaPerEmp === 0 ? 0 : totalNetSf["commercialParking"]/parkingAreaPerEmp);
+	totalDwellingOrHotelUnits["residential"] = errorChecking((residentialUnitSize === 0 ? 0 : totalNetSf["residential"]/residentialUnitSize));
+	totalDwellingOrHotelUnits["hotel"] = errorChecking((hotelAreaPerRoom === 0 ? 0 : totalNetSf["hotel"]/hotelAreaPerRoom));
+	totalDwellingOrHotelUnits["commercialParking"] = errorChecking((parkingAreaPerEmp === 0 ? 0 : totalNetSf["commercialParking"]/parkingAreaPerEmp));
 	totalDwellingOrHotelUnits["total"] = totalDwellingOrHotelUnits["residential"]+totalDwellingOrHotelUnits["hotel"]+totalDwellingOrHotelUnits["commercialParking"];
 
-	totalJobsByLandUse["retail"] = (retailAreaPerEmp === 0 ? 0 : totalGrossSf["retail"]/retailAreaPerEmp);
-	totalJobsByLandUse["office"] = (officeAreaPerEmp === 0 ? 0 : totalGrossSf["office"]/officeAreaPerEmp);
-	totalJobsByLandUse["industrial"] = (industrialAreaPerEmp === 0 ? 0 : totalGrossSf["industrial"]/industrialAreaPerEmp);
-	totalJobsByLandUse["public"] = (publicAreaPerEmp === 0 ? 0 : totalGrossSf["public"]/publicAreaPerEmp);
-	totalJobsByLandUse["educational"] = (educationAreaPerEmp === 0 ? 0 : totalGrossSf["educational"]/educationAreaPerEmp);
-	totalJobsByLandUse["hotel"] = (hotelAreaPerEmp === 0 ? 0 : totalGrossSf["hotel"]/hotelAreaPerEmp);
-	totalJobsByLandUse["commercialParking"] = (parkingAreaPerEmp === 0 ? 0 : totalGrossSf["commercialParking"]/parkingAreaPerEmp);
+	totalJobsByLandUse["retail"] = errorChecking((retailAreaPerEmp === 0 ? 0 : totalGrossSf["retail"]/retailAreaPerEmp));
+	totalJobsByLandUse["office"] = errorChecking((officeAreaPerEmp === 0 ? 0 : totalGrossSf["office"]/officeAreaPerEmp));
+	totalJobsByLandUse["industrial"] = errorChecking((industrialAreaPerEmp === 0 ? 0 : totalGrossSf["industrial"]/industrialAreaPerEmp));
+	totalJobsByLandUse["public"] = errorChecking((publicAreaPerEmp === 0 ? 0 : totalGrossSf["public"]/publicAreaPerEmp));
+	totalJobsByLandUse["educational"] = errorChecking((educationAreaPerEmp === 0 ? 0 : totalGrossSf["educational"]/educationAreaPerEmp));
+	totalJobsByLandUse["hotel"] = errorChecking((hotelAreaPerEmp === 0 ? 0 : totalGrossSf["hotel"]/hotelAreaPerEmp));
+	totalJobsByLandUse["commercialParking"] = errorChecking((parkingAreaPerEmp === 0 ? 0 : totalGrossSf["commercialParking"]/parkingAreaPerEmp));
 	totalJobsByLandUse["total"] = totalJobsByLandUse["retail"] +totalJobsByLandUse["office"]+totalJobsByLandUse["industrial"]+totalJobsByLandUse["public"]+totalJobsByLandUse["educational"] +totalJobsByLandUse["hotel"]+totalJobsByLandUse["commercialParking"]
 	
 	let b36 = adjustedParkingFootprint["surfaceArea"]-adjustedParkingFootprint["surfaceFootprint"];
-	let z3 = adjustedSpaces["surface"]*adjustedParkingFootprint["surfaceFootprint"]/adjustedParkingFootprint["surfaceArea"];;
-	let z2 = adjustedSpaces["surface"]*b36/adjustedParkingFootprint["surfaceArea"];
+	let z3 = errorChecking(adjustedSpaces["surface"]*adjustedParkingFootprint["surfaceFootprint"]/adjustedParkingFootprint["surfaceArea"]);
+	let z2 = errorChecking(adjustedSpaces["surface"]*b36/adjustedParkingFootprint["surfaceArea"]);
 	parkingSpacesByType["surface"] = ( z3 === 0 ? 0 : z3);
 	parkingSpacesByType["structure"] = ( z2 === 0 ? 0 : z2);
 	parkingSpacesByType["underground"] = adjustedSpaces["underground"]
@@ -981,6 +994,7 @@ export const updatePhysicalOutputs = ( physicalInfo, basicFinInfo, advFinInfo ) 
 	parkingSpacesByLandUse["commercialParkingSf"] = parkingAreaPerSf*parkingSpacesByLandUse["commercialParkingSpaces"]
 	parkingSpacesByLandUse["totalSf"] = parkingSpacesByLandUse["residentialSf"] + parkingSpacesByLandUse["retailSf"] + parkingSpacesByLandUse["officeSf"] + parkingSpacesByLandUse["industrialSf"] + parkingSpacesByLandUse["publicSf"] + parkingSpacesByLandUse["educationalSf"] + parkingSpacesByLandUse["hotelSf"] + parkingSpacesByLandUse["commercialParkingSf"];
 
+	// console.log('update physical outputs done...')
 }
 
 // PROJECT DEVELOPMENT COSTS		
@@ -1182,14 +1196,16 @@ export const updateDevelopmentCosts = (physicalInfo, basicFinInfo, advFinInfo) =
 	costAllocation["parking"]["total"] = costAllocation["parking"]["devAndLand"] + costAllocation["parking"]["parking"];
 	costAllocation["grand"]["total"] = costAllocation["residential"]["total"] + costAllocation["retail"]["total"] + costAllocation["office"]["total"] + costAllocation["industrial"]["total"] + costAllocation["public"]["total"] + costAllocation["educational"]["total"] + costAllocation["hotel"]["total"] + costAllocation["parking"]["total"];
 
-	costAllocation["percent"]["residential"] = costAllocation["residential"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["retail"] = costAllocation["retail"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["office"] = costAllocation["office"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["industrial"] = costAllocation["industrial"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["public"] = costAllocation["public"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["educational"] = costAllocation["educational"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["hotel"] = costAllocation["hotel"]["total"]/costAllocation["grand"]["total"]
-	costAllocation["percent"]["parking"] = costAllocation["parking"]["total"]/costAllocation["grand"]["total"]
+	costAllocation["percent"]["residential"] = errorChecking(costAllocation["residential"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["retail"] = errorChecking(costAllocation["retail"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["office"] = errorChecking(costAllocation["office"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["industrial"] = errorChecking(costAllocation["industrial"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["public"] = errorChecking(costAllocation["public"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["educational"] = errorChecking(costAllocation["educational"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["hotel"] =errorChecking( costAllocation["hotel"]["total"]/costAllocation["grand"]["total"]);
+	costAllocation["percent"]["parking"] = errorChecking(costAllocation["parking"]["total"]/costAllocation["grand"]["total"]);
+
+	updateMixedUseSummary( physicalInfo, basicFinInfo, advFinInfo );
 }
 export const getParkingCostSf = () => {
 	return -1 * developmentTotals["parkingConstruction"];
@@ -1385,7 +1401,7 @@ export const updateMixedUseSummary = (physicalInfo, basicFinInfo, advFinInfo) =>
 	residentialOwnerROI["leveragedPerformance"]["developerEquity"] = (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]-residentialOwnerROI["baseline"]["interimFinancing"] < 0 ? 1 : residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]-residentialOwnerROI["baseline"]["interimFinancing"])
 
 	residentialOwnerROI["leveragedPerformance"]["netProjectReturn"] = residentialOwnerROI["baseline"]["netSaleProceeds"]-residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"];
-	residentialOwnerROI["leveragedPerformance"]["projectRateReturn"] = (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"] === 0 ? 0 : residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]/residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"])
+	residentialOwnerROI["leveragedPerformance"]["projectRateReturn"] = errorChecking((residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"] === 0 ? 0 : residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]/residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]))
 	residentialOwnerROI["leveragedPerformance"]["projectProfit"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"] - (residentialOwnerROI["leveragedPerformance"]["adjustedProjectCost"]*projectReturnRateOwner);
 	residentialOwnerROI["leveragedPerformance"]["returnToEquity"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]/residentialOwnerROI["leveragedPerformance"]["developerEquity"];
 	residentialOwnerROI["leveragedPerformance"]["equityProfit"] = residentialOwnerROI["leveragedPerformance"]["netProjectReturn"]-(residentialOwnerROI["leveragedPerformance"]["developerEquity"]*returnToEquityOwner);
@@ -1402,7 +1418,7 @@ export const updateMixedUseSummary = (physicalInfo, basicFinInfo, advFinInfo) =>
 	residentialRenterROI["leveragingTools"]["totalDevelopmentOffsets"] = residentialRenterROI["leveragingTools"]["taxCreditsNetToProject"]+residentialRenterROI["leveragingTools"]["feeReductions"]+residentialRenterROI["leveragingTools"]["grants"];
 	
 	residentialRenterROI["netOperatingIncome"]["numberOfUnits"] = ( occupancyType === 'Renter' ? totalDwellingOrHotelUnits["residential"] : 0)
-	residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"] = ( occupancyType === 'Renter' ? (-1 * costAllocation["residential"]["total"] ) : 0) / residentialRenterROI["netOperatingIncome"]["numberOfUnits"]
+	residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"] = errorChecking(( occupancyType === 'Renter' ? (-1 * costAllocation["residential"]["total"] ) : 0) / residentialRenterROI["netOperatingIncome"]["numberOfUnits"])
 	residentialRenterROI["leveragingTools"]["netDevelopmentCosts"] = residentialRenterROI["netOperatingIncome"]["totalDevelopmentCosts"] - residentialRenterROI["leveragingTools"]["totalDevelopmentOffsets"]
 	let monthlyRentCalc = (monthlyRentPerSf*residentialUnitSize)+monthlyParkingCost;
 	residentialRenterROI["netOperatingIncome"]["monthlyRent"] = ( occupancyType === 'Renter' ? monthlyRentCalc : 0);
@@ -1431,6 +1447,7 @@ export const updateMixedUseSummary = (physicalInfo, basicFinInfo, advFinInfo) =>
 	//update commercialParking = {}
 	commercialParking["netOperatingIncome"]["totalDevelopmentCosts"] = -1 * costAllocation["parking"]["total"];
 	commercialParking["operatingStatement"]["lessPropertyTaxes"] = commercialParking["operatingStatement"]["totalDevelopmentCosts"] * propTaxParking * assessRatioTaxParking;
+	updatePhysicalOutputs(physicalInfo, basicFinInfo, advFinInfo );
 
 }
 

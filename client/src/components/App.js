@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import { Reboot } from 'material-ui';
+import { CssBaseline } from 'material-ui';
 
 import Header from './Header';
 import Welcome from './Welcome';
@@ -24,7 +24,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-            	<Reboot /> 
+            	<CssBaseline /> 
 				<BrowserRouter>
 					<div>
 						<Header />

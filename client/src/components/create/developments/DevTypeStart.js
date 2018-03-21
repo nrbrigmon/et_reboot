@@ -35,12 +35,7 @@ class DevTypeStart extends Component {
 
 	}
 	componentDidMount(){
-		//loop through this list of ids in library
-		if (this.props.devTypes.length < 1){
-			let selectedBldgs = this.props.myLibrary.selected_buildings;
-			// console.log(selectedBldgs)
-			this.props.fetchDevTypeInit(1, selectedBldgs);		
-		}
+		this.props.startInitalizeWorkbook(this.props.myLibrary.selected_buildings);		
 		//sample development type data until i can get some real stuff going
 	}
 	
@@ -81,8 +76,7 @@ class DevTypeStart extends Component {
 
 function mapStateToProps(state) {  
 	  return { 
-			myLibrary: state.myLibrary,
-			devTypes: state.devTypes
+			myLibrary: state.myLibrary
 		 };
 }
   

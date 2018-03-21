@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
+
 class AddBldgModalContents extends React.Component {
 
   handleToggle = id => () => {
@@ -16,9 +17,9 @@ class AddBldgModalContents extends React.Component {
   };
 
 	renderTabContainer = (bldgs, modList) => {
-    // console.log(bldgs);
+    console.log(bldgs);
     return (
-      <List>
+        <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
         {
           bldgs.map( (item, idx) => {
             // console.log(item.attributes["physicalInfo"])

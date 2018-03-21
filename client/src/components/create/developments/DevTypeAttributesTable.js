@@ -19,7 +19,7 @@ class DevTypeAttributesTable extends Component {
 
     render(){
         const { classes } = this.props;
-        const { devTypes } = this.props;
+        const devTypes = this.props.devWorkbook.workbook_devtypes;
         const { columns } = this.props;
         return (
             <Table className={classes.table}>
@@ -77,7 +77,7 @@ class DevTypeAttributesTable extends Component {
 
 function mapStateToProps(state) {  
     return { 
-          devTypes: state.devTypes
+          devWorkbook: state.devWorkbook
        };
 }
 

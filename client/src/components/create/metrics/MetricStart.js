@@ -1,30 +1,36 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
+
+// import { connect } from 'react-redux';
+// import * as actions from '../../../actions';
 class MetricStart extends Component {
 	render() {
 		return (
-			<div className="row">
-				<div className="col s12 center-align">
-					<h2>Step Four: Analyze Metrics</h2>
-					{/* COLUMN #1 */}
-					<div className="row">
-						<div className="col s6">
-							<div className="center-align">
-								1. what does this tell you<br />
-								2. can you add custom metrics?
-							</div>
-						</div>
-						{/* COLUMN #2 */}
-						<div className="col s6">
-							<div className="center-align">landing page for metrics</div>
-						</div>
-					</div>
-					<Link className="waves-effect waves-light btn" to="/">
-						Start over
-					</Link>
-				</div>
-			</div>
+			<Grid 
+				alignItems='flex-start'
+				direction='row'
+				container>
+				<Grid item sm={12} >
+					<h2>Step Four: Analyze the Metrics</h2>
+					
+					<Button variant="raised" 
+						color="primary" 
+						onClick={()=>this.handleNavigation('map')}>
+						Back to Map 
+					</Button>
+				</Grid>
+				<Grid item xs={6}>	
+					<p>Plan of Attack:</p>
+					<p>1. choose your site</p>
+					<p>2. paint your development</p>
+				</Grid>
+				<Grid item xs={6} >
+					<p>Your Dev Types:</p>
+		
+				</Grid>
+			</Grid>
 		);
 	}
 }

@@ -35,7 +35,7 @@ class Header extends Component {
 				return;
 			case false:
 				return (
-          <Button color="contrast">
+          <Button color="inherit">
             <a href="/auth/google" style={{color:'inherit',textDecoration:'none'}}>Login
             </a>
           </Button>
@@ -48,12 +48,12 @@ class Header extends Component {
               <div>
                 Welcome{ (this.props.auth.google_prof) ? ", "+ this.props.auth.google_prof.name.givenName : ''}
                 <IconButton
-                  color="contrast"
+                  color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
                 <a href="/api/user/logout" style={{color:'inherit',textDecoration:'none'}}>
-                  <Button color="contrast">
+                  <Button color="inherit">
                     Logout
                   </Button>
                 </a>
@@ -69,7 +69,7 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>

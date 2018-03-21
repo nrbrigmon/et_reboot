@@ -4,8 +4,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import './_tableCSS.css';
 
-import { VictoryPie } from 'victory';
-import Stop from 'material-ui-icons/Stop';
+import { VictoryPie, VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
 import NumberFormat from 'react-number-format';
 
 const styles = theme => ({
@@ -30,13 +29,17 @@ let legendCSS = {
 
 class BuildingFormReviewComponent extends Component {
 
+	numberWithCommas = (x) => {
+		x = parseInt(x, 10);
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	render() {		
 		const { classes } = this.props;
-		let bldg = this.props.attributes;
+		let bldg = this.props.attributes.forDevType;
+		console.log(bldg);
 		return (
 			<Grid container >
 				<Grid item xs={12} className={classes.paper}>
-					<h4>Review</h4>
 					<h4>{bldg.rBuildingName} | {bldg.rLotLocation}</h4>
 				</Grid>
 				
@@ -46,22 +49,26 @@ class BuildingFormReviewComponent extends Component {
 						Parking, and
 						Landscaping Footprints
 					</div>
-					<VictoryPie
-						animate={{duration: 1000}} 
-						innerRadius={75}
-						colorScale={["tomato", "orange", "gold"]} 
-						data={[
-							{ x: "Building", y: bldg.rBuildingLotCoverage },
-							{ x: "Landscaping", y: bldg.rLanscapeLotCoverage },
-							{ x: "Parking", y: bldg.rParkingLotCoverage }
-						]} />
+					<div>
+						<VictoryPie
+							padding={{ left: 90, top: 0, right: 90, bottom: 10 }}
+							margin={{ top:0 }}
+							animate={{ duration: 1000 }} 
+							innerRadius={75}
+							colorScale={["tomato", "orange", "gold"]} 
+							data={[
+								{ x: "Building", y: bldg.rBuildingLotCoverage },
+								{ x: "Landscaping", y: bldg.rLandscapeLotCoverage },
+								{ x: "Parking", y: bldg.rParkingLotCoverage }
+							]} />
+					</div>	
 				</Grid>
 	
 				<Grid item xs={4} >
 					<div style={legendCSS}>
 						Lot Area
 					</div>
-					<p>{bldg.rLotSize} sq ft</p>
+					<p><NumberFormat value={bldg.rLotSize} displayType={'text'} thousandSeparator={true} decimalScale={0} /> sq ft</p>
 					<p><NumberFormat value={bldg.rLotSize / 43560} displayType={'text'} thousandSeparator={true} decimalScale={2} /> acres</p>
 				</Grid>
 				<Grid item xs={4}>
@@ -77,16 +84,64 @@ class BuildingFormReviewComponent extends Component {
 					<div style={placeholderCSS}>3d image</div>
 				</Grid>
 
-				<Grid item xs={12}>	
-					<div><strong>Residential:</strong> {bldg.getResidentialSf} </div>
-					<div><strong>Retail:</strong> {bldg.getRetailSf} </div>
-					<div><strong>Office:</strong> {bldg.getOfficeSf} </div>
-					<div><strong>Industrial:</strong> {bldg.getIndustrialSf} </div>
-					<div><strong>Public/Civic:</strong> {bldg.getPublicSf} </div>
-					<div><strong>Educational:</strong> {bldg.getEducationalSf} </div>
-					<div><strong>Hotel / Hospitality:</strong> {bldg.getHotelSf} </div>
-					<div><strong>Commercial Parking:</strong> {bldg.getCommercialParkingSf} </div>
-					<div><strong>Internal / Structured Parking:</strong> {bldg.getInternalParkingSf} </div>
+				<Grid item xs={6}>	
+					<VictoryChart 
+						padding={{ left: 150, top: 50, right: 50, bottom: 50 }}
+   						 >
+						<VictoryAxis dependentAxis
+      						style={{ 
+								  tickLabels: { fontSize: 8, padding: 8 },
+								  axis: {stroke: " "} 
+							}} 
+						/>
+						<VictoryAxis  
+      						style={{ 
+								  tickLabels: { fontSize: 8, padding: 8 },
+								  axis: {stroke: " "}
+							}} 
+							
+						/>
+						<VictoryBar
+							alignment="middle"
+							horizontal={true}
+							labels={(d) => this.numberWithCommas(d.y)+" sf" }
+							labelComponent={<VictoryTooltip/>} 
+							style={{ data: { fill: "#c43a31" } }}
+							data={[
+								{ x: "Residential", y: bldg.rResidentialSf },
+								{ x: "Retail", y: bldg.rRetailSf },
+								{ x: "Office", y: bldg.rOfficeSf },
+								{ x: "Industrial", y: bldg.rIndustrialSf },
+								{ x: "Public/Civic", y: bldg.rPublicSf },
+								{ x: "Educational", y: bldg.rEducationSf },
+								{ x: "Hotel/Hospitality", y: bldg.rHospitalitySf },
+								{ x: "Commercial Parking", y: bldg.rParkingSf },
+								{ x: "Internal/Structured Parking", y: bldg.rInternalStructureParkingSf }
+							  ]}
+						/>
+					</VictoryChart>
+				</Grid>
+
+				<Grid item xs={6}>	
+					<p>Parking Spaces:  <NumberFormat value={bldg.rParkingSpaces} displayType={'text'} thousandSeparator={true} decimalScale={0} /> </p>
+					<p>Parking Cost: $<NumberFormat value={bldg.rParkingCostSf} displayType={'text'} thousandSeparator={true} decimalScale={0} /> </p>
+					<p>Land Cost (per sf): $<NumberFormat value={bldg.rLandCostSf} displayType={'text'} thousandSeparator={true} decimalScale={0} /> </p>
+					<p>Total Project Value: $<NumberFormat value={bldg.rTotalPrjValue}  displayType={'text'} thousandSeparator={true} decimalScale={0} /> </p>
+				</Grid>
+
+				<Grid item xs={6}>	
+					<div><strong>Residential:</strong> {bldg.rResidentialSfMix} </div>
+					<div><strong>Retail:</strong> {bldg.rRetailSfMix} </div>
+					<div><strong>Office:</strong> {bldg.rOfficeSfMix} </div>
+					<div><strong>Industrial:</strong> {bldg.rIndustrialSfMix} </div>
+					<div><strong>Public/Civic:</strong> {bldg.rPublicSfMix} </div>
+					<div><strong>Educational:</strong> {bldg.rEducationalSfMix} </div>
+					<div><strong>Hotel / Hospitality:</strong> {bldg.rHotelSfMix} </div>
+					<div><strong>Commercial Parking:</strong> {bldg.rCommercialParkingSfMix} </div>
+					<div><strong>Internal / Structured Parking:</strong> {bldg.rInternalParkingSfMix} </div>
+				</Grid>
+
+				<Grid item xs={6}>	
 					<div><strong>Residential sf:</strong> {bldg.rResidentialSf}</div>
 					<div><strong>Net sf per Unit:</strong> {bldg.rResidentialNetUnit} </div>
 					<div><strong>Gross sf per Unit:</strong> {bldg.rResidentialGrossUnit} </div>
@@ -104,6 +159,10 @@ class BuildingFormReviewComponent extends Component {
 					<div><strong>Retail Gross sf:</strong> 		{bldg.rRetailSf} </div>
 					<div><strong>Retail Lease Rate / sf:</strong> 	{bldg.rRetailLeaseRate} </div>
 					<div><strong>Space per Retail Employee:</strong> {bldg.rRetailSpacePerEmp} </div>
+					
+				</Grid>
+
+				<Grid item xs={6}>	
 					<div><strong>Retail Employees / sf:</strong> 	{bldg.rRetailEmpPerSf} </div>
 					<div><strong>Office Gross sf:</strong> {bldg.rOfficeSf}</div>
 					<div><strong>Office Lease Rate /sf:</strong> {bldg.rOfficeLeaseRate}</div>
@@ -121,6 +180,10 @@ class BuildingFormReviewComponent extends Component {
 					<div><strong>Educational Lease Rate /sf:</strong> {bldg.rEducationLeaseRate}</div>
 					<div><strong>Space per Employee:</strong>{bldg.rEducationSpacePerEmp}</div>
 					<div><strong>Educational Employees / sf:</strong>{bldg.rEducationEmpPerSf}</div>
+					
+				</Grid>
+
+				<Grid item xs={6}>	
 					<div><strong>Hospitality Gross sf:</strong>{bldg.rHospitalitySf}</div>
 					<div><strong>Hospitality Nightly Rate (per room):</strong>{bldg.rHospitalityRateNight} </div>
 					<div><strong>Space per Employee:</strong>{bldg.rHospitalitySpacePerEmp} </div>
@@ -133,12 +196,10 @@ class BuildingFormReviewComponent extends Component {
 					<div><strong>Space per Employee:</strong>{bldg.rParkingSpacePerEmp}</div>
 					<div><strong>Shared Parking Employees / sf:</strong> {bldg.rParkingEmpPerSf} </div>
 
-					<div><strong>Parking Spaces:</strong>  {bldg.rParkingSpaces} </div>
-					<div><strong>Parking sf:</strong>  {bldg.rParkingSf} </div>
-					<div><strong>Internal / Structured Parking sf:</strong> {bldg.rInternalStructureParkingSf}  </div>
-					<div><strong>Parking Cost:</strong> {bldg.rParkingCostSf} </div>
-					<div><strong>Land Cost (per sf):</strong> {bldg.rLandCostSf} </div>
-					<div><strong>Total Project Value:</strong>{bldg.rTotalPrjValue}  </div>
+
+				</Grid>
+
+				<Grid item xs={6}>	
 					<div><strong>Annual Property Tax Revenue (Year 1):</strong> {bldg.rPropTaxRevenueYr} </div>
 					<div><strong>Total Fees / SDCs:</strong> {bldg.rTotalFees} </div>
 					<div><strong>Subsidy:</strong>{bldg.rSubsidy}  </div>

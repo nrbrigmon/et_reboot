@@ -13,6 +13,7 @@
 	"author": "nate brigmon",
 	"license": "ISC",
 	"dependencies": {
+		"@turf/turf": "^5.1.6",
 		"body-parser": "^1.18.2",
 		"concurrently": "^3.5.1",
 		"cookie-session": "^2.0.0-beta.3",
@@ -24,6 +25,6 @@
 		"passport-google-oauth2": "^0.1.6",
 		"pg": "^7.4.0",
 		"shortid": "^2.2.8",
-		"turf": "^3.0.14"
+		"turf-clip": "0.0.1"
 	}
 }

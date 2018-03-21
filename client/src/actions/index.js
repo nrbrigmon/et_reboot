@@ -9,29 +9,27 @@ export const fetchUser = () => async dispatch => {
 };
 
 /* DEVELOPMENT TYPE ACTIONS */
-export const addNewDevTypeRow = (selectedBldgs) => {
+export const addNewDevTypeRow = (selected_buildings) => {
 	const action = {
 		type: 'ADD_DEV_TYPE_ROW',
-		selectedBldgs
+		selected_buildings
 	}
 	return action;
 };
-export const removeDevTypeRow = (selectedBldgs) => {
+export const removeDevTypeRow = (selected_buildings) => {
 	const action = {
 		type: 'REMOVE_DEV_TYPE_ROW',
-		selectedBldgs
+		selected_buildings
 	}
 	return action;
 };
-export const fetchDevTypeInit = (rows, selectedBldgs) => {
+export const startInitalizeWorkbook = (selected_buildings) => {
 	const action = {
-		type: 'FETCH_DEV_TYPE_INIT',
-		rows,
-		selectedBldgs
+		type: 'INITIALIZE_WORKBOOK',
+		selected_buildings
 	}
 	return action;
 }
-
 export const updateDevTypeRow = (value, rowId, cellId) => {
 	const action = {
 		type: 'UPDATE_DEV_TYPE_ROW',
@@ -50,14 +48,7 @@ export const updateDevTypeAttr = (value, rowId, attrId) => {
 	}
 	return action;
 }
-export const updateDevName = (value, rowId) => {
-	const action = {
-		type: 'UPDATE_DEV_TYPE_NAME',
-		value,
-		rowId
-	}
-	return action;
-}
+
 /* BUILDING ACTIONS */
 export const fetchRandomId = () => {
 	const action = {
@@ -66,16 +57,15 @@ export const fetchRandomId = () => {
 	return action;
 }
 export const addBuildingToLibrary = (bldg) => {
-	// console.log(action);
-	let bldgId = bldg.uniqueId;
+	//myLibraryReducer
 	const action = {
 		type: 'ADD_BUILDING',
-		bldgId,
 		bldg
 	}
 	return action;
 };
 export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
+	//myLibraryReducer
 	const action = {
 		type: 'ADD_BUILDING_ARRAY',
 		bldgArray,
@@ -84,8 +74,8 @@ export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
 	return action;
 }
 export const removeBuildingFromLibrary = (bldgId) => {
+	//myLibraryReducer
 	// console.log(action);
-	
 	const action = {
 		type: 'REMOVE_BUILDING',
 		bldgId
@@ -178,7 +168,7 @@ export const newAvailableBuilding = (bldg) => {
 
 export const saveBuildingToDb = (status, bldg) => async dispatch => {
 	//does it already exist? if so put, else post	
-	console.log(bldg);
+	// console.log(bldg);
 	if (status === true){
 		const res = await axios.put('/api/buildings/'+bldg.uniqueId+'', bldg)
 		// console.log(res);
@@ -215,14 +205,20 @@ export const editBuildingPrototype = (status, selection) => {
 	let action;
 	if (status === true){
 		action = {
-			type: 'UPDATE_BLDG_PROTOTYPE',
+			type: 'SET_BLDG_PROTOTYPE',
 			payload: selection
 		}
 	} else {
 		action = {
-			type: 'UPDATE_BLDG_PROTOTYPE',
+			type: 'SET_BLDG_PROTOTYPE',
 			payload: sampleFields
 		}
+	}
+	return action;
+}
+export const releaseBuildingPrototype = () => {
+	let action = {
+		type: 'RESET_BLDG_PROTOTYPE'
 	}
 	return action;
 }
@@ -236,6 +232,16 @@ export const fetchSampleDevStuff = () => async dispatch => {
 	dispatch({ type: 'SAMPLE_BUILDINGS', payload: res.data });
 };
 
+export const updateAvailableBuildings = (bldg) => {
+	//buildingReducer
+	// console.log(bldg)
+	const action = {
+		type: 'UPDATE_AVAILABLE_BLDGS',
+		payload: bldg
+	}
+	return action;
+}
+
 export const fetchBuildingPrototypeAttributes = (status, id) => async dispatch => {
 	if (status === true){
 		const res = await axios.get('/api/buildings/'+id);
@@ -248,15 +254,14 @@ export const fetchBuildingPrototypeAttributes = (status, id) => async dispatch =
 	}
 };
 
-export const updateFormFieldInput = (page, update) => {
+export const updateBuildingPrototypeField = (page, updateCopy) => {
 	const action = {
 		type: 'UPDATE_BLDG_PROTOTYPE_FIELD',
 		page,
-		update
+		updateCopy
 	}
 	return action;
 }
-
 
 /* MODAL SELECTIONS */
 export const openModal = (selection) => {
@@ -273,3 +278,17 @@ export const closeModal = () => {
 	}
 	return action;
 };
+
+/** Turf JS Queries */
+export const getTriangleGrid = () => async dispatch => {
+	const res = await axios.get('/api/turf_queries');
+	// console.log(res);
+	dispatch({ type: 'GET_T_GRID', payload: res });
+};
+
+export const createTriangleGrid = ( shapes) => async dispatch => {
+	// console.log(shapes);
+	const res = await axios.post('/api/turf_queries/grid', shapes);
+
+	dispatch({ type: 'GET_T_GRID', payload: res.data });
+}

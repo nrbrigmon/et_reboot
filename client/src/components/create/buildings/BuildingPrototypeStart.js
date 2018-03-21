@@ -14,7 +14,6 @@ import PhysicalFormComponent from './PhysicalFormComponent';
 import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
-import * as devFunc from './_updateForDevType';
 
 const styles = theme => ({
 	root: {
@@ -37,98 +36,10 @@ const styles = theme => ({
 		// if new building shortid.generate
 		// else get shortid from exinput
 		this.state = {
-			tabValue: 'review',
+			tabValue: 'phys',
 			editing: ( (props.match.path).indexOf("edit") >= 0 ? true : false), 
-			BP: {
-				uniqueId: '',
-				physicalInfo: {},
-				basicFinInfo: {},
-				advFinInfo: {}
-			},
-			forDevType: {	}
 		};
 		this.componentSelection = this.componentSelection.bind(this);
-		this.updatePrototypePhys = this.updatePrototypePhys.bind(this);
-		this.updateBasicFinInfo = this.updateBasicFinInfo.bind(this);
-		this.updateAdvFinInfo = this.updateAdvFinInfo.bind(this);
-		this.updateForDevType = this.updateForDevType.bind(this);
-		
-		//decide whether we are here to edit or not. if not
-		//we load default attributes
-	}
-
-	componentDidMount(){
-		console.log('mounted...')
-		let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
-		this.setState({
-			BP: {
-				uniqueId: this.props.match.params.id,
-				physicalInfo,
-				basicFinInfo,
-				advFinInfo
-			}
-		});
-		this.updateForDevType(this.props.bldgType);
-		if (this.props.bldgType.length === 0 ){
-			console.log('no props, getting new ones')
-			let _id = this.props.match.params.id
-			let status = this.state.editing;
-			fetch(this.props.fetchBuildingPrototypeAttributes(status, _id))
-				.then(res => {
-					console.log('then pt 1...')
-					let { physicalInfo, basicFinInfo, advFinInfo } = this.props.bldgType;
-					// console.log(this.props);
-					this.setState({
-						BP: {
-							uniqueId: _id,
-							physicalInfo,
-							basicFinInfo,
-							advFinInfo
-						}
-					});
-					// console.log(this.state.BP);
-				console.log('fetched...')
-					
-			}).then( () => {
-				console.log('then pt 2...')				
-				this.updateForDevType(...this.state.BP);
-			});
-		}
-		console.log(this.state.BP.forDevType);
-	}
-	
-	updatePrototypePhys(newState) {
-		let buildingCopy = {
-			...this.state.BP
-		};
-		let key = Object.keys(newState)[0];
-		let val = Object.values(newState)[0];
-		buildingCopy.physicalInfo[key] = val;
-		this.setState(buildingCopy);
-		this.updateForDevType(buildingCopy);
-	}
-
-	updateBasicFinInfo(newState) {
-		console.log(newState);
-		let buildingCopy = {
-			...this.state.BP
-		};
-		let key = Object.keys(newState)[0];
-		let val = Object.values(newState)[0];
-		buildingCopy.basicFinInfo[key] = val;
-		this.setState(buildingCopy);
-		this.updateForDevType(buildingCopy);
-	}
-
-	updateAdvFinInfo(newState) {
-		let buildingCopy = {
-			...this.state.BP
-		};
-		let key = Object.keys(newState)[0];
-		let val = Object.values(newState)[0];
-		buildingCopy.advFinInfo[key] = val;
-		this.setState(buildingCopy);
-		this.updateForDevType(buildingCopy);
 	}
 	
 	componentSelection = (e, value) => {
@@ -136,57 +47,54 @@ const styles = theme => ({
 			tabValue: value
 		});
 	}
-	
-	updateForDevType(buildingCopy){
-		this.setState({
-			forDevType: devFunc.main(buildingCopy) 
-		});
-		console.log('update for dev type func');
-	}
-
 	saveBuilding = () => {	
-		let editing = this.state.editing;
+		let { editing } = this.state;
+		let { bldgType } = this.props;
 		//if it is new tale the following actions
 		if (editing === false){
 			//add building to available library modal list
-			this.props.newAvailableBuilding(this.state.BP)
+			this.props.newAvailableBuilding(bldgType)
 			//add building to my library
-			this.props.addBuildingToLibrary(this.state.BP);
+			this.props.addBuildingToLibrary(bldgType);
 		}
-		this.props.updateBuildingInLibrary(editing, this.state.BP);
-		this.props.saveBuildingToDb(editing, this.state.BP);
+		//save overall library
+		this.props.updateBuildingInLibrary(editing, bldgType);
+		this.props.updateAvailableBuildings(bldgType);
+		this.props.saveBuildingToDb(editing, bldgType);
+		this.props.releaseBuildingPrototype();
 		this.props.history.push('/create');
 	}
+	
+	cancelBuilding = () => {
+		this.props.history.push('/create');
+		this.props.releaseBuildingPrototype();		
+	}
 
-	renderChildContent = (pg, newState, forDevType) => {
-		// console.log('newstate', newState["physicalInfo"].buildingName);
+	renderChildContent = (pg, buildingPrototype) => {
 		// console.log(newState);
 		if (pg === 'phys') {
 			return (
 				<PhysicalFormComponent
-					buildingUpdate={this.updatePrototypePhys}
-					attributes={newState}
+					attributes={buildingPrototype}
 				/>
 			);
 		} else if (pg === 'fin1') {
 			return (
 				<BasicFinFormComponent
-					buildingUpdate={this.updateBasicFinInfo}
-					attributes={newState}
+					attributes={buildingPrototype}
 				/>
 			);
 		} else if (pg === 'fin2') {
 			return (
 				<AdvancedFinFormComponent
-					buildingUpdate={this.updateAdvFinInfo}
-					attributes={newState}
+					attributes={buildingPrototype}
 				/>
 			);
 		} else {
 			return (
 				<BuildingFormReviewComponent
 					pageChange={this.changePage}
-					attributes={forDevType}
+					attributes={buildingPrototype}
 				/>
 			);
 		}
@@ -194,8 +102,9 @@ const styles = theme => ({
 	render() {
 		const { classes } = this.props;
 		const { tabValue } = this.state;
-		const { BP } = this.state;
-		const { forDevType } = this.state;
+		const buildingPrototype = this.props.bldgType;
+		
+		// console.log(buildingPrototype);
 		// console.log('render props ',this.props.bldgType);
 		// console.log(forDevType);
 		return (
@@ -221,29 +130,29 @@ const styles = theme => ({
 				</AppBar>
 				
 				<Grid item className={classes.paper} xs={12}>
-					<Button raised color="primary"  className={classes.button} 
+					<Button variant="raised" color="primary"  className={classes.button} 
 						onClick={()=>this.saveBuilding()}>
 						Save
 					</Button>	
 					
-					<Button raised color="accent"  className={classes.button} 
-						onClick={()=>this.props.history.push('/create')}>
+					<Button variant="raised" color="secondary"  className={classes.button} 
+						onClick={()=>this.cancelBuilding()}>
 						Cancel
 					</Button>	
 				</Grid>
 
 				<Grid item md={8} sm={12}>
-					{this.renderChildContent(this.state.tabValue, BP, forDevType)}
+					{this.renderChildContent(this.state.tabValue, buildingPrototype)}
 				</Grid>
 				
 				<Grid item className={classes.paper} xs={12}>
-					<Button raised color="primary"  className={classes.button} 
+					<Button variant="raised" color="primary"  className={classes.button} 
 						onClick={()=>this.saveBuilding()}>
 						Save
 					</Button>	
 					
-					<Button raised color="accent"  className={classes.button} 
-						onClick={()=>this.props.history.push('/create')}>
+					<Button variant="raised" color="secondary"  className={classes.button} 
+						onClick={()=>this.cancelBuilding()}>
 						Cancel
 					</Button>	
 				</Grid>
