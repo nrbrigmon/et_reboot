@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
 import * as shortid from 'shortid';
+import activeDevTypeReducer from './activeDevTypeReducer';
 import authReducer from './authReducer';
+import baseMapLayerReducer from './baseMapLayerReducer';
 import bldgPrototypeReducer from './bldgPrototypeReducer';
 import buildingLibReducer from './buildingLibReducer';
 import buildingReducer from './buildingReducer';
 import devWorkbookReducer from './devWorkbookReducer';
+import leafletDrawReducer from './leafletDrawReducer';
 import modalListReducer from './modalListReducer';
 import modalReducer from './modalReducer';
 import myLibraryReducer from './myLibraryReducer';
-import baseMapLayerReducer from './baseMapLayerReducer';
+import mapReferenceReducer from './mapReferenceReducer';
 import toastReducer from './toastReducer';
-
 
 const getRandomId = (state = [], action) => {
 	// console.log('action called');
@@ -23,16 +25,18 @@ const getRandomId = (state = [], action) => {
 }
 
 export default combineReducers({
+	activeDevType: activeDevTypeReducer,
 	auth: authReducer,							//user login confirmation
 	availableBldgs: buildingReducer, 			//saved buildings in database
 	availableLibs: buildingLibReducer,			//saved libraries in database
-	randomId: getRandomId,						//randomId function
-	// devPercTotals: DevTypeBottomLineReducer,
-	modList: modalListReducer,					//the list inside the modal
+	baseMapLayer: baseMapLayerReducer,			//the baseLayer for scenario planning
 	bldgType: bldgPrototypeReducer,				//the current building being edited
 	devWorkbook: devWorkbookReducer,					//the current development type being edited
+	leafletDrawTrigger: leafletDrawReducer,
+	mapRef: mapReferenceReducer,
+	modList: modalListReducer,					//the list inside the modal
 	myLibrary: myLibraryReducer,				//the name and properties of my building list
-	baseMapLayer: baseMapLayerReducer,			//the baseLayer for scenario planning
 	modal: modalReducer,						//open or close modal state
+	randomId: getRandomId,						//randomId function
 	toast: toastReducer							//open or close toast state
 });

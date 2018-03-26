@@ -18,6 +18,13 @@ const styles = theme => ({
 		// maxWidth: 345,
 		margin: '20px',
 		justify: 'center'
+	},
+	centerCard: {
+		margin: '20px',
+		// display: 'flex',
+		// justify: 'center',
+		// justifyContent: 'center',
+		alignItems: 'center'
 	}
   });
 
@@ -68,7 +75,8 @@ class Welcome extends Component {
 							</Typography>
 							</CardContent>
 							<CardActions>
-							<Button size="small" variant="raised" color="primary" onClick={()=>this.handleNavigation('gallery')}>
+							<Button size="small" variant="raised" color="primary"
+								 onClick={()=>this.handleNavigation('gallery')}>
 								Start here
 							</Button>
 						</CardActions>
@@ -86,7 +94,26 @@ class Welcome extends Component {
 							</Typography>
 							</CardContent>
 							<CardActions>
-							<Button size="small" variant="raised" color="primary" onClick={()=>this.handleNavigation('pitch')}>
+							<Button size="small" variant="raised" color="primary"
+								 onClick={()=>this.handleNavigation('pitch')}>
+								Start here
+							</Button>
+						</CardActions>
+					</Card>
+				</Grid>
+				<Grid item md={4} sm={12}>
+					<Card className={classes.centerCard}>
+						<CardContent>
+							<Typography variant="headline" component="h2">
+								Go to the Map
+							</Typography>
+							<Typography component="p">
+								Straight to the map
+							</Typography>
+							</CardContent>
+							<CardActions>
+							<Button size="small" variant="raised" color="primary"
+								 onClick={()=>this.handleNavigation('map')}>
 								Start here
 							</Button>
 						</CardActions>

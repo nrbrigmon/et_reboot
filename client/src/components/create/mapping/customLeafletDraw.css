@@ -5,7 +5,5 @@ div.leaflet-control-container .leaflet-top {
     z-index: 1500;
 }
 div.leaflet-control-container .leaflet-draw{
-    transform: rotate(90deg);
-    left: 150px;
-    top: -19px;
+    display: none;
 }

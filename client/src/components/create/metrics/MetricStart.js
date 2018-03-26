@@ -6,6 +6,10 @@ import Button from 'material-ui/Button';
 // import { connect } from 'react-redux';
 // import * as actions from '../../../actions';
 class MetricStart extends Component {
+	handleNavigation = val => {
+		this.props.history.push(val);
+	}
+	
 	render() {
 		return (
 			<Grid 
