@@ -9,6 +9,14 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import AccountCircle from 'material-ui-icons/AccountCircle';
+import SwipeableDrawer from 'material-ui/SwipeableDrawer';
+
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import MapIcon from 'material-ui-icons/Map';
+import ImageIcon from 'material-ui-icons/Image';
+import BeachAccessIcon from 'material-ui-icons/BeachAccess';
+import Divider from 'material-ui/Divider';
 
 const styles = {
   root: {
@@ -27,7 +35,64 @@ const styles = {
   }
 };
 
+const sideList = (
+  <div style={{width:'250px'}}>
+  <h3  style={{margin:'25px'}}>Envision Reboot!</h3>
+    <List>
+        <ListItem button>
+          <Avatar>
+            <ImageIcon />
+          </Avatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+        </ListItem>
+        <ListItem button>
+          <Avatar>
+            <MapIcon />
+          </Avatar>
+          <ListItemText primary="Map" secondary="Jan 7, 2014" />
+        </ListItem>
+        <ListItem button>
+          <Avatar>
+            <BeachAccessIcon />
+          </Avatar>
+          <ListItemText primary="Vacation" secondary="July 20, 2014" />
+        </ListItem>
+      </List>
+    <Divider />
+    <List>
+        <ListItem button>
+          <Avatar>
+            <ImageIcon />
+          </Avatar>
+          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+        </ListItem>
+        <ListItem button>
+          <Avatar>
+            <MapIcon />
+          </Avatar>
+          <ListItemText primary="Map" secondary="Jan 7, 2014" />
+        </ListItem>
+        <ListItem button>
+          <Avatar>
+            <BeachAccessIcon />
+          </Avatar>
+          <ListItemText primary="Vacation" secondary="July 20, 2014" />
+        </ListItem>
+      </List>
+  </div>
+);
+
 class Header extends Component {
+  state = {
+    left: false
+  };
+  
+  toggleDrawer = (side, open) => () => {
+    // console.log('boop');
+    this.setState({
+      [side]: open,
+    });
+  };
 
   renderLogin () {
 		switch (this.props.auth) {
@@ -41,15 +106,12 @@ class Header extends Component {
           </Button>
 				);
       default:
-      // console.log(this.props.auth.google_prof);
 				return (
           <div>
             {this.props.auth && (
               <div>
                 Welcome{ (this.props.auth.google_prof) ? ", "+ this.props.auth.google_prof.name.givenName : ''}
-                <IconButton
-                  color="inherit"
-                >
+                <IconButton  >
                   <AccountCircle />
                 </IconButton>
                 <a href="/api/user/logout" style={{color:'inherit',textDecoration:'none'}}>
@@ -62,15 +124,30 @@ class Header extends Component {
         </div>)
 		}
   };
+  
   render(){
-    // console.log(this.props)
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
+          <SwipeableDrawer
+            open={this.state.left}
+            onClose={this.toggleDrawer('left', false)}
+            onOpen={this.toggleDrawer('left', true)}
+          >
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={this.toggleDrawer('left', false)}
+              onKeyDown={this.toggleDrawer('left', false)}
+            >
+              {sideList}
+            </div>
+         </SwipeableDrawer>
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
+              <MenuIcon onClick={this.toggleDrawer('left', true)}/>
+        {/* <Button >Open Left</Button> */}
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
               <Link to="/"  style={{ textDecoration: 'none', color: 'inherit' }}>Envision Reboot</Link>

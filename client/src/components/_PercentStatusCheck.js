@@ -1,11 +1,17 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
+
 
 
 const PercentStatusCheck = (dataArray, optionalText) => {
     let sum = 100 * dataArray.reduce( (acc, curr, idx) => { return Number(acc) + Number(curr);  });
     let myColor = (sum !== 100 ? "red" : "green")
     // console.log(dataArray, sum)
-    return (<span style={{color:myColor}}>{(optionalText ? optionalText : '') + sum + "%"}</span>)
+    return (
+        <span style={{color:myColor}}>
+            {(optionalText ? optionalText : '')} <NumberFormat value={sum || 0} suffix="%" displayType={'text'}  thousandSeparator={true} decimalScale={0}  />
+        </span>
+    )
 }
 
 export default PercentStatusCheck;

@@ -26,7 +26,10 @@ const styles = theme => ({
 	},
 	cardButton: {
 		margin: '0 1px 0 1px'
-	}
+	},
+    tableContainer: {
+        overflowY: 'hidden'
+    }
   });
 
   
@@ -56,21 +59,27 @@ class DevTypeAttributes extends Component {
 						<Typography type="headline" component="h3">
 							Block Size
 						</Typography>
-						<DevTypeAttributesTable { ...this.props} columns={section1}/>
+						<div className={classes.tableContainer}>
+							<DevTypeAttributesTable { ...this.props} columns={section1}/>
+						</div>
 						<br />
 						<br />
 
 						<Typography type="headline" component="h3">
 							Street Characteristics
 						</Typography>
-						<DevTypeAttributesTable { ...this.props} columns={section2}/>
+						<div className={classes.tableContainer}>
+							<DevTypeAttributesTable { ...this.props} columns={section2}/>
+						</div>
 						<br />
 						<br />
 
 						<Typography type="headline" component="h3">
 							Public Space Dedication
 						</Typography>
-						<DevTypeAttributesTable { ...this.props} columns={section3}/>
+						<div className={classes.tableContainer}>
+							<DevTypeAttributesTable { ...this.props} columns={section3}/>
+						</div>
 						<br />
 						<br />
 

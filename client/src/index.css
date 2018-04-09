@@ -11,9 +11,7 @@ hr {
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
 }
-input {
-	font-size: '12px';
-}
+
 /* css addition for leaflet-draw*/
 .sr-only {
     display: none;

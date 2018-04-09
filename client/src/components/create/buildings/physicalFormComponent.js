@@ -8,7 +8,8 @@ import * as actions from '../../../actions';
 
 import inputFields from './inputs/physicalInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
-import PercentStatusCheck from '../../PercentStatusCheck';
+import PercentStatusCheck from '../../_PercentStatusCheck';
+import ThreeBuildingPrototype from '../threeModels/three-building-prototype';
 
 const styles = theme => ({
 		root: {
@@ -44,11 +45,12 @@ class PhysicalFormComponent extends Component {
 	};
 	
 	render() {
-		let bldgAttr = this.props.attributes.physicalInfo;
-		let { residentialUsePerc, retailUsePerc, officeUsePerc, industrialUsePerc, publicUsePerc, educationUsePerc, hotelUsePerc, parkingUsePerc } = bldgAttr;
 		const { classes } = this.props;
 		const { section1, section2, section3, section4, section5, section6 } = inputFields;
-		// console.log(bldgAttr)
+		let bldgAttr = this.props.attributes.physicalInfo; 
+		let { residentialUsePerc, retailUsePerc, officeUsePerc, industrialUsePerc, publicUsePerc, educationUsePerc, hotelUsePerc, parkingUsePerc } = bldgAttr;
+		let propArea = (bldgAttr.siteArea)*.1;
+		let bldgFootprint = (this.props.attributes.forDevType.rTotalSf / bldgAttr.buildingHeight)*.1;
 		return (
 			<Grid container >
 				<Grid item xs={6}> 
@@ -56,10 +58,11 @@ class PhysicalFormComponent extends Component {
 							inputUpdate={this.handleChange}
 							attributes={{bldgAttr, classes, section: section1}} />
 				</Grid>
-				<Grid item xs={6}> 
-					<div style={{ border: '1px solid grey', height: '300px' }}>
-						threeJS 3D component goes here...
-					</div>
+				<Grid item xs={6}>
+					
+					<ThreeBuildingPrototype 
+							cubeDim={{x: 5, y: 5, z: bldgAttr.buildingHeight, siteArea: propArea, 
+							sqft: bldgFootprint, landscaping: bldgAttr.landscapingPerc }} />
 				</Grid>
 				<Grid item xs={12}>
 					<hr />

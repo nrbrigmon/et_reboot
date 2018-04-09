@@ -14,15 +14,17 @@ import PhysicalFormComponent from './PhysicalFormComponent';
 import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
+import './_tableCSS.css';
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		width: '100%',
-		margin:0
+		margin:0,
+		marginTop: '65px'
 	},
 	paper: {
-	  textAlign: 'center',
+	  	textAlign: 'center',
 	},
 	button: {
 		margin: '10px 10px 10px 10px',
@@ -36,7 +38,7 @@ const styles = theme => ({
 		// if new building shortid.generate
 		// else get shortid from exinput
 		this.state = {
-			tabValue: 'phys',
+			tabValue: 'rev',
 			editing: ( (props.match.path).indexOf("edit") >= 0 ? true : false), 
 		};
 		this.componentSelection = this.componentSelection.bind(this);
@@ -104,9 +106,6 @@ const styles = theme => ({
 		const { tabValue } = this.state;
 		const buildingPrototype = this.props.bldgType;
 		
-		// console.log(buildingPrototype);
-		// console.log('render props ',this.props.bldgType);
-		// console.log(forDevType);
 		return (
 			<Grid container
 				className={classes.root}
@@ -125,7 +124,7 @@ const styles = theme => ({
 						<Tab value="phys" label="Physical Inputs" />
 						<Tab value="fin1" label="Basic Financial" />
 						<Tab value="fin2" label="Advanced Financial" />
-						<Tab value="review" label="Review" />
+						<Tab value="rev" label="Review" />
 					</Tabs>
 				</AppBar>
 				
@@ -141,7 +140,7 @@ const styles = theme => ({
 					</Button>	
 				</Grid>
 
-				<Grid item md={8} sm={12}>
+				<Grid item md={8} sm={12} className="myContainer">
 					{this.renderChildContent(this.state.tabValue, buildingPrototype)}
 				</Grid>
 				

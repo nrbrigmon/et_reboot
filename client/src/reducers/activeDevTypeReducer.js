@@ -3,7 +3,8 @@ function setNewDevType(state, action){
 }
 let activeDevType = {
     devTypeName: '',
-    devTypeColor: ''
+    devTypeColor: '',
+    acres: 0
 }
 export default function(state = activeDevType, action ) {
 	switch (action.type) {

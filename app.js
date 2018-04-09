@@ -12,8 +12,11 @@ const app = express();
 
 // Log requests to the console.
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); ///added to fix request entity too large issue
+
+
 //set up cookie session
 app.use(
 	cookieSession({

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { EditControl } from "react-leaflet-draw"
 import { FeatureGroup } from 'react-leaflet';
 import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 import L from 'leaflet';
 import * as _ from 'lodash';
 
@@ -51,8 +51,8 @@ class MapDrawComponent extends Component {
 
 	_onMounted = (drawControl) => {
 		// Set the button title text for the polygon button
-		console.log(drawControl);
-		console.log(this.props.mapRef);
+		// console.log(drawControl);
+		// console.log(this.props.mapRef);
 			this._drawControl = drawControl;
 			this._mapRef = this.props.mapRef;
 	}

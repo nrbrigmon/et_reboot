@@ -16,11 +16,12 @@ function modifyBaseLayer(state, payload){
 	// console.log(newState);
 	return newState;
 }
-export default function(state = null, {type, payload} ) {
-	let baseMapLayer = null;
-    if (localStorage.getItem('baseMapLayer')){
-        state = JSON.parse(localStorage.getItem('baseMapLayer'));
-    }
+export default function(state = [], {type, payload} ) {
+	let baseMapLayer = [];
+	if (localStorage.getItem('baseMapLayer')){
+			state = JSON.parse(localStorage.getItem('baseMapLayer'));
+	}
+	// console.log(state);
 	switch (type) {
 		case 'GET_TRI_GRID':
 			baseMapLayer = modifyBaseLayer(state, payload);
@@ -31,7 +32,8 @@ export default function(state = null, {type, payload} ) {
 			localStorage.setItem('baseMapLayer',JSON.stringify(baseMapLayer));
 			return baseMapLayer;
 		case 'RESET_BASE_LAYER':
-			baseMapLayer = null;
+			baseMapLayer = [];
+			localStorage.setItem('baseMapLayer',JSON.stringify(baseMapLayer));
 			return baseMapLayer;
 		default:
 			return state;

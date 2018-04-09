@@ -304,16 +304,22 @@ export const setActiveDevType = (devType) => {
 
 /** Turf JS Queries */
 export const createTriangleGrid = (shapes) => async dispatch => {
-	console.log(shapes);
+	// console.log(shapes);
 	const res = await axios.post('/api/turf_queries/grid', shapes);
 	
 	dispatch({ type: 'GET_TRI_GRID', payload: res.data });
 }
 
 export const paintDevelopmentType = (shapes) => async dispatch => {
-	console.log(shapes);
+	// console.log(shapes);
 	const res = await axios.post('/api/turf_queries/intersects', shapes);
-	console.log(res.data);
+	// console.log(res.data);
 
 	dispatch({ type: 'GET_PAINTED_GRID', payload: res.data });
+};
+export const resetBaseLayer = () => {
+	const action = {
+		type: 'RESET_BASE_LAYER'
+	}
+	return action;
 };

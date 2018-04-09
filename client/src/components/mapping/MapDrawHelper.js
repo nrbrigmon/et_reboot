@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 
 const styles = theme => ({
 	wrapper: {

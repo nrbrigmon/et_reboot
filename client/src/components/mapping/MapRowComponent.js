@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Map, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet';
 
 import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 
 import ZoomControl from 'react-leaflet/lib/ZoomControl';
 import MapDrawComponent from './MapDrawComponent';

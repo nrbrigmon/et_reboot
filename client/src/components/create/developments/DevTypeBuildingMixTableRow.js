@@ -6,7 +6,7 @@ import * as actions from '../../../actions';
 
 import TextField from 'material-ui/TextField';
 
-import PercentStatusCheck from '../../PercentStatusCheck';
+import PercentStatusCheck from '../../_PercentStatusCheck';
 
 import './devCell.css';
 

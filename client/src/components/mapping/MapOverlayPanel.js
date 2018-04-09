@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 import { withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import FileUpload from 'material-ui-icons/FileUpload';
+import LayersClear from 'material-ui-icons/LayersClear';
 import Edit from 'material-ui-icons/Edit';
 import MapDrawHelper from './MapDrawHelper';
 
@@ -45,7 +46,14 @@ const styles = theme => ({
         marginRight: '6px'
     }
   });
-
+function isEmptyObject(obj) {
+    for(var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+        return false;
+        }
+    }
+    return true;
+}
 class MapOverlayPanel extends Component {
 	
 	loadScenarioLayer = () => {
@@ -53,6 +61,10 @@ class MapOverlayPanel extends Component {
 	}
 	drawScenarioLayer = () => {
 		this.props.setDrawTrigger('drawBaseLayer');
+    }
+	resestScenarioLayer = () => {
+        this.props.setDrawTrigger('resetBaseLayer'); //remove the object from the map
+        this.props.resetBaseLayer(); //empty the object from state
     }
     paintDevelopmentType = (name, color) => {
         this.props.setDrawTrigger('paintScenarioLayer');
@@ -78,25 +90,39 @@ class MapOverlayPanel extends Component {
                 color="primary" 
 				className={classes.paper}
                 >
-                <span>
-                    <Button variant="raised" 
-                        color="secondary" 
-                        size="small"
-                        className={classes.buttonLayer}
-                        onClick={()=>this.drawScenarioLayer() } > 
-                        
-                        <Edit className={classes.icon}/> Draw Scenario Layer
-                    </Button>
-                    {(this.props.leafletDrawTrigger === "drawBaseLayer" ? <MapDrawHelper /> : '')}
-                </span>
-                <Button variant="raised" 
-                    color="secondary" 
-                    size="small"
-                    className={classes.buttonLayer}
-                    onClick={()=>this.loadScenarioLayer() } >
 
-                    <FileUpload className={classes.icon}/> Load Scenario Layer
-                </Button>
+                { 
+                    ( !isEmptyObject(this.props.baseMapLayer) ) ? 
+                        (<Button variant="raised" 
+                            color="secondary" 
+                            size="small"
+                            className={classes.buttonLayer}
+                            onClick={()=>this.resestScenarioLayer() } >
+        
+                            <LayersClear className={classes.icon}/> Reset Base Layer
+                        </Button>)
+                    :
+                        (<span>
+                            <Button variant="raised" 
+                                color="secondary" 
+                                size="small"
+                                className={classes.buttonLayer}
+                                onClick={()=>this.drawScenarioLayer() } > 
+                                
+                                <Edit className={classes.icon}/> Draw Scenario Layer
+                            </Button>
+                            {(this.props.leafletDrawTrigger === "drawBaseLayer" ? <MapDrawHelper /> : '')}
+                        
+                            <Button variant="raised" 
+                                color="secondary" 
+                                size="small"
+                                className={classes.buttonLayer}
+                                onClick={()=>this.loadScenarioLayer() } >
+
+                                <FileUpload className={classes.icon}/> Load Scenario Layer
+                            </Button>
+                        </span>)
+                }
             </Paper>
             { 
                 (this.props.baseMapLayer.length === 0 ? <span></span> :
@@ -106,6 +132,17 @@ class MapOverlayPanel extends Component {
                     className={classes.paper}
                         >
                     Choose Development Type: <br />
+                    <Button variant="raised" 
+                                        className={classes.buttonLayer}
+                                        size="small"
+                                        style={{ 
+                                            color: '#111111',
+                                            background: '#dddddd',
+                                            outline: (null === activeDevType.devTypeName ? '2px solid #ccc' : '')
+                                        }}
+                                        onClick={()=>this.paintDevelopmentType(null, "#dddddd" ) } 
+                                        > Clear Area
+                                    </Button>
                     {
                         devTypes.map( (item, idx) => {
                             return (

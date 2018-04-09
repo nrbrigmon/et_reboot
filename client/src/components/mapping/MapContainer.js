@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import L from 'leaflet';
 import { } from "react-leaflet-draw"
 import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 import * as _ from 'lodash';
 
 const mapCSS = {
@@ -22,7 +22,7 @@ function getDevTypeColor(feature){
     if (!isEmptyObject(feature.properties.activeDevType)){
         return feature.properties.activeDevType.devTypeColor;
     }else {
-        return "#ccc";
+        return "#dddddd";
     }
 }
 class MapContainer extends Component {
@@ -55,7 +55,11 @@ class MapContainer extends Component {
             .zoom({position: 'topright'})
             .addTo(this.map);
         // baseLayer load if we have one....
+        // console.log(this.props.baseMapLayer);
+        
         if (this.props.baseMapLayer && !isEmptyObject(this.props.baseMapLayer)) {
+            // console.log(this.props.baseMapLayer);
+            
             this.polygon = new L.geoJson(this.props.baseMapLayer, {
                 onEachFeature: this.onEachFeature,
                 style: function (feature) {
@@ -64,7 +68,7 @@ class MapContainer extends Component {
                         fillColor: getDevTypeColor(feature),
                         weight: 1,
                         opacity: 0.7,
-                        fillOpacity: 0.5
+                        fillOpacity: 0.7
                     });
                 }
             }).addTo(this.map);
@@ -127,21 +131,22 @@ class MapContainer extends Component {
             });
     }
     _drawBaseLayer = () => {
-        console.log('drawing......');
+        // console.log('drawing......');
         this._polygonDrawer.enable();
     }
     _addBaseLayerToMap = (baseMapLayer) => {
-        console.log('adding base layer .......');
-        console.log(baseMapLayer);
+        // console.log('adding base layer .......');
+        // console.log(baseMapLayer);
 
         baseMapLayer.eachLayer( layer => {
-                this.polygon.addLayer(layer) 
+            this.polygon.addLayer(layer) 
         })
     }
     componentWillReceiveProps({leafletDrawTrigger, baseMapLayer}) {
+        // console.log(leafletDrawTrigger, baseMapLayer);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);
-        console.log(this.props.baseMapLayer, baseMapLayer)
-        console.log("componentWillReceiveProps, drawTrigger: ",leafletDrawTrigger)
+        // console.log(this.props.baseMapLayer, baseMapLayer)
+        // console.log("componentWillReceiveProps, drawTrigger: ",leafletDrawTrigger)
         // check if position has changed
         if (same === false && !isEmptyObject(baseMapLayer)) {
             //if there is an existing layer, we remove it so that...
@@ -150,6 +155,7 @@ class MapContainer extends Component {
                     this.polygon.removeLayer(layer)
                 });
             }
+            // console.log(baseMapLayer);
             //we can add the new layer
             this.polygon = new L.geoJson(baseMapLayer, {
                 onEachFeature: this.onEachFeature,
@@ -167,8 +173,15 @@ class MapContainer extends Component {
             this._drawBaseLayer();
         } else if (leafletDrawTrigger === "paintScenarioLayer") {
             this._drawBaseLayer();
+        } else if (leafletDrawTrigger === "resetBaseLayer") {
+            if ( !isEmptyObject(this.polygon) ){
+                this.polygon.eachLayer(layer => {
+                    this.polygon.removeLayer(layer)
+                });
+            }
+            this.props.setDrawTrigger('');
         } else {
-            console.log('else nothing...')
+            // console.log('else nothing...')
         }
     }
     render() {

@@ -16,7 +16,6 @@ class ThreeBuildingPrototypeScene extends Component {
       
       const scene = new THREE.Scene()
      
-      
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true
@@ -37,7 +36,7 @@ class ThreeBuildingPrototypeScene extends Component {
         let camZoomAdj = Number(z) * 1.15
         let camYAdj = Number(z)/2.25
         //as screen moves, responsiveness needs to apply to camera
-      console.log(z)
+      // console.log(z)
        //as building beomces larger, we need to zoom the camera out
       let camera = new THREE.PerspectiveCamera(20+camZoomAdj, width / height, 1, 1000);
       // x, y, z
@@ -60,7 +59,7 @@ class ThreeBuildingPrototypeScene extends Component {
        );
       plane.position.set( 0,0,0)
       /*  START - section for adjusting landscaping  */
-      let percLand = Number(landscaping)/100;
+      let percLand = Number(landscaping);
       
       let greenery = new THREE.Mesh( 
         new THREE.PlaneGeometry(siteSide*percLand, siteSide*percLand), 
@@ -73,7 +72,7 @@ class ThreeBuildingPrototypeScene extends Component {
       /*  END - section for adjusting landscaping  */
       
       /*  START - section for adding a floor divider  */
-      let numDividers = Math.floor(numFloors);
+      // let numDividers = Math.floor(numFloors);
       let floorDividerPos = 1.5;
       //for numFloors, add a divider minus 1
       for (let i = 1; i < numFloors; i++) {
@@ -95,7 +94,7 @@ class ThreeBuildingPrototypeScene extends Component {
       group.add( structure );
       group.add( plane );
       
-      group.position.y = 25;
+      group.position.y = 27;
       group.rotation.x = THREE.Math.degToRad( -90 );
       scene.add( group );
       
@@ -127,7 +126,10 @@ class ThreeBuildingPrototypeScene extends Component {
     }
   
     animate() {
-      // this.scene.rotation.y += 0.0075
+      // console.log(this.props.rotate);
+      if (this.props.rotate === true){
+        this.scene.rotation.y += 0.0075;
+      }
   
       this.renderScene()
       this.frameId = window.requestAnimationFrame(this.animate)
@@ -141,7 +143,7 @@ class ThreeBuildingPrototypeScene extends Component {
       return (
         <div style={{ border:'1px solid orange' }}>
           <div
-            style={{ width: '100%', height: '350px', border:'1px solid green' }}
+            style={{ width: '100%', height: '200px', border:'1px solid green' }}
             ref={(mount) => { this.mount = mount }}
           />
         </div>

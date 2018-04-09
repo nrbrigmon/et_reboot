@@ -23,7 +23,10 @@ const styles = theme => ({
 	},
 	cardButton: {
 		margin: '0 1px 0 1px'
-	}
+    },
+    tableContainer: {
+        overflowY: 'hidden'
+    }
   });
 
 class DevTypeBuildingMix extends Component {
@@ -50,9 +53,9 @@ class DevTypeBuildingMix extends Component {
                             <Typography type="headline" component="h3">
                                 Development Types
                             </Typography>
-                            
-                            <DevTypeBuildingMixTable />
-                            
+                            <div className={classes.tableContainer}>
+                                <DevTypeBuildingMixTable />
+                            </div>
                             <CardActions>
                                 <div className={classes.cardAction}>
                                     <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('back')}>
