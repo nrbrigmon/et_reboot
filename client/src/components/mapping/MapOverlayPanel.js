@@ -137,10 +137,10 @@ class MapOverlayPanel extends Component {
                                         size="small"
                                         style={{ 
                                             color: '#111111',
-                                            background: '#dddddd',
+                                            background: '#eeeeee',
                                             outline: (null === activeDevType.devTypeName ? '2px solid #ccc' : '')
                                         }}
-                                        onClick={()=>this.paintDevelopmentType(null, "#dddddd" ) } 
+                                        onClick={()=>this.paintDevelopmentType(null, "#eeeeee" ) } 
                                         > Clear Area
                                     </Button>
                     {

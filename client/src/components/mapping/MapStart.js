@@ -10,24 +10,30 @@ import MapContainer from './MapContainer';
 import MapOverlayPanel from './MapOverlayPanel';
 import UploadLayerModal from './modal/UploadLayerModal';
 import ReactHighcharts from "react-highcharts";
+import Highcharts from 'react-highcharts';
+
 import AcresPerDevType from "../_AcresPerDevType";
+import * as mm from "../_MapMath";
 
 import './customLeafletDraw.css';
 
-const populationConfig = (data) => {
+Highcharts.Highcharts.setOptions({
+    lang: {
+        thousandsSep: ','
+    }
+});
+
+const chartColumnConfig = ({name, data, categories, colorArray}) => {
 	return {
 		chart: {
-			type: "bar"
+			type: "column"
 		},
 		title: {
-			text: "Historic World Population by Region"
+			text: name
 		},
-		subtitle: {
-			text:
-			'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
-		},
+		colors: colorArray,
 		xAxis: {
-			categories: ["Africa", "America", "Asia", "Europe", "Oceania"],
+			categories: categories,
 			title: {
 				text: null
 			}
@@ -35,15 +41,15 @@ const populationConfig = (data) => {
 		yAxis: {
 			min: 0,
 			title: {
-				text: "Population (millions)",
+				text: name,
 				align: "high"
 			},
 			labels: {
 				overflow: "justify"
 			}
 		},
-		tooltip: {
-			valueSuffix: " millions"
+		legend: {
+			enabled: false
 		},
 		plotOptions: {
 			bar: {
@@ -52,32 +58,14 @@ const populationConfig = (data) => {
 				}
 			}
 		},
-		legend: {
-			layout: "vertical",
-			align: "right",
-			verticalAlign: "top",
-			x: -40,
-			y: 80,
-			floating: true,
-			borderWidth: 1,
-			backgroundColor: "#FFFFFF",
-			shadow: true
-		},
 		credits: {
 			enabled: false
 		},
 		series: [
 			{
-				name: "Year 1800",
-				data: [107, 31, 635, 203, 2]
-			},
-			{
-				name: "Year 1900",
-				data: [133, 156, 947, 408, 6]
-			},
-			{
-				name: "Year 2012",
-				data: [1052, 954, 4250, 740, 38]
+				"name": name,
+				"colorByPoint": true,
+				"data": data
 			}
 		]
 	}
@@ -86,9 +74,33 @@ class MapStart extends Component {
     handleNavigation = val => {
 		this.props.history.push(val);
 	}
+	getDevTypes = (obj) => {
+		return obj.map( function(arr){
+			return arr.devType
+		})
+	}
+	getDevAcres = (obj) => {
+		return obj.map( function(arr){
+			return {
+				name: arr.devType,
+				y: Number( (arr.totalAcre).toFixed(2) )
+			}
+		})
+	}
+	getColorArray = (obj) => {
+		return obj.map( function(arr){
+			return arr.color
+		});
+	}
 	render() {
 		let acresPerDevType = AcresPerDevType(this.props.baseMapLayer);
-		
+		let devTypes = this.getDevTypes(acresPerDevType);
+		let developedAcres = this.getDevAcres(acresPerDevType);
+		let colorArray = this.getColorArray(acresPerDevType);
+		let populationMetric = mm.getPopulation(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
+		let housingMetric = mm.getHousingUnits(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
+		let jobsMetric = mm.getJobCounts(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
+
 		return (
 			<Grid >
 				<Grid item sm={12} >
@@ -107,15 +119,19 @@ class MapStart extends Component {
 				<Grid container>
 					<Grid item xs={4}>
 						{/* chart for population by  dev type W TOTAL ABOVE*/}
-						<ReactHighcharts config={populationConfig()} />					
+						<ReactHighcharts config={chartColumnConfig({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
 					</Grid>
 					<Grid item xs={4}>
 						{/* chart for housing units by  dev type W TOTAL ABOVE*/}					
-						<ReactHighcharts config={populationConfig()} />	
+						<ReactHighcharts config={chartColumnConfig({name:"Households" , data: housingMetric, categories: devTypes, colorArray } )} />					
 					</Grid>
 					<Grid item xs={4}>
 						{/* chart for jobs by dev type W TOTAL ABOVE*/}					
-						<ReactHighcharts config={populationConfig()} />	
+						<ReactHighcharts config={chartColumnConfig({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
+					</Grid>
+					<Grid item xs={4}>
+						{/* chart for population by  dev type W TOTAL ABOVE*/}
+						<ReactHighcharts config={chartColumnConfig({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
 					</Grid>
 				</Grid>
 				<UploadLayerModal />
@@ -127,6 +143,7 @@ class MapStart extends Component {
 function mapStateToProps(state) {  
 	return { 
 		  devWorkbook: state.devWorkbook,
+		  myLibrary: state.myLibrary,
 		  baseMapLayer: state.baseMapLayer,
 		  mapRef: state.mapRef,
 		  leafletDrawTrigger: state.leafletDrawTrigger,

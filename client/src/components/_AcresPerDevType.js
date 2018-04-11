@@ -29,13 +29,15 @@ let fixName = function(obj){
   var final = []
   
   _.forEach(objReduce, function(value, idx) {
-    // console.log( idx);
     let sum = _.reduce(value, function(sum, n) {    //get acreage totals
       return sum + n.acres;
     }, 0);
+    // console.log(value);
+    // console.log(idx);
     final.push({
       devType: unfixName(idx),
-      totalAcre: sum
+      totalAcre: sum,
+      color: value[0].activeDevType.devTypeColor
     })
   });
 

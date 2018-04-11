@@ -22,7 +22,7 @@ function getDevTypeColor(feature){
     if (!isEmptyObject(feature.properties.activeDevType)){
         return feature.properties.activeDevType.devTypeColor;
     }else {
-        return "#dddddd";
+        return "#eeeeee";
     }
 }
 class MapContainer extends Component {
