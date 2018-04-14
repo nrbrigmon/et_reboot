@@ -4,12 +4,12 @@
 	"description": "moving envision tomorrow like land use planning apps to javascript",
 	"main": "index.js",
 	"scripts": {
+		"prestart": "npm install --prefix client && npm run build --prefix client",
 		"start": "node index.js",
 		"server": "nodemon ./bin/www",
 		"config": "python ./bin/config_db.py",
 		"client": "npm run start --prefix client",
-		"dev": "concurrently \"npm run server\" \"npm run client\" ",
-		"aws": "concurrently \"npm run server\" \"npm install --prefix client && npm run build --prefix client\" "
+		"dev": "concurrently \"npm run server\" \"npm run client\" "
 	},
 	"keywords": ["node", "react", "postgres"],
 	"author": "nate brigmon",
