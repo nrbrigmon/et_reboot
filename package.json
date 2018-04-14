@@ -4,6 +4,7 @@
 	"description": "moving envision tomorrow like land use planning apps to javascript",
 	"main": "index.js",
 	"scripts": {
+		"prestart": "sudo npm install --prefix client && sudo npm run build --prefix client",
 		"start": "node index.js",
 		"server": "nodemon ./bin/www",
 		"config": "python ./bin/config_db.py",
