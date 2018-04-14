@@ -5,6 +5,8 @@
 /config/test.js
 /config/_pdubs.txt
 /bin/config_db.py
+/bin/_config_test.py
+/bin/sql
 
 # dependencies
 /node_modules
