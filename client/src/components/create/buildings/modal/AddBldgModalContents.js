@@ -17,11 +17,13 @@ class AddBldgModalContents extends React.Component {
   };
 
 	renderTabContainer = (bldgs, modList) => {
-    console.log(bldgs);
+    // console.log(bldgs);
+    let err  = bldgs.code === 'ECONNREFUSED' || bldgs === undefined ? true : false;
+    
     return (
         <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
         {
-          bldgs.map( (item, idx) => {
+           !err ? bldgs.map( (item, idx) => {
             // console.log(item.attributes["physicalInfo"])
             let name = item.physicalInfo.buildingName;
             let id = item.uniqueId;
@@ -49,7 +51,7 @@ class AddBldgModalContents extends React.Component {
                 
               </ListItem>
             )
-          })
+          }) : <ListItem dense>Failed to connect to database</ListItem>
         }
       </List>
     )

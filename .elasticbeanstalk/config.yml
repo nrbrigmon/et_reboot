@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: node-pg2-env
+    environment: pg2env
     group_suffix: null
 global:
   application_name: pg2

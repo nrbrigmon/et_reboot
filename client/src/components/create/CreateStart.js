@@ -25,7 +25,7 @@ import UpdateToast from '../UpdateToast';
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-		alignItems: 'center',
+		// alignItems: 'center',
 		width: '100%',
 		margin: '0px'
 	},
@@ -54,6 +54,9 @@ const styles = theme => ({
 	},
 	leftIcon: {
 	  marginRight: theme.spacing.unit,
+	},
+	libraryWrapper: {
+		minHeight: '300px'
 	},
 	cardAction: {
 		margin: '0 auto'
@@ -172,7 +175,7 @@ class CreateStart extends Component {
 												: <Building data={arrayData}/>
 										}
 									*/}
-									<List>
+									<List className={classes.libraryWrapper}>
 										{this.renderMyLibrary(this.props.myLibrary.selected_buildings)}
 									</List>
 									

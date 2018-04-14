@@ -12,18 +12,20 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 class AddLibraryModalContents extends React.Component {
 
   handleToggle = bldgs => () => {
-    console.log(bldgs);
+    // console.log(bldgs);
     // this.props.toggleDevModalList(id);
     this.props.toggleBuildingModalList(bldgs);
   };
 
 	renderTabContainer = (libraries, modList) => {
       // console.log(modList);
-      // console.log(libraries);
+      console.log(libraries);
+      let err  = libraries.code === 'ECONNREFUSED' || libraries === undefined ? true : false;
+      // console.log(err);
 			return (
         <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
           {
-            libraries.map( (item, idx) => {
+            !err ? libraries.map( (item, idx) => {
               // let id = item.library_id;
               let name = item.library_name;
               let bldgs = item.building_library_ids;
@@ -46,7 +48,7 @@ class AddLibraryModalContents extends React.Component {
                   
                 )
               }
-            )
+            ) : <ListItem dense>Failed to connect to database</ListItem>
           }
         </List>
 			);

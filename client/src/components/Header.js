@@ -22,6 +22,7 @@ import Divider from 'material-ui/Divider';
 const styles = {
   root: {
     width: '100%',
+    zIndex: '1600'
   },
   flex: {
     flex: 1,
@@ -122,9 +123,10 @@ class Header extends Component {
   
   render(){
     const { classes } = this.props;
+    console.log(this.props);
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed">
+      <div>
+        <AppBar position="fixed" className={classes.root}>
           <SwipeableDrawer
             open={this.state.left}
             onClose={this.toggleDrawer('left', false)}

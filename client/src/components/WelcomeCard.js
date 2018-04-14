@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import { withRouter} from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
@@ -14,6 +15,7 @@ const styles = theme => ({
 
 class WelcomeCard extends Component {
 	handleNavigation = (destination) => {
+        console.log(destination);
 		this.props.history.push('/'+destination+'');
 	}
 	render() {
@@ -39,5 +41,7 @@ class WelcomeCard extends Component {
 		);
 	}
 }
-
-export default withStyles(styles)(WelcomeCard);
+  
+// const styledApp = withStyles(styles)(WelcomeCard);
+export default withStyles(styles)( withRouter(WelcomeCard) );
+// export default connect(mapStateToProps, actions)(styledApp);

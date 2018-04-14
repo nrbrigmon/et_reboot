@@ -37,6 +37,7 @@ app.use('/', routes);
 app.use((err, req, res, next) => {
     res.json(err);
 })
+
 if (process.env.NODE_ENV === 'production') {
 	// Express will serve up production assets
 	app.use(express.static('client/build'));

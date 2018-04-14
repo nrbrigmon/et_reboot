@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
+// import Button from 'material-ui/Button';
 
 import MapContainer from './MapContainer';
 import MapOverlayPanel from './MapOverlayPanel';
@@ -103,16 +103,16 @@ class MapStart extends Component {
 
 		return (
 			<Grid >
-				<Grid item sm={12} >
+				<Grid item sm={12} style={{ marginTop: '80px', textAlign: 'center' }}>
 					<h2>Step Three: Map the Site</h2>
 					
-					<Button variant="raised" 
+					{/* <Button variant="raised" 
 						color="primary" 
 						onClick={()=>this.handleNavigation('metrics')}>
 						Metrics 
-					</Button>
+					</Button> */}
 				</Grid>
-				<Grid item xs={12} style={{ marginTop: '20px' }}>
+				<Grid item xs={12} style={{ marginTop: '30px', marginBottom: '30px' }}>
 					<MapOverlayPanel {...this.props} />	
 					<MapContainer {...this.props} />
 				</Grid>
