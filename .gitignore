@@ -2,6 +2,7 @@
 
 # private
 /config/dev.js
+/config/test.js
 /config/_pdubs.txt
 /bin/config_db.py
 
@@ -34,8 +35,13 @@
 
 !.elasticbeanstalk/*.global.yml
 
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+
+!.elasticbeanstalk/*.cfg.yml
+
+!.elasticbeanstalk/*.global.yml
+

@@ -142,9 +142,11 @@ class Header extends Component {
             </div>
          </SwipeableDrawer>
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon onClick={this.toggleDrawer('left', true)}/>
-        {/* <Button >Open Left</Button> */}
+            <IconButton className={classes.menuButton} 
+              color="inherit"
+              aria-label="Menu"
+              onClick={this.toggleDrawer('left', true)} >
+                <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
               <Link to="/"  style={{ textDecoration: 'none', color: 'inherit' }}>Envision Reboot</Link>
