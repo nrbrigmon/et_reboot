@@ -1,7 +1,7 @@
 const http = require('http');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const auth = require('../keys/auth');
+const { auth } = require('../config/keys');
 
 
 const pool = require('../db');

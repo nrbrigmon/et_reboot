@@ -12,8 +12,6 @@ import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
-//  {/*Reboot is like normalize in that it makes CSS equal across all browsers*/}
-
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 

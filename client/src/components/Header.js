@@ -8,14 +8,15 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
 import SwipeableDrawer from 'material-ui/SwipeableDrawer';
 
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import MapIcon from 'material-ui-icons/Map';
+import AccountCircle from 'material-ui-icons/AccountCircle';
 import ImageIcon from 'material-ui-icons/Image';
-import BeachAccessIcon from 'material-ui-icons/BeachAccess';
+import InfoIcon from 'material-ui-icons/Info';
+import MailIcon from 'material-ui-icons/Mail';
 import Divider from 'material-ui/Divider';
 
 const styles = {
@@ -41,42 +42,36 @@ const sideList = (
     <List>
         <ListItem button>
           <Avatar>
+            <AccountCircle />
+          </Avatar>
+          <ListItemText primary="Profile" secondary="Jan 9, 2014" />
+        </ListItem>
+        <ListItem button>
+          <Avatar>
             <ImageIcon />
           </Avatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+          <ListItemText primary="Gallery" secondary="Jan 7, 2014" />
         </ListItem>
         <ListItem button>
           <Avatar>
             <MapIcon />
           </Avatar>
-          <ListItemText primary="Map" secondary="Jan 7, 2014" />
-        </ListItem>
-        <ListItem button>
-          <Avatar>
-            <BeachAccessIcon />
-          </Avatar>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
+          <ListItemText primary="Map" secondary="July 20, 2014" />
         </ListItem>
       </List>
     <Divider />
     <List>
         <ListItem button>
           <Avatar>
-            <ImageIcon />
+            <InfoIcon />
           </Avatar>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+          <ListItemText primary="About" secondary="Jan 9, 2014" />
         </ListItem>
         <ListItem button>
           <Avatar>
-            <MapIcon />
+            <MailIcon />
           </Avatar>
-          <ListItemText primary="Map" secondary="Jan 7, 2014" />
-        </ListItem>
-        <ListItem button>
-          <Avatar>
-            <BeachAccessIcon />
-          </Avatar>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
+          <ListItemText primary="Contact" secondary="Jan 7, 2014" />
         </ListItem>
       </List>
   </div>

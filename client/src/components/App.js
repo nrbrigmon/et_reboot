@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import { CssBaseline } from 'material-ui';
+//  {/*CssBaseline is like normalize in that it makes CSS equal across all browsers*/}
 
 import Header from './Header';
 import Welcome from './Welcome';

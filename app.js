@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const routes = require('./routes');
-const auth = require('./keys/auth');
+const { auth } = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 
@@ -37,5 +37,16 @@ app.use('/', routes);
 app.use((err, req, res, next) => {
     res.json(err);
 })
+if (process.env.NODE_ENV === 'production') {
+	// Express will serve up production assets
+	app.use(express.static('client/build'));
+
+	// Express will serve up index.html if
+	//it doesnt understand the route
+	const path = require('path');
+	app.get('*', (req, res) =>
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+	);
+}
 
 module.exports = app;

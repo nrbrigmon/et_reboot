@@ -10,6 +10,7 @@
 		"client": "npm run start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\" "
 	},
+	"keywords": ["node", "react", "postgres"],
 	"author": "nate brigmon",
 	"license": "ISC",
 	"dependencies": {
