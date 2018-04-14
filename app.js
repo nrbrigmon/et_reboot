@@ -16,6 +16,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); ///added to fix request entity too large issue
 
+console.log('logging here **NRB**')
+console.log(process.env);
 
 //set up cookie session
 app.use(
