@@ -4,6 +4,7 @@
 /config/dev.js
 /config/test.js
 /config/_pdubs.txt
+/config/nates_key.pem
 /bin/config_db.py
 /bin/_config_test.py
 /bin/sql
