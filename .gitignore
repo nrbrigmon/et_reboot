@@ -5,6 +5,7 @@
 /config/test.js
 /config/_pdubs.txt
 /config/nates_key.pem
+/config/putty_key.ppk
 /bin/config_db.py
 /bin/_config_test.py
 /bin/sql
