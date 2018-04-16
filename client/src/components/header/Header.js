@@ -9,15 +9,8 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import SwipeableDrawer from 'material-ui/SwipeableDrawer';
-
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import MapIcon from 'material-ui-icons/Map';
 import AccountCircle from 'material-ui-icons/AccountCircle';
-import ImageIcon from 'material-ui-icons/Image';
-import InfoIcon from 'material-ui-icons/Info';
-import MailIcon from 'material-ui-icons/Mail';
-import Divider from 'material-ui/Divider';
+import {SideDrawer} from './SideDrawer';
 
 const styles = {
   root: {
@@ -37,46 +30,6 @@ const styles = {
   }
 };
 
-const sideList = (
-  <div style={{width:'250px'}}>
-  <h3  style={{margin:'25px'}}>Envision Reboot!</h3>
-    <List>
-        <ListItem button>
-          <Avatar>
-            <AccountCircle />
-          </Avatar>
-          <ListItemText primary="Profile" secondary="Jan 9, 2014" />
-        </ListItem>
-        <ListItem button>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
-          <ListItemText primary="Gallery" secondary="Jan 7, 2014" />
-        </ListItem>
-        <ListItem button>
-          <Avatar>
-            <MapIcon />
-          </Avatar>
-          <ListItemText primary="Map" secondary="July 20, 2014" />
-        </ListItem>
-      </List>
-    <Divider />
-    <List>
-        <ListItem button>
-          <Avatar>
-            <InfoIcon />
-          </Avatar>
-          <ListItemText primary="About" secondary="Jan 9, 2014" />
-        </ListItem>
-        <ListItem button>
-          <Avatar>
-            <MailIcon />
-          </Avatar>
-          <ListItemText primary="Contact" secondary="Jan 7, 2014" />
-        </ListItem>
-      </List>
-  </div>
-);
 
 class Header extends Component {
   state = {
@@ -123,7 +76,7 @@ class Header extends Component {
   
   render(){
     const { classes } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <AppBar position="fixed" className={classes.root}>
@@ -138,7 +91,7 @@ class Header extends Component {
               onClick={this.toggleDrawer('left', false)}
               onKeyDown={this.toggleDrawer('left', false)}
             >
-              {sideList}
+              <SideDrawer />
             </div>
          </SwipeableDrawer>
           <Toolbar>

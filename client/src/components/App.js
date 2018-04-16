@@ -7,8 +7,8 @@ import * as actions from '../actions';
 import { CssBaseline } from 'material-ui';
 //  {/*CssBaseline is like normalize in that it makes CSS equal across all browsers*/}
 
-import Header from './Header';
 import Welcome from './Welcome';
+import Header from './header/Header';
 import CreateStart from './create/CreateStart';
 import DevTypeStart from './create/developments/DevTypeStart';
 import MapStart from './mapping/MapStart';

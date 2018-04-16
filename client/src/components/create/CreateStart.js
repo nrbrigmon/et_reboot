@@ -94,12 +94,12 @@ class CreateStart extends Component {
 		this.props.history.push('/'+destination+'');
 	}
 	newItemInList = (uniqueId) => {
-		this.handleNavigation('create/new/'+uniqueId+'');
+		this.handleNavigation('create/new/'+uniqueId+'/physical-form');
 		this.props.editBuildingPrototype(false);
 	}
 	editItemInList = (selection) => {
 		let _id = selection.uniqueId;
-		this.handleNavigation('create/edit/'+_id+'')
+		this.handleNavigation('create/edit/'+_id+'/physical-form')
 		this.props.editBuildingPrototype(true, selection);
 	}
 

@@ -7,6 +7,8 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
+import { Link, Route } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 
@@ -31,14 +33,14 @@ const styles = theme => ({
 		width: '150px'
 	}
   });
-  
+
   class BuildingPrototypeStart extends Component {
 	constructor(props) {
 		super(props);
 		// if new building shortid.generate
 		// else get shortid from exinput
 		this.state = {
-			tabValue: 'rev',
+			tabValue: 0,
 			editing: ( (props.match.path).indexOf("edit") >= 0 ? true : false), 
 		};
 		this.componentSelection = this.componentSelection.bind(this);
@@ -71,38 +73,10 @@ const styles = theme => ({
 		this.props.history.push('/create');
 		this.props.releaseBuildingPrototype();		
 	}
-
-	renderChildContent = (pg, buildingPrototype) => {
-		// console.log(newState);
-		if (pg === 'phys') {
-			return (
-				<PhysicalFormComponent
-					attributes={buildingPrototype}
-				/>
-			);
-		} else if (pg === 'fin1') {
-			return (
-				<BasicFinFormComponent
-					attributes={buildingPrototype}
-				/>
-			);
-		} else if (pg === 'fin2') {
-			return (
-				<AdvancedFinFormComponent
-					attributes={buildingPrototype}
-				/>
-			);
-		} else {
-			return (
-				<BuildingFormReviewComponent
-					pageChange={this.changePage}
-					attributes={buildingPrototype}
-				/>
-			);
-		}
-	}
+	
 	render() {
-		const { classes } = this.props;
+		// console.log(this.props);
+		const { classes, match } = this.props;
 		const { tabValue } = this.state;
 		const buildingPrototype = this.props.bldgType;
 		
@@ -121,10 +95,10 @@ const styles = theme => ({
 						fullWidth
 						centered
 					>
-						<Tab value="phys" label="Physical Inputs" />
-						<Tab value="fin1" label="Basic Financial" />
-						<Tab value="fin2" label="Advanced Financial" />
-						<Tab value="rev" label="Review" />
+						<Tab label="Physical Inputs" component={Link} to={`${match.url}/physical-form`} />
+						<Tab label="Basic Financial" component={Link} to={`${match.url}/basic-financial`} />
+						<Tab label="Advanced Financial" component={Link} to={`${match.url}/advanced-financial`} />
+						<Tab label="Review" component={Link} to={`${match.url}/review`}/>
 					</Tabs>
 				</AppBar>
 				
@@ -141,7 +115,11 @@ const styles = theme => ({
 				</Grid>
 
 				<Grid item md={8} sm={12} className="myContainer">
-					{this.renderChildContent(this.state.tabValue, buildingPrototype)}
+					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} />}/>
+					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} />}/>
+					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} />}/>
+					<Route path={`${match.url}/review`} render={()=> <BuildingFormReviewComponent attributes={buildingPrototype} />}/>
+
 				</Grid>
 				
 				<Grid item className={classes.paper} xs={12}>
