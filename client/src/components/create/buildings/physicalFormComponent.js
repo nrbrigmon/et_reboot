@@ -33,14 +33,12 @@ class PhysicalFormComponent extends Component {
 	}
 
 	handleChange = (e, valueSub) => {
-		// console.log(e, percentSub);
 		let updateCopy = {};
 		if (valueSub){
 			updateCopy[e.target.id] = Number(valueSub);
 		} else {
 			updateCopy[e.target.id] = e.target.value;
 		}
-		// console.log(updateCopy);
 		this.props.updateBuildingPrototypeField('physicalInfo', updateCopy);
 	};
 	
