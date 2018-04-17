@@ -50,8 +50,8 @@ class Header extends Component {
 			case false:
 				return (
           <Button color="inherit">
-            {/* <a href="/auth/google" style={{color:'inherit',textDecoration:'none'}}>Login</a> */}
-            <a href="/" style={{color:'inherit',textDecoration:'none'}}>Login</a>            
+            <a href="/auth/google" style={{color:'inherit',textDecoration:'none'}}>Login</a>
+            {/* <a href="/" style={{color:'inherit',textDecoration:'none'}}>Login</a>             */}
           </Button>
 				);
       default:
