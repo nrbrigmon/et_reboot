@@ -1,14 +1,25 @@
 {
 	"name": "envision_reboot",
+	"repository": {
+		"type" : "git", 
+		"url" : "https://github.com/nrbrigmon/et_reboot.git"
+	},
 	"version": "1.0.0",
 	"description": "moving envision tomorrow like land use planning apps to javascript",
 	"main": "index.js",
+	"engines": {
+		"node": "8.1.0",
+		"npm": "5.0.1"
+	},
 	"scripts": {
-		"start": "node index.js",
+		"start": "node ./bin/www",
 		"server": "nodemon ./bin/www",
 		"config": "python ./bin/config_db.py",
 		"client": "npm run start --prefix client",
-		"dev": "concurrently \"npm run server\" \"npm run client\" "
+		"dev": "concurrently \"npm run server\" \"npm run client\" ",
+		"heroku-postbuild":
+		"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
 	},
 	"keywords": ["node", "react", "postgres"],
 	"author": "nate brigmon",
