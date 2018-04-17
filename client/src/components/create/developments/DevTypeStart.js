@@ -3,28 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
-
 import DevTypeBuildingMix from './DevTypeBuildingMix';
 import DevTypeAttributes from './DevTypeAttributes';
 import DevTypeReview from './DevTypeReview';
-
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		// marginTop: theme.spacing.unit * 3,
-		overflowX: 'auto',
-		padding: '20px'
-	},
-	card: {
-		padding: '20px'
-	}
-  });
+import Wrapper900 from '../../wrappers/Wrapper900';
 
 
-  
 class DevTypeStart extends Component {
 	constructor(props){
 		super(props);
@@ -57,19 +41,15 @@ class DevTypeStart extends Component {
 		}
 	}
 	render() {
-		const { classes } = this.props;
+		// const { classes } = this.props;
 		let devPage = this.state.devPage;
 		// console.log(this.props);
 		return (
-			<Grid container
-				className={classes.root}
-				alignItems='flex-start'
-				direction='row'
-				justify='center'>
+			<Wrapper900>
 
 					{ this.renderDevPage(devPage) }
 
-			</Grid>
+			</Wrapper900>
 		);
 	}
 }
@@ -80,5 +60,4 @@ function mapStateToProps(state) {
 		 };
 }
   
-const styledApp = withStyles(styles)(DevTypeStart);
-export default connect(mapStateToProps, actions)(styledApp);
+export default connect(mapStateToProps, actions)(DevTypeStart);

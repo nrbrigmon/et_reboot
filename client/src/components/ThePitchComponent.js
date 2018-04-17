@@ -7,13 +7,9 @@ import Card, { CardContent } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
+import Wrapper900 from './wrappers/Wrapper900';
 
 const styles = theme => ({
-	root: {
-	  flexGrow: 1,
-	  width: '100%',
-	  backgroundColor: theme.palette.background.paper
-	},
 	paper: {
 	  padding: '0px 20px 20px 20px',
 	  margin: '40px 20px 20px 20px',
@@ -76,11 +72,7 @@ class ThePitch extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Grid container
-				className={classes.root}
-				alignItems='flex-start'
-				direction='row'
-				justify='center'>
+			<Wrapper900>
 				<Paper className={classes.paper}>
 					
 					<Grid item xs={12}>
@@ -170,7 +162,7 @@ class ThePitch extends Component {
 						</Link>
 					</Grid>
 				</Paper>
-			</Grid>
+			</Wrapper900>
 		);
 	}
 }

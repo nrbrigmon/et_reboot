@@ -9,13 +9,6 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import DevTypeBuildingMixTableRow from './DevTypeBuildingMixTableRow';
 
 const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		marginTop: theme.spacing.unit * 3,
-		overflowX: 'auto',
-		padding: '20px'
-	},
 	table: {
 	  minWidth: 700,
 	},

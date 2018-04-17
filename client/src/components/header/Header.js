@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import SwipeableDrawer from 'material-ui/SwipeableDrawer';
 import AccountCircle from 'material-ui-icons/AccountCircle';
-import {SideDrawer} from './SideDrawer';
+import SideDrawer from './SideDrawer';
 
 const styles = {
   root: {
@@ -50,8 +50,8 @@ class Header extends Component {
 			case false:
 				return (
           <Button color="inherit">
-            <a href="/auth/google" style={{color:'inherit',textDecoration:'none'}}>Login
-            </a>
+            {/* <a href="/auth/google" style={{color:'inherit',textDecoration:'none'}}>Login</a> */}
+            <a href="/" style={{color:'inherit',textDecoration:'none'}}>Login</a>            
           </Button>
 				);
       default:

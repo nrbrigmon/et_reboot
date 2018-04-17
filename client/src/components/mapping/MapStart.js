@@ -87,6 +87,9 @@ class MapStart extends Component {
 			}
 		})
 	}
+	componentDidMount(){
+		window.scrollTo(0, 0)
+	}
 	getColorArray = (obj) => {
 		return obj.map( function(arr){
 			return arr.color

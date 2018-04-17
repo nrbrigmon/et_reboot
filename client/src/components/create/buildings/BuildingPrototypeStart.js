@@ -68,12 +68,31 @@ const styles = theme => ({
 		this.props.releaseBuildingPrototype();
 		this.props.history.push('/create');
 	}
-	
+	saveAsBuilding = () => {
+		let editingState = false;
+		let { bldgType } = this.props;
+		bldgType["uniqueId"] = this.props.uniqueId; //update to NEW ID 
+
+		//add building to available library modal list
+		this.props.newAvailableBuilding(bldgType)
+		//add building to my library
+		this.props.addBuildingToLibrary(bldgType);
+		
+		//save overall library
+		this.props.updateBuildingInLibrary(editingState, bldgType);
+		this.props.updateAvailableBuildings(bldgType);
+		this.props.saveBuildingToDb(editingState, bldgType);
+		this.props.releaseBuildingPrototype();
+		this.props.history.push('/create');
+	}
 	cancelBuilding = () => {
 		this.props.history.push('/create');
 		this.props.releaseBuildingPrototype();		
 	}
 	
+	componentDidMount(){
+		window.scrollTo(0, 0)
+	}
 	render() {
 		// console.log(this.props);
 		const { classes, match } = this.props;
@@ -108,6 +127,11 @@ const styles = theme => ({
 						Save
 					</Button>	
 					
+					<Button variant="raised" color="primary"  className={classes.button} 
+						onClick={()=>this.saveAsBuilding()}>
+						Save As
+					</Button>	
+
 					<Button variant="raised" color="secondary"  className={classes.button} 
 						onClick={()=>this.cancelBuilding()}>
 						Cancel
@@ -128,6 +152,12 @@ const styles = theme => ({
 						Save
 					</Button>	
 					
+					<Button variant="raised" color="primary"  className={classes.button} 
+						onClick={()=>this.saveAsBuilding()}>
+						Save As
+					</Button>	
+
+					
 					<Button variant="raised" color="secondary"  className={classes.button} 
 						onClick={()=>this.cancelBuilding()}>
 						Cancel
@@ -140,6 +170,7 @@ const styles = theme => ({
 
 function mapStateToProps(state) {
 	return { 
+		uniqueId: state.randomId,
 		bldgType: state.bldgType,
 		availableBldgs: state.availableBldgs
 	};

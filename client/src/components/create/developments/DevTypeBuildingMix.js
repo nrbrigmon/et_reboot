@@ -40,42 +40,35 @@ class DevTypeBuildingMix extends Component {
 		
 		// console.log(this.props);
 		return (
-			<Grid container
-				className={classes.root}
-				alignItems='flex-start'
-				direction='row'
-				justify='center'>
-
-				<Grid item xs={12} className={classes.card}>
-                    <h2>Step Two: Create Development Type Mix</h2>
-                    <Card className={classes.card}>
-                        <CardContent>
-                            <Typography type="headline" component="h3">
-                                Development Types
-                            </Typography>
-                            <div className={classes.tableContainer}>
-                                <DevTypeBuildingMixTable />
+            <Grid item xs={12}  >
+                <h2>Step Two: Create Development Type Mix</h2>
+                <Card>
+                    <CardContent>
+                        <Typography type="headline" component="h3">
+                            Development Types
+                        </Typography>
+                        <div className={classes.tableContainer}>
+                            <DevTypeBuildingMixTable />
+                        </div>
+                        <CardActions>
+                            <div className={classes.cardAction}>
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('back')}>
+                                    Go Back
+                                </Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
+                                    Add Row
+                                </Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
+                                    Save Progress
+                                </Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('attributes')}>
+                                    Move to Step Three
+                                </Button>	
                             </div>
-                            <CardActions>
-                                <div className={classes.cardAction}>
-                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('back')}>
-                                        Go Back
-                                    </Button>	
-                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
-                                        Add Row
-                                    </Button>	
-                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
-                                        Save Progress
-                                    </Button>	
-                                    <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('attributes')}>
-                                        Move to Step Three
-                                    </Button>	
-                                </div>
-                            </CardActions>
-                        </CardContent>
-                    </Card>
-                </Grid>
-			</Grid>
+                        </CardActions>
+                    </CardContent>
+                </Card>
+            </Grid>
         );
     }
 }

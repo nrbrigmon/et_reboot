@@ -46,15 +46,9 @@ class DevTypeAttributes extends Component {
 
 		// console.log(this.props);
 		return (
-			<Grid container
-				className={classes.root}
-				alignItems='flex-start'
-				direction='row'
-				justify='center'>
-				
-				<Grid item sm={12} className={classes.card}>
+			<Grid item sm={12} >
 				<h2>Step Three: Create Development Type Attributes</h2>
-					<Card className={classes.card}>
+					<Card >
 					<CardContent>
 						<Typography type="headline" component="h3">
 							Block Size
@@ -98,7 +92,6 @@ class DevTypeAttributes extends Component {
 						</CardActions>
 					</CardContent>
 				</Card>
-				</Grid>
 			</Grid>
 		);
 	}

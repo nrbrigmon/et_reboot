@@ -21,24 +21,9 @@ import AddBldgModal from './buildings/modal/AddBldgModal';
 import AddLibraryModal from './buildings/modal/AddLibraryModal';
 import SaveBldgLibraryModal from './buildings/modal/SaveBldgLibraryModal';
 import UpdateToast from '../UpdateToast';
+import Wrapper900 from '../wrappers/Wrapper900';
 
 const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		// alignItems: 'center',
-		width: '100%',
-		margin: '0px'
-	},
-	wrapper: {
-		maxWidth: '900px',
-		background: 'white',
-		backgroundColor: 'white'
-	},
-	sectionHeader: {
-		marginTop: '60px',
-		marginBottom: '30px',
-		textAlign: 'center'
-	},
 	column: {
 		margin: '0 auto'
 	},
@@ -148,86 +133,75 @@ class CreateStart extends Component {
 		const { classes } = this.props;
 		const { uniqueId } = this.props;
 		return (
-			<Grid 
-				container
-				justify="center"
-				className={classes.root}
-				spacing={16}>
-				<Grid item xs={12} className={classes.wrapper}>
-					<Grid 
-						container
-						className={classes.root}
-						justify="center">
-						<Grid item xs={12} className={classes.sectionHeader}>
-							<h2>Step One: Create Your Library</h2>
-						</Grid>
-						{/* COLUMN #1 */}
-						<Grid item sm={8} xs={12} className={classes.column}>
-							<Card className={classes.card}>
-								<CardContent>
-									<Typography type="headline" component="h3">
-										Your Library
-									</Typography>
-									{ /*
-										the proper loading pattern is using a ternary operator like this:
-										{ isEmpty ?
-												(isFetchingData ? <p>getting data/loading</p> : "empty list")
-												: <Building data={arrayData}/>
-										}
-									*/}
-									<List className={classes.libraryWrapper}>
-										{this.renderMyLibrary(this.props.myLibrary.selected_buildings)}
-									</List>
-									
-									<CardActions >
-										<div className={classes.cardAction}>
-											<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.openSaveLibraryModal()}>
-												Save Library
-											</Button>
-											<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types')}>
-												Move to Step Two
-											</Button>	
-										</div>
-									</CardActions>
-								</CardContent>
-							</Card>
-						</Grid>
-						{/* COLUMN #2 */}
-						<Grid item sm={4} xs={12} className={classes.column}>
-							<Grid container 
-								alignItems='center'>
-								{/* if you click on either existing libary or building, it
-								should open a modal window with a filterable table 
-								to choose existing buildings and/or libraries.
-								maybe they open a modal but you aview a different
-								tab depending on the click?*/}
-								
-								<Button variant="raised" color="primary" className={classes.button} 
-									onClick={() => this.props.openModal('library')}>
-									<CloudDownload className={classes.leftIcon}/>  Load Existing Library
-								</Button>
-								<Button variant="raised" color="primary" className={classes.button} 
-									onClick={() => this.props.openModal('buildings')}>
-									<CloudDownload className={classes.leftIcon}/>  Add Existing Building
-								</Button>
-								<Button variant="raised" color="primary" className={classes.button} 
-									onClick={() => this.newItemInList(uniqueId)}>
-									<AddCircle className={classes.leftIcon}/> Create New Building
-								</Button>
-								<Button variant="raised" color="primary" className={classes.button} 
-									onClick={() => this.resetList()}>
-									<Clear className={classes.leftIcon}/> Reset/Empty List
-								</Button>
-							</Grid>
-						</Grid>
-
-						<AddBldgModal   />
-						<AddLibraryModal   />
-						<SaveBldgLibraryModal  />
-						<UpdateToast />
+			<Wrapper900>
+				<Grid item xs={12}>
+					<h2>Step One: Create Your Library</h2>
+				</Grid>
+				{/* COLUMN #1 */}
+				<Grid item sm={8} xs={12} className={classes.column}>
+					<Card className={classes.card}>
+						<CardContent>
+							<Typography type="headline" component="h3">
+								Your Library
+							</Typography>
+							{ /*
+								the proper loading pattern is using a ternary operator like this:
+								{ isEmpty ?
+										(isFetchingData ? <p>getting data/loading</p> : "empty list")
+										: <Building data={arrayData}/>
+								}
+							*/}
+							<List className={classes.libraryWrapper}>
+								{this.renderMyLibrary(this.props.myLibrary.selected_buildings)}
+							</List>
+							
+							<CardActions >
+								<div className={classes.cardAction}>
+									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.openSaveLibraryModal()}>
+										Save Library
+									</Button>
+									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types')}>
+										Move to Step Two
+									</Button>	
+								</div>
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
+				{/* COLUMN #2 */}
+				<Grid item sm={4} xs={12} className={classes.column}>
+					<Grid container 
+						alignItems='center'>
+						{/* if you click on either existing libary or building, it
+						should open a modal window with a filterable table 
+						to choose existing buildings and/or libraries.
+						maybe they open a modal but you aview a different
+						tab depending on the click?*/}
+						
+						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.props.openModal('library')}>
+							<CloudDownload className={classes.leftIcon}/>  Load Existing Library
+						</Button>
+						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.props.openModal('buildings')}>
+							<CloudDownload className={classes.leftIcon}/>  Add Existing Building
+						</Button>
+						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.newItemInList(uniqueId)}>
+							<AddCircle className={classes.leftIcon}/> Create New Building
+						</Button>
+						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.resetList()}>
+							<Clear className={classes.leftIcon}/> Reset/Empty List
+						</Button>
 					</Grid>
-				</Grid>					
-			</Grid>	
+				</Grid>
+
+				<AddBldgModal   />
+				<AddLibraryModal   />
+				<SaveBldgLibraryModal  />
+				<UpdateToast />		
+			</Wrapper900>	
 		);
 	}
 }

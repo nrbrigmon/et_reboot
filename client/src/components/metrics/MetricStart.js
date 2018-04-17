@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
+import Wrapper900 from '../wrappers/Wrapper900';
 
 // import { connect } from 'react-redux';
 // import * as actions from '../../../actions';
@@ -12,10 +13,7 @@ class MetricStart extends Component {
 	
 	render() {
 		return (
-			<Grid 
-				alignItems='flex-start'
-				direction='row'
-				container>
+			<Wrapper900>
 				<Grid item sm={12} >
 					<h2>Step Four: Analyze the Metrics</h2>
 					
@@ -34,7 +32,7 @@ class MetricStart extends Component {
 					<p>Your Dev Types:</p>
 		
 				</Grid>
-			</Grid>
+			</Wrapper900>
 		);
 	}
 }

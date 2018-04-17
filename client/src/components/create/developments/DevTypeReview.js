@@ -39,40 +39,33 @@ class DevTypeReview extends Component {
 		
 		// console.log(this.props);
 		return (
-			<Grid container
-				className={classes.root}
-				alignItems='flex-start'
-				direction='row'
-				justify='center'>
-
-				<Grid item xs={12} className={classes.card}>
-					<h2>Review</h2>
-					<Card className={classes.card}>
-						<CardContent>
-							<Typography type="headline" component="h3">
-							Development Types 
-							</Typography>
-							
-							TIME TO REVIEW!!!!!
-							<CardActions>
-								<div className={classes.cardAction}>
-									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('attributes')}>
-										Go Back
-									</Button>	
-									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>alert("saved!... later...")}>
-										Save
-									</Button>
-									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/metrics')}>
-										Test Metrics
-									</Button>		
-									<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/map')}>
-										Start Mapping
-									</Button>	
-								</div>
-							</CardActions>
-						</CardContent>
-					</Card>
-				</Grid>
+			<Grid item xs={12} >
+				<h2>Review</h2>
+				<Card >
+					<CardContent>
+						<Typography type="headline" component="h3">
+						Development Types 
+						</Typography>
+						
+						TIME TO REVIEW!!!!!
+						<CardActions>
+							<div className={classes.cardAction}>
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('attributes')}>
+									Go Back
+								</Button>	
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>alert("saved!... later...")}>
+									Save
+								</Button>
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/metrics')}>
+									Test Metrics
+								</Button>		
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/map')}>
+									Start Mapping
+								</Button>	
+							</div>
+						</CardActions>
+					</CardContent>
+				</Card>
 			</Grid>
 		);
 	}

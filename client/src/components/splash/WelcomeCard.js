@@ -9,13 +9,14 @@ import { withRouter} from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
-		margin: '10px'
+        margin: '10px',
+        textAlign: 'left'
 	}
   });
 
 class WelcomeCard extends Component {
 	handleNavigation = (destination) => {
-        console.log(destination);
+        // console.log(destination);
 		this.props.history.push('/'+destination+'');
 	}
 	render() {
