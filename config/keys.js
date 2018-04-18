@@ -1,4 +1,4 @@
-var test = false;
+// var test = true;
 if (process.env.NODE_ENV === 'production') {
 	//we are in the prod env
 	module.exports = require('./prod');
