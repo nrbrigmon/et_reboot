@@ -15,7 +15,10 @@
 /client/node_modules
 
 # testing
+app-test.js
 /client/coverage
+/db/temp
+/bin/test
 
 # production
 /client/build

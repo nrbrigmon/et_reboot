@@ -76,7 +76,7 @@ class Header extends Component {
   
   render(){
     const { classes } = this.props;
-    // console.log(this.props);
+    console.log(this.props);
     return (
       <div>
         <AppBar position="fixed" className={classes.root}>

@@ -4,7 +4,6 @@ import sampleFields from '../components/create/buildings/inputs/sampleBuildingIn
 /* USER ACTIONS */
 export const fetchUser = () => async dispatch => {
 	const res = await axios.get('/api/user/info');
-	// console.log(res);
 	dispatch({ type: 'FETCH_USER', payload: res.data });
 };
 

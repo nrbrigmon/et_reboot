@@ -25,6 +25,7 @@ class DevTypeBuildingMixTableRow extends Component {
         this.props.updateDevTypeAttr(e.target.value, e.target.id, "devTypeName");
     }
     getTotal = (cells) => {
+        console.log(cells);
         let sum = cells.reduce( (acc, curr, idx) => {
             // console.log(acc, curr, idx);
             if (idx === 1) {

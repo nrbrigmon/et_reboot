@@ -15,7 +15,7 @@ router.get('/', (request, response, next) =>{
 
 //get specific user by googleid 
 router.get('/:id', (request, response, next) =>{
-    // console.log(request.params);    
+    console.log(request.params);    
     const { id } = request.params;
     console.log('incoming specific request..active_users.get', id)
     pool.query("SELECT * FROM envision_users WHERE google_id = '"+ id +"' ", (err, res) =>{

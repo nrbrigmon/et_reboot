@@ -8,7 +8,7 @@ const pool = require('../db');
 
 passport.serializeUser((user, done) => {
 	console.log('serializing user...');
-	console.log(user);
+	// console.log(user);
 	done(null, user);
 });
 
@@ -34,12 +34,12 @@ passport.use(
 			proxy: true
 		},
 		(accessToken, refreshToken, profile, done) => {
-			// console.log('google id: ', profile.id);
+			console.log('google strategy');
+			console.log(profile);
+			let _id_search = profile.id;
+			console.log('using google strategy with ', _id_search);
 
-			let google_id = profile.id;
-			console.log('using google strategy with ', google_id);
-
-			const res = pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [google_id], (err, res) =>{
+			const res = pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [_id_search], (err, res) =>{
 				console.log('running query....')
 				if (err) return done(err);
 				// console.log('existing user search: ', res.rows[0]);
@@ -54,7 +54,7 @@ passport.use(
 					let profileObj = JSON.stringify(profile);
 					let { google_id } = profileObj
 					return pool.query('INSERT INTO envision_users (google_id, building_library_ids, google_prof, date_started)'+
-						'VALUES ($1, $2, $3, CURRENT_TIMESTAMP);',[profileObj.google_id, [], profileObj ], (err, res) => {
+						'VALUES ($1, $2, $3, CURRENT_TIMESTAMP);',[ google_id, [], profileObj ], (err, res) => {
 					    if (err) return done(err);
 						
 						let newUser = res.rows[0];

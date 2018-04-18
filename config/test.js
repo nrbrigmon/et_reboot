@@ -8,9 +8,9 @@ module.exports = {
     },
     auth: {
         googleClientID:
-            '60059498079-vcbac83v03sp8j494u744c50o2efonos.apps.googleusercontent.com',
-        googleClientSecret: 'kHoePzsLKF0hM4Rk0fin-3EW',
+            '192685580989-rlvs2a8r6ppo1u6j1e3ggkk25brugp9n.apps.googleusercontent.com',
+        googleClientSecret: 'OIEVppJWxriUIlob5LBXqvan',
         cookieKey: 'sdfhwtnq323435wmtnwtn',
-        redirectDomain: 'http://localhost:3000'
+        redirectDomain: 'http://localhost:5000'
     }
 }
