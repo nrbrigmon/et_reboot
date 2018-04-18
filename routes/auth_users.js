@@ -24,7 +24,7 @@ module.exports = app => {
 	});
 
 	app.get('/api/user/info', (req, res) => {
-		console.log(req.user);
+		console.log('*auth_users.js*, gettin user info: ',req.user);
 		res.send(req.user);
 	});
 };

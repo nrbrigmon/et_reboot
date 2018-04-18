@@ -14,7 +14,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
 	console.log('de__serializing user...');
-	console.log(user);
+	// console.log(user);
 	pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [user.google_id], (err, res) =>{
 		if (err) return done(err);
 		// console.log(res.rows);
@@ -34,7 +34,7 @@ passport.use(
 			proxy: true
 		},
 		(accessToken, refreshToken, profile, done) => {
-			console.log('google id: ', profile.id);
+			// console.log('google id: ', profile.id);
 
 			let google_id = profile.id;
 			console.log('using google strategy with ', google_id);

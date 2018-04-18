@@ -38,7 +38,7 @@ router.delete('/:id', (request, response, next) =>{
     console.log('deleting building from database..', uniqueId)
     pool.query("DELETE FROM development_type_inputs WHERE (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) =>{
         if (err) return next(err);
-        console.log(res.rows);
+        // console.log(res.rows);
         console.log('successful delete');
         response.json(res.rows);
     });
