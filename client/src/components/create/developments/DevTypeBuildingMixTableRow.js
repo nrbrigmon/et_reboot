@@ -25,7 +25,7 @@ class DevTypeBuildingMixTableRow extends Component {
         this.props.updateDevTypeAttr(e.target.value, e.target.id, "devTypeName");
     }
     getTotal = (cells) => {
-        console.log(cells);
+        // console.log(cells);
         let sum = cells.reduce( (acc, curr, idx) => {
             // console.log(acc, curr, idx);
             if (idx === 1) {
@@ -43,6 +43,10 @@ class DevTypeBuildingMixTableRow extends Component {
         const { devTypeName } = this.props;
         // console.log(cellData);
         // console.log(this.props); 
+        
+        let err  = cellData.length === 0 || cellData === undefined ? true : false;
+        // console.log(err);
+        // console.log(cellData)
         return (
             <TableRow>
                 <TableCell style={{width:'300px'}}>
@@ -57,12 +61,12 @@ class DevTypeBuildingMixTableRow extends Component {
                 </TableCell>
                 <TableCell>
                 
-                   { PercentStatusCheck( this.getTotal(cellData)) }
+                   { !err ? PercentStatusCheck( this.getTotal(cellData)) : <p></p> }
                     
                 
                 </TableCell>
                 {
-                    cellData.map((cell, idx) => {
+                    !err ? cellData.map((cell, idx) => {
                         return (
                             <TableCell key={idx} numeric>
                                 <TextField
@@ -75,7 +79,7 @@ class DevTypeBuildingMixTableRow extends Component {
                                 />
                             </TableCell>
                         )
-                    })
+                    }) : <td><p></p></td>
                 }
             </TableRow>
         )
