@@ -5,7 +5,7 @@ module.exports = app => {
 	app.get(
 		'/auth/google',
 		passport.authenticate('google', {
-			scope: ['profile', 'email']
+			scope: ['https://www.googleapis.com/auth/plus.login']
 		})
 	);
 
@@ -25,7 +25,7 @@ module.exports = app => {
 	app.get('/api/user/info', (req, res) => {
 		console.log('\n\n*auth_users.js*, request:\n\n',req.headers);
 		
-		console.log('\n\n*auth_users.js*, gettin user info: \n\n',req.user);
+		console.log('\n\n*auth_users.js*, gettin user info: ',req.user,'\n\n');
 		res.send(req.user);
 	});
 };

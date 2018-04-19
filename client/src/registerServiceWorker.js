@@ -19,6 +19,8 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+  console.log('here in service worker #22')
+  
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
@@ -74,13 +76,19 @@ function registerValidSW(swUrl) {
 
 function checkValidServiceWorker(swUrl) {
   // Check if the service worker can be found. If it can't reload the page.
+  console.log('here in service worker #79')
+  
   fetch(swUrl)
     .then(response => {
+      console.log('service worker 83', response)
+      
       // Ensure service worker exists, and that we really are getting a JS file.
       if (
         response.status === 404 ||
         response.headers.get('content-type').indexOf('javascript') === -1
       ) {
+      console.log('service worker 90', response)
+        
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {
           registration.unregister().then(() => {
@@ -88,6 +96,7 @@ function checkValidServiceWorker(swUrl) {
           });
         });
       } else {
+        console.log('service worker 99', response)
         // Service worker found. Proceed as normal.
         registerValidSW(swUrl);
       }
@@ -100,6 +109,8 @@ function checkValidServiceWorker(swUrl) {
 }
 
 export function unregister() {
+  console.log('here in service worker #107')
+  
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();

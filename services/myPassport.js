@@ -34,8 +34,8 @@ passport.use(
 			proxy: true
 		},
 		(accessToken, refreshToken, profile, done) => {
-			console.log('google strategy');
-			console.log(profile);
+			console.log('google strategy in progress');
+			// console.log(profile);
 			let _id_search = profile.id;
 			console.log('using google strategy with ', _id_search);
 

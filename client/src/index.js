@@ -9,7 +9,9 @@ import reduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
+
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
 
@@ -19,4 +21,5 @@ ReactDOM.render(
         <Provider store={store}>
             <App />
         </Provider>, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();
+unregister();
