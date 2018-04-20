@@ -25,14 +25,16 @@ function getDevTypeColor(feature){
         return "#eeeeee";
     }
 }
+function onEachFeature(feature, layer) {
+    // console.log( feature )
+    // console.log( layer )
+    layer.on({
+        click: (e)=>{console.log(e.target.feature)} //highlightFeature func,
+        // mouseout: console.log('mouseout', feature),  //highlightReset func, click:
+        // console.log('mouseclick', feature)  //zoomToFeature func
+    });
+}
 class MapContainer extends Component {
-    onEachFeature = (feature, layer) => {
-        layer.on({
-            // mouseover: console.log('mouseover ',feature), //highlightFeature func,
-            // mouseout: console.log('mouseout', feature),  //highlightReset func, click:
-            // console.log('mouseclick', feature)  //zoomToFeature func
-        });
-    }
 
     _baseLayerGroup = new L.FeatureGroup();
     _polygonDrawer = null;
@@ -59,9 +61,9 @@ class MapContainer extends Component {
         
         if (this.props.baseMapLayer && !isEmptyObject(this.props.baseMapLayer)) {
             // console.log(this.props.baseMapLayer);
-            
+            console.log('update base layer, no?')
             this.polygon = new L.geoJson(this.props.baseMapLayer, {
-                onEachFeature: this.onEachFeature,
+                onEachFeature: onEachFeature,
                 style: function (feature) {
                     return ({
                         color: '#333333', 

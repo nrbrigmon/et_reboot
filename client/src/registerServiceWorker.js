@@ -109,7 +109,7 @@ function checkValidServiceWorker(swUrl) {
 }
 
 export function unregister() {
-  console.log('here in service worker #107')
+  // console.log('here in service worker #107')
   
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
