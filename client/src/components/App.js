@@ -14,7 +14,8 @@ import DevTypeStart from './create/developments/DevTypeStart';
 import MapStart from './mapping/MapStart';
 import MetricStart from './metrics/MetricStart';
 import GalleryStart from './gallery/GalleryStart';
-import ThePitch from './ThePitchComponent';
+import ThePitch from './about/ThePitchComponent';
+import ContactStart from './contact/ContactStart';
 import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 
 class App extends Component {
@@ -30,14 +31,15 @@ class App extends Component {
 					<div>
 						<Header />
 						<Route exact path="/" component={Welcome} />
+						<Route path="/about" component={ThePitch} />
 						<Route exact path="/create" component={CreateStart} />
 						<Route path="/create/new/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/edit/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/dev-types" component={DevTypeStart} />
-						<Route path="/map" component={MapStart} />
-						<Route path="/metrics" component={MetricStart} />
 						<Route path="/gallery" component={GalleryStart} />
-						<Route path="/pitch" component={ThePitch} />
+						<Route path="/map" component={MapStart} />
+						<Route path="/contact" component={ContactStart} />
+						<Route path="/metrics" component={MetricStart} />
 					</div>
 				</BrowserRouter>
 			</div>

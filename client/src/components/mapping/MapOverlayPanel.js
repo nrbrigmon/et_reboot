@@ -18,7 +18,8 @@ const styles = theme => ({
 		margin:0
     },
     overlayContainer: {
-        position: 'absolute'
+        position: 'absolute',
+        left: '0px'
     },
 	paper: {
         position:'relative',

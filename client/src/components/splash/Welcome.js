@@ -6,8 +6,8 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import ThreeBuildingPrototype from '../create/threeModels/three-building-prototype';
 import WelcomeCard from './WelcomeCard';
 import CheckIcon from 'material-ui-icons/Check';
-import WelcomeActions from './WelcomeActions';
 import Wrapper900 from '../wrappers/Wrapper900';
+import welcomeActions from './WelcomeActions';
 
 const styles = theme => ({
 	paper: {
@@ -28,7 +28,6 @@ class Welcome extends Component {
 	}
 	render() {
 		const { classes } = this.props;
-		const { actions } = WelcomeActions;
 
 		return (
 			<Wrapper900>
@@ -61,7 +60,7 @@ class Welcome extends Component {
 							sqft: 250, landscaping: .75 }} />
 					</Grid>
 					{
-						actions.map( (card, idx) => {
+						welcomeActions.map( (card, idx) => {
 							return <WelcomeCard {...card} key={idx}/>
 						})
 					}

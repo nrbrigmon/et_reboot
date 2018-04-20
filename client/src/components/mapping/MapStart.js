@@ -14,6 +14,7 @@ import Highcharts from 'react-highcharts';
 
 import AcresPerDevType from "../_AcresPerDevType";
 import * as mm from "../_MapMath";
+import WrapperFull from '../wrappers/WrapperFull';
 
 import './customLeafletDraw.css';
 
@@ -105,8 +106,8 @@ class MapStart extends Component {
 		let jobsMetric = mm.getJobCounts(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
 
 		return (
-			<Grid >
-				<Grid item sm={12} style={{ marginTop: '80px', textAlign: 'center' }}>
+			<WrapperFull >
+				<Grid item sm={12}>
 					<h2>Step Three: Map the Site</h2>
 					
 					{/* <Button variant="raised" 
@@ -115,7 +116,7 @@ class MapStart extends Component {
 						Metrics 
 					</Button> */}
 				</Grid>
-				<Grid item xs={12} style={{ marginTop: '30px', marginBottom: '30px' }}>
+				<Grid item xs={12} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	
 					<MapContainer {...this.props} />
 				</Grid>
@@ -138,7 +139,7 @@ class MapStart extends Component {
 					</Grid>
 				</Grid>
 				<UploadLayerModal />
-			</Grid>
+			</WrapperFull>
 		);
 	}
 }

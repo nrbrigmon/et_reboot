@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 
 import Grid from 'material-ui/Grid';
 
-import Card, { CardContent } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-import Wrapper900 from './wrappers/Wrapper900';
+import Wrapper900 from '../wrappers/Wrapper900';
 
 const styles = theme => ({
 	paper: {
@@ -80,27 +79,23 @@ class ThePitch extends Component {
 					</Grid>
 					
 					<Grid item xs={12}>
-						<Card>
-							<CardContent>
-								<p>
-									For{' '}
-									<a onClick={() => this.handleClick('target')}>
-										[TARGET AUDIENCES]
-									</a>,{' '}
-									<a onClick={() => this.handleClick('org')}>[ORGANIZATION]</a>{' '}
-									offers{' '}
-									<a onClick={() => this.handleClick('products')}>
-										[WHAT PRODUCTS/SERVICES]
-									</a>{' '}
-									that{' '}
-									<a onClick={() => this.handleClick('advantage')}>
-										[DISTINCTIVE ADVANTAGE]
-									</a>{' '}
-									to achieve{' '}
-									<a onClick={() => this.handleClick('bene')}>[END BENEFITS]</a>.
-								</p>
-							</CardContent>
-						</Card>
+						<p>
+							For{' '}
+							<a onClick={() => this.handleClick('target')}>
+								[TARGET AUDIENCES]
+							</a>,{' '}
+							<a onClick={() => this.handleClick('org')}>[ORGANIZATION]</a>{' '}
+							offers{' '}
+							<a onClick={() => this.handleClick('products')}>
+								[WHAT PRODUCTS/SERVICES]
+							</a>{' '}
+							that{' '}
+							<a onClick={() => this.handleClick('advantage')}>
+								[DISTINCTIVE ADVANTAGE]
+							</a>{' '}
+							to achieve{' '}
+							<a onClick={() => this.handleClick('bene')}>[END BENEFITS]</a>.
+						</p>
 					</Grid>
 					
 					<Grid item xs={12}>

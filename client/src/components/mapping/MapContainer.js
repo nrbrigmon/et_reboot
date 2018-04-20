@@ -77,8 +77,7 @@ class MapContainer extends Component {
         }
 
         //feature group to edit added to map
-        this.map
-            .addLayer(this._baseLayerGroup);
+        this.map.addLayer(this._baseLayerGroup);
 
         /** Leaflet-Drawa Controls section  **/
         let drawControl = new L.Control
@@ -95,8 +94,7 @@ class MapContainer extends Component {
                     featureGroup: this._baseLayerGroup
                 }
             });
-        this.map
-            .addControl(drawControl);
+        this.map.addControl(drawControl);
 
         //draw created happens when a feature is offish created
         this.map.on('draw:created', (e) => {
