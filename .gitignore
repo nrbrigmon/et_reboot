@@ -9,7 +9,7 @@
 /bin/config_db.py
 /bin/_config_test.py
 /bin/sql
-
+project_ideas.txt
 # dependencies
 /node_modules
 /client/node_modules
@@ -35,20 +35,12 @@ app-test.js
 /client/yarn-error.log*
 
 
-
 .elasticbeanstalk/*
-
 !.elasticbeanstalk/*.cfg.yml
-
 !.elasticbeanstalk/*.global.yml
 
-
-
 # Elastic Beanstalk Files
-
 .elasticbeanstalk/*
-
 !.elasticbeanstalk/*.cfg.yml
-
 !.elasticbeanstalk/*.global.yml
 

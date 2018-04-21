@@ -43,6 +43,4 @@ class WelcomeCard extends Component {
 	}
 }
   
-// const styledApp = withStyles(styles)(WelcomeCard);
 export default withStyles(styles)( withRouter(WelcomeCard) );
-// export default connect(mapStateToProps, actions)(styledApp);

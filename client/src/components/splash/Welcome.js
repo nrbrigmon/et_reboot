@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import ThreeBuildingPrototype from '../create/threeModels/three-building-prototype';
+import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-prototype-scene';
 import WelcomeCard from './WelcomeCard';
 import CheckIcon from 'material-ui-icons/Check';
 import Wrapper900 from '../wrappers/Wrapper900';
@@ -55,7 +55,7 @@ class Welcome extends Component {
 					</Grid>
 
 					<Grid item sm={5} className={classes.card}>
-						<ThreeBuildingPrototype 
+						<ThreeBuildingPrototypeScene 
 							cubeDim={{x: 5, y: 5, z: 3, siteArea: 1000, 
 							sqft: 250, landscaping: .75 }} />
 					</Grid>

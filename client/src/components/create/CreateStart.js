@@ -27,9 +27,6 @@ const styles = theme => ({
 	column: {
 		margin: '0 auto'
 	},
-	buttonContainer: {
-		width: '100%',
-	},
 	button: {
 		width: '100%',
 		margin: '0 auto',
@@ -38,7 +35,7 @@ const styles = theme => ({
 		marginBottom: '10px'
 	},
 	leftIcon: {
-	  marginRight: theme.spacing.unit,
+	  marginRight: '10px',
 	},
 	libraryWrapper: {
 		minHeight: '300px'

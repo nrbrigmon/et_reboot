@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
 
-class ThreeBuildingPrototype extends Component {
+class ThreeDevPrototype extends Component {
     constructor(props) {
       super(props)
   
@@ -28,6 +28,84 @@ class ThreeBuildingPrototype extends Component {
       //this.props.dimensions are the inputs from the USER
       let { sqft, z, landscaping, siteArea } = this.props.dimensions;
       let floorHeight = 1.5;
+      
+        var structureX = 0;
+        var structureX2 = -3;
+        var structureX3 = 3;
+        var structureX4 = 6;
+        var structureX5 = -6;
+        var structureX6 = 8;
+        var structureX7 = -8;
+        var structureX8 = 11;
+
+        var structureY = 0;  var numFloors = 1;
+        var structureY4 = 0.75;  var numFloors4 = 2;
+        var structureY5 = 1.5;  var numFloors5 = 3;
+        var structureY2 = 2.25;  var numFloors2 = 4;
+        var structureY6 = 3;  var numFloors6 = 5;
+        var structureY7 = 3.75;  var numFloors7 = 6;
+        var structureY8 = 4.5;  var numFloors8 = 7;
+        var structureY3 = 5.25;  var numFloors3 = 8;
+
+//x, y, z
+var xWth = 5, yWth = numFloors*floorHeight, zWth = 5;
+var structure = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors*floorHeight, zWth ),
+  material );
+
+var structureDepth = 0;
+structure.position.set( structureX, structureY, structureDepth);
+structure.rotation.y = 0.5;
+
+var structure2 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors2*floorHeight, zWth ),
+  material );
+structure2.position.set( structureX2, structureY2, structureDepth);
+structure2.rotation.y = 0.5;
+group.add( structure2 );
+
+var structure3 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors3*floorHeight, zWth ),
+  material );
+structure3.position.set( structureX3, structureY3, structureDepth);
+structure3.rotation.y = 0.5;
+group.add( structure3 );
+
+var structure4 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors4*floorHeight, zWth ),
+  material );
+structure4.position.set( structureX4, structureY4, structureDepth);
+structure4.rotation.y = 0.5;
+group.add( structure4 );
+
+var structure5 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors5*floorHeight, zWth ),
+  material );
+structure5.position.set( structureX5, structureY5, structureDepth);
+structure5.rotation.y = 0.5;
+group.add( structure5 );
+
+var structure6 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors6*floorHeight, zWth ),
+  material );
+structure6.position.set( structureX6, structureY6, structureDepth);
+structure6.rotation.y = 0.5;
+group.add( structure6 );
+
+var structure7 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors7*floorHeight, zWth ),
+  material );
+structure7.position.set( structureX7, structureY7, structureDepth);
+structure7.rotation.y = 0.5;
+group.add( structure7 );
+
+var structure8 = new THREE.Mesh( 
+  new THREE.BoxGeometry( xWth, numFloors8*floorHeight, zWth ),
+  material );
+structure8.position.set( structureX8, structureY8, structureDepth);
+structure8.rotation.y = 0.5;
+group.add( structure8 );
+
       let numFloors = z;
       let side = Math.sqrt(sqft)/2;
       let siteSide = Math.sqrt(siteArea)/2;
@@ -58,38 +136,7 @@ class ThreeBuildingPrototype extends Component {
         new THREE.MeshBasicMaterial( {color: 0x444444, side: THREE.DoubleSide} )
        );
       plane.position.set( 0,0,0)
-      /*  START - section for adjusting landscaping  */
-      let percLand = Number(landscaping);
-      
-      let greenery = new THREE.Mesh( 
-        new THREE.PlaneGeometry(siteSide*percLand, siteSide*percLand), 
-        new THREE.MeshBasicMaterial( {color: 0x009900, side: THREE.DoubleSide} )
-       );
-      // greenery.rotation.x = planeX;
-      greenery.position.set(0,0,0.07)
-      
-      group.add( greenery );
-      /*  END - section for adjusting landscaping  */
-      
-      /*  START - section for adding a floor divider  */
-      // let numDividers = Math.floor(numFloors);
-      let floorDividerPos = 1.5;
-      //for numFloors, add a divider minus 1
-      for (let i = 1; i < numFloors; i++) {
-        
-          let floorDivider = new THREE.Mesh( 
-            new THREE.BoxGeometry( Number(side)+0.1, Number(side)+0.1, 0.05),
-            new THREE.MeshBasicMaterial( {color: 0x222222, side: THREE.DoubleSide} )
-          );
-        
-          // floorDivider.rotation.y = 0.75;
-          floorDivider.position.z = floorDividerPos
-          group.add( floorDivider );
-          floorDividerPos += 1.5;
-       }
-      
-      /*  END - section for adding a floor divider  */
-      
+
       /////////////////////////////////////////////////
       group.add( structure );
       group.add( plane );
@@ -150,4 +197,4 @@ class ThreeBuildingPrototype extends Component {
       )
     }
   }
-  export default ThreeBuildingPrototype;
+  export default ThreeDevPrototype;

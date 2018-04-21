@@ -1,48 +1,69 @@
-NEXT STEPS:
-1. on building creation, add to database AND add to templist
-    ----saving animation
-    ----save notification popup
+/************************/
+        BUG TRACKER 
+/************************/ 
+- leaflet layer on click function loads only once. after layer update, stops working
+- drawing - delete last point does not work
+- drawing - finish does not work 
+- drawing - cancel does not work
+- need method for removing development types
+- save user profile
+- tie library to user
+- if no devtypes selected (or no name||name full of spaces), do no show paint toolbar
+- need loading thingy for when you paint and are waiting for a draw
+- basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
+---- combine hillshading and OSM toner for badass base map
+- no profile page
+- gallery should be split between buildings, maps, and development types
+- development types need a visualization of some kind
+- building 3d component needs to adjust with size of sitearea
+- building check error (saw in post-build)
+- side drawer links directing you to pages
+- build user profile page
+- outline ABOUT page
+- get user image from google img
+- document service worker error for future self
+- test building update and the corresponding metric change in the map
+- upload geojson capability,
+---- can we test for file type?
+---- copy arcmap style
+- where can we store files (e.g. s3)?
+- build contact page and contact method....
+- new SQL tables for drop and reload DEV/TEST/PROD
 
-2c. enable user to save templist
-2d. enable user to load templist
-
-3. create devType database for saving finished building prototypes....
-
-4. create dev type pages
-
-5. create regEx form-input validations
 
 
-
-1. integrate with machine learning classifier....
-2. move from mouse interaction to a more tactile approach (ipads with stylus...)
-3. 3d building enevelope
-    -   give basic options: U-shape, L-shape, Block, Rectangle
-    -   zoom in, zoom out automatically based on height or building size.
-4. integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
-4. when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
-5. add switch/toggle for US vs Metric System
-6. create PowerUser excel editing interface for updating formulas OR SQL(?)
-7. import Old excel ROIs function
-8. export excel ROIs
-9. import geojson | shp
-10. export CAD | BIM | 3D stuff
-11. message board for questions about the data or the tool?
-
-
+/************************/
+       BUSINESS IDEAS
+/************************/ 
 services
 FREE        |       BUSINESS        |       ENTERPRISE
 
-1. tiered support
-2. tiered metrics
-3. trusted advisor AI
-4. tiered data storage
-5. tiered use of tools (fishnet cut, import custom data)
-6. tiered access to data library
-7. paypal donate button.
+- tiered support
+- tiered metrics
+- trusted advisor AI
+- tiered data storage
+- tiered use of tools (fishnet cut, import custom data)
+- tiered access to data library
 
 
-TODO
-1. integrate authentication
-2. integrate redux for stateful app
-3. new SQL tables for drop and reload
+/************************/
+        LONG TERM IDEAS
+/************************/ 
+
+- paypal donate button
+- protected routes for USERS
+- move from mouse interaction to a more tactile approach (ipads with stylus...)
+- 3d building enevelope
+    -   give basic options: U-shape, L-shape, Block, Rectangle
+    -   zoom in, zoom out automatically based on height or building size.
+- integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
+- when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
+- add switch/toggle for US vs Metric System
+- create PowerUser excel editing interface for updating formulas OR SQL(?)
+- import Old excel ROIs function
+- export excel ROIs
+- import geojson | shapefile
+- export CAD | BIM | 3D stuff
+- export geojson | shapefile
+- message board for questions about the data or the tool? community?
+- integrate with machine learning classifier....

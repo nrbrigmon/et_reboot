@@ -9,7 +9,7 @@ import * as actions from '../../../actions';
 import inputFields from './inputs/physicalInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
 import PercentStatusCheck from '../../_PercentStatusCheck';
-import ThreeBuildingPrototype from '../threeModels/three-building-prototype';
+import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';
 
 const styles = theme => ({
 		root: {
@@ -58,7 +58,7 @@ class PhysicalFormComponent extends Component {
 				</Grid>
 				<Grid item xs={6}>
 					
-					<ThreeBuildingPrototype 
+					<ThreeBuildingPrototypeScene 
 							cubeDim={{x: 5, y: 5, z: bldgAttr.buildingHeight, siteArea: propArea, 
 							sqft: bldgFootprint, landscaping: bldgAttr.landscapingPerc }} />
 				</Grid>

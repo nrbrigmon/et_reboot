@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import SwipeableDrawer from 'material-ui/SwipeableDrawer';
 import AccountCircle from 'material-ui-icons/AccountCircle';
-import SideDrawer from './SideDrawer';
+import SideBar from './SideBar';
 
 const styles = {
   root: {
@@ -91,7 +91,7 @@ class Header extends Component {
               onClick={this.toggleDrawer('left', false)}
               onKeyDown={this.toggleDrawer('left', false)}
             >
-              <SideDrawer />
+              <SideBar />
             </div>
          </SwipeableDrawer>
           <Toolbar>
