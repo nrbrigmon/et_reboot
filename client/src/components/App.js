@@ -9,29 +9,32 @@ import { CssBaseline } from 'material-ui';
 
 import Welcome from './splash/Welcome';
 import Header from './header/Header';
+import AboutStart from './about/AboutStart';
 import CreateStart from './create/CreateStart';
+import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 import DevTypeStart from './create/developments/DevTypeStart';
 import MapStart from './mapping/MapStart';
 import MetricStart from './metrics/MetricStart';
 import GalleryStart from './gallery/GalleryStart';
-import ThePitch from './about/ThePitchComponent';
 import ContactStart from './contact/ContactStart';
-import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
+import ProfileStart from './profile/ProfileStart';
 
 class App extends Component {
 	componentDidMount() {
+		// console.log("baseline mounted")
 		//fetchUser will get name, info, if exists
 		this.props.fetchUser();
 	}
 	render() {
 		return (
 			<div>
+				inside app, w router
             	<CssBaseline /> 
 				<BrowserRouter>
 					<div>
 						<Header />
 						<Route exact path="/" component={Welcome} />
-						<Route path="/about" component={ThePitch} />
+						<Route path="/about" component={AboutStart} />
 						<Route exact path="/create" component={CreateStart} />
 						<Route path="/create/new/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/edit/:id" component={BuildingPrototypeStart} />
@@ -40,6 +43,7 @@ class App extends Component {
 						<Route path="/map" component={MapStart} />
 						<Route path="/contact" component={ContactStart} />
 						<Route path="/metrics" component={MetricStart} />
+						<Route path="/profile" component={ProfileStart} />
 					</div>
 				</BrowserRouter>
 			</div>

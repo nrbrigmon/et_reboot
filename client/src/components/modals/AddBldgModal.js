@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Modal from 'material-ui/Modal';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
-import * as actions from '../../../../actions';
+import * as actions from '../../actions';
 
 import AddBldgModalContents from './AddBldgModalContents';
+import ModalContainer from './ModalContainer';
 
 const styles = theme => ({
 	paper: {
@@ -19,42 +19,16 @@ const styles = theme => ({
       }
   });
 
-function getModalStyle() {
-    const top = 50; // + Math.floor(Math.random() * 20) - 10;
-    const left = 50; // + Math.floor(Math.random() * 20) - 10;
-
-    return {
-        position: 'absolute',
-        width: 8 * 50,
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-        border: '1px solid #e5e5e5',
-        backgroundColor: '#fff',
-        boxShadow: '0 5px 15px rgba(0, 0, 0, .5)',
-        padding: 8 * 4,
-    };
-}
-
 class AddBldgModal extends Component {
     saveBuildings = () =>{
         this.props.addBuildingArrayToLibrary(this.props.modList, this.props.availableBldgs);
         this.props.closeModal();
     }
 
-    cancelModal = () => {
-        this.props.closeModal()
-    }
 	render() {
         const { classes } = this.props;
 		return (
-            <Modal
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={this.props.modal === 'buildings'}
-                onClose={this.cancelModal}
-                >
-                <div style={getModalStyle()}>
+            <ModalContainer modal={this.props.modal === 'buildings' ? true : false}>
                     <h4>Select your buildings:</h4>
 
                     <AddBldgModalContents />
@@ -70,17 +44,15 @@ class AddBldgModal extends Component {
                             Cancel
                         </Button>
                     </div>
-                </div>
-                
-            </Modal>)
+            </ModalContainer>)
     };
                 
 }
 
 function mapStateToProps(state) {
     return {
-        modal: state.modal,
         modList: state.modList,
+        modal: state.modal,
         availableBldgs: state.availableBldgs
     };
 }

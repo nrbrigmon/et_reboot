@@ -35,8 +35,7 @@ class SideBar extends Component {
           {
             section1.map( (elem, idx) => {
               return(
-
-                <ListItem button className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
+              <ListItem button key={idx} className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
                 <Avatar className={classes.avatar}>
                   {elem.component}
                 </Avatar>
@@ -51,8 +50,7 @@ class SideBar extends Component {
           {
             section2.map( (elem, idx) => {
               return(
-
-                <ListItem button className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
+              <ListItem button key={idx} className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
                 <Avatar className={classes.avatar}>
                   {elem.component}
                 </Avatar>

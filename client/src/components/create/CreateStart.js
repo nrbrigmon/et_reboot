@@ -17,9 +17,9 @@ import Clear from 'material-ui-icons/Clear';
 import Domain from 'material-ui-icons/Domain';
 import Delete from 'material-ui-icons/Delete';
 
-import AddBldgModal from './buildings/modal/AddBldgModal';
-import AddLibraryModal from './buildings/modal/AddLibraryModal';
-import SaveBldgLibraryModal from './buildings/modal/SaveBldgLibraryModal';
+import AddBldgModal from '../modals/AddBldgModal';
+import AddLibraryModal from '../modals/AddLibraryModal';
+import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
 import UpdateToast from '../UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
 

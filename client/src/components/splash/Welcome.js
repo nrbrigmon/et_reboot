@@ -69,4 +69,5 @@ class Welcome extends Component {
 	}
 }
 
-export default withStyles(styles)(Welcome);
+const styledApp = withStyles(styles)(Welcome);
+export default styledApp;

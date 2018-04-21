@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ThreeBuildingPrototype from './three-building-prototype-scene';
+import ThreeBuildingPrototype from './three-building-prototype';
 import Grid from 'material-ui/Grid';
 
 // Inline styles applied in the HTML you build here
