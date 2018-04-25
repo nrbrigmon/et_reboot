@@ -31,9 +31,11 @@ const styles = theme => ({
   
 class DevTypeReview extends Component {
 
-    handleNavigation = val => {
-		this.props.changePage(val);
-    }
+
+	handleNavigation = (destination) => {
+		this.props.history.push('/'+destination+'');
+	}
+
 	render() {
 		const { classes } = this.props;
 		
@@ -47,19 +49,22 @@ class DevTypeReview extends Component {
 						Development Types 
 						</Typography>
 						
-						TIME TO REVIEW!!!!!
+						TIME TO REVIEW!!!!!<br/>Metrics page i guess
 						<CardActions>
 							<div className={classes.cardAction}>
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('attributes')}>
-									Go Back
+                                <Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/building-mix')}>
+									Building Mix
 								</Button>	
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>alert("saved!... later...")}>
-									Save
-								</Button>
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/metrics')}>
+								<Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
+                                    Attributes
+                                </Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
+                                    Review
+                                </Button>	
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('metrics')}>
 									Test Metrics
 								</Button>		
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.props.history.push('/map')}>
+								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('map')}>
 									Start Mapping
 								</Button>	
 							</div>

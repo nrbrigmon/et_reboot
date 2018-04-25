@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter} from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
@@ -26,14 +27,35 @@ const styles = theme => ({
     },
     tableContainer: {
         overflowY: 'hidden'
+    },
+	table: {
+	  minWidth: 700,
+	},
+    header: {
+        textAlign: 'right',
+        padding: '5px'
+    },
+    cell: {
+      padding: '5px 8px',
+    },
+    field: {
+        width: '90px'
+    },
+    devTypes: {
+        width: '300px',
+        padding: '5px'
+    },
+    delete: {
+        margin: '0px 5px 5px 0px'
     }
   });
 
 class DevTypeBuildingMix extends Component {
     
-    handleNavigation = val => {
-		this.props.changePage(val);
-    }
+
+	handleNavigation = (destination) => {
+		this.props.history.push('/'+destination+'');
+	}
 
 	render() {
 		const { classes } = this.props;
@@ -48,21 +70,21 @@ class DevTypeBuildingMix extends Component {
                             Development Types
                         </Typography>
                         <div className={classes.tableContainer}>
-                            <DevTypeBuildingMixTable />
+                            <DevTypeBuildingMixTable {...this.props} />
                         </div>
                         <CardActions>
                             <div className={classes.cardAction}>
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('back')}>
-                                    Go Back
-                                </Button>	
                                 <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
                                     Add Row
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
-                                    Save Progress
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
+                                    Attributes
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('attributes')}>
-                                    Move to Step Three
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
+                                    Review
+                                </Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
+                                    Map
                                 </Button>	
                             </div>
                         </CardActions>
@@ -76,9 +98,10 @@ class DevTypeBuildingMix extends Component {
 function mapStateToProps(state) {  
     return { 
             myLibrary: state.myLibrary,
-            devTypes: state.devTypes
+            devTypes: state.devTypes,
+            devWorkbook: state.devWorkbook
        };
 }
 
 const styledApp = withStyles(styles)(DevTypeBuildingMix);
-export default connect(mapStateToProps, actions)(styledApp);
+export default withRouter(connect(mapStateToProps, actions)(styledApp));

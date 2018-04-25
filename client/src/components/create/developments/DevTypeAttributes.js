@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 
@@ -15,9 +15,6 @@ import columns from './inputs/attributeColumns';
 import DevTypeAttributesTable from './DevTypeAttributesTable';
 
 const styles = theme => ({
-	table: {
-	  minWidth: 700,
-	},
 	card: {
 		padding: '20px'
 	},
@@ -27,24 +24,41 @@ const styles = theme => ({
 	cardButton: {
 		margin: '0 1px 0 1px'
 	},
-    tableContainer: {
-        overflowY: 'hidden'
-    }
-  });
-
+	tableContainer: {
+		overflowY: 'hidden'
+	},
+	table: {
+		minWidth: 700,
+	},
+	header: {
+		textAlign: 'right',
+		padding: '5px'
+	},
+	cell: {
+		padding: '5px 8px',
+	},
+	field: {
+		width: '90px'
+	},
+	devTypes: {
+		width: '300px',
+		padding: '5px'
+	},
+	delete: {
+		margin: '0px 5px 5px 0px'
+	}
+});
   
 class DevTypeAttributes extends Component {
 
-    handleNavigation = val => {
-		this.props.changePage(val);
-    }
 
+	handleNavigation = (destination) => {
+		this.props.history.push('/'+destination+'');
+	}
 	render() {
 		const { classes } = this.props;
-		
 		const { section1,section2,section3 } = columns;
 
-		// console.log(this.props);
 		return (
 			<Grid item sm={12} >
 				<h2>Step Three: Create Development Type Attributes</h2>
@@ -79,15 +93,15 @@ class DevTypeAttributes extends Component {
 
 						<CardActions>
 							<div className={classes.cardAction}>
-								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('mix')}>
-									Go Back
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/building-mix')}>
+									Building Mix
 								</Button>	
-								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
-									Save Progress
-								</Button>	
-								<Button className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('review')}>
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
 									Review 
 								</Button>	
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
+                                    Map
+                                </Button>	
 							</div>
 						</CardActions>
 					</CardContent>
@@ -98,10 +112,10 @@ class DevTypeAttributes extends Component {
 }
 
 function mapStateToProps(state) {  
-	  return { 
-			devWorkbook: state.devWorkbook
-		 };
+	return { 
+		devWorkbook: state.devWorkbook
+		};
 }
   
 const styledApp = withStyles(styles)(DevTypeAttributes);
-export default connect(mapStateToProps, actions)(styledApp);
+export default withRouter(connect(mapStateToProps, actions)(styledApp));

@@ -1,29 +1,13 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
 
-import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 import DevTypeBuildingMixTableRow from './DevTypeBuildingMixTableRow';
 
-const styles = theme => ({
-	table: {
-	  minWidth: 700,
-	},
-	card: {
-		padding: '20px'
-	},
-	cardAction: {
-		margin: '0 auto'
-	}
-  });
-
 class DevTypeBuildingMixTable extends Component {
 
     render(){
-
         const { classes } = this.props;
         const devTypes = this.props.devWorkbook.workbook_devtypes;	
         const selectedBldgs = this.props.myLibrary.selected_buildings;
@@ -32,11 +16,10 @@ class DevTypeBuildingMixTable extends Component {
             <TableHead>
                 <TableRow>
                     <TableCell>Development Types</TableCell>
-                    <TableCell>Mix Total</TableCell>
+                    <TableCell className={classes.header} numeric>Mix Total</TableCell>
                     {
                         selectedBldgs.map( (col, idx) => {
-                    
-                            return <TableCell key={idx} numeric> { (col.physicalInfo) ? col.physicalInfo.buildingName : '0'} </TableCell>
+                            return <TableCell key={idx} className={classes.header} numeric >{ (col.physicalInfo) ? col.physicalInfo.buildingName : '0'}</TableCell>
                         })
                     }
                 </TableRow>
@@ -45,7 +28,7 @@ class DevTypeBuildingMixTable extends Component {
                     {
                         
                         devTypes.map( (row, idx) => {
-                            return <DevTypeBuildingMixTableRow {...row} key={idx} rowId={idx}/>
+                            return <DevTypeBuildingMixTableRow {...row} {...this.props} key={idx} rowId={idx}/>
                         })
                     }
                     
@@ -67,15 +50,4 @@ class DevTypeBuildingMixTable extends Component {
     
 }
   
-
-function mapStateToProps(state) {  
-    return { 
-            // myLib: state.myLib,
-            devWorkbook: state.devWorkbook,
-			myLibrary: state.myLibrary
-            // devPercTotals: state.devPercTotals
-       };
-}
-
-const styledApp = withStyles(styles)(DevTypeBuildingMixTable);
-export default connect(mapStateToProps, actions)(styledApp);
+export default DevTypeBuildingMixTable;

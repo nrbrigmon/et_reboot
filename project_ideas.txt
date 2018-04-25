@@ -17,20 +17,13 @@
 - development types need a visualization of some kind
 - building 3d component needs to adjust with size of sitearea
 - building check error (saw in post-build)
-- side drawer links directing you to pages
-- build user profile page
-- outline ABOUT page
 - get user image from google img
 - document service worker error for future self
 - test building update and the corresponding metric change in the map
 - upload geojson capability,
 ---- can we test for file type?
 ---- copy arcmap style
-- where can we store files (e.g. s3)?
-- build contact page and contact method....
-- new SQL tables for drop and reload DEV/TEST/PROD
-
-
+- we need a simpler file / file save as / save / load sample building data / export to excel, txt / print
 
 /************************/
        BUSINESS IDEAS
@@ -58,6 +51,7 @@ FREE        |       BUSINESS        |       ENTERPRISE
     -   zoom in, zoom out automatically based on height or building size.
 - integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
 - when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
+- new SQL tables for drop and reload DEV/TEST/PROD
 - add switch/toggle for US vs Metric System
 - create PowerUser excel editing interface for updating formulas OR SQL(?)
 - import Old excel ROIs function
@@ -67,3 +61,8 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - export geojson | shapefile
 - message board for questions about the data or the tool? community?
 - integrate with machine learning classifier....
+- create messaging forum
+- where can we store files (e.g. s3)?
+- build contact page and contact method....
+- set up messaging system
+- replace lodash with native functions for speed purposes

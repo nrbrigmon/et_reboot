@@ -18,11 +18,7 @@ class GalleryStart extends Component {
 					<h2>Welcome to the Gallery!</h2>
 					<h4>***still under development***</h4>
 				</Grid>
-				{
-					sampleList.map(elem => {
-						return <Grid item key={elem} style={{margin:'20px',padding:'20px'}} xs={3}><Paper style={{width:'100%',padding:'30px',height:'100%'}}>{elem} </Paper></Grid>
-					})
-				}
+				
 				<Grid item xs={12}>
 					<div>
 						<List>
@@ -38,6 +34,11 @@ class GalleryStart extends Component {
 						</List>
 					</div>
 				</Grid>
+				{
+					sampleList.map(elem => {
+						return <Grid item key={elem} style={{margin:'20px',padding:'20px'}} xs={3}><Paper style={{width:'100%',padding:'30px',height:'100%'}}>{elem} </Paper></Grid>
+					})
+				}
 
 				<Grid item xs={12}>
 					<Link className="waves-effect waves-light btn" to="/">

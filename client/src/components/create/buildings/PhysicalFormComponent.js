@@ -1,29 +1,14 @@
 import React, { Component } from 'react';
  
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
 
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+// import { connect } from 'react-redux';
+// import * as actions from '../../../actions';
 
 import inputFields from './inputs/physicalInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
 import PercentStatusCheck from '../../_PercentStatusCheck';
 import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';
-
-const styles = theme => ({
-		root: {
-			flexGrow: 1,
-		},
-		paper: {
-			textAlign: 'center',
-		},
-		textField: {
-			marginLeft: theme.spacing.unit,
-			marginRight: theme.spacing.unit,
-			width: '80%'
-		}
-	});
 
 
 class PhysicalFormComponent extends Component {
@@ -109,5 +94,4 @@ class PhysicalFormComponent extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(PhysicalFormComponent);
-export default connect(null, actions)(styledApp);
+export default PhysicalFormComponent;

@@ -16,6 +16,7 @@ import AddCircle from 'material-ui-icons/AddCircle';
 import Clear from 'material-ui-icons/Clear';
 import Domain from 'material-ui-icons/Domain';
 import Delete from 'material-ui-icons/Delete';
+import Save from 'material-ui-icons/Save';
 
 import AddBldgModal from '../modals/AddBldgModal';
 import AddLibraryModal from '../modals/AddLibraryModal';
@@ -154,10 +155,7 @@ class CreateStart extends Component {
 							
 							<CardActions >
 								<div className={classes.cardAction}>
-									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.openSaveLibraryModal()}>
-										Save Library
-									</Button>
-									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types')}>
+									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types/building-mix')}>
 										Move to Step Two
 									</Button>	
 								</div>
@@ -188,8 +186,12 @@ class CreateStart extends Component {
 							<AddCircle className={classes.leftIcon}/> Create New Building
 						</Button>
 						<Button variant="raised" color="primary" className={classes.button} 
+							onClick={() => this.openSaveLibraryModal()}>
+							<Save className={classes.leftIcon}/> Save Library To Database
+						</Button>
+						<Button variant="raised" color="primary" className={classes.button} 
 							onClick={() => this.resetList()}>
-							<Clear className={classes.leftIcon}/> Reset/Empty List
+							<Clear className={classes.leftIcon}/> Reset/Empty Library
 						</Button>
 					</Grid>
 				</Grid>

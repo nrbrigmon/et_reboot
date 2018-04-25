@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { TableCell, TableRow } from 'material-ui/Table';
 
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
-
 import TextField from 'material-ui/TextField';
-
 import PercentStatusCheck from '../../_PercentStatusCheck';
 
+import { InputAdornment } from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui-icons/Delete';
 import './devCell.css';
 
 class DevTypeBuildingMixTableRow extends Component {
@@ -36,20 +35,19 @@ class DevTypeBuildingMixTableRow extends Component {
 
         return [sum * 0.01]; //PercentStatusCheck requires an array, also we need percent values
     }
-
+	removeDevType = (devTypeId) =>{
+		this.props.removeDevTypeFromWorkbook(devTypeId);
+	}
     render(){
         const { cellData } = this.props;
         const { uniqueId } = this.props;
         const { devTypeName } = this.props;
-        // console.log(cellData);
-        // console.log(this.props); 
-        
+        const { classes } = this.props
         let err  = cellData.length === 0 || cellData === undefined ? true : false;
-        // console.log(err);
-        // console.log(cellData)
+
         return (
             <TableRow>
-                <TableCell style={{width:'300px'}}>
+                <TableCell className={classes.devTypes}>
                     <TextField
                         id={uniqueId}
                         placeholder={"Development Type Name"}
@@ -57,9 +55,18 @@ class DevTypeBuildingMixTableRow extends Component {
                         onChange={(e) => this.updateDevName(e, uniqueId) }
                         margin="dense"
                         padding="dense"
+                        className={classes.cell}
+                        InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <IconButton className={classes.delete} onClick={()=>this.removeDevType(uniqueId)} aria-label="Delete">
+                                    <Delete />
+                                </IconButton>
+                              </InputAdornment>
+                            )}}
                     />
                 </TableCell>
-                <TableCell>
+                <TableCell  className={classes.cell}>
                 
                    { !err ? PercentStatusCheck( this.getTotal(cellData)) : <p></p> }
                     
@@ -68,14 +75,15 @@ class DevTypeBuildingMixTableRow extends Component {
                 {
                     !err ? cellData.map((cell, idx) => {
                         return (
-                            <TableCell key={idx} numeric>
+                            <TableCell key={idx} numeric className={classes.cell}>
                                 <TextField
                                     id={cell.bldgId}
                                     placeholder={"0%"}
                                     value={cell.percVal}
                                     onChange={(e) => this.handleChange(e, uniqueId) }
                                     margin="dense"
-                                    padding="dense"                                    
+                                    padding="dense"     
+                                    className={classes.field}                            
                                 />
                             </TableCell>
                         )
@@ -86,11 +94,4 @@ class DevTypeBuildingMixTableRow extends Component {
     }
 }
 
-function mapStateToProps(state) {  
-    return { 
-            // myLib: state.sample,
-          devTypes: state.devTypes
-       };
-}
-
-export default connect(mapStateToProps, actions)(DevTypeBuildingMixTableRow);
+export default DevTypeBuildingMixTableRow;

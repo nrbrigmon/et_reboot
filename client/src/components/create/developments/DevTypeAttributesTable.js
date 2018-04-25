@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
-
-
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 import TextField from 'material-ui/TextField';
@@ -31,7 +27,7 @@ class DevTypeAttributesTable extends Component {
                             !(columns) ? '' :
                             columns.map( (col, idx) => {
                                 // console.log(col);
-                                return <TableCell style={{textAlign:'right'}} key={idx}> {col.name}</TableCell>
+                                return <TableCell className={classes.header} numeric key={idx}> {col.name}</TableCell>
                             })
                         )
                     }			
@@ -58,7 +54,9 @@ class DevTypeAttributesTable extends Component {
                                                 placeholder={col.placeholder}
                                                 value={row[col.attr]}
                                                 onChange={(e) => this.myHandleChange(e, row.uniqueId) }
-                                                margin="normal"
+                                                margin="dense"
+                                                padding="dense"
+                                                className={classes.cell}
                                             />
                                         </TableCell>
                                     )
@@ -75,10 +73,5 @@ class DevTypeAttributesTable extends Component {
     }
 }
 
-function mapStateToProps(state) {  
-    return { 
-          devWorkbook: state.devWorkbook
-       };
-}
 
-export default connect(mapStateToProps, actions)(DevTypeAttributesTable);
+export default DevTypeAttributesTable;

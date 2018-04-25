@@ -3,26 +3,37 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+import Avatar from 'material-ui/Avatar';
+import Message from 'material-ui-icons/Message';
+import Button from 'material-ui/Button';
 
 const styles = ({
   paper: {
-	padding: '0px 20px 20px 20px',
-	margin: '40px 20px 20px 20px',
-	width: '80%'
+		padding: '0px 20px 20px 20px',
+		margin: '40px 20px 20px 20px',
+		width: '80%'
   },
+  avatar: {
+    height: '80px',
+		width: '80px',
+		margin: '0 auto',
+		marginBottom: '20px'
+  },
+  bio: {
+		margin: '20px',
+		padding: '20px'
+	},
   leftIcon: {
-	marginRight: '10px',
-  },
-  formInput: {
-	width: '100%',
-	margin: '12px'
+		marginRight: '10px',
   },
   button: {
 	  margin: '0 auto',
 	  maxWidth: '180px',
 	  marginTop: '10px',
 	  marginBottom: '10px'
-  },
+  }
+	
 });
 
 
@@ -43,17 +54,23 @@ class ProfileStart extends Component {
 					</Grid>
 
 					<Grid item xs={12}>
-						<div>
-						What to add to a profile page?0px Let's investigate..
-						- Name
-						- Location
-						- Bio
-						- Image Url
-						- Fun Facts
-						- Education
-						</div>
+						<Avatar className={classes.avatar}>
+							img
+						</Avatar>
+						<Typography className={classes.location} color="textSecondary">
+							Nate B | austin, tx
+						</Typography>
+						<Typography component="p" className={classes.bio}>In sit amet est nulla. Vestibulum 
+							sollicitudin justo sit amet congue congue. Ut sit amet ligula non purus 
+							aliquam sollicitudin. Ut ut congue lectus, eu tempus magna. 
+						</Typography>
 						
+						<Button variant="raised" color="primary" className={classes.button} 
+									onClick={() =>console.log("HELLO")}>
+							<Message  className={classes.leftIcon}/> Message
+						</Button>
 					</Grid>
+
 				</Paper>
 			</Wrapper900>
 		);

@@ -23,22 +23,23 @@ class AboutStart extends Component {
 				<Paper className={classes.paper}>
 					
 					<Grid item xs={12}>
-						<h2>Why this app?</h2>
+						<h2>Software for Urban Planners</h2>
 					</Grid>
 					
 					<Grid item xs={12}>
 						<p>
 							For	cities, policy-makers, and developers, the ET Reboot App offers
-							planning insight, real time metrics, building visualization and more that
-							is the new "back of the envelope" analysis to achieve deeper discussions about 
+							planning insight, real time metrics, building visualization and more. </p>
+						<p>
+							The new "back of the envelope" analysis to achieve deeper discussions about 
 							development impacts
 						</p>
 					</Grid>
 	
 					<Grid item xs={12}>
-						<h5>
+						<h4>
 							What are the issues with the current Scenario Planning Software?
-						</h5>
+						</h4>
 						<List>
 							<ListItem>
 								<ListItemText 
@@ -77,7 +78,7 @@ class AboutStart extends Component {
 							</ListItem>
 							<ListItem>						
 								<ListItemText 
-									primary="Shareable and interactive results" />
+									primary="Shareable, fast, and interactive results" />
 							</ListItem>
 						</List>
 					</Grid>

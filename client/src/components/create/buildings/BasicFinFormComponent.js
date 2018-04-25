@@ -1,37 +1,18 @@
 import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+// import { withStyles } from 'material-ui/styles';
 
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
+// import { connect } from 'react-redux';
+// import * as actions from '../../../actions';
 
 import inputFields from './inputs/basicFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
 
-const styles = theme => ({
-	root: {
-	  flexGrow: 1,
-	},
-	paper: {
-	  textAlign: 'center',
-	},
-	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
-		width: '80%'
-	}
-});
-
 class BasicFinFormComponent extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			localBP: this.props.attributes
-		}
-		this.handleChange = this.handleChange.bind(this);		
-		// console.log('updated entire building protoype')
-
+		this.handleChange = this.handleChange.bind(this);	
 	}
 
 	handleChange = (e, valueSub) => {
@@ -42,7 +23,7 @@ class BasicFinFormComponent extends Component {
 		} else {
 			updateCopy[e.target.id] = e.target.value;
 		}
-		console.log(updateCopy);
+		// console.log(updateCopy);
 		this.props.updateBuildingPrototypeField('basicFinInfo', updateCopy);
 	};
 
@@ -51,7 +32,7 @@ class BasicFinFormComponent extends Component {
 		let bldgAttr = this.props.attributes.basicFinInfo;
 		const { classes } = this.props;
 		const { section1,section2,section3,section4 } = inputFields;
-		console.log(bldgAttr);
+		// console.log(bldgAttr);
 		return (
 			<Grid container >
 				
@@ -104,5 +85,4 @@ class BasicFinFormComponent extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(BasicFinFormComponent);
-export default connect(null, actions)(styledApp);
+export default BasicFinFormComponent;

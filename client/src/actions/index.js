@@ -194,7 +194,13 @@ export const saveDevelopmentType = (status, devType) => async dispatch => {
 		dispatch({ type: 'NEW_DEV_TYPES', payload: res.data });
 	}
 };
-
+export const removeDevTypeFromWorkbook = (devTypeId) => {
+	let action = {
+		type: 'REMOVE_DEV_TYPE_ROW',
+		devTypeId
+	}
+	return action;
+}
 export const closeToast = () => {
 	let action = {
 		type: 'CLOSE_TOAST'

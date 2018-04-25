@@ -36,5 +36,4 @@ class WrapperFull extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(WrapperFull);
-export default styledApp;
+export default withStyles(styles)(WrapperFull);

@@ -27,5 +27,5 @@ export default [{
         headline: 'Product Features',
         content: 'Why this application? What problems does it solve and to whom is it targeted?',
         actionText: 'Start Here',
-        actionDestination: 'pitch'
+        actionDestination: 'about'
     }]

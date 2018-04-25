@@ -95,5 +95,4 @@ class ContactStart extends Component {
 }
 
 
-const styledApp = withStyles(styles)(ContactStart);
-export default styledApp;
+export default withStyles(styles)(ContactStart);

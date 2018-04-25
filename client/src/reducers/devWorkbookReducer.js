@@ -1,5 +1,5 @@
 import * as shortid from 'shortid';
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 ////
 function updateCellValue(oldObject, newValues) {
@@ -68,6 +68,21 @@ function addDevelopmentType(state, action) {
 	newState["workbook_devtypes"] = new_devtype_state;
     return newState;
 }
+function removeDevTypeRow(state, action) {
+	let currentDevTypes = [...state.workbook_devtypes]; //create array of existing IDs
+    let currentDevIds = _.map(state.workbook_devtypes, 'uniqueId'); //create array of existing IDs
+	
+	// console.log("id received ",action.devTypeId)
+	// console.log("ids current: ", currentDevIds);
+	let deleteID = currentDevIds.indexOf(action.devTypeId);
+	// console.log("position being delteed ",deleteID)
+	currentDevTypes.splice(deleteID, 1);
+	// console.log("new list being returned ", currentDevIds);
+    return {
+        ...state,
+        workbook_devtypes: currentDevTypes
+    }
+}
 //my initial structure for the devType table
 const newEmptyDevTypeRow = (selected_buildings, devTypeArray) => {
 	let tableCells = [];
@@ -128,6 +143,7 @@ const devTypeRow = (selected_buildings, devTypeArray) => {
 	}
 };
 
+
 function initializeWorkbook(state, action){
 	//if there are no existing devtypes, we start with a blank one
 	// console.log(state);
@@ -170,8 +186,9 @@ export default function(state = starterDevTypeWorkbook, action) {
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
 		case 'REMOVE_DEV_TYPE_ROW':
-			//need to implement/write
-			return action.payload || false;
+			myDevelopmentWorkbook = removeDevTypeRow(state, action);
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
 		case 'UPDATE_DEV_TYPE_ROW': 
 			myDevelopmentWorkbook = editDevelopmentTypeMixer(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));

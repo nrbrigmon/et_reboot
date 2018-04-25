@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+// import { withStyles } from 'material-ui/styles';
 import NumberFormat from 'react-number-format';
 import ReactHighcharts from "react-highcharts";
-import ThreeBuildingPrototype from '../threeModels/three-building-prototype';
+import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 import './_tableCSS.css';
-
-const styles = theme => ({
-	root: {
-	  flexGrow: 1,
-	},
-	paper: {
-	  textAlign: 'center',
-	},
-	table: {
-
-	}
-  });
 
 const chartConfig = (data, title) => {
 	return {
@@ -162,7 +150,7 @@ class BuildingFormReviewComponent extends Component {
 				</Grid>
 	
 				<Grid item xs={12}>	
-					<ThreeBuildingPrototype 
+					<ThreeBuildingPrototypeScene
 							cubeDim={{x: 5, y: 5, z: bldgAttr.buildingHeight, siteArea: propArea, 
 							sqft: bldgFootprint, landscaping: bldgAttr.landscapingPerc }} />
 				
@@ -503,4 +491,4 @@ class BuildingFormReviewComponent extends Component {
 	}
 }
 
-export default withStyles(styles)(BuildingFormReviewComponent);
+export default BuildingFormReviewComponent;

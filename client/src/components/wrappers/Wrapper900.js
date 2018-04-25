@@ -46,5 +46,4 @@ class Wrapper900 extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(Wrapper900);
-export default styledApp;
+export default withStyles(styles)(Wrapper900);

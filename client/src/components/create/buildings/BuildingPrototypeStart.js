@@ -17,13 +17,17 @@ import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import './_tableCSS.css';
+import BuildingMenu from './menu/BuildingMenu';
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		width: '100%',
-		margin:0,
-		marginTop: '65px'
+		margin: 0,
+		marginTop: '100px'
+	},
+	appbar: {
+		top: '60px'
 	},
 	paper: {
 	  	textAlign: 'center',
@@ -31,6 +35,11 @@ const styles = theme => ({
 	button: {
 		margin: '10px 10px 10px 10px',
 		width: '150px'
+	},
+	textField: {
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+		width: '80%'
 	}
   });
 
@@ -50,6 +59,7 @@ const styles = theme => ({
 		this.setState({
 			tabValue: value
 		});
+		window.scrollTo(0, 0)
 	}
 	saveBuilding = () => {	
 		let { editing } = this.state;
@@ -105,7 +115,8 @@ const styles = theme => ({
 				alignItems='center'
 				direction='row'
 				justify='center'>
-				<AppBar position="static" color="default">
+				<AppBar position="fixed" color="default"
+					className={classes.appbar}>
 					<Tabs
 						value={tabValue}
 						onChange={this.componentSelection}
@@ -121,28 +132,12 @@ const styles = theme => ({
 					</Tabs>
 				</AppBar>
 				
-				<Grid item className={classes.paper} xs={12}>
-					<Button variant="raised" color="primary"  className={classes.button} 
-						onClick={()=>this.saveBuilding()}>
-						Save
-					</Button>	
-					
-					<Button variant="raised" color="primary"  className={classes.button} 
-						onClick={()=>this.saveAsBuilding()}>
-						Save As
-					</Button>	
-
-					<Button variant="raised" color="secondary"  className={classes.button} 
-						onClick={()=>this.cancelBuilding()}>
-						Cancel
-					</Button>	
-				</Grid>
-
 				<Grid item md={8} sm={12} className="myContainer">
-					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} />}/>
-					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} />}/>
-					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} />}/>
-					<Route path={`${match.url}/review`} render={()=> <BuildingFormReviewComponent attributes={buildingPrototype} />}/>
+					<BuildingMenu />
+					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} {...this.props}/>}/>
+					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
+					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
+					<Route path={`${match.url}/review`} render={()=> <BuildingFormReviewComponent attributes={buildingPrototype} {...this.props}/>}/>
 
 				</Grid>
 				
