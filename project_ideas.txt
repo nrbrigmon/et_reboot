@@ -1,14 +1,8 @@
 /************************/
         BUG TRACKER 
 /************************/ 
-- leaflet layer on click function loads only once. after layer update, stops working
-- drawing - delete last point does not work
-- drawing - finish does not work 
-- drawing - cancel does not work
-- need method for removing development types
-- save user profile
+- load, edit and save user profile
 - tie library to user
-- if no devtypes selected (or no name||name full of spaces), do no show paint toolbar
 - need loading thingy for when you paint and are waiting for a draw
 - basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
 ---- combine hillshading and OSM toner for badass base map
@@ -24,6 +18,8 @@
 ---- can we test for file type?
 ---- copy arcmap style
 - we need a simpler file / file save as / save / load sample building data / export to excel, txt / print
+- charts dont update except on paint ... 
+- mapping needs to be xs=12 sm=8 so painting changes are more readily visible
 
 /************************/
        BUSINESS IDEAS
@@ -44,6 +40,7 @@ FREE        |       BUSINESS        |       ENTERPRISE
 /************************/ 
 
 - paypal donate button
+- leaflet layer on click function loads only once. after layer update, stops working
 - protected routes for USERS
 - move from mouse interaction to a more tactile approach (ipads with stylus...)
 - 3d building enevelope

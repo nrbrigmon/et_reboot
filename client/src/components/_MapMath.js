@@ -1,6 +1,7 @@
-//local function
+//local functions
 function getSumProduct(array /*other arrays*/) {
-	if (!arguments.length) return 0
+    if (!arguments.length) return 0
+    
 	if (!Array.isArray(array)) return NaN
 	var dim = arguments.length,
 			len = array.length,
@@ -67,9 +68,9 @@ export const getPopulation = (devTypes, {selected_buildings}, {workbook_devtypes
         });
 
         //4. get dev streets, civic, park %
-        let { civicPerc } = currentWorkbook[0];
-        let { openSpacePerc } = currentWorkbook[0];
-        let { publicRoadsPerc } = currentWorkbook[0];
+        let { civicPerc } = currentWorkbook[0] || 0;
+        let { openSpacePerc } = currentWorkbook[0] || 0;
+        let { publicRoadsPerc } = currentWorkbook[0] || 0;
 
         let newPop = ((currentDevType.totalAcre) * getSumProduct(bldgHHAcre,devPercMix) * (1 - publicRoadsPerc - civicPerc - openSpacePerc)) *
             ( getSumProduct(bldgHHSize,bldgHHAcre,devPercMix) / getSumProduct(bldgHHAcre,devPercMix) ); 
@@ -112,9 +113,9 @@ export const getHousingUnits = (devTypes, {selected_buildings}, {workbook_devtyp
         });
 
         //4. get dev streets, civic, park %
-        let { civicPerc } = currentWorkbook[0];
-        let { openSpacePerc } = currentWorkbook[0];
-        let { publicRoadsPerc } = currentWorkbook[0];
+        let { civicPerc } = currentWorkbook[0] || 0;
+        let { openSpacePerc } = currentWorkbook[0] || 0;
+        let { publicRoadsPerc } = currentWorkbook[0] || 0;
 
         let newHousing = ((currentDevType.totalAcre) * getSumProduct(bldgHHAcre,devPercMix) * (1 - publicRoadsPerc - civicPerc - openSpacePerc));
             // ( getSumProduct(bldgHHSize,bldgHHAcre,devPercMix) / getSumProduct(bldgHHAcre,devPercMix) ); 
@@ -157,9 +158,9 @@ export const getJobCounts =  (devTypes, {selected_buildings}, {workbook_devtypes
         });
 
         //4. get dev streets, civic, park %
-        let { civicPerc } = currentWorkbook[0];
-        let { openSpacePerc } = currentWorkbook[0];
-        let { publicRoadsPerc } = currentWorkbook[0];
+        let { civicPerc } = currentWorkbook[0] || 0;
+        let { openSpacePerc } = currentWorkbook[0] || 0;
+        let { publicRoadsPerc } = currentWorkbook[0] || 0;
 
         let newJobs = ((currentDevType.totalAcre) * getSumProduct(jobsPerAcre,devPercMix) * (1 - publicRoadsPerc - civicPerc - openSpacePerc));
             // ( getSumProduct(bldgHHSize,bldgHHAcre,devPercMix) / getSumProduct(bldgHHAcre,devPercMix) ); 

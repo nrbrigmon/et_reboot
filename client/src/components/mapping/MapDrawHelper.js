@@ -1,34 +1,17 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
-import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import * as actions from '../../actions';
-
-const styles = theme => ({
-	wrapper: {
-        left:' 205px',
-        width: '210px',
-        opacity: 0.8,
-        outline: '1px #ccc solid',
-        position: 'absolute',
-        background: 'white',
-        fontSize: '12px',
-        margin: '4px 5px',
-        padding: '0px'
-    },
-    action: {
-        padding: '1px',
-        margin: '0px',
-        fontSize: '10px',
-        width: '70px'
-    }
-  });
 
 class MapDrawHelper extends Component {	
     handleAction = (action) => {
         this.props.setDrawTrigger(action);
-        if (action !== 'deleteLastPoint'){
+        if (action === 'cancelLayer'){
             this.props.setActiveDevType({devTypeName: '', devTypeColor: ''});
+        }
+    }
+    componentWillReceiveProps({leafletDrawTrigger}){
+        // console.log(leafletDrawTrigger);
+        if (leafletDrawTrigger === 'cancelLayer'){
+            this.handleAction(leafletDrawTrigger)
         }
     }
 	render() {
@@ -46,5 +29,4 @@ class MapDrawHelper extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(MapDrawHelper);
-export default connect(null, actions)(styledApp);
+export default MapDrawHelper;

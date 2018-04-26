@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { withStyles } from 'material-ui/styles';
 
 import Grid from 'material-ui/Grid';
-// import Button from 'material-ui/Button';
 
 import MapContainer from './MapContainer';
 import MapOverlayPanel from './MapOverlayPanel';
-import UploadLayerModal from './modal/UploadLayerModal';
+import UploadLayerModal from '../modals/UploadLayerModal';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
 
@@ -17,12 +17,67 @@ import * as mm from "../_MapMath";
 import WrapperFull from '../wrappers/WrapperFull';
 
 import './customLeafletDraw.css';
+import UpdateToast from '../modals/UpdateToast';
 
 Highcharts.Highcharts.setOptions({
     lang: {
         thousandsSep: ','
     }
 });
+
+const styles = theme => ({
+	root: {
+		flexGrow: 1,
+		width: '100%',
+		margin:0
+    },
+    overlayContainer: {
+        position: 'absolute',
+        left: '0px'
+    },
+	paper: {
+        position:'relative',
+        zIndex: '1000',
+        left: '0px',
+        margin: '0px',
+        padding: '10px',
+        width:'226px',
+        // top: '120px'
+	},
+	buttonLayer: {
+		position:'relative',
+        margin: '5px',
+        padding: '5px',
+        width: '90%',
+        fontSize: '10px'
+    },
+    buttonDevType: {
+		position:'relative',
+        margin: '5px',
+        padding: '5px',
+        width: '90%',
+    },
+    icon: {
+        marginRight: '6px'
+	},	
+	wrapper: {
+        left:' 205px',
+        width: '210px',
+        opacity: 0.8,
+        outline: '1px #ccc solid',
+        position: 'absolute',
+        background: 'white',
+        fontSize: '12px',
+        margin: '4px 5px',
+        padding: '0px'
+    },
+    action: {
+        padding: '1px',
+        margin: '0px',
+        fontSize: '10px',
+        width: '70px'
+    }
+  });
 
 const chartColumnConfig = ({name, data, categories, colorArray}) => {
 	return {
@@ -109,12 +164,6 @@ class MapStart extends Component {
 			<WrapperFull >
 				<Grid item sm={12}>
 					<h2>Step Three: Map the Site</h2>
-					
-					{/* <Button variant="raised" 
-						color="primary" 
-						onClick={()=>this.handleNavigation('metrics')}>
-						Metrics 
-					</Button> */}
 				</Grid>
 				<Grid item xs={12} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	
@@ -139,6 +188,7 @@ class MapStart extends Component {
 					</Grid>
 				</Grid>
 				<UploadLayerModal />
+				<UpdateToast {...this.props}/>
 			</WrapperFull>
 		);
 	}
@@ -151,8 +201,9 @@ function mapStateToProps(state) {
 		  baseMapLayer: state.baseMapLayer,
 		  mapRef: state.mapRef,
 		  leafletDrawTrigger: state.leafletDrawTrigger,
-		  activeDevType: state.activeDevType
+		  activeDevType: state.activeDevType,
+		  toast: state.toast
 	   }
 }
 
-export default connect(mapStateToProps, actions)(MapStart);
+export default withStyles(styles)(connect(mapStateToProps, actions)(MapStart));

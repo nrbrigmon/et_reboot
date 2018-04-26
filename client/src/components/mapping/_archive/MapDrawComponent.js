@@ -16,7 +16,7 @@ class MapDrawComponent extends Component {
 	_baseMapAdded = false;
 	
 	_onCreated = (e) => {
-		console.log('over here? ',e)
+		// console.log('over here? ',e)
 		let layer = e.layer;
 		let bbox = e.layer._bounds;
 		let leafletFG = this._editableFG.leafletElement;

@@ -5,12 +5,16 @@ import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
+import { Typography } from 'material-ui';
 
 const styles =({
 	paper: {
 	  padding: '0px 20px 20px 20px',
 	  margin: '40px 20px 20px 20px',
 	  width: '80%'
+	},
+	intro: {
+		textAlign: 'left'
 	}
   });
 
@@ -26,14 +30,14 @@ class AboutStart extends Component {
 						<h2>Software for Urban Planners</h2>
 					</Grid>
 					
-					<Grid item xs={12}>
-						<p>
+					<Grid item xs={12} className={classes.intro}>
+						<Typography component="p" align="left">
 							For	cities, policy-makers, and developers, the ET Reboot App offers
-							planning insight, real time metrics, building visualization and more. </p>
-						<p>
+							planning insight, real time metrics, building visualization and more.	
+							<br />
 							The new "back of the envelope" analysis to achieve deeper discussions about 
 							development impacts
-						</p>
+						</Typography>
 					</Grid>
 	
 					<Grid item xs={12}>

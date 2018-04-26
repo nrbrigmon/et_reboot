@@ -21,7 +21,7 @@ import Save from 'material-ui-icons/Save';
 import AddBldgModal from '../modals/AddBldgModal';
 import AddLibraryModal from '../modals/AddLibraryModal';
 import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
-import UpdateToast from '../UpdateToast';
+import UpdateToast from '../modals/UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
 
 const styles = theme => ({
@@ -46,6 +46,10 @@ const styles = theme => ({
 	},
 	cardButton: {
 		margin: '0 1px 0 1px'
+	},  
+	close: {
+		width: theme.spacing.unit * 4,
+		height: theme.spacing.unit * 4,
 	}
   });
 
@@ -199,7 +203,7 @@ class CreateStart extends Component {
 				<AddBldgModal   />
 				<AddLibraryModal   />
 				<SaveBldgLibraryModal  />
-				<UpdateToast />		
+				<UpdateToast {...this.props} /> 
 			</Wrapper900>	
 		);
 	}
@@ -209,7 +213,8 @@ function mapStateToProps(state) {
 	return { 
 		uniqueId: state.randomId,
 		myLibrary: state.myLibrary,
-		availableBldgs: state.availableBldgs
+		availableBldgs: state.availableBldgs,
+		toast: state.toast		
 	};
 }
   

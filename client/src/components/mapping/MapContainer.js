@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import L from 'leaflet';
-import { } from "react-leaflet-draw"
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { } from "react-leaflet-draw";
 import * as _ from 'lodash';
 
 const mapCSS = {
@@ -21,7 +19,7 @@ function isEmptyObject(obj) {
 function getDevTypeColor(feature){
     if (!isEmptyObject(feature.properties.activeDevType)){
         return feature.properties.activeDevType.devTypeColor;
-    }else {
+    } else {
         return "#eeeeee";
     }
 }
@@ -53,15 +51,13 @@ class MapContainer extends Component {
         this._polygonDrawer = new L.Draw.Polygon(this.map);
 
         // STILL LOOKING FOR A WAY TO MOVE THE ZOOM CONTORL TO BOTTOM RIGHT
-        L.control
-            .zoom({position: 'topright'})
-            .addTo(this.map);
+        L.control.zoom({position: 'topright'}).addTo(this.map);
         // baseLayer load if we have one....
         // console.log(this.props.baseMapLayer);
         
         if (this.props.baseMapLayer && !isEmptyObject(this.props.baseMapLayer)) {
             // console.log(this.props.baseMapLayer);
-            console.log('update base layer, no?')
+            // console.log('update base layer, no?')
             this.polygon = new L.geoJson(this.props.baseMapLayer, {
                 onEachFeature: onEachFeature,
                 style: function (feature) {
@@ -80,20 +76,19 @@ class MapContainer extends Component {
         this.map.addLayer(this._baseLayerGroup);
 
         /** Leaflet-Drawa Controls section  **/
-        let drawControl = new L.Control
-            .Draw({
-                draw: {
-                    polyline: false,
-                    polygon: true,
-                    rectangle: false,
-                    marker: true,
-                    circle: false,
-                    circlemarker: false
-                },
-                edit: {
-                    featureGroup: this._baseLayerGroup
-                }
-            });
+        let drawControl = new L.Control.Draw({
+            draw: {
+                polyline: false,
+                polygon: true,
+                rectangle: false,
+                marker: true,
+                circle: false,
+                circlemarker: false
+            },
+            edit: {
+                featureGroup: this._baseLayerGroup
+            }
+        });
         this.map.addControl(drawControl);
 
         //draw created happens when a feature is offish created
@@ -131,13 +126,17 @@ class MapContainer extends Component {
             });
     }
     _drawBaseLayer = () => {
-        // console.log('drawing......');
         this._polygonDrawer.enable();
     }
+    _drawMessage = (msg, err) => {
+        this.props.toastMessage(msg);
+        this.props.setDrawTrigger(err);
+    }
+    _finishLayer = () => {
+        this._polygonDrawer.completeShape(); //close the shape
+        this.props.setDrawTrigger("cancelLayer"); //close the DrawHelper
+    }   
     _addBaseLayerToMap = (baseMapLayer) => {
-        // console.log('adding base layer .......');
-        // console.log(baseMapLayer);
-
         baseMapLayer.eachLayer( layer => {
             this.polygon.addLayer(layer) 
         })
@@ -145,8 +144,6 @@ class MapContainer extends Component {
     componentWillReceiveProps({leafletDrawTrigger, baseMapLayer}) {
         // console.log(leafletDrawTrigger, baseMapLayer);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);
-        // console.log(this.props.baseMapLayer, baseMapLayer)
-        // console.log("componentWillReceiveProps, drawTrigger: ",leafletDrawTrigger)
         // check if position has changed
         if (same === false && !isEmptyObject(baseMapLayer)) {
             //if there is an existing layer, we remove it so that...
@@ -155,7 +152,6 @@ class MapContainer extends Component {
                     this.polygon.removeLayer(layer)
                 });
             }
-            // console.log(baseMapLayer);
             //we can add the new layer
             this.polygon = new L.geoJson(baseMapLayer, {
                 onEachFeature: this.onEachFeature,
@@ -180,8 +176,18 @@ class MapContainer extends Component {
                 });
             }
             this.props.setDrawTrigger('');
+        } else if (leafletDrawTrigger === 'deleteLastPoint'){          
+            this._polygonDrawer.deleteLastVertex();
+            // this._drawAction.deleteLastVertex();	
+        } else if (leafletDrawTrigger === 'finishLayer'){
+            // console.log(this._polygonDrawer._markers.length);
+            this._polygonDrawer._markers.length <= 2 ? 
+                this._drawMessage("You need more than two points!", "continueDraw") :
+                this._finishLayer();
+        } else if (leafletDrawTrigger === 'cancelLayer'){
+            this._polygonDrawer.disable();	
         } else {
-            // console.log('else nothing...')
+            // console.log("leafletDrawTrigger ", leafletDrawTrigger)
         }
     }
     render() {
@@ -189,4 +195,4 @@ class MapContainer extends Component {
     }
 }
 
-export default connect(null, actions)(MapContainer);
+export default MapContainer;

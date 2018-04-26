@@ -1,11 +1,13 @@
-export default function (state = false, action) {
+let defaultState = {
+    msg: '',
+    open: false
+}
+export default function (state = defaultState, action) {
     switch (action.type) {
-        case 'POST_BUILDING_TOAST':
-            return true;
-        case 'UPDATE_BUILDING_TOAST':
-            return true;
+        case 'SEND_TOAST':
+            return action.payload;
         case 'CLOSE_TOAST':
-            return false;
+            return action.payload;
         default:
             return state;
     }

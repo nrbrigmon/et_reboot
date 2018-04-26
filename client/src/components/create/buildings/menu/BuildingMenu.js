@@ -41,7 +41,7 @@ class BuildingMenu extends Component {
               <MenuItem onClick={this.handleClose}>Save As...</MenuItem>
               <MenuItem onClick={this.handleClose}>Print...</MenuItem>
               <MenuItem onClick={this.handleClose}>Export As...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Load Building...</MenuItem>
+              <MenuItem onClick={this.handleClose}>Load Attributes...</MenuItem>
             </Menu>
           </AppBar>
         );

@@ -173,15 +173,22 @@ export const saveBuildingToDb = (status, bldg) => async dispatch => {
 	if (status === true){
 		const res = await axios.put('/api/buildings/'+bldg.uniqueId+'', bldg)
 		// console.log(res);
-		dispatch({ type: 'UPDATE_BUILDING_TOAST', payload: res.data });
+		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg: "Building Updated!", open: true } });
 	} else {
 		// axios.post('/api/buildings', bldg)
 		const res = await axios.post('/api/buildings', bldg)
 		// console.log(res);
-		dispatch({ type: 'POST_BUILDING_TOAST', payload: res.data });
+		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg:"Building Posted!", open: true } });
 	}
 };
 
+export const toastMessage = (msg) => {
+	const action = {
+		type: 'SEND_TOAST',
+		payload: { msg: msg, open: true }
+	}
+	return action;
+}
 export const saveDevelopmentType = (status, devType) => async dispatch => {
 	//does it already exist? if so put, else post
 	if (status === true){
@@ -203,7 +210,10 @@ export const removeDevTypeFromWorkbook = (devTypeId) => {
 }
 export const closeToast = () => {
 	let action = {
-		type: 'CLOSE_TOAST'
+		type: 'CLOSE_TOAST',
+		payload: {
+			open: false
+		}
 	}
 	return action;
 }
