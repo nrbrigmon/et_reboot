@@ -15,6 +15,9 @@ const styles =({
 	},
 	intro: {
 		textAlign: 'left'
+	},
+	list: {
+		fontSize: '12px'
 	}
   });
 
@@ -34,16 +37,17 @@ class AboutStart extends Component {
 						<Typography component="p" align="left">
 							For	cities, policy-makers, and developers, the ET Reboot App offers
 							planning insight, real time metrics, building visualization and more.	
-							<br />
-							The new "back of the envelope" analysis to achieve deeper discussions about 
-							development impacts
+							It's a new "back of the envelope" analysis to achieve deeper discussions about 
+							development impacts.
+							<br/><br/>
+							This tool was developed by Nathan Brigmon as a response to the lack of integration
+							and intuitiveness with the Envision Tomorrow Plugin. This tool promises an ease of use
+							to building scenarios and helps bridge the divide between modern planning and architecture.
 						</Typography>
 					</Grid>
 	
 					<Grid item xs={12}>
-						<h4>
-							What are the issues with the current Scenario Planning Software?
-						</h4>
+						<h5> What are the issues with the current Scenario Planning Software? </h5>
 						<List>
 							<ListItem>
 								<ListItemText 

@@ -64,6 +64,11 @@ class DevTypeBuildingMix extends Component {
 		return (
             <Grid item xs={12}  >
                 <h2>Step Two: Create Development Type Mix</h2>
+                
+                <Typography component="p">
+                    The next step is to mix those buildings from our library into <b>Development Types</b>. It's kind of like creating new zoning standards by defining what buildings are permitted.
+                    <br/><br/>
+                </Typography>
                 <Card>
                     <CardContent>
                         <Typography type="headline" component="h3">
@@ -77,15 +82,18 @@ class DevTypeBuildingMix extends Component {
                                 <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
                                     Add Row
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
-                                    Attributes
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create')}>
+                                    Back
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
+                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
+                                    Move to Step Three
+                                </Button>	
+                                {/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
                                     Review
                                 </Button>	
                                 <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
                                     Map
-                                </Button>	
+                                </Button>	 */}
                             </div>
                         </CardActions>
                     </CardContent>

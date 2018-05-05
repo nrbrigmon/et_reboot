@@ -138,14 +138,16 @@ class CreateStart extends Component {
 			<Wrapper900>
 				<Grid item xs={12}>
 					<h2>Step One: Create Your Library</h2>
+					<Typography component="p">
+						To build any development, we need structures on which to draw. This is called our <b>library</b>.
+						<br/><br/>
+					</Typography>
 				</Grid>
 				{/* COLUMN #1 */}
 				<Grid item sm={8} xs={12} className={classes.column}>
 					<Card className={classes.card}>
 						<CardContent>
-							<Typography type="headline" component="h3">
-								Your Library
-							</Typography>
+							
 							{ /*
 								the proper loading pattern is using a ternary operator like this:
 								{ isEmpty ?

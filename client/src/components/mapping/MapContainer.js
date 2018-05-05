@@ -126,6 +126,7 @@ class MapContainer extends Component {
             });
     }
     _drawBaseLayer = () => {
+        // console.log('drawing...?');
         this._polygonDrawer.enable();
     }
     _drawMessage = (msg, err) => {
@@ -142,7 +143,6 @@ class MapContainer extends Component {
         })
     }
     componentWillReceiveProps({leafletDrawTrigger, baseMapLayer}) {
-        // console.log(leafletDrawTrigger, baseMapLayer);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);
         // check if position has changed
         if (same === false && !isEmptyObject(baseMapLayer)) {
@@ -165,6 +165,8 @@ class MapContainer extends Component {
                     });
                 }
             }).addTo(this.map);
+            this.props.setDrawTrigger("paintScenarioLayer"); //close the DrawHelper
+            
         } else if (leafletDrawTrigger === "drawBaseLayer") {
             this._drawBaseLayer();
         } else if (leafletDrawTrigger === "paintScenarioLayer") {
@@ -180,14 +182,19 @@ class MapContainer extends Component {
             this._polygonDrawer.deleteLastVertex();
             // this._drawAction.deleteLastVertex();	
         } else if (leafletDrawTrigger === 'finishLayer'){
-            // console.log(this._polygonDrawer._markers.length);
-            this._polygonDrawer._markers.length <= 2 ? 
-                this._drawMessage("You need more than two points!", "continueDraw") :
-                this._finishLayer();
+            // console.log(this._polygonDrawer._markers);
+            if (this._polygonDrawer._markers.length === undefined){
+                this.props.setDrawTrigger("cancelLayer"); //close the DrawHelper
+            } else {
+                this._polygonDrawer._markers.length <= 2 ? 
+                    this._drawMessage("You need more than two points!", "continueDraw") :
+                    this._finishLayer();
+            }
         } else if (leafletDrawTrigger === 'cancelLayer'){
             this._polygonDrawer.disable();	
         } else {
             // console.log("leafletDrawTrigger ", leafletDrawTrigger)
+            // this._polygonDrawer.enable();
         }
     }
     render() {

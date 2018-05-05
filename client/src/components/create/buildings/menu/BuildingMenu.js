@@ -16,6 +16,7 @@ class BuildingMenu extends Component {
       };
     
       handleClose = () => {
+        alert("JUST FOR SHOW RIGHT NOW")
         this.setState({ anchorEl: null });
       };
     

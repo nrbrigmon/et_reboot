@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
-// import { withStyles } from 'material-ui/styles';
-
-// import { connect } from 'react-redux';
-// import * as actions from '../../../actions';
-
 import inputFields from './inputs/basicFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
+import Typography from 'material-ui/Typography';
+import NumberFormat from 'react-number-format';
 
 class BasicFinFormComponent extends Component {
 	constructor(props) {
@@ -30,6 +27,7 @@ class BasicFinFormComponent extends Component {
 	render() {
 		// console.log(this.props);
 		let bldgAttr = this.props.attributes.basicFinInfo;
+		let bldg = this.props.attributes.forDevType;
 		const { classes } = this.props;
 		const { section1,section2,section3,section4 } = inputFields;
 		// console.log(bldgAttr);
@@ -43,9 +41,18 @@ class BasicFinFormComponent extends Component {
 							attributes={{bldgAttr, classes, section: section1}} />
 				</Grid>
 				<Grid item xs={6}> 
-					<div style={{ border: '1px solid grey', height: '300px' }}>
-						cool chart component goes here...
-					</div>
+					<Grid item xs={12} className={classes.indicator}> 
+						<Typography variant="headline" component="h1">
+							Estimated Rent: <br />
+							<NumberFormat value={bldg.rMonthlyRent || 0} suffix="" prefix="$" thousandSeparator={true} displayType={'text'} /> 
+						</Typography>
+					</Grid>
+					<Grid item xs={12} className={classes.indicator}> 
+						<Typography variant="headline" component="h1">
+							Sales Price: <br />
+							<NumberFormat value={bldg.rSalesPrice || 0} suffix="" prefix="$" thousandSeparator={true} displayType={'text'} />
+						</Typography>
+					</Grid>
 				</Grid>
 				
 				<Grid item xs={12}>
@@ -75,9 +82,12 @@ class BasicFinFormComponent extends Component {
 							attributes={{bldgAttr, classes, section: section4}} />
 				</Grid>
 				<Grid item xs={6}> 
-					<div style={{ border: '1px solid grey', height: '300px' }}>
-						cool chart component goes here...
-					</div>
+					<Grid item xs={12} className={classes.indicator}> 
+						<Typography variant="headline" component="h1">
+							Total Project Value: <br />
+							<NumberFormat value={bldg.rTotalPrjValue || 0 }  prefix="$" displayType={'text'} thousandSeparator={true} decimalScale={0} />
+						</Typography>
+					</Grid>
 				</Grid>
 				
 			</Grid>

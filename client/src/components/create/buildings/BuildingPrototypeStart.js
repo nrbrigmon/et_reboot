@@ -16,7 +16,6 @@ import PhysicalFormComponent from './PhysicalFormComponent';
 import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
-import './_tableCSS.css';
 import BuildingMenu from './menu/BuildingMenu';
 
 const styles = theme => ({
@@ -40,6 +39,10 @@ const styles = theme => ({
 		marginLeft: theme.spacing.unit,
 		marginRight: theme.spacing.unit,
 		width: '80%'
+	},
+	indicator: {
+		margin: '40px',
+		padding: '40px'		
 	}
   });
 

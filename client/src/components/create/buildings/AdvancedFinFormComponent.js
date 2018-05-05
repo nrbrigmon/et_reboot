@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-
 import Grid from 'material-ui/Grid';
-
-// import { connect } from 'react-redux';
-// import * as actions from '../../../actions';
-
 import inputFields from './inputs/advancedFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
+import Typography from 'material-ui/Typography';
+import NumberFormat from 'react-number-format';
 
 class AdvancedFinFormComponent extends Component {
 	constructor(props) {
@@ -29,6 +26,7 @@ class AdvancedFinFormComponent extends Component {
 
 	render() {
 		let bldgAttr = this.props.attributes.advFinInfo;
+		let bldg = this.props.attributes.forDevType;
 		const { classes } = this.props;
 		const { section1, section2, section3,
 			section4, section5, section6, section7 } = inputFields;
@@ -43,9 +41,12 @@ class AdvancedFinFormComponent extends Component {
 							attributes={{bldgAttr, classes, section: section1}} />
 				</Grid>
 				<Grid item xs={6}> 
-					<div style={{ border: '1px solid grey', height: '300px' }}>
-						cool chart component goes here...
-					</div>
+					<Grid item xs={12} className={classes.indicator}> 
+						<Typography variant="headline" component="h1">
+							Estimated Annual Property Tax Revenue: <br />
+							<NumberFormat value={bldg.rPropTaxRevenueYr || 0} prefix="$" suffix="" displayType={'text'} thousandSeparator={true} decimalScale={0} />
+						</Typography>
+					</Grid>
 				</Grid>
 				
 				<Grid item xs={12}>

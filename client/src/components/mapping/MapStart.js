@@ -163,7 +163,7 @@ class MapStart extends Component {
 		return (
 			<WrapperFull >
 				<Grid item sm={12}>
-					<h2>Step Three: Map the Site</h2>
+					<h2>Step Four: Map the Site</h2>
 				</Grid>
 				<Grid item xs={12} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	

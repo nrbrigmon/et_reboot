@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import Message from 'material-ui-icons/Message';
 import Button from 'material-ui/Button';
+import Edit from 'material-ui-icons/Edit';
 
 const styles = ({
   paper: {
@@ -58,16 +59,21 @@ class ProfileStart extends Component {
 							img
 						</Avatar>
 						<Typography className={classes.location} color="textSecondary">
-							Nate B | austin, tx
+							name | location
 						</Typography>
 						<Typography component="p" className={classes.bio}>In sit amet est nulla. Vestibulum 
 							sollicitudin justo sit amet congue congue. Ut sit amet ligula non purus 
 							aliquam sollicitudin. Ut ut congue lectus, eu tempus magna. 
 						</Typography>
 						
+						{/* if this is your profile show edit ELSE message */ }
 						<Button variant="raised" color="primary" className={classes.button} 
 									onClick={() =>console.log("HELLO")}>
 							<Message  className={classes.leftIcon}/> Message
+						</Button>
+						<Button variant="raised" color="primary" className={classes.button} 
+									onClick={() =>console.log("HELLO")}>
+							<Edit  className={classes.leftIcon}/> Edit Profile
 						</Button>
 					</Grid>
 

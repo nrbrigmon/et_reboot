@@ -8,7 +8,7 @@ const PercentStatusCheck = (dataArray, optionalText) => {
     let myColor = (sum !== 100 ? "red" : "green")
     // console.log(dataArray, sum)
     return (
-        <span style={{color:myColor}}>
+        <span style={{color:myColor, fontWeight:700}}>
             {(optionalText ? optionalText : '')} <NumberFormat value={sum || 0} suffix="%" displayType={'text'}  thousandSeparator={true} decimalScale={0}  />
         </span>
     )

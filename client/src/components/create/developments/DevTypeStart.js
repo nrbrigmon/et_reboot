@@ -36,7 +36,7 @@ class DevTypeStart extends Component {
 	}
 	render() {
 		let pathHome = this.props.match.isExact;
-		console.log(pathHome);
+		// console.log(pathHome);
 		const { classes } = this.props;
 		return (
 			<Wrapper900>
@@ -48,9 +48,9 @@ class DevTypeStart extends Component {
 					(pathHome) ? <p>welcome home</p> : <span></span>
 				}
 				<div className={classes.cardAction}>
-					<Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/')}>
+					{/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/')}>
 						About
-					</Button>	
+					</Button>	 */}
 					<Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
 						Save Progress
 					</Button>	

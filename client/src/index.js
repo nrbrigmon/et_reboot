@@ -23,4 +23,9 @@ ReactDOM.render(
         </Provider>
         , document.getElementById('root'));
 // registerServiceWorker();
+/*  I removed service worker because it "hijacks" the get request for logging in
+    via googleAuth with PassportJS. Then, in order to un-hijack the service worker
+    I had to unregister it using the function below...
+    ... this will probably need to be addressed in the future...
+*/
 unregister();

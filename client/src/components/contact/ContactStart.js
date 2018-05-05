@@ -9,6 +9,7 @@ import Wrapper900 from '../wrappers/Wrapper900';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Send from 'material-ui-icons/Send';
+import { Link } from 'react-router-dom';
 
 const styles = ({
   paper: {
@@ -46,11 +47,7 @@ class ContactStart extends Component {
 
 					<Grid item xs={12}>
 						<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere quam 
-						sed pharetra malesuada. Cras non tincidunt erat. Sed scelerisque maximus 
-						velit, eu pulvinar diam condimentum id. In sit amet est nulla. Vestibulum 
-						sollicitudin justo sit amet congue congue. Ut sit amet ligula non purus 
-						aliquam sollicitudin. Ut ut congue lectus, eu tempus magna. 
+						Drop a line and let us know what you think.
 						</div>
 						<List>
 							<ListItem>
@@ -87,6 +84,11 @@ class ContactStart extends Component {
 								</Button>
 							</ListItem>
 						</List>
+					</Grid>
+					<Grid item xs={12}>
+						<Link className="waves-effect waves-light btn" to="/">
+							Back to Homepage
+						</Link>
 					</Grid>
 				</Paper>
 			</Wrapper900>

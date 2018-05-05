@@ -1,25 +1,34 @@
 /************************/
         BUG TRACKER 
 /************************/ 
-- load, edit and save user profile
-- tie library to user
-- need loading thingy for when you paint and are waiting for a draw
-- basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
----- combine hillshading and OSM toner for badass base map
-- no profile page
-- gallery should be split between buildings, maps, and development types
-- development types need a visualization of some kind
-- building 3d component needs to adjust with size of sitearea
-- building check error (saw in post-build)
-- get user image from google img
-- document service worker error for future self
-- test building update and the corresponding metric change in the map
-- upload geojson capability,
----- can we test for file type?
----- copy arcmap style
-- we need a simpler file / file save as / save / load sample building data / export to excel, txt / print
-- charts dont update except on paint ... 
-- mapping needs to be xs=12 sm=8 so painting changes are more readily visible
+---- USER BUGS
+        - load, edit and save user profile
+        - tie library to user
+        - show profile page, ONLY if logged in        
+        - list other users and CONTACT/MESSAGE button
+        - get user image from google img
+
+---- GENERAL BUGS
+        - need loading thingy for when you paint and are waiting for a draw
+        - build contact method for contact page.... (what did my nrbmaps use?)
+
+---- MAPPING BUGS
+        - basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
+        - combine hillshading and OSM toner for badass base map
+        - test building update and the corresponding metric change in the map
+        - create side by side metrics with WIDER screen, xs=12 sm=8 
+        - upload geojson capability, can we test for file type, model after arcmap upload
+        - where can we store files after geojson upload (e.g. s3)?
+        - charts dont update except on paint ... need to update on ComponentDidMount
+
+---- GALLERY BUGS
+        - gallery should be split between buildings, maps, and development types
+
+---- BUILDING & DEV TYPES BUGS
+        - development types need a visualization of some kind
+        - building 3d component needs to adjust with size of sitearea
+        - give basic options: U-shape, L-shape, Block, Rectangle
+        - we need a simpler file / file save as / save / load sample building data / export to excel, txt / print
 
 /************************/
        BUSINESS IDEAS
@@ -43,9 +52,6 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - leaflet layer on click function loads only once. after layer update, stops working
 - protected routes for USERS
 - move from mouse interaction to a more tactile approach (ipads with stylus...)
-- 3d building enevelope
-    -   give basic options: U-shape, L-shape, Block, Rectangle
-    -   zoom in, zoom out automatically based on height or building size.
 - integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
 - when you are building a prototype or dev type, inputs should not be visible unless they are optional or required. this will make the forms less intimitdating
 - new SQL tables for drop and reload DEV/TEST/PROD
@@ -53,13 +59,10 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - create PowerUser excel editing interface for updating formulas OR SQL(?)
 - import Old excel ROIs function
 - export excel ROIs
-- import geojson | shapefile
 - export CAD | BIM | 3D stuff
 - export geojson | shapefile
 - message board for questions about the data or the tool? community?
 - integrate with machine learning classifier....
 - create messaging forum
-- where can we store files (e.g. s3)?
-- build contact page and contact method....
 - set up messaging system
 - replace lodash with native functions for speed purposes
