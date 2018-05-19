@@ -52,7 +52,6 @@ const styles = theme => ({
 
 class DevTypeBuildingMix extends Component {
     
-
 	handleNavigation = (destination) => {
 		this.props.history.push('/'+destination+'');
 	}

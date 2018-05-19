@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 
 import Grid from 'material-ui/Grid';
 
@@ -29,12 +30,15 @@ const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		width: '100%',
-		margin:0
+		margin: 0
     },
     overlayContainer: {
         position: 'absolute',
         left: '0px'
-    },
+	},	
+	buttonNav: {
+		margin: '20px'
+	},  
 	paper: {
         position:'relative',
         zIndex: '1000',
@@ -157,34 +161,42 @@ class MapStart extends Component {
 		let developedAcres = this.getDevAcres(acresPerDevType);
 		let colorArray = this.getColorArray(acresPerDevType);
 		let populationMetric = mm.getPopulation(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
-		let housingMetric = mm.getHousingUnits(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
+		// let housingMetric = mm.getHousingUnits(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
 		let jobsMetric = mm.getJobCounts(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
-
+		let { classes } = this.props;
+		// console.log(classes)
 		return (
 			<WrapperFull >
 				<Grid item sm={12}>
 					<h2>Step Four: Map the Site</h2>
 				</Grid>
-				<Grid item xs={12} style={{padding:'0px'}}>
+				<Grid item xs={12} lg={6} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	
 					<MapContainer {...this.props} />
 				</Grid>
-				<Grid container>
-					<Grid item xs={4}>
-						{/* chart for population by  dev type W TOTAL ABOVE*/}
-						<ReactHighcharts config={chartColumnConfig({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
-					</Grid>
-					<Grid item xs={4}>
-						{/* chart for housing units by  dev type W TOTAL ABOVE*/}					
-						<ReactHighcharts config={chartColumnConfig({name:"Households" , data: housingMetric, categories: devTypes, colorArray } )} />					
-					</Grid>
-					<Grid item xs={4}>
-						{/* chart for jobs by dev type W TOTAL ABOVE*/}					
-						<ReactHighcharts config={chartColumnConfig({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
-					</Grid>
-					<Grid item xs={4}>
-						{/* chart for population by  dev type W TOTAL ABOVE*/}
-						<ReactHighcharts config={chartColumnConfig({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
+				<Grid item xs={12} lg={6}>
+					<Grid container justify="center">
+						<Grid item xs={4}>
+							{/* chart for population by  dev type W TOTAL ABOVE*/}
+							<ReactHighcharts config={chartColumnConfig({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
+						</Grid>
+						{/* <Grid item xs={4}> */}
+							{/* chart for housing units by  dev type W TOTAL ABOVE*/}					
+							{/* <ReactHighcharts config={chartColumnConfig({name:"Households" , data: housingMetric, categories: devTypes, colorArray } )} />					 */}
+						{/* </Grid> */}
+						<Grid item xs={4}>
+							{/* chart for jobs by dev type W TOTAL ABOVE*/}					
+							<ReactHighcharts config={chartColumnConfig({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
+						</Grid>
+						<Grid item xs={4}>
+							{/* chart for population by  dev type W TOTAL ABOVE*/}
+							<ReactHighcharts config={chartColumnConfig({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
+						</Grid>
+						<Grid item sx={12}>
+							<Button className={classes.buttonNav} variant="raised" color="secondary" onClick={() => this.handleNavigation('metrics')}>
+								View all Metrics
+							</Button>	
+						</Grid>
 					</Grid>
 				</Grid>
 				<UploadLayerModal />
