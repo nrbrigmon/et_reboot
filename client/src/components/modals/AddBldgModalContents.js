@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+// import { connect } from 'react-redux';
+// import * as actions from '../../actions';
 
 import Grid from 'material-ui/Grid';
 import Checkbox from 'material-ui/Checkbox';
@@ -18,7 +18,7 @@ class AddBldgModalContents extends React.Component {
 
 	renderTabContainer = (bldgs, modList) => {
     // console.log(bldgs);
-    let err  = bldgs.code === 'ECONNREFUSED' || bldgs === undefined ? true : false;
+    let err  = (bldgs === undefined || bldgs.code === 'ECONNREFUSED') ? true : false;
     
     return (
         <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
@@ -77,12 +77,4 @@ class AddBldgModalContents extends React.Component {
   }
 }
 
-
-function mapStateToProps(state) {
-  return { 
-    availableBldgs: state.availableBldgs,
-    modList: state.modList 
-  };
-}
-
-export default connect(mapStateToProps, actions)(AddBldgModalContents);
+export default AddBldgModalContents;

@@ -28,11 +28,12 @@ class AddLibraryModal extends Component {
     
 	render() {
         const { classes } = this.props;
+        console.log(this.props);
 		return (
             <ModalContainer modal={this.props.modal === 'library' ? true : false}>
                     <h4>Select a library:</h4>
                    
-                    <AddLibraryModalContents  />
+                    <AddLibraryModalContents {...this.props} />
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 

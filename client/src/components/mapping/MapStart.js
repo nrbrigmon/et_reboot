@@ -168,7 +168,7 @@ class MapStart extends Component {
 		return (
 			<WrapperFull >
 				<Grid item sm={12}>
-					<h2>Step Four: Map the Site</h2>
+					<h2>Map the Site</h2>
 				</Grid>
 				<Grid item xs={12} lg={6} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	
@@ -198,6 +198,14 @@ class MapStart extends Component {
 							</Button>	
 						</Grid>
 					</Grid>
+				</Grid>
+				<Grid item xs={12}>
+					<Button variant="raised" 
+						color="primary" 
+						onClick={()=>this.handleNavigation('/create/dev-types/building-mix')}
+						className={classes.buttonNav}>
+						Edit Development Types
+					</Button>
 				</Grid>
 				<UploadLayerModal />
 				<UpdateToast {...this.props}/>

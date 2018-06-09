@@ -137,7 +137,7 @@ class CreateStart extends Component {
 		return (
 			<Wrapper900>
 				<Grid item xs={12}>
-					<h2>Step One: Create Your Library</h2>
+					<h2>Create Your Library</h2>
 					<Typography component="p">
 						To build any development, we need structures on which to draw. This is called our <b>library</b>.
 						<br/><br/>
@@ -162,7 +162,7 @@ class CreateStart extends Component {
 							<CardActions >
 								<div className={classes.cardAction}>
 									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types/building-mix')}>
-										Move to Step Two
+										Next: Development Types
 									</Button>	
 								</div>
 							</CardActions>

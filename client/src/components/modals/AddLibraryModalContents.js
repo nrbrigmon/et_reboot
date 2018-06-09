@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+// import { connect } from 'react-redux';
+// import * as actions from '../../actions';
 
 import Grid from 'material-ui/Grid';
 import Checkbox from 'material-ui/Checkbox';
@@ -18,8 +18,8 @@ class AddLibraryModalContents extends React.Component {
   };
 
 	renderTabContainer = (libraries, modList) => {
-      // console.log(modList);
-      let err  = libraries.code === 'ECONNREFUSED' || libraries === undefined ? true : false;
+      // console.log(modList, libraries);
+      let err = (libraries === undefined || libraries.code === 'ECONNREFUSED' ) ? true : false;
       // console.log(err);
 			return (
         <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
@@ -75,12 +75,4 @@ class AddLibraryModalContents extends React.Component {
   }
 }
 
-
-function mapStateToProps(state) {
-  return { 
-    availableLibs: state.availableLibs,
-    modList: state.modList 
-  };
-}
-
-export default connect(mapStateToProps, actions)(AddLibraryModalContents);
+export default AddLibraryModalContents;

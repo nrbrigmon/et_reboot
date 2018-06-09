@@ -8,6 +8,7 @@ import WelcomeCard from './WelcomeCard';
 import CheckIcon from 'material-ui-icons/Check';
 import Wrapper900 from '../wrappers/Wrapper900';
 import welcomeActions from './WelcomeActions';
+import Button from 'material-ui/Button';
 
 const styles = theme => ({
 	paper: {
@@ -17,9 +18,17 @@ const styles = theme => ({
 		marginBottom:'50px'
 	},
 	card: {
-		marginBottom: '60px',
-		marginTop: '60px'
-	}
+		marginBottom: '60px'
+		// marginTop: '60px'
+	},
+	root: {
+		backgroundColor: 'blue',
+		// Match [md, ∞[
+		//       [960px, ∞[
+		[theme.breakpoints.up('md')]: {
+		  backgroundColor: 'red',
+		},
+	  },
   });
 
 class Welcome extends Component {
@@ -31,7 +40,7 @@ class Welcome extends Component {
 
 		return (
 			<Wrapper900>
-					<Grid item sm={5} className={classes.card}>
+					<Grid item sm={12} md={5} className={classes.card}>
 						<h2>Software for urban planners</h2>
 						<List>
 							<ListItem >
@@ -54,10 +63,16 @@ class Welcome extends Component {
 						</List>
 					</Grid>
 
-					<Grid item sm={5} className={classes.card}>
+					<Grid item sm={12} md={5} className={classes.card}>
 						<ThreeBuildingPrototypeScene 
 							cubeDim={{x: 5, y: 5, z: 3, siteArea: 1000, 
 							sqft: 250, landscaping: .75 }} />
+					</Grid>
+
+					<Grid item sm={12} className={classes.card}>
+						<Button variant="raised" color="primary" className={classes.root}>
+							<p>View the Demo</p>
+						</Button>
 					</Grid>
 					{
 						welcomeActions.map( (card, idx) => {

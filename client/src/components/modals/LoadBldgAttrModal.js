@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import AddBldgModalContents from './AddBldgModalContents';
+import LoadBldgAttrModalContents from './LoadBldgAttrModalContents';
 import ModalContainer from './ModalContainer';
 
 const styles = theme => ({
@@ -19,23 +19,24 @@ const styles = theme => ({
       }
   });
 
-class AddBldgModal extends Component {
-    saveBuildings = () =>{
-        this.props.addBuildingArrayToLibrary(this.props.modList, this.props.availableBldgs);
+class LoadBldgAttrModal extends Component {
+    loadBuildingAttributes = () =>{
+        console.log("LOADING>>>")
+        // this.props.editBuildingPrototype(true, selection)
         this.props.closeModal();
     }
 
 	render() {
         const { classes } = this.props;
 		return (
-            <ModalContainer modal={this.props.modal === 'buildings' ? true : false}>
-                    <h4>Select your buildings:</h4>
+            <ModalContainer modal={this.props.modal === 'loadAttributes' ? true : false}>
+                    <h4>Load an Existing Template:</h4>
 
-                    <AddBldgModalContents {...this.props}/>
+                    <LoadBldgAttrModalContents {...this.props} />
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 
-                            onClick={()=>this.saveBuildings()}>
+                            onClick={()=>this.loadBuildingAttributes()}>
                             Save
                         </Button>	
                         
@@ -51,10 +52,8 @@ class AddBldgModal extends Component {
 
 function mapStateToProps(state) {
     return {
-        modList: state.modList,
         modal: state.modal,
-        availableBldgs: state.availableBldgs
     };
 }
-const styledApp = withStyles(styles)(AddBldgModal);
+const styledApp = withStyles(styles)(LoadBldgAttrModal);
 export default connect(mapStateToProps, actions)(styledApp);

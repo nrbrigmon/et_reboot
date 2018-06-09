@@ -1,16 +1,41 @@
 /************************/
         BUG TRACKER 
 /************************/ 
----- USER BUGS
-        - load, edit and save user profile
-        - tie library to user
-        - show profile page, ONLY if logged in        
-        - list other users and CONTACT/MESSAGE button
-        - get user image from google img
+
+---- STEPS TO DEMO
+        - create manual building types list:
+                - austin list (short-term) (x20)
+                        - get from old projects in ET Folder
+                - brazil list (long-term) (xProject based)
+                        - using dev types from KStiphany project board in emails, create custom variations
+        - create development types list:
+                - austin list (short-term) (based on CodeNEXT zoning)
+                        - get from old projects in ET folder
+                - brazil list (long-term) (xProject based)
+                        - get from KStiphany project board in emails
+        - ALSO worth investigating.... i can load via python scripts... would be worth creating.... 
+
+        - create building types (STEP ONE)
+        - create development types (STEP TWO) 
+
+        - HOW DO I ENSURE I CAN LOAD EVERTYHING at snap of button?
+        - HOW DO I REVERT BACK TO ANOTHER PROFILE OR LIBRARY?
+                - should be load and clear library?
+                - create clear and load myDevelopmentWorkbook %s and values button?
+                
+        - create cloned mapping page, which does the following:
+                - loads canned building library
+                - loads canned development types
+        - create at least two more metrics
+        - show side-by-side before and after page 
+        - HOUSECLeaning: i need to decouple my actions page the same way as i have for my reducers
+        - HOW DO I MIGRATE specific data to PROD instance?
 
 ---- GENERAL BUGS
+        - We want brazil and austin demo.... does this mean we need to sets of metrics (Hectares and Acres)
         - need loading thingy for when you paint and are waiting for a draw
         - build contact method for contact page.... (what did my nrbmaps use?)
+        - instead of VIEW DEMO we could also have a 1.5 minute video that walks through full process
 
 ---- MAPPING BUGS
         - basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
@@ -21,14 +46,21 @@
         - where can we store files after geojson upload (e.g. s3)?
         - charts dont update except on paint ... need to update on ComponentDidMount
 
----- GALLERY BUGS
-        - gallery should be split between buildings, maps, and development types
-
 ---- BUILDING & DEV TYPES BUGS
         - development types need a visualization of some kind
         - building 3d component needs to adjust with size of sitearea
         - give basic options: U-shape, L-shape, Block, Rectangle
         - we need a simpler file / file save as / save / load sample building data / export to excel, txt / print
+
+---- USER BUGS (Priority 4)
+        - load, edit and save user profile (also callback error on login)
+        - tie library to user
+        - get user image from google img
+        - show profile page, ONLY if logged in        
+        - list other users and CONTACT/MESSAGE button
+
+---- GALLERY BUGS (Priority 5)
+        - gallery should be split between buildings, maps, and development types
 
 /************************/
        BUSINESS IDEAS
@@ -63,6 +95,5 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - export geojson | shapefile
 - message board for questions about the data or the tool? community?
 - integrate with machine learning classifier....
-- create messaging forum
-- set up messaging system
+- create messaging forum/system OR harness a third-party messenging system/forum
 - replace lodash with native functions for speed purposes

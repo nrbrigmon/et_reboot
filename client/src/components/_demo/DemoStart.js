@@ -16,6 +16,10 @@ class DemoStart extends Component {
 			<Wrapper900>
 				<Grid item sm={12} >
 					<h2>Demo</h2>
+					in perfect world we'd have an international Demo (sau paulo)
+					and a local demo (austin).
+
+					custom metrics?
 					<Button variant="raised" 
 						color="primary" 
 						onClick={()=>this.handleNavigation('map')}>

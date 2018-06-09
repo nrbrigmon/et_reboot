@@ -17,6 +17,7 @@ import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingMenu from './menu/BuildingMenu';
+import LoadBldgAttrModal from '../../modals/LoadBldgAttrModal';
 
 const styles = theme => ({
 	root: {
@@ -136,12 +137,13 @@ const styles = theme => ({
 				</AppBar>
 				
 				<Grid item md={8} sm={12} className="myContainer">
-					<BuildingMenu />
+					<BuildingMenu  />
 					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/review`} render={()=> <BuildingFormReviewComponent attributes={buildingPrototype} {...this.props}/>}/>
-
+					
+					<LoadBldgAttrModal />
 				</Grid>
 				
 				<Grid item className={classes.paper} xs={12}>

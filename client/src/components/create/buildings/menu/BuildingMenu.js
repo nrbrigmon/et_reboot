@@ -4,10 +4,13 @@ import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 // import { withStyles } from 'material-ui/styles';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
+
 import AppBar from 'material-ui/AppBar';
 
 class BuildingMenu extends Component {
-    state = {
+      state = {
         anchorEl: null,
       };
     
@@ -42,10 +45,12 @@ class BuildingMenu extends Component {
               <MenuItem onClick={this.handleClose}>Save As...</MenuItem>
               <MenuItem onClick={this.handleClose}>Print...</MenuItem>
               <MenuItem onClick={this.handleClose}>Export As...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Load Attributes...</MenuItem>
+              <MenuItem 
+							  onClick={() => {this.props.openModal('loadAttributes'); this.handleClose()} }>Load Attributes...</MenuItem>
             </Menu>
           </AppBar>
         );
       }
 }
-export default BuildingMenu;
+
+export default connect(null, actions)(BuildingMenu);

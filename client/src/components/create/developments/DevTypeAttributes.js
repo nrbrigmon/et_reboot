@@ -61,7 +61,7 @@ class DevTypeAttributes extends Component {
 
 		return (
 			<Grid item sm={12} >
-				<h2>Step Three: Create Development Type Attributes</h2>
+				<h2>Create Development Type Attributes</h2>
 				
                 <Typography component="p">
                     This section is for defining the characteristics of these development types. Like block size or street size.
@@ -105,7 +105,7 @@ class DevTypeAttributes extends Component {
 									Review 
 								</Button>	 */}
                                 <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
-                                    Move to Step Four
+                                    Next: Mapping
                                 </Button>	
 							</div>
 						</CardActions>

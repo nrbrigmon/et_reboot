@@ -32,7 +32,7 @@ class MetricStart extends Component {
 		return (
 			<Wrapper900>
 				<Grid item sm={12} >
-					<h2>Step Four: Analyze the Metrics</h2>
+					<h2>Analyze the Metrics</h2>
 					<p>Click on a metric to view it in full</p>
 					{
 						metricList.map( (item, idx) => {

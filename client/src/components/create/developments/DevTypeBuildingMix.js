@@ -62,7 +62,7 @@ class DevTypeBuildingMix extends Component {
 		// console.log(this.props);
 		return (
             <Grid item xs={12}  >
-                <h2>Step Two: Create Development Type Mix</h2>
+                <h2>Create Development Type Mix</h2>
                 
                 <Typography component="p">
                     The next step is to mix those buildings from our library into <b>Development Types</b>. It's kind of like creating new zoning standards by defining what buildings are permitted.
@@ -85,7 +85,7 @@ class DevTypeBuildingMix extends Component {
                                     Back
                                 </Button>	
                                 <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
-                                    Move to Step Three
+                                    Next: Create Attributes
                                 </Button>	
                                 {/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
                                     Review
