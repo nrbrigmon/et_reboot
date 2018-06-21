@@ -85,8 +85,9 @@ const styles = theme => ({
 	saveAsBuilding = () => {
 		let editingState = false;
 		let { bldgType } = this.props;
+		// console.log(bldgType);
 		bldgType["uniqueId"] = this.props.uniqueId; //update to NEW ID 
-
+		// console.log(this.props);
 		//add building to available library modal list
 		this.props.newAvailableBuilding(bldgType)
 		//add building to my library
@@ -137,7 +138,7 @@ const styles = theme => ({
 				</AppBar>
 				
 				<Grid item md={8} sm={12} className="myContainer">
-					<BuildingMenu  />
+					<BuildingMenu  onSave={this.saveBuilding} onSaveAs={this.saveAsBuilding} onCancel={this.cancelBuilding}/>
 					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>

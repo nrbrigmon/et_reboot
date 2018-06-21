@@ -18,7 +18,7 @@ class AddBldgModalContents extends React.Component {
 
 	renderTabContainer = (bldgs, modList) => {
     // console.log(bldgs);
-    let err  = (bldgs === undefined || bldgs.code === 'ECONNREFUSED') ? true : false;
+    let err  = (bldgs === undefined || bldgs.code === 'ECONNREFUSED' || bldgs.code === 'ENOENT') ? true : false;
     
     return (
         <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>

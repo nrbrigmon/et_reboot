@@ -40,7 +40,7 @@ class Welcome extends Component {
 
 		return (
 			<Wrapper900>
-					<Grid item sm={12} md={5} className={classes.card}>
+					<Grid item xs={12} sm={12} md={5} className={classes.card}>
 						<h2>Software for urban planners</h2>
 						<List>
 							<ListItem >
@@ -63,13 +63,13 @@ class Welcome extends Component {
 						</List>
 					</Grid>
 
-					<Grid item sm={12} md={5} className={classes.card}>
+					<Grid item xs={12} sm={12} md={5} className={classes.card}>
 						<ThreeBuildingPrototypeScene 
 							cubeDim={{x: 5, y: 5, z: 3, siteArea: 1000, 
 							sqft: 250, landscaping: .75 }} />
 					</Grid>
 
-					<Grid item sm={12} className={classes.card}>
+					<Grid item xs={12} sm={12} className={classes.card}>
 						<Button variant="raised" color="primary" className={classes.root}>
 							<p>View the Demo</p>
 						</Button>

@@ -6,6 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
 import { Typography } from 'material-ui';
+import "./aboutStyle.css"
 
 const styles =({
 	paper: {
@@ -47,8 +48,8 @@ class AboutStart extends Component {
 					</Grid>
 	
 					<Grid item xs={12}>
-						<h5> What are the issues with the current Scenario Planning Software? </h5>
-						<List>
+						<h4> What are the issues with the current Scenario Planning Software? </h4>
+						<List className={classes.list}>
 							<ListItem>
 								<ListItemText 
 									primary="Overly complicated spreadsheets and files" />
@@ -70,8 +71,8 @@ class AboutStart extends Component {
 									primary="Difficult to share results" />
 							</ListItem>
 						</List>
-						<h5>What are the solutions offered by this application?</h5>
-						<List>
+						<h4>What are the solutions offered by this application?</h4>
+						<List  className={classes.list}>
 							<ListItem>
 								<ListItemText 
 									primary="Centralized database" />

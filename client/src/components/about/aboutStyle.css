@@ -1,0 +1,8 @@
+ul li {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+ul li div h3 {
+    font-size: 0.9rem !important;
+}

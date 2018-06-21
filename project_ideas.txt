@@ -97,3 +97,4 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - integrate with machine learning classifier....
 - create messaging forum/system OR harness a third-party messenging system/forum
 - replace lodash with native functions for speed purposes
+- uber.github.io has some awesome geospatial libraries to integrate (kepler, luma, reactviz)

@@ -19,15 +19,15 @@ class BuildingMenu extends Component {
       };
     
       handleClose = () => {
-        alert("JUST FOR SHOW RIGHT NOW")
+        // console.log("JUST FOR SHOW RIGHT NOW")
         this.setState({ anchorEl: null });
       };
     
       render() {
         const { anchorEl } = this.state;
-    
+        // console.log(this.props);
         return (
-          <AppBar position="static" color="default" elevation={0}>
+          <AppBar position="static" color="default" style={{border:'1px #ccc solid'}} elevation={0}>
             <Button
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
@@ -41,12 +41,16 @@ class BuildingMenu extends Component {
               open={Boolean(anchorEl)}
               onClose={this.handleClose}
             >
-              <MenuItem onClick={this.handleClose}>Save...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Save As...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Print...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Export As...</MenuItem>
+              <MenuItem 
+                onClick={()=> {this.props.onSave(); this.handleClose()} }>Save...</MenuItem>
+              <MenuItem 
+                onClick={()=> {this.props.onSaveAs(); this.handleClose()} }>Save As...</MenuItem>
               <MenuItem 
 							  onClick={() => {this.props.openModal('loadAttributes'); this.handleClose()} }>Load Attributes...</MenuItem>
+              <MenuItem onClick={this.handleClose}>Export As...</MenuItem>
+              <MenuItem onClick={this.handleClose}>Print...</MenuItem>
+              <MenuItem 
+                onClick={()=> {this.props.onCancel(); this.handleClose()} }>Cancel</MenuItem>
             </Menu>
           </AppBar>
         );
