@@ -44,7 +44,6 @@ export default function(state = null, action) {
 			//make update
 			buildingPrototypeEdit = editPrototypeAttribute(state, action);
 			//update building prototype
-			// console.log('buildingPrototypeEdit ', buildingPrototypeEdit);
 			buildingPrototypeEdit = editPrototypeOutputs(buildingPrototypeEdit);
 			localStorage.setItem('buildingPrototypeEdit',JSON.stringify(buildingPrototypeEdit));
 			return buildingPrototypeEdit;

@@ -3,7 +3,6 @@ const turfClip = require('turf-clip');
 const { Router } = require('express');
 const router = Router();
 const LatLon = require('geodesy').LatLonSpherical;
-const stringify = require('json-stringify');
 
 router.post('/grid', (request, response, next) =>{
 	//step one - get bounding box of feature that was just drawn
@@ -60,16 +59,17 @@ router.post('/test', (request, response, next) =>{
 	console.log('ok')
 	let intersection1 = Turf.intersect( Turf.polygon([a]),  Turf.polygon([paint]) );
 	let intersection2 = Turf.intersect( Turf.polygon([b]),  Turf.polygon([paint]) );
-	console.log(intersection1);
-	console.log(intersection2);
+	// console.log(intersection1);
+	// console.log(intersection2);
 	var c1 = Turf.centroid(Turf.polygon([a]))
 	var c2 = Turf.centroid(Turf.polygon([b]))
 	var intersection3 = Turf.booleanPointInPolygon(c1, Turf.polygon([paint]));
 	var intersection4 = Turf.booleanPointInPolygon(c2, Turf.polygon([paint]));
-	console.log(intersection3);
-	console.log(intersection4);
+	// console.log(intersection3);
+	// console.log(intersection4);
 	response.json("testing complete");
 })
+
 router.post('/intersects', (request, response, next) =>{
 	//step one - get bounding box of feature that was just drawn
 	var { baseMapLayer } = request.body;
@@ -102,13 +102,10 @@ router.post('/intersects', (request, response, next) =>{
 				elem.properties = { activeDevType };
 				// get coordinate array of shape
 				var coords = elem.geometry.coordinates[0];
-				// console.log(coords);
 				// loop through coordinates and convert to LatLng object
 				for (i = 0; i < coords.length; ++i) { 
 					__coords[i] = new LatLon(coords[i][0].toString(), coords[i][1].toString());
 				}
-				// console.log(__coords);
-				// console.log(LatLon.areaOf(__coords));
 				//calculate area w geodesic transformation * acre conversion
 				var acres = LatLon.areaOf(__coords) * 0.000247105;  
 				// console.log(acres);

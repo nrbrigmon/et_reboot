@@ -16,6 +16,7 @@ function isEmptyObject(obj) {
     }
     return true;
 }
+
 class MapOverlayPanel extends Component {
 	
 	loadScenarioLayer = () => {
@@ -44,7 +45,8 @@ class MapOverlayPanel extends Component {
 		]
         const { classes } = this.props;
         const { activeDevType } = this.props;
-		const devTypes = this.props.devWorkbook.workbook_devtypes;        
+        const devTypes = this.props.devWorkbook.workbook_devtypes;   
+        console.log(this.props);     
 		return (
             <span className={classes.overlayContainer}>
 			{/*for the panel on left, which is soon to be drawer */	}
@@ -54,7 +56,7 @@ class MapOverlayPanel extends Component {
                 >
 
                 { 
-                    ( !isEmptyObject(this.props.baseMapLayer) ) ? 
+                    ( this.props.mapOverlayPanel === "painting"  ) ? 
                         (<Button variant="raised" 
                             color="secondary" 
                             size="small"
@@ -87,7 +89,7 @@ class MapOverlayPanel extends Component {
                 }
             </Paper>
             { 
-                (this.props.baseMapLayer.length === 0 ? <span></span> :
+                (this.props.mapOverlayPanel === false ? <span></span> :
             
                 <Paper variant="raised" 
                     color="primary" 

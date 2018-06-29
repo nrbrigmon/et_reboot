@@ -8,16 +8,9 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 
-const styles = theme => ({
-	paper: {
-        textAlign: 'center',
-      },
-      button: {
-          width: '40%',
-          margin: '0 10px 0 10px',
-          maxWidth: '180px'
-      }
-  });
+import _ModalStyles from './_ModalStyles';
+
+const styles = theme => (_ModalStyles(theme));
 
 class SaveBldgLibraryModal extends Component {
 

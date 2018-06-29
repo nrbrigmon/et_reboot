@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 const mapCSS = {
     height: '500px'
 };
-const mapCenterCoords = [30.2764099, -97.7507724];
+const MAP_CENTER_COORDS = [30.2764099, -97.7507724];
 
 function isEmptyObject(obj) {
     for(var prop in obj) {
@@ -38,7 +38,7 @@ class MapContainer extends Component {
     _polygonDrawer = null;
     componentDidMount() {
         this.map = L.map('map', {
-            center: mapCenterCoords,
+            center: MAP_CENTER_COORDS,
             zoom: 16,
             zoomControl: false,
             maxZoom: 20,
@@ -135,7 +135,7 @@ class MapContainer extends Component {
     }
     _finishLayer = () => {
         this._polygonDrawer.completeShape(); //close the shape
-        this.props.setDrawTrigger("cancelLayer"); //close the DrawHelper
+        this.props.setDrawTrigger("closeDrawHelper"); //close the DrawHelper
     }   
     _addBaseLayerToMap = (baseMapLayer) => {
         baseMapLayer.eachLayer( layer => {
@@ -143,6 +143,8 @@ class MapContainer extends Component {
         })
     }
     componentWillReceiveProps({leafletDrawTrigger, baseMapLayer}) {
+        // console.log(leafletDrawTrigger, baseMapLayer);
+        // console.log(this.props);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);
         // check if position has changed
         if (same === false && !isEmptyObject(baseMapLayer)) {
@@ -165,8 +167,10 @@ class MapContainer extends Component {
                     });
                 }
             }).addTo(this.map);
-            this.props.setDrawTrigger("paintScenarioLayer"); //close the DrawHelper
-            
+            this.props.setDrawTrigger("closeDrawHelper"); //close the DrawHelper
+		    this.props.closeModal(); //if it's open
+            this.props.updateOverlayPanel("painting"); //keep panel open so we know we are painting
+
         } else if (leafletDrawTrigger === "drawBaseLayer") {
             this._drawBaseLayer();
         } else if (leafletDrawTrigger === "paintScenarioLayer") {
@@ -178,19 +182,20 @@ class MapContainer extends Component {
                 });
             }
             this.props.setDrawTrigger('');
+            this.props.updateOverlayPanel(false);
         } else if (leafletDrawTrigger === 'deleteLastPoint'){          
             this._polygonDrawer.deleteLastVertex();
             // this._drawAction.deleteLastVertex();	
         } else if (leafletDrawTrigger === 'finishLayer'){
             // console.log(this._polygonDrawer._markers);
             if (this._polygonDrawer._markers.length === undefined){
-                this.props.setDrawTrigger("cancelLayer"); //close the DrawHelper
+                this.props.setDrawTrigger("closeDrawHelper"); //close the DrawHelper
             } else {
                 this._polygonDrawer._markers.length <= 2 ? 
                     this._drawMessage("You need more than two points!", "continueDraw") :
                     this._finishLayer();
             }
-        } else if (leafletDrawTrigger === 'cancelLayer'){
+        } else if (leafletDrawTrigger === 'closeDrawHelper'){
             this._polygonDrawer.disable();	
         } else {
             // console.log("leafletDrawTrigger ", leafletDrawTrigger)

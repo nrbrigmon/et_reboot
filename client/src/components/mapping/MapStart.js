@@ -222,7 +222,8 @@ function mapStateToProps(state) {
 		  mapRef: state.mapRef,
 		  leafletDrawTrigger: state.leafletDrawTrigger,
 		  activeDevType: state.activeDevType,
-		  toast: state.toast
+		  toast: state.toast,
+		  mapOverlayPanel: state.mapOverlayPanel
 	   }
 }
 

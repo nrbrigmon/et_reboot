@@ -1,3 +1,5 @@
+import * as localStorageMethods from './_localStorageMethods';
+
 function isEmptyObject(obj) {
     for(var prop in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, prop)) {
@@ -13,27 +15,29 @@ function modifyBaseLayer(state, payload){
 	} else {
 		newState = payload;
 	};
-	// console.log(newState);
+	console.log(newState);
 	return newState;
 }
+const LAYER_NAME = 'baseMapLayer';
+
 export default function(state = [], {type, payload} ) {
 	let baseMapLayer = [];
-	if (localStorage.getItem('baseMapLayer')){
-			state = JSON.parse(localStorage.getItem('baseMapLayer'));
+	if (localStorageMethods.itemExists(LAYER_NAME)) {
+		state = localStorageMethods.get(LAYER_NAME);
 	}
-	// console.log(state);
+	console.log(type, payload)
 	switch (type) {
-		case 'GET_TRI_GRID':
+		case 'SET_BASE_LAYER':
 			baseMapLayer = modifyBaseLayer(state, payload);
-			localStorage.setItem('baseMapLayer',JSON.stringify(baseMapLayer));
+			localStorageMethods.set(LAYER_NAME, baseMapLayer);
 			return baseMapLayer;
 		case 'GET_PAINTED_GRID':
 			baseMapLayer = modifyBaseLayer(state, payload);
-			localStorage.setItem('baseMapLayer',JSON.stringify(baseMapLayer));
+			localStorageMethods.set(LAYER_NAME, baseMapLayer);
 			return baseMapLayer;
 		case 'RESET_BASE_LAYER':
-			baseMapLayer = [];
-			localStorage.setItem('baseMapLayer',JSON.stringify(baseMapLayer));
+			baseMapLayer = []
+			localStorageMethods.set(LAYER_NAME, baseMapLayer);
 			return baseMapLayer;
 		default:
 			return state;

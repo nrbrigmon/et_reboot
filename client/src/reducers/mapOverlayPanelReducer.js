@@ -1,13 +1,8 @@
-let defaultState = {
-    msg: '',
-    open: false
-}
+let defaultState =  false;
 
 export default function (state = defaultState, { type, payload } ) {
     switch (type) {
-        case 'SEND_TOAST':
-            return payload;
-        case 'CLOSE_TOAST':
+        case 'UPDATE_OVERLAY_PANEL':
             return payload;
         default:
             return state;

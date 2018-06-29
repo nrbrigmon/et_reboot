@@ -7,17 +7,9 @@ import * as actions from '../../actions';
 
 import AddBldgModalContents from './AddBldgModalContents';
 import ModalContainer from './ModalContainer';
+import _ModalStyles from './_ModalStyles';
 
-const styles = theme => ({
-	paper: {
-        textAlign: 'center',
-      },
-      button: {
-          width: '40%',
-          margin: '0 10px 0 10px',
-          maxWidth: '180px'
-      }
-  });
+const styles = theme => (_ModalStyles(theme));
 
 class AddBldgModal extends Component {
     saveBuildings = () =>{

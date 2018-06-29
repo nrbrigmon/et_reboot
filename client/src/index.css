@@ -19,3 +19,6 @@ hr {
 .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
     border: 1px solid rgba(0,0,0,0.2);
 }
+div.leaflet-control-container .leaflet-top {
+    z-index: 1000;
+}

@@ -1,7 +1,7 @@
-export default function(state = false, action ) {
-	switch (action.type) {
+export default function(state = false, { type, payload } ) {
+	switch (type) {
         case 'SET_DRAW_TYPE':
-            return action.payload;
+            return payload;
         case 'END_DRAWING':
             return false;
         default:

@@ -12,6 +12,7 @@ import modalListReducer from './modalListReducer';
 import modalReducer from './modalReducer';
 import myLibraryReducer from './myLibraryReducer';
 import mapReferenceReducer from './mapReferenceReducer';
+import mapOverlayPanelReducer from './mapOverlayPanelReducer';
 import toastReducer from './toastReducer';
 
 const getRandomId = (state = [], action) => {
@@ -31,12 +32,13 @@ export default combineReducers({
 	availableLibs: buildingLibReducer,			//saved libraries in database
 	baseMapLayer: baseMapLayerReducer,			//the baseLayer for scenario planning
 	bldgType: bldgPrototypeReducer,				//the current building being edited
-	devWorkbook: devWorkbookReducer,					//the current development type being edited
+	devWorkbook: devWorkbookReducer,			//the current development type being edited
 	leafletDrawTrigger: leafletDrawReducer,
 	mapRef: mapReferenceReducer,
 	modList: modalListReducer,					//the list inside the modal
 	myLibrary: myLibraryReducer,				//the name and properties of my building list
 	modal: modalReducer,						//open or close modal state
 	randomId: getRandomId,						//randomId function
-	toast: toastReducer							//open or close toast state
+	toast: toastReducer,						//open or close toast state
+	mapOverlayPanel: mapOverlayPanelReducer
 });

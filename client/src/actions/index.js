@@ -5,9 +5,9 @@ export * from './DevTypeActions';
 export * from './DrawActions';
 export * from './UtilActions';
 export * from './BldgPrototypeActions';
+export * from './AwsBackendActions';
 
 /* BUILDING ACTIONS */
-
 export const addBuildingToLibrary = (bldg) => {
 	//myLibraryReducer
 	const action = {

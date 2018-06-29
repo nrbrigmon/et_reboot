@@ -34,7 +34,7 @@ app.use('/', routes);
 
 //middleware
 app.use((err, req, res, next) => {
-    res.json(err);``
+    res.json(err);
 })
 
 if (process.env.NODE_ENV === 'production') {

@@ -4,16 +4,18 @@ import Button from 'material-ui/Button';
 class MapDrawHelper extends Component {	
     handleAction = (action) => {
         this.props.setDrawTrigger(action);
-        if (action === 'cancelLayer'){
+        if (action === 'closeDrawHelper'){
             this.props.setActiveDevType({devTypeName: '', devTypeColor: ''});
         }
     }
-    componentWillReceiveProps({leafletDrawTrigger}){
+
+    componentWillReceiveProps({ leafletDrawTrigger }){
         // console.log(leafletDrawTrigger);
-        if (leafletDrawTrigger === 'cancelLayer'){
+        if (leafletDrawTrigger === 'closeDrawHelper'){
             this.handleAction(leafletDrawTrigger)
         }
     }
+
 	render() {
         const { classes } = this.props;
 		return (
@@ -22,7 +24,7 @@ class MapDrawHelper extends Component {
                     Finish </Button>
                 <Button size="small" className={classes.action} onClick={() => this.handleAction('deleteLastPoint')}>
                     Delete Last Point </Button>
-                <Button size="small" className={classes.action} onClick={() => this.handleAction('cancelLayer')}>
+                <Button size="small" className={classes.action} onClick={() => this.handleAction('closeDrawHelper')}>
                     Cancel </Button>
 			</span>
 		);

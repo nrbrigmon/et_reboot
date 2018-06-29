@@ -3,7 +3,7 @@
 export const openModal = (selection) => {
 	const action = {
 		type: 'OPEN_MODAL',
-		selection
+		payload: selection
 	}
 	return action;
 };

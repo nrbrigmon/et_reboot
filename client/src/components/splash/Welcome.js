@@ -7,29 +7,11 @@ import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-pr
 import WelcomeCard from './WelcomeCard';
 import CheckIcon from 'material-ui-icons/Check';
 import Wrapper900 from '../wrappers/Wrapper900';
-import welcomeActions from './WelcomeActions';
 import Button from 'material-ui/Button';
+import welcomeActions from './WelcomeActions';
+import _WelcomeStyles from './_WelcomeStyles';
 
-const styles = theme => ({
-	paper: {
-	  textAlign: 'center',
-	},
-	section: {
-		marginBottom:'50px'
-	},
-	card: {
-		marginBottom: '60px'
-		// marginTop: '60px'
-	},
-	root: {
-		backgroundColor: 'blue',
-		// Match [md, ∞[
-		//       [960px, ∞[
-		[theme.breakpoints.up('md')]: {
-		  backgroundColor: 'red',
-		},
-	  },
-  });
+const styles = theme => (_WelcomeStyles(theme));
 
 class Welcome extends Component {
 	handleNavigation = (destination) => {
@@ -63,14 +45,17 @@ class Welcome extends Component {
 						</List>
 					</Grid>
 
-					<Grid item xs={12} sm={12} md={5} className={classes.card}>
+					<Grid item xs={12} sm={12} md={5} className={classes.grid}>
 						<ThreeBuildingPrototypeScene 
 							cubeDim={{x: 5, y: 5, z: 3, siteArea: 1000, 
 							sqft: 250, landscaping: .75 }} />
 					</Grid>
 
-					<Grid item xs={12} sm={12} className={classes.card}>
-						<Button variant="raised" color="primary" className={classes.root}>
+					<Grid item xs={12} sm={12} className={classes.grid}>
+						<Button variant="raised" 
+							color="primary" 
+							className={classes.root}
+							onClick={ ()=>{alert("... soon ...")} }>
 							<p>View the Demo</p>
 						</Button>
 					</Grid>

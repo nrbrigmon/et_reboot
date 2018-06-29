@@ -2,23 +2,11 @@ import React, { Component } from 'react';
 import Modal from 'material-ui/Modal';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { withStyles } from 'material-ui/styles';
 
-function getModalStyle() {
-    const top = 50; // + Math.floor(Math.random() * 20) - 10;
-    const left = 50; // + Math.floor(Math.random() * 20) - 10;
+import _ModalStyles from './_ModalStyles';
 
-    return {
-        position: 'absolute',
-        width: 8 * 50,
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-        border: '1px solid #e5e5e5',
-        backgroundColor: '#fff',
-        boxShadow: '0 5px 15px rgba(0, 0, 0, .5)',
-        padding: 8 * 4,
-    };
-}
+const styles = theme => _ModalStyles(theme);
 
 class ModalContainer extends Component {
 
@@ -26,7 +14,9 @@ class ModalContainer extends Component {
         this.props.closeModal()
     }
 	render() {
-		const { children } = this.props;
+        const { children } = this.props;
+        const { classes } = this.props;
+        
 		return (
 			<Modal
                 aria-labelledby="simple-modal-title"
@@ -34,7 +24,7 @@ class ModalContainer extends Component {
                 open={this.props.modal}
                 onClose={this.cancelModal}
                 >
-                <div style={getModalStyle()}>
+                <div className={classes.container}>
 					{children}
 				</div>
             </Modal>)
@@ -42,4 +32,5 @@ class ModalContainer extends Component {
 }
 
 
-export default connect(null, actions)(ModalContainer);
+const styledApp = withStyles(styles)(ModalContainer);
+export default connect(null, actions)(styledApp);

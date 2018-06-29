@@ -1,32 +1,37 @@
 import _ from 'lodash';
 
 const AcresPerDevType = ( { features } ) => {
-    
-let fixName = function(obj){
+  let fixName = function(obj){
+    //this function removes spaces and replaces them with undescores
+    //we need this bc we are going to group by this type, so it will
+    //become an object key... which cant have spaces
+    // console.log(obj);
+    let newName = ( obj === undefined ? null : obj.devTypeName.split(' ').join('_'))
     return {
-        ...obj,
-        devTypeName: obj.devTypeName.split(' ').join('_')
+      ...obj,
+        devTypeName: newName
       }
   }
   let unfixName = function(word){
     return word.split('_').join(' ')
   }
   ///step one works! filter the data
-  var objReduce =
+  let objReduce =
           _.chain(features)
            .filter( function(o) {       //remove empty features
               return Object.keys(o.properties).length > 0
             })
-           .map('properties')           //remove features due to size
+           .map('properties')           //only map properties to save on size
            .map( function(o) {          //fix spaces in dev types
+            // console.log(o);
              return {...o, activeDevType: fixName(o.activeDevType) }
            })
            .groupBy(function (o, idx) { //group feautures by devtypes
              return o.activeDevType.devTypeName
            })
            .value()
-  
-  var final = []
+  // console.log(objReduce);
+  let final = []
   
   _.forEach(objReduce, function(value, idx) {
     let sum = _.reduce(value, function(sum, n) {    //get acreage totals

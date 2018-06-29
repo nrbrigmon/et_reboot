@@ -6,13 +6,9 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { withRouter} from 'react-router-dom';
+import _WelcomeStyles from './_WelcomeStyles';
 
-const styles = theme => ({
-	card: {
-        margin: '10px',
-        textAlign: 'left'
-	}
-  });
+const styles = theme => (_WelcomeStyles(theme));
 
 class WelcomeCard extends Component {
 	handleNavigation = (destination) => {
@@ -21,6 +17,7 @@ class WelcomeCard extends Component {
 	}
 	render() {
         const { classes } = this.props;
+        // console.log(classes);
 		return (
             <Grid item md={4} sm={6} xs={12}>
                 <Card className={classes.card}>

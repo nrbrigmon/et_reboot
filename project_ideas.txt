@@ -2,6 +2,8 @@
         BUG TRACKER 
 /************************/ 
 
+*** after layer uploads, remove modal AND do not set to DRAW AND adjust properties to load
+
 ---- STEPS TO DEMO
         - create manual building types list:
                 - austin list (short-term) (x20)

@@ -28,7 +28,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				inside app, w router
+				{/* inside app, w router */}
             	<CssBaseline /> 
 				<BrowserRouter>
 					<div>
