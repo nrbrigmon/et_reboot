@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Paper from 'material-ui/Paper';
 import FileUpload from 'material-ui-icons/FileUpload';
 import LayersClear from 'material-ui-icons/LayersClear';
 import Edit from 'material-ui-icons/Edit';
 import MapDrawHelper from './MapDrawHelper';
-
-
-function isEmptyObject(obj) {
-    for(var prop in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        return false;
-        }
-    }
-    return true;
-}
 
 class MapOverlayPanel extends Component {
 	
@@ -46,7 +36,7 @@ class MapOverlayPanel extends Component {
         const { classes } = this.props;
         const { activeDevType } = this.props;
         const devTypes = this.props.devWorkbook.workbook_devtypes;   
-        console.log(this.props);     
+        // console.log(this.props.mapOverlayPanel);     
 		return (
             <span className={classes.overlayContainer}>
 			{/*for the panel on left, which is soon to be drawer */	}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 // import { withStyles } from 'material-ui/styles';
 
@@ -9,11 +9,38 @@ import * as actions from '../../../../actions';
 
 import AppBar from 'material-ui/AppBar';
 
+
+const MenuItemOptions = (ctx) => {
+  console.log(ctx);
+  return (
+    <span>
+      <MenuItem 
+        onClick={()=> {ctx.props.onSave(); ctx.handleClose()} }>
+        Save...</MenuItem>
+      <MenuItem 
+        onClick={()=> {ctx.props.onSaveAs(); ctx.handleClose()} }>
+        Save As...</MenuItem>
+      <MenuItem 
+        onClick={() => {ctx.props.openModal('loadAttributes'); ctx.handleClose()} }>
+        Load Attributes...</MenuItem>
+      <MenuItem 
+        onClick={ctx.handleClose}>
+        Export As...</MenuItem>
+      <MenuItem 
+        onClick={ctx.handleClose}>
+        Print...</MenuItem>
+      <MenuItem 
+        onClick={()=> {ctx.props.onCancel(); ctx.handleClose()} }>
+        Cancel</MenuItem>
+    </span>
+  )
+}
+
 class BuildingMenu extends Component {
       state = {
         anchorEl: null,
       };
-    
+
       handleClick = event => {
         this.setState({ anchorEl: event.currentTarget });
       };
@@ -41,16 +68,8 @@ class BuildingMenu extends Component {
               open={Boolean(anchorEl)}
               onClose={this.handleClose}
             >
-              <MenuItem 
-                onClick={()=> {this.props.onSave(); this.handleClose()} }>Save...</MenuItem>
-              <MenuItem 
-                onClick={()=> {this.props.onSaveAs(); this.handleClose()} }>Save As...</MenuItem>
-              <MenuItem 
-							  onClick={() => {this.props.openModal('loadAttributes'); this.handleClose()} }>Load Attributes...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Export As...</MenuItem>
-              <MenuItem onClick={this.handleClose}>Print...</MenuItem>
-              <MenuItem 
-                onClick={()=> {this.props.onCancel(); this.handleClose()} }>Cancel</MenuItem>
+              <MenuItemOptions {...this}  />
+              
             </Menu>
           </AppBar>
         );

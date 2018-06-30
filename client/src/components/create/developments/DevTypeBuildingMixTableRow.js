@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TableCell, TableRow } from 'material-ui/Table';
 
 import TextField from 'material-ui/TextField';
-import PercentStatusCheck from '../../_PercentStatusCheck';
+import PercentStatusCheck from '../../../utils/_PercentStatusCheck';
 
 import { InputAdornment } from 'material-ui/Input';
 import IconButton from 'material-ui/IconButton';

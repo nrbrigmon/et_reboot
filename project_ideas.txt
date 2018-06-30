@@ -2,7 +2,9 @@
         BUG TRACKER 
 /************************/ 
 
-*** after layer uploads, remove modal AND do not set to DRAW AND adjust properties to load
+*** select get layer from s3 (and metadata?)
+*** after layer uploads adjust properties to load
+*** add loading animation component
 
 ---- STEPS TO DEMO
         - create manual building types list:

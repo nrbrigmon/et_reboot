@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
 import Grid from 'material-ui/Grid';
 
@@ -13,12 +13,16 @@ import UploadLayerModal from '../modals/UploadLayerModal';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
 
-import AcresPerDevType from "../_AcresPerDevType";
-import * as mm from "../_MapMath";
+import AcresPerDevType from "../../utils/_AcresPerDevType";
+import * as mm from "../../utils/_MapMath";
 import WrapperFull from '../wrappers/WrapperFull';
 
 import './customLeafletDraw.css';
 import UpdateToast from '../modals/UpdateToast';
+import _MapStyles from './_MapStyles';
+import * as metricConfig from '../metrics/metricConfig';
+
+const styles = theme => _MapStyles(theme);
 
 Highcharts.Highcharts.setOptions({
     lang: {
@@ -26,110 +30,6 @@ Highcharts.Highcharts.setOptions({
     }
 });
 
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		margin: 0
-    },
-    overlayContainer: {
-        position: 'absolute',
-        left: '0px'
-	},	
-	buttonNav: {
-		margin: '20px'
-	},  
-	paper: {
-        position:'relative',
-        zIndex: '1000',
-        left: '0px',
-        margin: '0px',
-        padding: '10px',
-        width:'226px',
-        // top: '120px'
-	},
-	buttonLayer: {
-		position:'relative',
-        margin: '5px',
-        padding: '5px',
-        width: '90%',
-        fontSize: '10px'
-    },
-    buttonDevType: {
-		position:'relative',
-        margin: '5px',
-        padding: '5px',
-        width: '90%',
-    },
-    icon: {
-        marginRight: '6px'
-	},	
-	wrapper: {
-        left:' 205px',
-        width: '210px',
-        opacity: 0.8,
-        outline: '1px #ccc solid',
-        position: 'absolute',
-        background: 'white',
-        fontSize: '12px',
-        margin: '4px 5px',
-        padding: '0px'
-    },
-    action: {
-        padding: '1px',
-        margin: '0px',
-        fontSize: '10px',
-        width: '70px'
-    }
-  });
-
-const chartColumnConfig = ({name, data, categories, colorArray}) => {
-	return {
-		chart: {
-			type: "column"
-		},
-		title: {
-			text: name
-		},
-		colors: colorArray,
-		xAxis: {
-			categories: categories,
-			title: {
-				text: null
-			}
-		},
-		yAxis: {
-			min: 0,
-			title: {
-				text: name,
-				align: "high"
-			},
-			labels: {
-				overflow: "justify"
-			}
-		},
-		legend: {
-			enabled: false
-		},
-		plotOptions: {
-			bar: {
-				dataLabels: {
-				enabled: true
-				}
-			}
-		},
-		credits: {
-			enabled: false
-		},
-		series: [
-			{
-				"name": name,
-				"colorByPoint": true,
-				"data": data
-			}
-		]
-	}
-}
 class MapStart extends Component {
     handleNavigation = val => {
 		this.props.history.push(val);
@@ -178,7 +78,7 @@ class MapStart extends Component {
 					<Grid container justify="center">
 						<Grid item xs={4}>
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
-							<ReactHighcharts config={chartColumnConfig({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts config={metricConfig.chartColumn({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
 						</Grid>
 						{/* <Grid item xs={4}> */}
 							{/* chart for housing units by  dev type W TOTAL ABOVE*/}					
@@ -186,11 +86,11 @@ class MapStart extends Component {
 						{/* </Grid> */}
 						<Grid item xs={4}>
 							{/* chart for jobs by dev type W TOTAL ABOVE*/}					
-							<ReactHighcharts config={chartColumnConfig({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts config={metricConfig.chartColumn({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
 						</Grid>
 						<Grid item xs={4}>
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
-							<ReactHighcharts config={chartColumnConfig({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts config={metricConfig.chartColumn({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
 						</Grid>
 						<Grid item sx={12}>
 							<Button className={classes.buttonNav} variant="raised" color="secondary" onClick={() => this.handleNavigation('metrics')}>

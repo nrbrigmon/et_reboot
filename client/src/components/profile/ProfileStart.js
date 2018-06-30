@@ -6,37 +6,11 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import Message from 'material-ui-icons/Message';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Edit from 'material-ui-icons/Edit';
+import _ProfileStyles from './_ProfileStyles';
 
-const styles = ({
-  paper: {
-		padding: '0px 20px 20px 20px',
-		margin: '40px 20px 20px 20px',
-		width: '80%'
-  },
-  avatar: {
-    height: '80px',
-		width: '80px',
-		margin: '0 auto',
-		marginBottom: '20px'
-  },
-  bio: {
-		margin: '20px',
-		padding: '20px'
-	},
-  leftIcon: {
-		marginRight: '10px',
-  },
-  button: {
-	  margin: '0 auto',
-	  maxWidth: '180px',
-	  marginTop: '10px',
-	  marginBottom: '10px'
-  }
-	
-});
-
+const styles = theme => _ProfileStyles(theme);
 
 class ProfileStart extends Component {
 

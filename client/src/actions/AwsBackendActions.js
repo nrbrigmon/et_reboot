@@ -4,21 +4,29 @@ export const uploadFileToS3 = (file) => async dispatch => {
 	
 	let formData = new FormData();
 	formData.append('file', file);
-	console.log(formData)	
+	// console.log(formData)	
 	const res = await axios.post('/api/aws_queries/s3', formData, {
 		headers: {
 		  'Content-Type': 'multipart/form-data'
 		}
 	});
-	console.log(res);
-	dispatch({ type: 'SEND_TOAST', payload: "File Saved!" });
+	// console.log(res);
+	dispatch({ type: 'SEND_TOAST', payload: { msg: "File Saved!", open: true } });
 	
 }
 
-export const getFileFromS3 = (id) => async dispatch => {
+export const getFileFromS3 = (bucketKey) => async dispatch => {
 	
-	const res = await axios.get('/api/aws_queries/s3'+id);
-	// console.log(res);
+	const res = await axios.get('/api/aws_queries/s3/'+bucketKey);
+	console.log(res);
+	dispatch({ type: 'TEST_FROM_S3', payload: res.data });
+}
+
+export const getAllFromS3 = () => async dispatch => {
+	
+	const res = await axios.get('/api/aws_queries/s3');
+	
+	console.log(res);
 	dispatch({ type: 'TEST_FROM_S3', payload: res.data });
 }
 /*

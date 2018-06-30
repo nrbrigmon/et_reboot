@@ -4,7 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import { CssBaseline } from 'material-ui';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 //  {/*CssBaseline is like normalize in that it makes CSS equal across all browsers*/}
 
 import Welcome from './splash/Welcome';

@@ -12,7 +12,7 @@ export const get = (name) => {
 }
 
 export const itemExists = (name) => {    
-	if (localStorage.getItem(name)){
+	if (localStorage.getItem(name).length > 2){
         return true;
     } else {
         return false;

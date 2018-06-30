@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Wrapper900 from '../wrappers/Wrapper900';
 import Typography from 'material-ui/Typography';
 
@@ -10,11 +10,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import metricList from './MetricList';
+import metricList from './metricList';
 import { withStyles } from 'material-ui/styles';
-
-// import { connect } from 'react-redux';
-// import * as actions from '../../../actions';
 
 const styles = theme => ({
 	buttonAction: {

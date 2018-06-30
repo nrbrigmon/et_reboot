@@ -7,8 +7,8 @@ import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-pr
 import WelcomeCard from './WelcomeCard';
 import CheckIcon from 'material-ui-icons/Check';
 import Wrapper900 from '../wrappers/Wrapper900';
-import Button from 'material-ui/Button';
-import welcomeActions from './WelcomeActions';
+import Button from '@material-ui/core/Button';
+import welcomeActions from './welcomeActions';
 import _WelcomeStyles from './_WelcomeStyles';
 
 const styles = theme => (_WelcomeStyles(theme));

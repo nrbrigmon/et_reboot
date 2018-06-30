@@ -9,7 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Typography from 'material-ui/Typography';
 
 import DevTypeBuildingMixTable from './DevTypeBuildingMixTable';

@@ -1,21 +1,13 @@
-import * as localStorageMethods from './_localStorageMethods';
+import * as localStorageMethods from '../utils/_localStorageMethods';
+import * as helper from '../utils/_helperMethods';
 
-function isEmptyObject(obj) {
-    for(var prop in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        return false;
-      }
-    }
-    return true;
-  }
 function modifyBaseLayer(state, payload){
 	let newState;
-	if (isEmptyObject(payload)){
+	if (helper.isEmptyObject(payload)){
 		newState = state;
 	} else {
 		newState = payload;
 	};
-	console.log(newState);
 	return newState;
 }
 const LAYER_NAME = 'baseMapLayer';
@@ -25,7 +17,6 @@ export default function(state = [], {type, payload} ) {
 	if (localStorageMethods.itemExists(LAYER_NAME)) {
 		state = localStorageMethods.get(LAYER_NAME);
 	}
-	console.log(type, payload)
 	switch (type) {
 		case 'SET_BASE_LAYER':
 			baseMapLayer = modifyBaseLayer(state, payload);

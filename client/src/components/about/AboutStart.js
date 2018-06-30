@@ -6,10 +6,10 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
 import { Typography } from 'material-ui';
-import _AboutSyles from './_AboutSyles';
+import _AboutStyles from './_AboutStyles';
 import aboutInputs from './aboutInputs';
 
-const styles = theme => (_AboutSyles(theme));
+const styles = theme => _AboutStyles(theme);
 
 class AboutStart extends Component {
 

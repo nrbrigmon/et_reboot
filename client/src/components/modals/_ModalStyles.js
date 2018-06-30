@@ -7,6 +7,10 @@ export default (theme) => ({
         margin: '0 10px 0 10px',
         maxWidth: '180px'
     },
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 250,
+    },
     dropzone: {
       width: "100%",
       height: '160px',

@@ -7,7 +7,7 @@ import Grid from 'material-ui/Grid';
 
 import inputFields from './inputs/physicalInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
-import PercentStatusCheck from '../../_PercentStatusCheck';
+import PercentStatusCheck from '../../../utils/_PercentStatusCheck';
 import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';
 
 

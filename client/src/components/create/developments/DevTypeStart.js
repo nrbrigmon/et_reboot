@@ -9,7 +9,7 @@ import DevTypeAttributes from './DevTypeAttributes';
 import DevTypeReview from './DevTypeReview';
 import { Route } from 'react-router-dom';
 import Wrapper900 from '../../wrappers/Wrapper900';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({

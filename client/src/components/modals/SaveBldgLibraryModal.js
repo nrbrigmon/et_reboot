@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';

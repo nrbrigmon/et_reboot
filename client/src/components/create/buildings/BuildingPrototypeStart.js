@@ -4,7 +4,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 import { Link, Route } from 'react-router-dom';
@@ -18,34 +18,9 @@ import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingMenu from './menu/BuildingMenu';
 import LoadBldgAttrModal from '../../modals/LoadBldgAttrModal';
+import _FormStyles from './_FormStyles';
 
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		margin: 0,
-		marginTop: '100px'
-	},
-	appbar: {
-		top: '60px'
-	},
-	paper: {
-	  	textAlign: 'center',
-	},
-	button: {
-		margin: '10px 10px 10px 10px',
-		width: '150px'
-	},
-	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
-		width: '80%'
-	},
-	indicator: {
-		margin: '40px',
-		padding: '40px'		
-	}
-  });
+const styles = theme => _FormStyles(theme);
 
   class BuildingPrototypeStart extends Component {
 	constructor(props) {

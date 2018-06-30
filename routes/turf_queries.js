@@ -22,9 +22,10 @@ router.post('/grid', (request, response, next) =>{
 		cellSide = 0.005;
 	}
 	
-	// **** TODO DEPENDING ON EXTENT OF DRAW, change cellSide number + or -
 	var options = {units: 'miles'};
+	//step three - take bounding box and run triangle grid function through it
 	var triangleGrid = Turf.triangleGrid(bboxArray, cellSide, options);
+	//step four - clip the triangle grid with the original draw shape!
 	var postTurfClip = turfClip(src, triangleGrid)
 	
 	response.json(postTurfClip);
@@ -75,9 +76,7 @@ router.post('/intersects', (request, response, next) =>{
 	var { baseMapLayer } = request.body;
 	var { paintLayer } = request.body;
 	var { activeDevType } = request.body;
-	// console.log('running intersects query');
-	// console.log("# of features ", baseMapLayer['features'].length);
-	// console.log("Paint Layer\n\n",stringify(paintLayer.geometry.coordinates[0]));
+	
 	var __count1 = 0;
 	var __count2 = 0;
 	var updatedFeatures = baseMapLayer['features'].map( elem => {
