@@ -9,7 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Wrapper900 from '../wrappers/Wrapper900';
 
-
 const sampleList = [0,1,2,3,4,5,6,7,8,9,10,11];
 
 class GalleryStart extends Component {

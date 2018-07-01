@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Tooltip from 'material-ui/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -31,34 +31,9 @@ import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
 import UpdateToast from '../modals/UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
 
-const styles = theme => ({
-	column: {
-		margin: '0 auto'
-	},
-	button: {
-		width: '100%',
-		margin: '0 auto',
-		maxWidth: '180px',
-		marginTop: '10px',
-		marginBottom: '10px'
-	},
-	leftIcon: {
-	  marginRight: '10px',
-	},
-	libraryWrapper: {
-		minHeight: '300px'
-	},
-	cardAction: {
-		margin: '0 auto'
-	},
-	cardButton: {
-		margin: '0 1px 0 1px'
-	},  
-	close: {
-		width: theme.spacing.unit * 4,
-		height: theme.spacing.unit * 4,
-	}
-  });
+import CreateStyles from '../../../styles/CreateStyles';
+
+const styles = theme => CreateStyles(theme);
 
 class CreateStart extends Component {
 	constructor(props) {

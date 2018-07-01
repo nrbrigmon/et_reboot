@@ -1,13 +1,12 @@
 import React from 'react';
 
 import Radio from '@material-ui/core/Radio';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import hotel5 from '../create/buildings/examples/hotelFiveStory';
-
-import List, {ListItem, ListItemText} from 'material-ui/List';
 
 const blgSampleList = [
   {

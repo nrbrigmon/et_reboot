@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 
-import _ModalStyles from './_ModalStyles';
+import _ModalStyles from '../../styles/ModalStyles';
 
 const styles = theme => _ModalStyles(theme);
 

@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Message from '@material-ui/icons/Message';
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit';
-import _ProfileStyles from './_ProfileStyles';
+import _ProfileStyles from '../../styles/_ProfileStyles';
 
 const styles = theme => _ProfileStyles(theme);
 

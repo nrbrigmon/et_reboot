@@ -29,8 +29,6 @@
 	"author": "nate brigmon",
 	"license": "ISC",
 	"dependencies": {
-		"@material-ui/core": "^1.0.0",
-		"@material-ui/icons": "^1.0.0",
 		"@turf/turf": "^5.1.6",
 		"aws-sdk": "^2.263.1",
 		"body-parser": "^1.18.2",

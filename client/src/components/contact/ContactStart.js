@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
 import Paper from '@material-ui/core/Paper';
-import List, { ListItem } from 'material-ui/List';
-import Wrapper900 from '../wrappers/Wrapper900';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Send from '@material-ui/icons/Send';
+import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
 
 const styles = ({

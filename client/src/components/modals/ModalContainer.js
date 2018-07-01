@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Modal from 'material-ui/Modal';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { withStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
-import _ModalStyles from './_ModalStyles';
+import _ModalStyles from '../../styles/ModalStyles';
 
 const styles = theme => _ModalStyles(theme);
 

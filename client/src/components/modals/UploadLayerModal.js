@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import FileUpload from '@material-ui/icons/FileUpload';
 import ModalContainer from './ModalContainer';
-import _ModalStyles from './_ModalStyles';
+import _ModalStyles from '../../styles/ModalStyles';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';

@@ -8,13 +8,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-prototype-scene';
 import WelcomeCard from './WelcomeCard';
 import Wrapper900 from '../wrappers/Wrapper900';
 import welcomeActions from './welcomeActions';
-import _WelcomeStyles from './_WelcomeStyles';
+import _WelcomeStyles from '../../styles/WelcomeStyles';
 
-const styles = theme => (_WelcomeStyles(theme));
+const styles = theme => _WelcomeStyles(theme);
 
 class Welcome extends Component {
 	handleNavigation = (destination) => {

@@ -19,7 +19,7 @@ import WrapperFull from '../wrappers/WrapperFull';
 
 import './customLeafletDraw.css';
 import UpdateToast from '../modals/UpdateToast';
-import _MapStyles from './_MapStyles';
+import _MapStyles from '../../styles/MapStyles';
 import * as metricConfig from '../metrics/metricConfig';
 
 const styles = theme => _MapStyles(theme);

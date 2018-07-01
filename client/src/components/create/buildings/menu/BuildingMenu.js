@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
-import Menu, { MenuItem } from 'material-ui/Menu';
-// import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
 
-import AppBar from 'material-ui/AppBar';
-
+import AppBar from '@material-ui/core/AppBar';
 
 const MenuItemOptions = (ctx) => {
   console.log(ctx);

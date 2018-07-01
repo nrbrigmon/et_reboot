@@ -4,10 +4,10 @@ import React from 'react';
 // import * as actions from '../../actions';
 
 import Grid from '@material-ui/core/Grid';
-import Checkbox from 'material-ui/Checkbox';
-
-import List, { ListItem, ListItemText } from 'material-ui/List';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class AddBldgModalContents extends React.Component {
 

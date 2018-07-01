@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { MenuItem } from 'material-ui/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class InputFieldsComponent extends Component {
     constructor(props){

@@ -12,7 +12,6 @@ import reducers from './reducers';
 // import registerServiceWorker from './registerServiceWorker';
 // import { unregister } from './registerServiceWorker';
 
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));

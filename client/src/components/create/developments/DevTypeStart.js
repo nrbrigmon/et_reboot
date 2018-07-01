@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import DevTypeBuildingMix from './DevTypeBuildingMix';
 import DevTypeAttributes from './DevTypeAttributes';
 import DevTypeReview from './DevTypeReview';
-import { Route } from 'react-router-dom';
 import Wrapper900 from '../../wrappers/Wrapper900';
-import Button from '@material-ui/core/Button';
 
-import _DevTypeStyles from './_DevTypeStyles';
+import _DevTypeStyles from '../../../styles/DevTypeStyles';
 
 const styles = theme => _DevTypeStyles(theme);
 
