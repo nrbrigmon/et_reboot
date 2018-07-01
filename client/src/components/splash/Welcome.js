@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import CheckIcon from '@material-ui/icons/Check';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-prototype-scene';
 import WelcomeCard from './WelcomeCard';
-import CheckIcon from 'material-ui-icons/Check';
 import Wrapper900 from '../wrappers/Wrapper900';
-import Button from '@material-ui/core/Button';
 import welcomeActions from './welcomeActions';
 import _WelcomeStyles from './_WelcomeStyles';
 

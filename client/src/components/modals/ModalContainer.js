@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'material-ui/Modal';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import _ModalStyles from './_ModalStyles';
 

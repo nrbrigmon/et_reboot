@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import DevTypeBuildingMix from './DevTypeBuildingMix';
 import DevTypeAttributes from './DevTypeAttributes';
@@ -11,18 +11,9 @@ import { Route } from 'react-router-dom';
 import Wrapper900 from '../../wrappers/Wrapper900';
 import Button from '@material-ui/core/Button';
 
+import _DevTypeStyles from './_DevTypeStyles';
 
-const styles = theme => ({
-	card: {
-		padding: '20px'
-	},
-	cardAction: {
-		margin: '0 auto'
-	},
-	cardButton: {
-		margin: '0 1px 0 1px'
-	}
-});
+const styles = theme => _DevTypeStyles(theme);
 
 class DevTypeStart extends Component {
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import MapIcon from 'material-ui-icons/Map';
-import InfoIcon from 'material-ui-icons/Info';
-import Domain from 'material-ui-icons/Domain';
-// import ImageIcon from 'material-ui-icons/Image';
-// import MailIcon from 'material-ui-icons/Mail';
-// import AccountCircle from 'material-ui-icons/AccountCircle';
+import MapIcon from '@material-ui/icons/Map';
+import InfoIcon from '@material-ui/icons/Info';
+import Domain from '@material-ui/icons/Domain';
+// import ImageIcon from '@material-ui/icons/Image';
+// import MailIcon from '@material-ui/icons/Mail';
+// import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const classes = {
     fontSize: '16px'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ThreeBuildingPrototype from './three-building-prototype';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 
 // Inline styles applied in the HTML you build here
 class ThreeBuildingPrototypeScene extends Component {

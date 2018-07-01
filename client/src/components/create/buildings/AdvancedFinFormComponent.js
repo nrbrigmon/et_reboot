@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Grid from 'material-ui/Grid';
 import inputFields from './inputs/advancedFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import NumberFormat from 'react-number-format';
 
 class AdvancedFinFormComponent extends Component {

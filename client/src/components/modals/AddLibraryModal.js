@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -10,7 +10,7 @@ import ModalContainer from './ModalContainer';
 
 import _ModalStyles from './_ModalStyles';
 
-const styles = theme => (_ModalStyles(theme));
+const styles = theme => _ModalStyles(theme);
 
 class AddLibraryModal extends Component {
     saveBuildings = () =>{

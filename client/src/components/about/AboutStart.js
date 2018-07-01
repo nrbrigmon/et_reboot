@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';

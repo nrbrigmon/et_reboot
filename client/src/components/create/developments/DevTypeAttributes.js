@@ -3,51 +3,20 @@ import { withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 
 import Button from '@material-ui/core/Button';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 import columns from './inputs/attributeColumns';
 import DevTypeAttributesTable from './DevTypeAttributesTable';
 
-const styles = theme => ({
-	card: {
-		padding: '20px'
-	},
-	cardAction: {
-		margin: '0 auto'
-	},
-	cardButton: {
-		margin: '0 1px 0 1px'
-	},
-	tableContainer: {
-		overflowY: 'hidden'
-	},
-	table: {
-		minWidth: 700,
-	},
-	header: {
-		textAlign: 'right',
-		padding: '5px'
-	},
-	cell: {
-		padding: '5px 8px',
-	},
-	field: {
-		width: '90px'
-	},
-	devTypes: {
-		width: '300px',
-		padding: '5px'
-	},
-	delete: {
-		margin: '0px 5px 5px 0px'
-	}
-});
+import _DevTypeStyles from './_DevTypeStyles';
+
+const styles = theme => _DevTypeStyles(theme);
   
 class DevTypeAttributes extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
-// import { withStyles } from 'material-ui/styles';
+// import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';

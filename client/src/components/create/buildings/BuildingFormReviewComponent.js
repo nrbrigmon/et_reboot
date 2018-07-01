@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Grid from 'material-ui/Grid';
-// import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+// import { withStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
 import ReactHighcharts from "react-highcharts";
 import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';

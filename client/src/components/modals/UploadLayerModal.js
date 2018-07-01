@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import FileUpload from 'material-ui-icons/FileUpload';
+import FileUpload from '@material-ui/icons/FileUpload';
 import ModalContainer from './ModalContainer';
 import _ModalStyles from './_ModalStyles';
 

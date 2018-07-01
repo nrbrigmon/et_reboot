@@ -4,13 +4,13 @@ import { withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 
 import Button from '@material-ui/core/Button';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 import inputFields from './inputs/basicFinancialInputs';
 import InputFieldsComponent from './inputs/InputFieldsComponent';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import NumberFormat from 'react-number-format';
 
 class BasicFinFormComponent extends Component {

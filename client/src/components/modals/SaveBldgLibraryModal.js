@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from 'material-ui/styles';
-import TextField from 'material-ui/TextField';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -10,7 +10,7 @@ import ModalContainer from './ModalContainer';
 
 import _ModalStyles from './_ModalStyles';
 
-const styles = theme => (_ModalStyles(theme));
+const styles = theme => _ModalStyles(theme);
 
 class SaveBldgLibraryModal extends Component {
 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { TableCell, TableRow } from 'material-ui/Table';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import PercentStatusCheck from '../../../utils/_PercentStatusCheck';
 
-import { InputAdornment } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
-import Delete from 'material-ui-icons/Delete';
+import { InputAdornment } from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
 import './devCell.css';
 
 class DevTypeBuildingMixTableRow extends Component {

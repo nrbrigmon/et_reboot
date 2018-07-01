@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
-import Paper from 'material-ui/Paper';
-import FileUpload from 'material-ui-icons/FileUpload';
-import LayersClear from 'material-ui-icons/LayersClear';
-import Edit from 'material-ui-icons/Edit';
+import Paper from '@material-ui/core/Paper';
+import FileUpload from '@material-ui/icons/FileUpload';
+import LayersClear from '@material-ui/icons/LayersClear';
+import Edit from '@material-ui/icons/Edit';
 import MapDrawHelper from './MapDrawHelper';
 
 class MapOverlayPanel extends Component {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Wrapper900 from '../wrappers/Wrapper900';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Avatar from 'material-ui/Avatar';
-import Message from 'material-ui-icons/Message';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import Message from '@material-ui/icons/Message';
 import Button from '@material-ui/core/Button';
-import Edit from 'material-ui-icons/Edit';
+import Edit from '@material-ui/icons/Edit';
 import _ProfileStyles from './_ProfileStyles';
 
 const styles = theme => _ProfileStyles(theme);

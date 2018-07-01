@@ -3,7 +3,7 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import * as actions from '../../actions';
 
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 import Checkbox from 'material-ui/Checkbox';
 
 import List, { ListItem, ListItemText } from 'material-ui/List';
