@@ -18,9 +18,9 @@ import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingMenu from './menu/BuildingMenu';
 import LoadBldgAttrModal from '../../modals/LoadBldgAttrModal';
-import _FormStyles from './_FormStyles';
+import FormStyles from '../../../styles/FormStyles';
 
-const styles = theme => _FormStyles(theme);
+const styles = theme => FormStyles(theme);
 
   class BuildingPrototypeStart extends Component {
 	constructor(props) {

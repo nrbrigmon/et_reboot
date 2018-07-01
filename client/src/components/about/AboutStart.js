@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
-import { Typography } from 'material-ui';
+import Typography from '@material-ui/core/Typography';
 import _AboutStyles from '../../styles/AboutStyles';
 import aboutInputs from './aboutInputs';
 

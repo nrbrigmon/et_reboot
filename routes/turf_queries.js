@@ -31,45 +31,46 @@ router.post('/grid', (request, response, next) =>{
 	response.json(postTurfClip);
 
 });
-router.post('/test', (request, response, next) =>{
-	console.log('ttttt')
-	var poly1 = Turf.polygon([[
-		[-122.801742, 45.48565],
-		[-122.801742, 45.60491],
-		[-122.584762, 45.60491],
-		[-122.584762, 45.48565],
-		[-122.801742, 45.48565]
-	  ]]);
+
+// router.post('/test', (request, response, next) =>{
+// 	console.log('ttttt')
+// 	var poly1 = Turf.polygon([[
+// 		[-122.801742, 45.48565],
+// 		[-122.801742, 45.60491],
+// 		[-122.584762, 45.60491],
+// 		[-122.584762, 45.48565],
+// 		[-122.801742, 45.48565]
+// 	  ]]);
 	  
-	  var poly2 = Turf.polygon([[
-		[-122.520217, 45.535693],
-		[-122.64038, 45.553967],
-		[-122.720031, 45.526554],
-		[-122.669906, 45.507309],
-		[-122.723464, 45.446643],
-		[-122.532577, 45.408574],
-		[-122.487258, 45.477466],
-		[-122.520217, 45.535693]
-	  ]]);
+// 	  var poly2 = Turf.polygon([[
+// 		[-122.520217, 45.535693],
+// 		[-122.64038, 45.553967],
+// 		[-122.720031, 45.526554],
+// 		[-122.669906, 45.507309],
+// 		[-122.723464, 45.446643],
+// 		[-122.532577, 45.408574],
+// 		[-122.487258, 45.477466],
+// 		[-122.520217, 45.535693]
+// 	  ]]);
 	  
-	  var intersection = Turf.intersect(poly1, poly2);
-	  console.log('starting interssection ',intersection);
-	let paint = [[-97.752512,30.276975],[-97.752807,30.277036],[-97.752933,30.27673],[-97.752418,30.276723],[-97.752512,30.276975]];
-	let a = [[-97.75273229174094,30.27685104142831],[-97.75269556979384,30.27688269298103],[-97.75268514697034,30.27688269298103],[-97.75268514697034,30.27681032718946],[-97.75273229174094,30.27685104142831]];
-	let b = [[-97.75269556979384,30.27688269298103],[-97.75268514697034,30.276891676669916],[-97.75268514697034,30.27688269298103],[-97.75269556979384,30.27688269298103]];
-	console.log('ok')
-	let intersection1 = Turf.intersect( Turf.polygon([a]),  Turf.polygon([paint]) );
-	let intersection2 = Turf.intersect( Turf.polygon([b]),  Turf.polygon([paint]) );
-	// console.log(intersection1);
-	// console.log(intersection2);
-	var c1 = Turf.centroid(Turf.polygon([a]))
-	var c2 = Turf.centroid(Turf.polygon([b]))
-	var intersection3 = Turf.booleanPointInPolygon(c1, Turf.polygon([paint]));
-	var intersection4 = Turf.booleanPointInPolygon(c2, Turf.polygon([paint]));
-	// console.log(intersection3);
-	// console.log(intersection4);
-	response.json("testing complete");
-})
+// 	  var intersection = Turf.intersect(poly1, poly2);
+// 	  console.log('starting interssection ',intersection);
+// 	let paint = [[-97.752512,30.276975],[-97.752807,30.277036],[-97.752933,30.27673],[-97.752418,30.276723],[-97.752512,30.276975]];
+// 	let a = [[-97.75273229174094,30.27685104142831],[-97.75269556979384,30.27688269298103],[-97.75268514697034,30.27688269298103],[-97.75268514697034,30.27681032718946],[-97.75273229174094,30.27685104142831]];
+// 	let b = [[-97.75269556979384,30.27688269298103],[-97.75268514697034,30.276891676669916],[-97.75268514697034,30.27688269298103],[-97.75269556979384,30.27688269298103]];
+// 	console.log('ok')
+// 	let intersection1 = Turf.intersect( Turf.polygon([a]),  Turf.polygon([paint]) );
+// 	let intersection2 = Turf.intersect( Turf.polygon([b]),  Turf.polygon([paint]) );
+// 	// console.log(intersection1);
+// 	// console.log(intersection2);
+// 	var c1 = Turf.centroid(Turf.polygon([a]))
+// 	var c2 = Turf.centroid(Turf.polygon([b]))
+// 	var intersection3 = Turf.booleanPointInPolygon(c1, Turf.polygon([paint]));
+// 	var intersection4 = Turf.booleanPointInPolygon(c2, Turf.polygon([paint]));
+// 	// console.log(intersection3);
+// 	// console.log(intersection4);
+// 	response.json("testing complete");
+// })
 
 router.post('/intersects', (request, response, next) =>{
 	//step one - get bounding box of feature that was just drawn

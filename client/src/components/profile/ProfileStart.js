@@ -8,9 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Message from '@material-ui/icons/Message';
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit';
-import _ProfileStyles from '../../styles/_ProfileStyles';
+import ProfileStyles from '../../styles/ProfileStyles';
 
-const styles = theme => _ProfileStyles(theme);
+const styles = theme => ProfileStyles(theme);
 
 class ProfileStart extends Component {
 

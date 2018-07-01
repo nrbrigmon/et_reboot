@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const { aws } = require('../config/keys');
+const shp = require('shpjs')
 const { Router } = require('express');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
@@ -47,6 +48,8 @@ router.get('/s3', (request, response, next) => {
     else     response.json(data)
    });
 })
+
+
 router.get('/s3/:bucketKey', (request, response, next) => { 
   const { bucketKey } = request.params;
   // console.log(request.params);
@@ -55,16 +58,27 @@ router.get('/s3/:bucketKey', (request, response, next) => {
     Key: bucketKey
    };
    s3Bucket.getObject(params, function(err, data) {
-     if (err) console.log(err, err.stack); // an error occurred     
-     else     response.json(data)
-
-    // const res = await axios.post('/api/conv_queries/zipToLayer', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // });
-    // // console.log(res);
-    // dispatch({ type: 'SET_BASE_LAYER', payload: res.data });
+    //  console.log(data)
+     if (err) {
+      //  console.log(err, err.stack); // an error occurred     
+      response.json("ERROR");
+     } else {
+        shp(data["Body"]).then(function(geojson){
+            //see bellow for whats here this internally call shp.parseZip()
+            // return updated baselayer copy
+            var updatedFeatures = geojson['features'].map( elem => {
+                //run through features and empty it out... for science
+                //later we can efficiently add stuff
+                elem.properties = { }
+                return elem;
+            });
+            
+            var updatedBaseLayer = geojson; //make copy of layer
+            updatedBaseLayer['features'] = updatedFeatures; //update copy
+            // console.log("done");
+            response.json(updatedBaseLayer);
+        });
+      }  
 
    }); 
 

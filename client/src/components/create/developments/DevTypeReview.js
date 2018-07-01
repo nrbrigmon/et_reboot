@@ -12,23 +12,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import _DevTypeStyles from '../../../styles/DevTypeStyles';
 
-const styles = theme => ({
-	table: {
-	  minWidth: 700,
-	},
-	card: {
-		padding: '20px'
-	},
-	cardAction: {
-		margin: '0 auto'
-	},
-	cardButton: {
-		margin: '0 1px 0 1px'
-	}
-  });
+const styles = theme => _DevTypeStyles(theme);
 
-  
 class DevTypeReview extends Component {
 
 

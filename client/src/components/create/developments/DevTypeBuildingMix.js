@@ -13,8 +13,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import DevTypeBuildingMixTable from './DevTypeBuildingMixTable';
-
-
 import _DevTypeStyles from '../../../styles/DevTypeStyles';
 
 const styles = theme => _DevTypeStyles(theme);

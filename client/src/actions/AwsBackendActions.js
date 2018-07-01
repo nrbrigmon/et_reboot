@@ -18,16 +18,15 @@ export const uploadFileToS3 = (file) => async dispatch => {
 export const getFileFromS3 = (bucketKey) => async dispatch => {
 	
 	const res = await axios.get('/api/aws_queries/s3/'+bucketKey);
-	console.log(res);
-	dispatch({ type: 'TEST_FROM_S3', payload: res.data });
+	// console.log(res);
+	dispatch({ type: 'SET_BASE_LAYER', payload: res.data });
 }
 
-export const getAllFromS3 = () => async dispatch => {
+export const getAllLayersFromS3 = () => async dispatch => {
 	
 	const res = await axios.get('/api/aws_queries/s3');
-	
-	console.log(res);
-	dispatch({ type: 'TEST_FROM_S3', payload: res.data });
+	// console.log(res);
+	dispatch({ type: 'FETCH_S3_LAYERS', payload: res.data["Contents"] });
 }
 /*
 	see calvinmetcalf shpzip to geojson

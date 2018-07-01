@@ -17,12 +17,13 @@ import AcresPerDevType from "../../utils/_AcresPerDevType";
 import * as mm from "../../utils/_MapMath";
 import WrapperFull from '../wrappers/WrapperFull';
 
-import './customLeafletDraw.css';
 import UpdateToast from '../modals/UpdateToast';
-import _MapStyles from '../../styles/MapStyles';
-import * as metricConfig from '../metrics/metricConfig';
 
-const styles = theme => _MapStyles(theme);
+import * as metricConfig from '../metrics/metricConfig';
+import '../../styles/customLeafletDraw.css';
+import MapStyles from '../../styles/MapStyles';
+
+const styles = theme => MapStyles(theme);
 
 Highcharts.Highcharts.setOptions({
     lang: {

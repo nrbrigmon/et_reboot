@@ -8,7 +8,7 @@ import PercentStatusCheck from '../../../utils/_PercentStatusCheck';
 import { InputAdornment } from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
-import './devCell.css';
+import '../../../styles/devCell.css';
 
 class DevTypeBuildingMixTableRow extends Component {
     handleChange = (e, rowId) => {

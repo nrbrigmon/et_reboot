@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 import ThreeBuildingPrototypeScene from '../threeModels/three-building-prototype-scene';
-import './_tableCSS.css';
+import '../../../styles/tableCSS.css';
 
 const chartConfig = (data, title) => {
 	return {

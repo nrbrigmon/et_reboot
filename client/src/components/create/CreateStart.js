@@ -31,8 +31,7 @@ import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
 import UpdateToast from '../modals/UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
 
-import CreateStyles from '../../../styles/CreateStyles';
-
+import CreateStyles from '../../styles/CreateStyles';
 const styles = theme => CreateStyles(theme);
 
 class CreateStart extends Component {

@@ -2,22 +2,15 @@ import React, {Component} from 'react';
 import L from 'leaflet';
 import { } from "react-leaflet-draw";
 import * as _ from 'lodash';
+import * as helper from '../../utils/_helperMethods';
 
 const mapCSS = {
     height: '500px'
 };
 const MAP_CENTER_COORDS = [30.2764099, -97.7507724];
 
-function isEmptyObject(obj) {
-    for(var prop in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        return false;
-      }
-    }
-    return true;
-  }
 function getDevTypeColor(feature){
-    if (!isEmptyObject(feature.properties.activeDevType)){
+    if (!helper.isEmptyObject(feature.properties.activeDevType)){
         return feature.properties.activeDevType.devTypeColor;
     } else {
         return "#eeeeee";
@@ -55,7 +48,7 @@ class MapContainer extends Component {
         // baseLayer load if we have one....
         // console.log(this.props.baseMapLayer);
         
-        if (this.props.baseMapLayer && !isEmptyObject(this.props.baseMapLayer)) {
+        if (this.props.baseMapLayer && !helper.isEmptyObject(this.props.baseMapLayer)) {
             // console.log(this.props.baseMapLayer);
             // console.log('update base layer, no?')
             this.polygon = new L.geoJson(this.props.baseMapLayer, {
@@ -147,9 +140,9 @@ class MapContainer extends Component {
         // console.log(this.props);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);
         // check if position has changed
-        if (same === false && !isEmptyObject(baseMapLayer)) {
+        if (same === false && !helper.isEmptyObject(baseMapLayer)) {
             //if there is an existing layer, we remove it so that...
-            if ( !isEmptyObject(this.polygon) ){
+            if ( !helper.isEmptyObject(this.polygon) ){
                 this.polygon.eachLayer(layer => {
                     this.polygon.removeLayer(layer)
                 });
@@ -176,7 +169,7 @@ class MapContainer extends Component {
         } else if (leafletDrawTrigger === "paintScenarioLayer") {
             this._drawBaseLayer();
         } else if (leafletDrawTrigger === "resetBaseLayer") {
-            if ( !isEmptyObject(this.polygon) ){
+            if ( !helper.isEmptyObject(this.polygon) ){
                 this.polygon.eachLayer(layer => {
                     this.polygon.removeLayer(layer)
                 });
