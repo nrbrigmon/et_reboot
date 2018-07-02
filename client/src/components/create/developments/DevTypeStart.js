@@ -22,9 +22,6 @@ class DevTypeStart extends Component {
 		//sample development type data until i can get some real stuff going
 	}
 
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
 	render() {
 		let pathHome = this.props.match.isExact;
 		// console.log(pathHome);
@@ -39,7 +36,12 @@ class DevTypeStart extends Component {
 					(pathHome) ? <p>welcome home</p> : <span></span>
 				}
 				<div className={classes.cardAction}>
-					{/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/')}>
+					{/* <Button 
+						className={classes.cardButton} 
+						variant="raised" 
+						color="primary" 
+						onClick={()=>helper.navigateTo('create/dev-types/', 
+							this.props)}>
 						About
 					</Button>	 */}
 					<Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>

@@ -79,7 +79,7 @@ export const convertFileToLayer = (file) => async dispatch => {
 		  'Content-Type': 'multipart/form-data'
 		}
 	});
-	// console.log(res);
+	console.log(res);
 	dispatch({ type: 'SET_BASE_LAYER', payload: res.data });
 
 }

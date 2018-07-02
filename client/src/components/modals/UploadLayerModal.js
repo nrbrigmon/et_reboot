@@ -24,7 +24,7 @@ const ExistingLayersDropdown = (ctx) => {
     let { availableS3Layers } = ctx.props;
     let { formControl } = ctx.props;
     let { layerSelection } = ctx;
-    console.log(ctx);
+    // console.log(ctx);
     return (
         <div>
             <FormControl className={formControl}>
@@ -61,7 +61,7 @@ class UploadLayerModal extends Component {
         this.props.getFileFromS3(bucketKey)
     }
     onDrop = (file) => {
-        // this.props.uploadFileToS3(file[0]);
+        this.props.uploadFileToS3(file[0]);
         this.setState({
             isLoading: true
         })

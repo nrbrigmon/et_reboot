@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Wrapper900 from '../wrappers/Wrapper900';
 import Typography from '@material-ui/core/Typography';
+
+import ReactHighcharts from "react-highcharts";
+import Highcharts from 'react-highcharts';
+
+import * as metricConfig from '../metrics/metricConfig';
+import * as helper from "../../utils/_helperMethods";
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -13,19 +20,22 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import metricList from './metricList';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-	buttonAction: {
-		margin: '20px'
-	}
+import MetricStyles from '../../styles/MetricStyles';
+
+const styles = theme => MetricStyles(theme);
+
+Highcharts.Highcharts.setOptions({
+    lang: {
+        thousandsSep: ','
+    }
 });
 
 class MetricStart extends Component {
-	handleNavigation = val => {
-		this.props.history.push(val);
-	}
-	
-	render() {
-		let { classes } = this.props;
+
+	render() {		
+		let { classes, metricData } = this.props;
+		console.log(this.props)
+		let { colorArray, devTypes } = this.props.metricData;
 		return (
 			<Wrapper900>
 				<Grid item sm={12} >
@@ -34,23 +44,32 @@ class MetricStart extends Component {
 					{
 						metricList.map( (item, idx) => {
 							return (
-							<ExpansionPanel key={idx}>
-								<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-									<Typography > {item.headline} </Typography>
-								</ExpansionPanelSummary>
-								<ExpansionPanelDetails>
-									<Typography>
-										{item.content}
-									</Typography>
-								</ExpansionPanelDetails>
-							</ExpansionPanel>
+								<ExpansionPanel key={idx}>
+									<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+										<Typography > {item.headline} </Typography>
+									</ExpansionPanelSummary>
+									<ExpansionPanelDetails>
+										<Typography>
+											{item.content}
+										</Typography>
+										<ReactHighcharts 
+											config={
+												metricConfig.chartColumn({
+													name: item.headline, 
+													data: metricData[item.metric], 
+													categories: devTypes, 
+													colorArray })
+												} />	
+										{ item.component }
+									</ExpansionPanelDetails>
+								</ExpansionPanel>
 							)
 						})
 					}
 					
 					<Button variant="raised" 
 						color="primary" 
-						onClick={()=>this.handleNavigation('map')}
+						onClick={()=>helper.navigateTo('map', this.props)}
 						className={classes.buttonAction}>
 						Back to Map 
 					</Button>
@@ -61,4 +80,10 @@ class MetricStart extends Component {
 	}
 }
 
-export default withStyles(styles)(MetricStart);
+function mapStateToProps(state) {  
+	return { 
+		metricData: state.metricData
+	   }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, null)(MetricStart));

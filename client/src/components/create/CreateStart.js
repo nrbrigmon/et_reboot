@@ -30,16 +30,12 @@ import AddLibraryModal from '../modals/AddLibraryModal';
 import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
 import UpdateToast from '../modals/UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
+import * as helper from '../../utils/_helperMethods';
 
 import CreateStyles from '../../styles/CreateStyles';
 const styles = theme => CreateStyles(theme);
 
 class CreateStart extends Component {
-	constructor(props) {
-		super(props);
-		this.handleNavigation = this.handleNavigation.bind(this);
-		this.removeItemFromList = this.removeItemFromList.bind(this);
-	}
 	componentWillMount(){
 		//load all available buildings in the database
 		if (this.props.availableBldgs.length === 0) {
@@ -58,16 +54,13 @@ class CreateStart extends Component {
 		}
 	}
 	
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
 	newItemInList = (uniqueId) => {
-		this.handleNavigation('create/new/'+uniqueId+'/physical-form');
+		helper.navigateTo('create/new/'+uniqueId+'/physical-form', this.props);
 		this.props.editBuildingPrototype(false);
 	}
 	editItemInList = (selection) => {
 		let _id = selection.uniqueId;
-		this.handleNavigation('create/edit/'+_id+'/physical-form')
+		helper.navigateTo('create/edit/'+_id+'/physical-form', this.props);
 		this.props.editBuildingPrototype(true, selection);
 	}
 
@@ -142,7 +135,10 @@ class CreateStart extends Component {
 							
 							<CardActions >
 								<div className={classes.cardAction}>
-									<Button className={classes.cardButton} variant="raised" color="primary" onClick={() => this.handleNavigation('create/dev-types/building-mix')}>
+									<Button 
+										className={classes.cardButton} 
+										variant="raised" color="primary" 
+										onClick={() => helper.navigateTo('create/dev-types/building-mix', this.props)} >
 										Next: Development Types
 									</Button>	
 								</div>

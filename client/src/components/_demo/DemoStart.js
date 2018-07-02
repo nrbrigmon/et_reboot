@@ -2,34 +2,41 @@ import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Wrapper900 from '../wrappers/Wrapper900';
+import * as helper from '../../utils/_helperMethods';
 
-// import { connect } from 'react-redux';
-// import * as actions from '../../../actions';
+import { withStyles } from '@material-ui/core/styles';
+import GlobalStyles from '../../styles/GlobalStyles';
+const styles = theme => GlobalStyles(theme);
+
 class DemoStart extends Component {
-	handleNavigation = val => {
-		this.props.history.push(val);
-	}
-	
 	render() {
+		const { classes } = this.props;
 		return (
 			<Wrapper900>
-				<Grid item sm={12} >
-					<h2>Demo</h2>
-					in perfect world we'd have an international Demo (sau paulo)
-					and a local demo (austin).
+			<Paper className={classes.paper}>
+					<Grid item sm={12} >
+						<h2>Demo</h2>
+					</Grid>
+					<Grid item sm={12} >
 
-					custom metrics?
-					<Button variant="raised" 
-						color="primary" 
-						onClick={()=>this.handleNavigation('map')}>
-						Back to Map 
-					</Button>
-				</Grid>
+						in perfect world we'd have an international Demo (sau paulo)
+						and a local demo (austin).
+
+						custom metrics?
+					</Grid>
+					<Grid item sm={12} >
+						<Button variant="raised" 
+							color="primary" 
+							onClick={()=>helper.navigateTo('', this.props)} >
+							Back Home 
+						</Button>
+					</Grid>
+				</Paper>
 			</Wrapper900>
 		);
 	}
 }
 
-export default DemoStart
-;
+export default withStyles(styles)(DemoStart);;

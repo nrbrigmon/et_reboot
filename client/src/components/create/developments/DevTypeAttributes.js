@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import columns from './inputs/attributeColumns';
 import DevTypeAttributesTable from './DevTypeAttributesTable';
+import * as helper from '../../../utils/_helperMethods';
 
 import _DevTypeStyles from '../../../styles/DevTypeStyles';
 
@@ -20,10 +21,6 @@ const styles = theme => _DevTypeStyles(theme);
   
 class DevTypeAttributes extends Component {
 
-
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
 	render() {
 		const { classes } = this.props;
 		const { section1,section2,section3 } = columns;
@@ -67,13 +64,16 @@ class DevTypeAttributes extends Component {
 
 						<CardActions>
 							<div className={classes.cardAction}>
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/building-mix')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="primary" 
+									onClick={()=>helper.navigateTo('create/dev-types/building-mix', this.props)} >
 									Back
 								</Button>	
-                                {/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
-									Review 
-								</Button>	 */}
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="primary" 
+									onClick={()=>helper.navigateTo('map', this.props)} >
                                     Next: Mapping
                                 </Button>	
 							</div>

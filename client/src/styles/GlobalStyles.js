@@ -10,9 +10,9 @@ export default (theme) => ({
 	},
 	list: {
 		fontSize: '12px'
-    },
-    listItem: {
-        paddingTop: '4px',
-        paddingBottom: '4px'
-    }
+	},
+	listItem: {
+			paddingTop: '4px',
+			paddingBottom: '4px'
+	}
 })

@@ -9,14 +9,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import _WelcomeStyles from '../../styles/WelcomeStyles';
+import * as helper from '../../utils/_helperMethods';
 
 const styles = theme => _WelcomeStyles(theme);
 
 class WelcomeCard extends Component {
-	handleNavigation = (destination) => {
-        // console.log(destination);
-		this.props.history.push('/'+destination+'');
-	}
+
 	render() {
         const { classes } = this.props;
         // console.log(classes);
@@ -32,7 +30,8 @@ class WelcomeCard extends Component {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" onClick={()=>this.handleNavigation(this.props.actionDestination)}>
+                        <Button size="small" color="primary" 
+						onClick={()=>helper.navigateTo(this.props.actionDestination, this.props)} >
                             {this.props.actionText}
                         </Button>
                     </CardActions>

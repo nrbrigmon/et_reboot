@@ -11,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import * as helper from '../../../utils/_helperMethods';
 
 import _DevTypeStyles from '../../../styles/DevTypeStyles';
 
@@ -18,15 +19,8 @@ const styles = theme => _DevTypeStyles(theme);
 
 class DevTypeReview extends Component {
 
-
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
-
 	render() {
 		const { classes } = this.props;
-		
-		// console.log(this.props);
 		return (
 			<Grid item xs={12} >
 				<h2>Review</h2>
@@ -39,19 +33,34 @@ class DevTypeReview extends Component {
 						TIME TO REVIEW!!!!!<br/>Metrics page i guess
 						<CardActions>
 							<div className={classes.cardAction}>
-                                <Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/building-mix')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="secondary" 
+									onClick={()=>helper.navigateTo('create/dev-types/building-mix', this.props)} >
 									Building Mix
 								</Button>	
-								<Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="secondary" 
+									onClick={()=>helper.navigateTo('create/dev-types/attributes', this.props)} >
                                     Attributes
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="secondary" 
+									onClick={()=>helper.navigateTo('create/dev-types/review', this.props)} >
                                     Review
                                 </Button>	
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('metrics')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="secondary" 
+									onClick={()=>helper.navigateTo('metrics', this.props)} >
 									Test Metrics
 								</Button>		
-								<Button className={classes.cardButton} variant="raised" color="secondary" onClick={()=>this.handleNavigation('map')}>
+								<Button 
+									className={classes.cardButton} 
+									variant="raised" color="secondary" 
+									onClick={()=>helper.navigateTo('map', this.props)} >
 									Start Mapping
 								</Button>	
 							</div>

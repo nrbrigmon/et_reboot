@@ -9,14 +9,14 @@ const mapCSS = {
 };
 const MAP_CENTER_COORDS = [30.2764099, -97.7507724];
 
-function getDevTypeColor(feature){
+const getDevTypeColor = (feature) => {
     if (!helper.isEmptyObject(feature.properties.activeDevType)){
         return feature.properties.activeDevType.devTypeColor;
     } else {
         return "#eeeeee";
     }
 }
-function onEachFeature(feature, layer) {
+const onEachFeature = (feature, layer)  => {
     // console.log( feature )
     // console.log( layer )
     layer.on({
@@ -24,6 +24,22 @@ function onEachFeature(feature, layer) {
         // mouseout: console.log('mouseout', feature),  //highlightReset func, click:
         // console.log('mouseclick', feature)  //zoomToFeature func
     });
+}
+const addLayerToMap = (ctx) => {
+    ctx.polygon = new L.geoJson(ctx.props.baseMapLayer, {
+        onEachFeature: onEachFeature,
+        style: function (feature) {
+            return ({
+                color: '#333333', 
+                fillColor: getDevTypeColor(feature),
+                weight: 1,
+                opacity: 0.7,
+                fillOpacity: 0.7
+            });
+        }
+    }).addTo(ctx.map);
+    //zoom to bounds of new feature
+    ctx.map.fitBounds(ctx.polygon.getBounds());
 }
 class MapContainer extends Component {
 
@@ -51,20 +67,9 @@ class MapContainer extends Component {
         if (this.props.baseMapLayer && !helper.isEmptyObject(this.props.baseMapLayer)) {
             // console.log(this.props.baseMapLayer);
             // console.log('update base layer, no?')
-            this.polygon = new L.geoJson(this.props.baseMapLayer, {
-                onEachFeature: onEachFeature,
-                style: function (feature) {
-                    return ({
-                        color: '#333333', 
-                        fillColor: getDevTypeColor(feature),
-                        weight: 1,
-                        opacity: 0.7,
-                        fillOpacity: 0.7
-                    });
-                }
-            }).addTo(this.map);
+            addLayerToMap(this);
         }
-
+        
         //feature group to edit added to map
         this.map.addLayer(this._baseLayerGroup);
 
@@ -86,37 +91,36 @@ class MapContainer extends Component {
 
         //draw created happens when a feature is offish created
         this.map.on('draw:created', (e) => {
-                let { layer } = e;
-                let { _bounds } = layer;
-                let { leafletDrawTrigger } = this.props;
-                //1. are we creating a base layer OR is this a "painting" situation
-                if (leafletDrawTrigger === 'drawBaseLayer') {
-                    // this.props.setDrawTrigger('addBaseLayer');
-                    let lat1 = _.get(_bounds, '_southWest').lat;
-                    let lng1 = _.get(_bounds, '_southWest').lng;
-                    let lat2 = _.get(_bounds, '_northEast').lat;
-                    let lng2 = _.get(_bounds, '_northEast').lng;
+            let { layer } = e;
+            let { _bounds } = layer;
+            let { leafletDrawTrigger, activeDevType, baseMapLayer, myLibrary, devWorkbook } = this.props;
+            //1. are we creating a base layer OR is this a "painting" situation
+            if (leafletDrawTrigger === 'drawBaseLayer') {
+                // this.props.setDrawTrigger('addBaseLayer');
+                let lat1 = _.get(_bounds, '_southWest').lat;
+                let lng1 = _.get(_bounds, '_southWest').lng;
+                let lat2 = _.get(_bounds, '_northEast').lat;
+                let lng2 = _.get(_bounds, '_northEast').lng;
 
-                    // access shape from FeatureClass and remove
-                    let shapes = {
-                        "bboxArray": [
-                            lng1, lat1, lng2, lat2
-                        ],
-                        "src": layer.toGeoJSON(),
-                        "zoom": this.map.getZoom()
-                    };
-                    this.props.createTriangleGrid(shapes);
-                    // leafletFG.removeLayer(layer); dont have to remove, we never added it
-                    this._polygonDrawer.disable();
-                } else if (leafletDrawTrigger === "paintScenarioLayer") {
-                    // this.props.setDrawTrigger('updateBaseLayer');
-                    let { activeDevType } = this.props;
-                    let { baseMapLayer } = this.props;
-                    let paintLayer = layer.toGeoJSON();
-                    this.props.paintDevelopmentType({ baseMapLayer, paintLayer, activeDevType });
-                }
-                this.props.setDrawTrigger('');
-            });
+                // access shape from FeatureClass and remove
+                let shapes = {
+                    "bboxArray": [
+                        lng1, lat1, lng2, lat2
+                    ],
+                    "src": layer.toGeoJSON(),
+                    "zoom": this.map.getZoom()
+                };
+                this.props.createTriangleGrid(shapes);
+                // leafletFG.removeLayer(layer); dont have to remove, we never added it
+                this._polygonDrawer.disable();
+            } else if (leafletDrawTrigger === "paintScenarioLayer") {
+                // this.props.setDrawTrigger('updateBaseLayer');
+                let paintLayer = layer.toGeoJSON();
+                this.props.paintDevelopmentType({ baseMapLayer, paintLayer, activeDevType });
+                this.props.updateMetrics(baseMapLayer, myLibrary, devWorkbook);
+            }
+            this.props.setDrawTrigger('');
+        });
     }
     _drawBaseLayer = () => {
         // console.log('drawing...?');
@@ -148,18 +152,8 @@ class MapContainer extends Component {
                 });
             }
             //we can add the new layer
-            this.polygon = new L.geoJson(baseMapLayer, {
-                onEachFeature: this.onEachFeature,
-                style: function (feature) {
-                    return ({
-                        color: '#333333', 
-                        fillColor: getDevTypeColor(feature),
-                        weight: 1,
-                        opacity: 0.7,
-                        fillOpacity: 0.5
-                    });
-                }
-            }).addTo(this.map);
+            addLayerToMap(this);
+
             this.props.setDrawTrigger("closeDrawHelper"); //close the DrawHelper
 		    this.props.closeModal(); //if it's open
             this.props.updateOverlayPanel("painting"); //keep panel open so we know we are painting

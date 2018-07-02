@@ -1,10 +1,10 @@
 const AWS = require('aws-sdk');
 const { aws } = require('../config/keys');
-const shp = require('shpjs')
 const { Router } = require('express');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const router = Router();
+const geoMethods = require('../services/geoMethods');
 
 const s3Bucket = new AWS.S3({
     accessKeyId: aws.accessKeyId,
@@ -49,7 +49,6 @@ router.get('/s3', (request, response, next) => {
    });
 })
 
-
 router.get('/s3/:bucketKey', (request, response, next) => { 
   const { bucketKey } = request.params;
   // console.log(request.params);
@@ -63,22 +62,13 @@ router.get('/s3/:bucketKey', (request, response, next) => {
       //  console.log(err, err.stack); // an error occurred     
       response.json("ERROR");
      } else {
-        shp(data["Body"]).then(function(geojson){
-            //see bellow for whats here this internally call shp.parseZip()
-            // return updated baselayer copy
-            var updatedFeatures = geojson['features'].map( elem => {
-                //run through features and empty it out... for science
-                //later we can efficiently add stuff
-                elem.properties = { }
-                return elem;
-            });
-            
-            var updatedBaseLayer = geojson; //make copy of layer
-            updatedBaseLayer['features'] = updatedFeatures; //update copy
-            // console.log("done");
-            response.json(updatedBaseLayer);
-        });
-      }  
+      geoMethods
+        .zipToGeoJSON(data["Body"])
+        .then( function(newJSON){
+          // console.log(newJSON);
+          response.json(newJSON);
+        })
+    }  
 
    }); 
 

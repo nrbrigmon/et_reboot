@@ -14,13 +14,12 @@ import WelcomeCard from './WelcomeCard';
 import Wrapper900 from '../wrappers/Wrapper900';
 import welcomeActions from './welcomeActions';
 import _WelcomeStyles from '../../styles/WelcomeStyles';
+import * as helper from '../../utils/_helperMethods';
 
 const styles = theme => _WelcomeStyles(theme);
 
 class Welcome extends Component {
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
+
 	render() {
 		const { classes } = this.props;
 
@@ -38,13 +37,15 @@ class Welcome extends Component {
 							<ListItem >
 								<ListItemIcon>
 									<CheckIcon />
-								</ListItemIcon><ListItemText primary={'Measure Impacts in Real Time'} /> 
+								</ListItemIcon>
+								<ListItemText primary={'Measure Impacts in Real Time'} /> 
 							</ListItem>
 		
 							<ListItem >
 								<ListItemIcon>
 									<CheckIcon />
-								</ListItemIcon><ListItemText primary={'Visualize Results In 3D'} /> 
+								</ListItemIcon>
+								<ListItemText primary={'Visualize Results In 3D'} /> 
 							</ListItem>
 						</List>
 					</Grid>
@@ -59,7 +60,7 @@ class Welcome extends Component {
 						<Button variant="raised" 
 							color="primary" 
 							className={classes.root}
-							onClick={ ()=>{alert("... soon ...")} }>
+							onClick={()=>helper.navigateTo('demo', this.props)} >
 							<p>View the Demo</p>
 						</Button>
 					</Grid>

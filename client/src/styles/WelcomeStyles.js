@@ -18,8 +18,8 @@ export default (theme) => ({
 		  backgroundColor: 'red',
     },
   },
-    card: {
-          margin: '10px',
-          textAlign: 'left'
-    }
-  })
+	card: {
+				margin: '10px',
+				textAlign: 'left'
+	}
+})

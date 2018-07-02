@@ -12,13 +12,9 @@ import MapOverlayPanel from './MapOverlayPanel';
 import UploadLayerModal from '../modals/UploadLayerModal';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
-
-import AcresPerDevType from "../../utils/_AcresPerDevType";
-import * as mm from "../../utils/_MapMath";
-import WrapperFull from '../wrappers/WrapperFull';
-
 import UpdateToast from '../modals/UpdateToast';
-
+import WrapperFull from '../wrappers/WrapperFull';
+import * as helper from "../../utils/_helperMethods";
 import * as metricConfig from '../metrics/metricConfig';
 import '../../styles/customLeafletDraw.css';
 import MapStyles from '../../styles/MapStyles';
@@ -32,40 +28,14 @@ Highcharts.Highcharts.setOptions({
 });
 
 class MapStart extends Component {
-    handleNavigation = val => {
-		this.props.history.push(val);
-	}
-	getDevTypes = (obj) => {
-		return obj.map( function(arr){
-			return arr.devType
-		})
-	}
-	getDevAcres = (obj) => {
-		return obj.map( function(arr){
-			return {
-				name: arr.devType,
-				y: Number( (arr.totalAcre).toFixed(2) )
-			}
-		})
-	}
+
 	componentDidMount(){
-		window.scrollTo(0, 0)
-	}
-	getColorArray = (obj) => {
-		return obj.map( function(arr){
-			return arr.color
-		});
+		helper.windowToTop();
 	}
 	render() {
-		let acresPerDevType = AcresPerDevType(this.props.baseMapLayer);
-		let devTypes = this.getDevTypes(acresPerDevType);
-		let developedAcres = this.getDevAcres(acresPerDevType);
-		let colorArray = this.getColorArray(acresPerDevType);
-		let populationMetric = mm.getPopulation(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
-		// let housingMetric = mm.getHousingUnits(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
-		let jobsMetric = mm.getJobCounts(acresPerDevType, this.props.myLibrary, this.props.devWorkbook);
-		let { classes } = this.props;
-		// console.log(classes)
+		let { classes, metricData } = this.props;
+		let { colorArray, devTypes } = this.props.metricData;
+
 		return (
 			<WrapperFull >
 				<Grid item sm={12}>
@@ -79,7 +49,14 @@ class MapStart extends Component {
 					<Grid container justify="center">
 						<Grid item xs={4}>
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
-							<ReactHighcharts config={metricConfig.chartColumn({name:"Population" , data: populationMetric, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts 
+								config={
+									metricConfig.chartColumn({
+										name:"Population", 
+										data: metricData["population"], 
+										categories: devTypes, 
+										colorArray })
+									} />					
 						</Grid>
 						{/* <Grid item xs={4}> */}
 							{/* chart for housing units by  dev type W TOTAL ABOVE*/}					
@@ -87,24 +64,42 @@ class MapStart extends Component {
 						{/* </Grid> */}
 						<Grid item xs={4}>
 							{/* chart for jobs by dev type W TOTAL ABOVE*/}					
-							<ReactHighcharts config={metricConfig.chartColumn({name:"Jobs" , data: jobsMetric, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts 
+								config={
+									metricConfig.chartColumn({
+										name:"Jobs", 
+										data: metricData["jobTotals"], 
+										categories: devTypes, 
+										colorArray })
+									} />					
 						</Grid>
 						<Grid item xs={4}>
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
-							<ReactHighcharts config={metricConfig.chartColumn({name: "Acreage" , data: developedAcres, categories: devTypes, colorArray } )} />					
+							<ReactHighcharts 
+								config={
+									metricConfig.chartColumn({
+										name: "Acreage", 
+										data: metricData["developedAcreage"], 
+										categories: devTypes, 
+										colorArray })
+									} />					
 						</Grid>
 						<Grid item sx={12}>
-							<Button className={classes.buttonNav} variant="raised" color="secondary" onClick={() => this.handleNavigation('metrics')}>
-								View all Metrics
+							<Button 
+								className={classes.buttonNav} 
+								variant="raised" 
+								color="secondary" 
+								onClick={()=>helper.navigateTo('metrics', this.props)} >
+									View all Metrics
 							</Button>	
 						</Grid>
 					</Grid>
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="raised" 
+						className={classes.buttonNav}
 						color="primary" 
-						onClick={()=>this.handleNavigation('/create/dev-types/building-mix')}
-						className={classes.buttonNav}>
+						onClick={()=>helper.navigateTo('/create/dev-types/building-mix', this.props)} >
 						Edit Development Types
 					</Button>
 				</Grid>
@@ -124,7 +119,8 @@ function mapStateToProps(state) {
 		  leafletDrawTrigger: state.leafletDrawTrigger,
 		  activeDevType: state.activeDevType,
 		  toast: state.toast,
-		  mapOverlayPanel: state.mapOverlayPanel
+		  mapOverlayPanel: state.mapOverlayPanel,
+		  metricData: state.metricData
 	   }
 }
 

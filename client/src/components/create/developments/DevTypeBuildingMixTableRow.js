@@ -5,7 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import PercentStatusCheck from '../../../utils/_PercentStatusCheck';
 
-import { InputAdornment } from '@material-ui/core/InputAdornment';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import '../../../styles/devCell.css';
@@ -40,12 +40,8 @@ class DevTypeBuildingMixTableRow extends Component {
 		this.props.removeDevTypeFromWorkbook(devTypeId);
 	}
     render(){
-        const { cellData } = this.props;
-        const { uniqueId } = this.props;
-        const { devTypeName } = this.props;
-        const { classes } = this.props
+        let { cellData, uniqueId, devTypeName, classes } = this.props;
         let err  = cellData.length === 0 || cellData === undefined ? true : false;
-
         return (
             <TableRow>
                 <TableCell className={classes.devTypes}>
@@ -55,23 +51,25 @@ class DevTypeBuildingMixTableRow extends Component {
                         value={devTypeName}
                         onChange={(e) => this.updateDevName(e, uniqueId) }
                         margin="dense"
-                        padding="dense"
                         className={classes.cell}
                         InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
-                                <IconButton className={classes.delete} onClick={()=>this.removeDevType(uniqueId)} aria-label="Delete">
+                                <IconButton 
+                                    className={classes.delete} 
+                                    onClick={()=>this.removeDevType(uniqueId)} 
+                                    aria-label="Delete">
                                     <Delete />
                                 </IconButton>
                               </InputAdornment>
                             )}}
                     />
+                    
                 </TableCell>
                 <TableCell  className={classes.cell}>
                 
                    { !err ? PercentStatusCheck( this.getTotal(cellData)) : <p></p> }
                     
-                
                 </TableCell>
                 {
                     !err ? cellData.map((cell, idx) => {

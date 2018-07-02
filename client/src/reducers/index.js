@@ -15,6 +15,7 @@ import mapReferenceReducer from './mapReferenceReducer';
 import mapOverlayPanelReducer from './mapOverlayPanelReducer';
 import toastReducer from './toastReducer';
 import s3LayerReducer from './s3LayerReducer';
+import metricReducer from './metricReducer';
 
 const getRandomId = (state = [], action) => {
 	// console.log('action called');
@@ -43,4 +44,5 @@ export default combineReducers({
 	,toast: toastReducer						//open or close toast state
 	,mapOverlayPanel: mapOverlayPanelReducer
 	,availableS3Layers: s3LayerReducer
+	,metricData: metricReducer
 });

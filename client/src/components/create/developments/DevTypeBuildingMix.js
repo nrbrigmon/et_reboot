@@ -14,19 +14,13 @@ import Typography from '@material-ui/core/Typography';
 
 import DevTypeBuildingMixTable from './DevTypeBuildingMixTable';
 import _DevTypeStyles from '../../../styles/DevTypeStyles';
+import * as helper from '../../../utils/_helperMethods';
 
 const styles = theme => _DevTypeStyles(theme);
 
 class DevTypeBuildingMix extends Component {
-    
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
-
 	render() {
 		const { classes } = this.props;
-		
-		// console.log(this.props);
 		return (
             <Grid item xs={12}  >
                 <h2>Create Development Type Mix</h2>
@@ -45,21 +39,24 @@ class DevTypeBuildingMix extends Component {
                         </div>
                         <CardActions>
                             <div className={classes.cardAction}>
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)}>
+                                <Button 
+                                    className={classes.cardButton} variant="raised" 
+                                    color="primary" 
+                                    onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)} >
                                     Add Row
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create')}>
+                                <Button 
+                                    className={classes.cardButton} variant="raised" 
+                                    color="primary" 
+                                    onClick={()=>helper.navigateTo('create', this.props)} >
                                     Back
                                 </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/attributes')}>
+                                <Button 
+                                    className={classes.cardButton} variant="raised" 
+                                    color="primary" 
+                                    onClick={()=>helper.navigateTo('create/dev-types/attributes', this.props)} >
                                     Next: Create Attributes
                                 </Button>	
-                                {/* <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('create/dev-types/review')}>
-                                    Review
-                                </Button>	
-                                <Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>this.handleNavigation('map')}>
-                                    Map
-                                </Button>	 */}
                             </div>
                         </CardActions>
                     </CardContent>

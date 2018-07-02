@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import sideBarActions from './SideBarActions';
-
+import * as helper from '../../utils/_helperMethods';
 
 const styles = ({
   listItem: {
@@ -22,9 +22,6 @@ const styles = ({
 });
 
 class SideBar extends Component {
-	handleNavigation = (destination) => {
-		this.props.history.push('/'+destination+'');
-	}
 	render() {
     const { section1, section2 } = sideBarActions; 
 		const { classes } = this.props;
@@ -36,7 +33,9 @@ class SideBar extends Component {
           {
             section1.map( (elem, idx) => {
               return(
-              <ListItem button key={idx} className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
+              <ListItem button key={idx} 
+                className={classes.listItem} 
+							  onClick={()=>helper.navigateTo(elem.navLink, this.props)} >
                 <Avatar className={classes.avatar}>
                   {elem.component}
                 </Avatar>
@@ -51,7 +50,9 @@ class SideBar extends Component {
           {
             section2.map( (elem, idx) => {
               return(
-              <ListItem button key={idx} className={classes.listItem} onClick={()=>this.handleNavigation(elem.navLink)} >
+              <ListItem button key={idx} 
+                className={classes.listItem} 
+							  onClick={()=>helper.navigateTo(elem.navLink, this.props)} >                
                 <Avatar className={classes.avatar}>
                   {elem.component}
                 </Avatar>

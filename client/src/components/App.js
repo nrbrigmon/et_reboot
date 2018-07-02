@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Welcome from './splash/Welcome';
 import Header from './header/Header';
 import AboutStart from './about/AboutStart';
+import DemoStart from './_demo/DemoStart';
 import CreateStart from './create/CreateStart';
 import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 import DevTypeStart from './create/developments/DevTypeStart';
@@ -35,6 +36,7 @@ class App extends Component {
 						<Header />
 						<Route exact path="/" component={Welcome} />
 						<Route path="/about" component={AboutStart} />
+						<Route path="/demo" component={DemoStart} />
 						<Route exact path="/create" component={CreateStart} />
 						<Route path="/create/new/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/edit/:id" component={BuildingPrototypeStart} />

@@ -5,11 +5,13 @@ export const uploadFileToS3 = (file) => async dispatch => {
 	let formData = new FormData();
 	formData.append('file', file);
 	// console.log(formData)	
-	const res = await axios.post('/api/aws_queries/s3', formData, {
+	console.log("about to send data")
+	await axios.post('/api/aws_queries/s3', formData, {
 		headers: {
 		  'Content-Type': 'multipart/form-data'
 		}
 	});
+	console.log("data was sent")
 	// console.log(res);
 	dispatch({ type: 'SEND_TOAST', payload: { msg: "File Saved!", open: true } });
 	

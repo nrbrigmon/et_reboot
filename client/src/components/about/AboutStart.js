@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import Button from '@material-ui/core/Button';
+import * as helper from '../../utils/_helperMethods';
 import Wrapper900 from '../wrappers/Wrapper900';
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import _AboutStyles from '../../styles/AboutStyles';
+import { withStyles } from '@material-ui/core/styles';
+import GlobalStyles from '../../styles/GlobalStyles';
 import aboutInputs from './aboutInputs';
 
-const styles = theme => _AboutStyles(theme);
+const styles = theme => GlobalStyles(theme);
 
 class AboutStart extends Component {
 
@@ -70,9 +70,11 @@ class AboutStart extends Component {
 					</Grid>
 
 					<Grid item xs={12}>
-						<Link className="waves-effect waves-light btn" to="/">
+						<Button variant="raised" 
+							color="primary" 
+							onClick={()=>helper.navigateTo('', this.props)} >
 							Back to Homepage
-						</Link>
+						</Button>
 					</Grid>
 				</Paper>
 			</Wrapper900>
