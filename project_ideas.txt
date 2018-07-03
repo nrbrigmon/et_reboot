@@ -2,10 +2,6 @@
         BUG TRACKER 
 /************************/ 
 
-*** select get layer from s3 (and metadata?)
-*** after layer uploads adjust properties to load
-*** add loading animation component
-
 ---- STEPS TO DEMO
         - create manual building types list:
                 - austin list (short-term) (x20)
@@ -85,7 +81,6 @@ FREE        |       BUSINESS        |       ENTERPRISE
 /************************/ 
 
 - paypal donate button
-- leaflet layer on click function loads only once. after layer update, stops working
 - protected routes for USERS
 - move from mouse interaction to a more tactile approach (ipads with stylus...)
 - integrate with localized price calculations for materials, rent, land value, etc based on APIs and web scraping.
