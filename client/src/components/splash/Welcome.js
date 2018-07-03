@@ -12,7 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-prototype-scene';
 import WelcomeCard from './WelcomeCard';
 import Wrapper900 from '../wrappers/Wrapper900';
-import welcomeActions from './welcomeActions';
+import WelcomeActions from './WelcomeActions';
 import WelcomeStyles from '../../styles/WelcomeStyles';
 import * as helper from '../../utils/_helperMethods';
 
@@ -65,7 +65,7 @@ class Welcome extends Component {
 						</Button>
 					</Grid>
 					{
-						welcomeActions.map( (card, idx) => {
+						WelcomeActions.map( (card, idx) => {
 							return <WelcomeCard {...card} key={idx}/>
 						})
 					}
