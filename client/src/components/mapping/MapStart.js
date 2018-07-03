@@ -15,7 +15,7 @@ import Highcharts from 'react-highcharts';
 import UpdateToast from '../modals/UpdateToast';
 import WrapperFull from '../wrappers/WrapperFull';
 import * as helper from "../../utils/_helperMethods";
-import * as metricConfig from '../metrics/metricConfig';
+import * as MetricConfig from '../metrics/MetricConfig';
 import '../../styles/customLeafletDraw.css';
 import MapStyles from '../../styles/MapStyles';
 
@@ -51,7 +51,7 @@ class MapStart extends Component {
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
 							<ReactHighcharts 
 								config={
-									metricConfig.chartColumn({
+									MetricConfig.chartColumn({
 										name:"Population", 
 										data: metricData["population"], 
 										categories: devTypes, 
@@ -66,7 +66,7 @@ class MapStart extends Component {
 							{/* chart for jobs by dev type W TOTAL ABOVE*/}					
 							<ReactHighcharts 
 								config={
-									metricConfig.chartColumn({
+									MetricConfig.chartColumn({
 										name:"Jobs", 
 										data: metricData["jobTotals"], 
 										categories: devTypes, 
@@ -77,7 +77,7 @@ class MapStart extends Component {
 							{/* chart for population by  dev type W TOTAL ABOVE*/}
 							<ReactHighcharts 
 								config={
-									metricConfig.chartColumn({
+									MetricConfig.chartColumn({
 										name: "Acreage", 
 										data: metricData["developedAcreage"], 
 										categories: devTypes, 
