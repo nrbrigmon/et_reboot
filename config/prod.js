@@ -11,5 +11,9 @@ module.exports = {
         googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
         cookieKey: process.env.COOKIE_SESSION,
         redirectDomain: process.env.REDIRECT_DOMAIN
+    },
+    aws: {
+        accessKeyId: process.env.ACCESS_KEY_ID,
+        secretAccessKey: process.env.SECRET_ACCESS_KEY
     }
 }

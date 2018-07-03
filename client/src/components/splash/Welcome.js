@@ -11,8 +11,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-prototype-scene';
 import WelcomeCard from './WelcomeCard';
-import Wrapper900 from '../wrappers/Wrapper900';
 import WelcomeActions from './WelcomeActions';
+import Wrapper900 from '../wrappers/Wrapper900';
 import WelcomeStyles from '../../styles/WelcomeStyles';
 import * as helper from '../../utils/_helperMethods';
 

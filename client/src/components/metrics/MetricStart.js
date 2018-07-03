@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
 
-import * as MetricConfig from '../metrics/MetricConfig';
+import * as MetricConfig from './MetricConfig';
 import * as helper from "../../utils/_helperMethods";
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -34,7 +34,7 @@ class MetricStart extends Component {
 
 	render() {		
 		let { classes, metricData } = this.props;
-		console.log(this.props)
+		// console.log(this.props)
 		let { colorArray, devTypes } = this.props.metricData;
 		return (
 			<Wrapper900>
