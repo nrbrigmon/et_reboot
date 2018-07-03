@@ -24,7 +24,7 @@ router.get('/:uniqueId', (request, response, next) =>{
     // console.log(request.params);    
     const { uniqueId } = request.params;
     console.log('incoming specific request..', uniqueId)
-    pool.query("SELECT * FROM building_prototype_inputs where (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) =>{
+    pool.query("SELECT * FROM building_prototype_inputs where (attributes ->> 'uniqueId') = $1 ", [uniqueId], (err, res) =>{
         if (err) return next(err);
         // console.log(res.rows);
         response.json(res.rows);
@@ -36,7 +36,7 @@ router.get('/:uniqueId', (request, response, next) =>{
 router.delete('/:id', (request, response, next) =>{
     const { uniqueId } = request.params;
     console.log('deleting building from database..', uniqueId)
-    pool.query("DELETE FROM building_prototype_inputs WHERE (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) =>{
+    pool.query("DELETE FROM building_prototype_inputs WHERE (attributes ->> 'uniqueId') = 1 ", [uniqueId], (err, res) =>{
         if (err) return next(err);
         console.log(res.rows);
         console.log('successful delete');
@@ -53,7 +53,7 @@ router.post('/', (request, response, next) =>{
     
     // console.log('adding new building to database..', uniqueId)
     pool.query(
-        "INSERT INTO building_prototype_inputs (attributes) VALUES ('" + values + "'::jsonb)", (err, res) => {
+        "INSERT INTO building_prototype_inputs (attributes) VALUES ($1::jsonb)", [values], (err, res) => {
         if (err) return next(err);
         console.log('successfully added');
         response.json(res.rows);
@@ -66,7 +66,7 @@ router.put('/:uniqueId', (request, response, next) =>{
     let values = JSON.stringify(request.body)
     const { uniqueId } = request.params;
     console.log('updating building in database..', uniqueId)
-    pool.query("UPDATE building_prototype_inputs SET attributes = '" + values + "' WHERE (attributes ->> 'uniqueId') = '"+ uniqueId +"' ", (err, res) => {
+    pool.query("UPDATE building_prototype_inputs SET attributes = $1 WHERE (attributes ->> 'uniqueId') = $2 ", [values, uniqueId], (err, res) => {
         if (err) {
             console.log(err)
             return next(err);

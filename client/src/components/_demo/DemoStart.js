@@ -11,11 +11,26 @@ import GlobalStyles from '../../styles/GlobalStyles';
 const styles = theme => GlobalStyles(theme);
 
 class DemoStart extends Component {
+	componentDidMount(){
+		// 1. load sample basemaplayer from s3
+		// 2. load devWorkbook from postgres
+		// 3. load myLibary from postgres
+		// 4. set mapRef here
+		// 5. set leafletDrawTrigger  here
+		// 6. set activeDevType here
+		// 7. set mapOverlayPanel state here 
+		// 8. copy metricData: state.metricData
+		console.log("mounting")
+	}
+	componentWillUnmount(){
+		console.log("unmounting")
+		//empty states
+	}
 	render() {
 		const { classes } = this.props;
 		return (
 			<Wrapper900>
-			<Paper className={classes.paper}>
+				<Paper className={classes.paper}>
 					<Grid item sm={12} >
 						<h2>Demo</h2>
 					</Grid>

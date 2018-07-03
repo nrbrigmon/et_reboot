@@ -53,18 +53,19 @@ class UploadLayerModal extends Component {
     state = {
         isLoading: false
     }
+    updateState = () => {
+        this.setState({
+            isLoading: !this.state.isloading
+        })
+    }
     layerSelection = (e) =>{
         let bucketKey = e.target.value;
-        this.setState({
-            isLoading: true
-        })
         this.props.getFileFromS3(bucketKey)
+        this.updateState();
     }
     onDrop = (file) => {
         this.props.uploadFileToS3(file[0]);
-        this.setState({
-            isLoading: true
-        })
+        this.updateState();
         this.props.convertFileToLayer(file[0]);
     }
     componentDidMount(){
@@ -74,9 +75,7 @@ class UploadLayerModal extends Component {
         //if the modal is closed, we turn off the animation
         //and restore the initialState
         if (nextProps.modal === false) {
-            this.setState({
-                isLoading: false
-            })
+            this.updateState();        
         }
     }
     

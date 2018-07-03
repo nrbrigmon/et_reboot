@@ -11,8 +11,6 @@ router.get('/', (request, response, next) =>{
         //destructuring to make up for silly db design
         let payload = res.rows;
 
-        // console.log(payload);
-        // console.log(res.rows);
         response.json(payload);
     });
 

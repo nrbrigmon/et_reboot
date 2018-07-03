@@ -44,3 +44,18 @@ export const updateBuildingPrototypeField = (page, updateCopy) => {
 	}
 	return action;
 }
+
+export const saveBuildingToDb = (status, bldg) => async dispatch => {
+	//does it already exist? if so put, else post	
+	// console.log(bldg);
+	if (status === true){
+		const res = await axios.put('/api/buildings/'+bldg.uniqueId+'', bldg)
+		// console.log(res);
+		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg: "Building Updated!", open: true } });
+	} else {
+		// axios.post('/api/buildings', bldg)
+		const res = await axios.post('/api/buildings', bldg)
+		// console.log(res);
+		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg:"Building Posted!", open: true } });
+	}
+};

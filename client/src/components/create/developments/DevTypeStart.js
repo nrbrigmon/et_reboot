@@ -16,12 +16,19 @@ import _DevTypeStyles from '../../../styles/DevTypeStyles';
 const styles = theme => _DevTypeStyles(theme);
 
 class DevTypeStart extends Component {
-
+	state = {
+		isExisting: false
+	}
 	componentDidMount(){
 		this.props.startInitalizeWorkbook(this.props.myLibrary.selected_buildings);		
 		//sample development type data until i can get some real stuff going
 	}
-
+	loadWorkbook = () => {
+		this.props.openModal("loadWorkbook");
+	}
+	saveWorkbook = () => {
+		this.props.openModal("saveWorbook")
+	}
 	render() {
 		let pathHome = this.props.match.isExact;
 		// console.log(pathHome);
@@ -36,15 +43,16 @@ class DevTypeStart extends Component {
 					(pathHome) ? <p>welcome home</p> : <span></span>
 				}
 				<div className={classes.cardAction}>
-					{/* <Button 
+					<Button  
 						className={classes.cardButton} 
-						variant="raised" 
-						color="primary" 
-						onClick={()=>helper.navigateTo('create/dev-types/', 
-							this.props)}>
-						About
-					</Button>	 */}
-					<Button  className={classes.cardButton} variant="raised" color="primary" onClick={()=>alert("saved!... later...")}>
+						variant="raised" color="primary" 
+						onClick={()=>this.loadWorkbook()}>
+						Load Existing
+					</Button>	
+					<Button  
+						className={classes.cardButton} 
+						variant="raised" color="primary" 
+						onClick={()=>this.saveWorkbook()}>
 						Save Progress
 					</Button>	
 				</div>
@@ -55,7 +63,9 @@ class DevTypeStart extends Component {
 
 function mapStateToProps(state) {  
 	  return { 
-			myLibrary: state.myLibrary
+			myLibrary: state.myLibrary,
+			devWorkbook: state.myLibrary,
+			modal: state.modal
 		 };
 }
   

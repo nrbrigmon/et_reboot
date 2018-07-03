@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import hotel5 from '../create/buildings/examples/hotelFiveStory';
 import blgSampleList from './_sampleBuildings';
 
-class LoadBldgAttrModalContents extends React.Component {
+class LoadWorkbookModalContents extends React.Component {
 
   state = {
     selectedValue: 'a'
@@ -85,4 +85,4 @@ class LoadBldgAttrModalContents extends React.Component {
   }
 }
 
-export default LoadBldgAttrModalContents;
+export default LoadWorkbookModalContents;

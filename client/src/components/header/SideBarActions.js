@@ -2,6 +2,8 @@ import React from 'react';
 import MapIcon from '@material-ui/icons/Map';
 import InfoIcon from '@material-ui/icons/Info';
 import Domain from '@material-ui/icons/Domain';
+import Home from '@material-ui/icons/Home';
+
 // import ImageIcon from '@material-ui/icons/Image';
 // import MailIcon from '@material-ui/icons/Mail';
 // import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -11,7 +13,7 @@ const classes = {
 };
 
 export default {
-    section1: [
+    section2: [
         // {
         //     text: 'Profile',
         //     navLink: 'profile',
@@ -33,16 +35,16 @@ export default {
         //     component: <ImageIcon style={classes}/>
         // }
     ],
-    section2:[
+    section1:[
         {
+            text: 'Home',
+            navLink: '',
+            component: <Home style={classes}/>
+        }
+        ,{
             text: 'About',
             navLink: 'about',
             component: <InfoIcon style={classes}/>
         }
-        // ,{
-        //     text: 'Contact',
-        //     navLink: 'contact',
-        //     component: <MailIcon style={classes}/>
-        // }
     ]
 }

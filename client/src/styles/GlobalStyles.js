@@ -14,5 +14,8 @@ export default (theme) => ({
 	listItem: {
 			paddingTop: '4px',
 			paddingBottom: '4px'
+	},
+	sideBar: {
+    fontSize: '16px'
 	}
 })

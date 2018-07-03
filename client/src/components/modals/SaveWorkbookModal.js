@@ -12,16 +12,16 @@ import _ModalStyles from '../../styles/ModalStyles';
 
 const styles = theme => _ModalStyles(theme);
 
-class SaveBldgLibraryModal extends Component {
+class SaveWorkbookModal extends Component {
 
     myHandleChange = (e) => {
-        this.props.updateLibraryName(e.target.value);
+        this.props.updateWorkbookName(e.target.value);
     }
 	render() {
         const { classes } = this.props;
         const { library_name } = this.props.myLibrary
 		return (
-            <ModalContainer modal={this.props.modal === 'saveLibrary' ? true : false}>
+            <ModalContainer modal={this.props.modal === 'saveWorkbook' ? true : false}>
                 <div className={classes.paper}>
                     <Typography type="headline" component="h4">
                         Workbook Name:
@@ -49,11 +49,5 @@ class SaveBldgLibraryModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return { 
-        myLibrary: state.myLibrary,
-        modal: state.modal
-     };
-}
-const styledApp = withStyles(styles)(SaveBldgLibraryModal);
-export default connect(mapStateToProps, actions)(styledApp);
+const styledApp = withStyles(styles)(SaveWorkbookModal);
+export default connect(null, actions)(styledApp);

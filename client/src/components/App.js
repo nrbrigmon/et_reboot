@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -19,6 +19,7 @@ import MetricStart from './metrics/MetricStart';
 import GalleryStart from './gallery/GalleryStart';
 import ContactStart from './contact/ContactStart';
 import ProfileStart from './profile/ProfileStart';
+import NotFound404 from './global/NotFound404';
 
 class App extends Component {
 	componentDidMount() {
@@ -34,6 +35,7 @@ class App extends Component {
 				<BrowserRouter>
 					<div>
 						<Header />
+						<Switch>
 						<Route exact path="/" component={Welcome} />
 						<Route path="/about" component={AboutStart} />
 						<Route path="/demo" component={DemoStart} />
@@ -46,6 +48,8 @@ class App extends Component {
 						<Route path="/contact" component={ContactStart} />
 						<Route path="/metrics" component={MetricStart} />
 						<Route path="/profile" component={ProfileStart} />
+						<Route component={NotFound404} />
+						</Switch>
 					</div>
 				</BrowserRouter>
 			</div>

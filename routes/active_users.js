@@ -18,7 +18,7 @@ router.get('/:id', (request, response, next) =>{
     console.log(request.params);    
     const { id } = request.params;
     console.log('incoming specific request..active_users.get', id)
-    pool.query("SELECT * FROM envision_users WHERE google_id = '"+ id +"' ", (err, res) =>{
+    pool.query("SELECT * FROM envision_users WHERE google_id =  $1", [id], (err, res) =>{
         if (err) return next(err);
         // console.log(res.rows);
         response.json(res.rows);
@@ -30,7 +30,7 @@ router.get('/:id', (request, response, next) =>{
 router.delete('/:id', (request, response, next) =>{
     const { id } = request.params;
     console.log('incoming specific request..', id)
-    pool.query("DELETE FROM envision_users WHERE (attributes ->> 'uniqueId') = '"+ id +"' ", (err, res) =>{
+    pool.query("DELETE FROM envision_users WHERE (attributes ->> 'uniqueId') =  $1", [id], (err, res) =>{
         if (err) return next(err);
         console.log(res.rows);
         response.json(res.rows);
@@ -44,7 +44,7 @@ router.post('/:id', (request, response, next) =>{
     // console.log('update ', id);
     // console.log(values);
     pool.query(
-        " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ('"+id+"', ARRAY[]::integer[], CURRENT_TIMESTAMP);", (err, res) => {
+        " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ( $1, ARRAY[]::integer[], CURRENT_TIMESTAMP);", [id], (err, res) => {
      if (err) {
             console.log(err)
             return next(err);
@@ -61,7 +61,7 @@ router.put('/:id', (request, response, next) =>{
     // console.log('update ', id);
     // console.log(values);
     pool.query(
-        " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ('"+id+"', ARRAY[]::integer[], CURRENT_TIMESTAMP);", (err, res) => {
+        " INSERT INTO envision_users (google_id, building_library_ids, date_started) VALUES ($1, ARRAY[]::integer[], CURRENT_TIMESTAMP);", [id], (err, res) => {
      if (err) {
             console.log(err)
             return next(err);

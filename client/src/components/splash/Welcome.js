@@ -13,10 +13,10 @@ import ThreeBuildingPrototypeScene from '../create/threeModels/three-building-pr
 import WelcomeCard from './WelcomeCard';
 import Wrapper900 from '../wrappers/Wrapper900';
 import welcomeActions from './welcomeActions';
-import _WelcomeStyles from '../../styles/WelcomeStyles';
+import WelcomeStyles from '../../styles/WelcomeStyles';
 import * as helper from '../../utils/_helperMethods';
 
-const styles = theme => _WelcomeStyles(theme);
+const styles = theme => WelcomeStyles(theme);
 
 class Welcome extends Component {
 
@@ -74,5 +74,4 @@ class Welcome extends Component {
 	}
 }
 
-const styledApp = withStyles(styles)(Welcome);
-export default styledApp;
+export default withStyles(styles)(Welcome);
