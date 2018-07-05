@@ -32,7 +32,19 @@ export const addBuildingToLibrary = (bldg) => {
 	}
 	return action;
 };
+export const loadSelectedBuildings = (bldgArray, availableBldgs) => {
+	const action = {
+		type: 'LOAD_BUILDING_ARRAY',
+		bldgArray,
+		availableBldgs
+	}
+	return action;
+}
+
 export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
+	// console.log(availableBldgs);
+	// console.log("JERER")
+	// console.log(bldgArray, availableBldgs)
 	//myLibraryReducer
 	const action = {
 		type: 'ADD_BUILDING_ARRAY',

@@ -21,10 +21,10 @@ class UploadLayerModal extends Component {
     componentDidMount(){
         this.props.getAllLayersFromS3();
     }
-    componentWillReceiveProps(nextProps){
+    componentDidUpdate(prevProps){
         //if the modal is closed, we turn off the animation
         //and restore the initialState
-        if (nextProps.modal === false) {
+        if (this.props.modal === false) {
             this.updateState();        
         }
     }

@@ -1,6 +1,45 @@
 import * as shortid from 'shortid';
 import * as _ from 'lodash';
 
+function correctDevCells(cellArray, bldgIdArray){
+	/// we need to map through the selected bldg ids
+	let newCells = _.map(bldgIdArray, (i, idx) => {
+		//if we one of the cells in our workbook is blank
+		if (cellArray[idx] === undefined){
+			//we update it with something
+			return newCell(i)
+		} else {
+			//otherwise we return the existing cell
+			return cellArray[idx]
+		}
+		//this method will also truncate if we have too many cells
+	});
+	// console.log(newCells);
+	return newCells;
+}
+
+function updateAllDevTypeCells(state, action){
+	let { myLibary, devWorkbook } = action;
+	// console.log(action);
+	let idArray = _.map(myLibary.selected_buildings, "uniqueId"); 
+	let { workbook_devtypes } = devWorkbook;
+	//1. loop through workbook_devtypes and update only the cellData
+	const newDevMixer = _.map(workbook_devtypes, (row, idx) => {
+		// console.log(row);
+		return { ...row, 
+			cellData: correctDevCells(row["cellData"], idArray)
+		}
+	});
+	console.log(newDevMixer);
+	// 2. for each table Cell, if it has data, skip
+	//3. if there are too many cells, truncate
+	//4. if there are not enough, add the correct buildingID
+	//5. and cell by using this function newCell(id)
+	//copy state correctly and return new object
+	let newState = _.cloneDeep(state);
+	newState["workbook_devtypes"] = newDevMixer;
+	return newState
+}
 ////
 function updateCellValue(oldObject, newValues) {
     // Encapsulate the idea of passing a new object as the first parameter
@@ -83,17 +122,19 @@ function removeDevTypeRow(state, action) {
         workbook_devtypes: currentDevTypes
     }
 }
+//table cell function
+function newCell(id) {
+	return {
+		bldgId: id,
+		percVal: 0
+	}
+}
 //my initial structure for the devType table
 const newEmptyDevTypeRow = (selected_buildings, devTypeArray) => {
 	let tableCells = [];
 	//return one tableCell for every cellNum
 	// console.log(selected_buildings)
-	function newCell(id) {
-		return {
-			bldgId: id,
-			percVal: 0
-		}
-	}
+
 	for (let i = 0; i < selected_buildings.length; i++) {
 		tableCells.push( newCell(selected_buildings[i]["uniqueId"]) );
 	}
@@ -143,10 +184,10 @@ const devTypeRow = (selected_buildings, devTypeArray) => {
 	}
 };
 
-
 function initializeWorkbook(state, action){
 	//if there are no existing devtypes, we start with a blank one
-	// console.log(state);
+	let { selected_buildings } = action.myLibary;
+
 	let devTypeArray = state["workbook_devtypes"].filter((devTypeRow) => {
 			return devTypeRow.devTypeName.length > 1		
 	}); //create array of devTypes
@@ -154,10 +195,10 @@ function initializeWorkbook(state, action){
 	
 	let devTypeCount = (devTypeArray.length === 0 ? 1 : devTypeArray.length);
 	
-	let newState = state;
+	let newState = _.cloneDeep(state);
 	let newArray = [];
 	for (let i = 0; i < devTypeCount; i++){
-		newArray.push(devTypeRow(action.selected_buildings, devTypeArray[i]));
+		newArray.push(devTypeRow(selected_buildings, devTypeArray[i]));
 	}
 	newState["workbook_devtypes"] = newArray;
 	return newState;
@@ -169,10 +210,11 @@ function updateFirstLevelAttribute(state, key, value){
     }
 }
 let starterDevTypeWorkbook = {
-	workbook_id: shortid.generate(),
-	workbook_isNew: true, 
-    workbook_name: '',
-    workbook_devtypes: []
+	workbook_id: shortid.generate()
+	,workbook_isNew: true 
+    ,workbook_name: ''
+    ,workbook_devtypes: []
+    ,user_id: ''
 }
 
 export default function(state = starterDevTypeWorkbook, action) {
@@ -193,6 +235,10 @@ export default function(state = starterDevTypeWorkbook, action) {
 			return myDevelopmentWorkbook;
 		case 'REMOVE_DEV_TYPE_ROW':
 			myDevelopmentWorkbook = removeDevTypeRow(state, action);
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'UPDATE_ALL_DEV_TYPE_ROW': 
+			myDevelopmentWorkbook = updateAllDevTypeCells(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
 		case 'UPDATE_DEV_TYPE_ROW': 

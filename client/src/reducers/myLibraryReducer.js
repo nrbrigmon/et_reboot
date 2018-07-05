@@ -45,12 +45,12 @@ function addBuildingArray(state, action) {
     let newArray = action["availableBldgs"].filter(bldg => {
         return IDsToKeep.indexOf(bldg.uniqueId) >= 0; //return items that exist
     });
-
     return {
         ...state,
         selected_buildings: [...state.selected_buildings].concat(newArray)
     }
 }
+
 
 function updateLibraryAttribute(state, value, attribute) {
     return {
@@ -109,6 +109,14 @@ export default function (state = starterLibrary, action) {
             return newLibrary;
         case 'ADD_BUILDING_ARRAY':
             newLibrary = addBuildingArray(state, action);
+            localStorage.setItem('myLibrary', JSON.stringify(newLibrary));
+            return newLibrary;
+        case 'LOAD_BUILDING_ARRAY':
+            let emptiedState = {
+                ...state,
+                selected_buildings: []
+            }
+            newLibrary = addBuildingArray(emptiedState, action);
             localStorage.setItem('myLibrary', JSON.stringify(newLibrary));
             return newLibrary;
         case 'REMOVE_BUILDING':

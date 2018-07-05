@@ -15,10 +15,11 @@ export const removeDevTypeRow = (selected_buildings) => {
 	}
 	return action;
 };
-export const startInitalizeWorkbook = (selected_buildings) => {
+export const initalizeWorkbook = (myLibary, devWorkbook) => {
 	const action = {
 		type: 'INITIALIZE_WORKBOOK',
-		selected_buildings
+		myLibary, 
+		devWorkbook
 	}
 	return action;
 }
@@ -28,6 +29,14 @@ export const updateDevTypeRow = (value, rowId, cellId) => {
 		value,
 		rowId,
 		cellId
+	}
+	return action;
+}
+export const updateAllDevTypeRows = (myLibary, devWorkbook) => {
+	const action = {
+		type: 'UPDATE_ALL_DEV_TYPE_ROW',
+		myLibary, 
+		devWorkbook
 	}
 	return action;
 }

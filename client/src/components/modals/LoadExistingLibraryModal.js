@@ -22,7 +22,7 @@ class LoadExistingLibraryModal extends Component {
         const { classes } = this.props;
         // console.log(this.props);
 		return (
-            <ModalContainer modal={this.props.modal === 'library' ? true : false}>
+            <ModalContainer modal={this.props.modal === 'existingLibrary' ? true : false}>
                     <h4>Select a library:</h4>
                    
                     <LoadExistingLibraryModalContents {...this.props} />

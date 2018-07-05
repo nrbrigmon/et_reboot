@@ -8,6 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import * as helper from '../../utils/_helperMethods';
 
 class LoadExistingLibraryModalContents extends React.Component {
 
@@ -19,7 +20,7 @@ class LoadExistingLibraryModalContents extends React.Component {
 
 	renderTabContainer = (props) => {
       let { availableLibs, modList, classes } = props;
-      let err = (availableLibs === undefined || availableLibs.code === 'ECONNREFUSED' ) ? true : false;
+    let err  = helper.checkDbError(availableLibs);
       // console.log(err);
 			return (
         <List className={classes.list}>

@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import * as helper from '../../utils/_helperMethods';
 
 class LoadExistingBldgModalContents extends React.Component {
 
@@ -17,8 +18,9 @@ class LoadExistingBldgModalContents extends React.Component {
   };
 
 	renderTabContainer = (props) => {
+
     let { availableBldgs, modList, classes } = props;
-    let err  = (availableBldgs === undefined || availableBldgs.code === 'ECONNREFUSED' || availableBldgs.code === 'ENOENT') ? true : false;
+    let err  = helper.checkDbError(availableBldgs);
     
     return (
         <List className={classes.list}>
@@ -61,6 +63,8 @@ class LoadExistingBldgModalContents extends React.Component {
   }
 
   render() {  
+    // console.log(this.props.modList);
+
     return (
       <Grid container
 					alignItems='center'

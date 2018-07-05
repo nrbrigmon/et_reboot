@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import * as helper from '../../utils/_helperMethods';
 
 class LoadWorkbookModalContents extends React.Component {
 
@@ -20,9 +21,9 @@ class LoadWorkbookModalContents extends React.Component {
   };
 
   renderTabContainer = (props) => {
-    // console.log(props);
+    console.log(props);
     let { availableWkbks, classes } = props;
-    let err  = (availableWkbks === undefined || availableWkbks.code === 'ECONNREFUSED') ? true : false;
+    let err = helper.checkDbError(availableWkbks);
     // console.log(availableWkbks); 
 
     return (

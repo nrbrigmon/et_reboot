@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', (request, response, next) =>{
     pool.query("SELECT * FROM building_libraries ORDER BY id ASC", (err, res) =>{
         if (err) return next(err);
-        console.log(res.rows);
+        // console.log(res.rows);
         //destructuring to make up for silly db design
         let payload = res.rows;
 

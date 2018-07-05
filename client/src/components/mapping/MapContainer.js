@@ -139,7 +139,7 @@ class MapContainer extends Component {
             this.polygon.addLayer(layer) 
         })
     }
-    componentWillReceiveProps({leafletDrawTrigger, baseMapLayer}) {
+    componentDidUpdate({leafletDrawTrigger, baseMapLayer}) {
         // console.log(leafletDrawTrigger, baseMapLayer);
         // console.log(this.props);
         let same = _.isEqual(this.props.baseMapLayer.features, baseMapLayer.features);

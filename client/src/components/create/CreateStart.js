@@ -37,14 +37,32 @@ const styles = theme => CreateStyles(theme);
 
 class CreateStart extends Component {
 	componentWillMount(){
+		// console.log(this.props);
 		//load all available buildings in the database
 		if (this.props.availableBldgs.length === 0) {
 			this.props.fetchAllBuildings();
 			this.props.fetchAllBuildingLibraries();
+			this.props.initalizeWorkbook(this.props.myLibrary);		
+
 		}	
+		let { selected_buildings } = this.props.myLibrary;
+		let { cellData } = this.props.devWorkbook.workbook_devtypes[0];
+		let shouldContinue = helper.compareBldgArrays(selected_buildings, cellData);
+		// console.log("shouldContinue", shouldContinue)
+		if (shouldContinue.resp === false) {
+			// the thing that needs updating is the cellData length in each of the existing workbook dev types
+			this.props.updateAllDevTypeRows(this.props.myLibrary, this.props.devWorkbook)
+		}
 		this.props.fetchRandomId();
+		console.log(this.props.devWorkbook)
+
 	}
-	
+	componentDidUpdate(prevProps){
+		// console.log(prevProps, this.props)
+		if(prevProps.myLibrary.selected_buildings.length !== this.props.myLibrary.selected_buildings.length){
+			this.props.updateAllDevTypeRows(this.props.myLibrary, this.props.devWorkbook)
+		}
+	}
 	openSaveLibraryModal = () => {
 		let arrayLength = this.props.myLibrary.selected_buildings.length;
 		if (arrayLength > 1){
@@ -193,6 +211,7 @@ function mapStateToProps(state) {
 		uniqueId: state.randomId
 		,myLibrary: state.myLibrary
 		,availableBldgs: state.availableBldgs
+		,devWorkbook: state.devWorkbook
 		,toast: state.toast		
 	};
 }

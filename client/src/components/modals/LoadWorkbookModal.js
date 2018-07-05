@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-
+import * as helper from '../../utils/_helperMethods';
 import LoadWorkbookModalContents from './LoadWorkbookModalContents';
 import ModalContainer from './ModalContainer';
 import { withStyles } from '@material-ui/core/styles';  
@@ -21,9 +21,14 @@ class LoadWorkbookModal extends Component {
         })
         // console.log(item);
     }
-    loadWorkbook = () =>{
+    loadWorkbook = (bldgs) =>{
         // console.log(this.state.selectedWorkbook);
+        //load the workbook and all it's attributes
         this.props.loadSavedWorkbook(this.state.selectedWorkbook)
+        //also, load the buildings that make up the workbook itself
+        let selectedBldgs = helper.getBldgIdsFromWkbk(this.state.selectedWorkbook);
+        console.log(selectedBldgs);
+        this.props.loadSelectedBuildings(selectedBldgs, bldgs);
         this.props.closeModal();
     }
 
@@ -39,7 +44,7 @@ class LoadWorkbookModal extends Component {
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 
-                            onClick={()=>this.loadWorkbook()}>
+                            onClick={()=>this.loadWorkbook(this.props.availableBldgs)}>
                             Load
                         </Button>	
                         
@@ -57,6 +62,7 @@ function mapStateToProps(state) {
     return {
         modal: state.modal
         ,availableWkbks: state.availableWkbks
+        ,availableBldgs: state.availableBldgs
     };
 }
 export default withStyles(styles)(connect(mapStateToProps, actions)(LoadWorkbookModal));

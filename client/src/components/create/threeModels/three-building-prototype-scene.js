@@ -21,9 +21,10 @@ class ThreeBuildingPrototypeScene extends Component {
     }); 
   }
   
-  componentWillReceiveProps(props){
-    this.handleChange('update');
-  }
+  // componentDidUpdate(prevProps){
+  //   this.handleChange('update');
+  // this.props === prevProps
+  // }
   render() {
     let someVariable = this.state.changeCounter;
     // let sqft = this.props.cubeDim.z * this.props.cubeDim.sqft;

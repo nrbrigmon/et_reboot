@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import * as helper from '../../../utils/_helperMethods';
 import * as actions from '../../../actions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -22,12 +23,24 @@ class DevTypeStart extends Component {
 		isExisting: false
 	}
 	componentDidMount(){
-		this.props.startInitalizeWorkbook(this.props.myLibrary.selected_buildings);		
 		//sample development type data until i can get some real stuff going
 		if (this.props.availableWkbks.length === 0) {
 			this.props.fetchAllDevWorkbooks();
 		}
+		let { selected_buildings } = this.props.myLibrary;
+		// console.log(this.props.devWorkbook);
+		let { cellData } = this.props.devWorkbook.workbook_devtypes[0];
+		let shouldContinue = helper.compareBldgArrays(selected_buildings, cellData);
+		if (shouldContinue.resp === false) {
+			this.props.addBuildingArrayToLibrary(shouldContinue.diffArray, this.props.availableBldgs)
+			// with the current devWorkbook
+		}
+		console.log(this.props.devWorkbook);
 	}
+	// componentDidUpdate(prevProps){
+	// 	//we want to align the current myLibrary state
+		
+	// }
 	loadWorkbook = () => {
 		this.props.openModal("loadWorkbook");
 	}
@@ -35,6 +48,7 @@ class DevTypeStart extends Component {
 		this.props.openModal("saveWorkbook")
 	}
 	render() {
+		console.log(this.props.devWorkbook);
 		let pathHome = this.props.match.isExact;
 		// console.log(pathHome);
 		const { classes } = this.props;
@@ -73,6 +87,7 @@ function mapStateToProps(state) {
 	  return { 
 			myLibrary: state.myLibrary
 			,availableWkbks: state.availableWkbks
+			,availableBldgs: state.availableBldgs
 			,devWorkbook: state.devWorkbook
 			,modal: state.modal
 			,toast: state.toast		

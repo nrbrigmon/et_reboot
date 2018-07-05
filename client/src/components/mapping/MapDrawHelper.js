@@ -9,7 +9,7 @@ class MapDrawHelper extends Component {
         }
     }
 
-    componentWillReceiveProps({ leafletDrawTrigger }){
+    componentDidUpdate({ leafletDrawTrigger }){
         // console.log(leafletDrawTrigger);
         if (leafletDrawTrigger === 'closeDrawHelper'){
             this.handleAction(leafletDrawTrigger)

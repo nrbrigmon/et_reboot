@@ -84,28 +84,33 @@ class MapDrawComponent extends Component {
 		this._drawAction.enable();	
 	}
 
-	componentWillReceiveProps(props){
-		console.log('leaflet trigger: ', props.leafletDrawTrigger);
-		let { leafletDrawTrigger } = props;
-		if (leafletDrawTrigger === 'baseLayer'){
-			this._drawBaseLayer();
-		} else if (leafletDrawTrigger === 'paintLayer'){
-			this._paintBaseLayer();
-		} else if (leafletDrawTrigger === 'addBaseLayer'){
-			this._addBaseLayerToMap(props.baseMapLayer[0]); 
-		} else if (leafletDrawTrigger === 'updateBaseLayer'){
-			this._updateBaseLayerOnMap(props.baseMapLayer[0]); 
-		} else if (leafletDrawTrigger === 'deleteLastPoint'){
-			this._drawAction.deleteLastVertex();	
-		} else if (leafletDrawTrigger === 'finishLayer'){
-			this._drawAction.completeShape();
-		} else if (leafletDrawTrigger === 'cancelLayer'){
-			this._drawAction.disable();	
+	componentDidUpdate(prevProps){
+		console.log('leaflet trigger: ', prevProps.leafletDrawTrigger);
+		if (this.props.leafletDrawTrigger === prevProps.leafletDrawTrigger){
+			return;
 		} else {
-			// console.log('else rreturn')
-			// console.log(props.baseMapLayer);
-			// return;
+			let { leafletDrawTrigger } = this.props;
+			if (leafletDrawTrigger === 'baseLayer'){
+				this._drawBaseLayer();
+			} else if (leafletDrawTrigger === 'paintLayer'){
+				this._paintBaseLayer();
+			} else if (leafletDrawTrigger === 'addBaseLayer'){
+				this._addBaseLayerToMap(this.props.baseMapLayer[0]); 
+			} else if (leafletDrawTrigger === 'updateBaseLayer'){
+				this._updateBaseLayerOnMap(this.props.baseMapLayer[0]); 
+			} else if (leafletDrawTrigger === 'deleteLastPoint'){
+				this._drawAction.deleteLastVertex();	
+			} else if (leafletDrawTrigger === 'finishLayer'){
+				this._drawAction.completeShape();
+			} else if (leafletDrawTrigger === 'cancelLayer'){
+				this._drawAction.disable();	
+			} else {
+				// console.log('else rreturn')
+				// console.log(props.baseMapLayer);
+				// return;
+			}
 		}
+		
 	}
 
 	render() {

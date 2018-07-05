@@ -6,11 +6,11 @@ const router = Router();
 //get all workbooks in table
 router.get('/', (request, response, next) =>{
     pool.query("SELECT attributes FROM development_workbooks ORDER BY id ASC", (err, res) =>{
+        // console.log(err);
         if (err) return next(err);
         
         //destructuring to make up for silly db design
         let payload = res.rows.map( row => row.attributes);
-        // console.log(payload);
         // console.log(res.rows);
         response.json(payload);
     });
@@ -67,7 +67,7 @@ router.put('/:workbook_id', (request, response, next) =>{
     console.log('updating workbook in database..', workbook_id)
     pool.query("UPDATE development_workbooks SET attributes = $1 WHERE (attributes ->> 'workbook_id') = $2 ", [values, workbook_id], (err, res) => {
         if (err) {
-            console.log(err)
+            // console.log(err)
             return next(err);
         }
         response.json(res.rows);
