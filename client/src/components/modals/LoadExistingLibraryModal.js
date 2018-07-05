@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import AddLibraryModalContents from './AddLibraryModalContents';
+import LoadExistingLibraryModalContents from './LoadExistingLibraryModalContents';
 import ModalContainer from './ModalContainer';
+import { withStyles } from '@material-ui/core/styles';  
+import ModalStyles from '../../styles/ModalStyles';  
+const styles = theme => ModalStyles(theme);
 
-import _ModalStyles from '../../styles/ModalStyles';
 
-const styles = theme => _ModalStyles(theme);
-
-class AddLibraryModal extends Component {
+class LoadExistingLibraryModal extends Component {
     saveBuildings = () =>{
         let tweak = this.props.modList[0];
         this.props.addBuildingArrayToLibrary(tweak, this.props.availableBldgs);
@@ -26,7 +25,7 @@ class AddLibraryModal extends Component {
             <ModalContainer modal={this.props.modal === 'library' ? true : false}>
                     <h4>Select a library:</h4>
                    
-                    <AddLibraryModalContents {...this.props} />
+                    <LoadExistingLibraryModalContents {...this.props} />
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 
@@ -46,10 +45,10 @@ class AddLibraryModal extends Component {
 
 function mapStateToProps(state) {
     return { 
-        modList: state.modList,
-        modal: state.modal,
-        availableBldgs: state.availableBldgs
+        modList: state.modList
+        ,availableBldgs: state.availableBldgs
+        ,availableLibs: state.availableLibs
+        ,modal: state.modal
     };
 }
-const styledApp = withStyles(styles)(AddLibraryModal);
-export default connect(mapStateToProps, actions)(styledApp);
+export default withStyles(styles)(connect(mapStateToProps, actions)(LoadExistingLibraryModal));

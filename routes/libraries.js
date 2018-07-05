@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', (request, response, next) =>{
     pool.query("SELECT * FROM building_libraries ORDER BY id ASC", (err, res) =>{
         if (err) return next(err);
-        
+        console.log(res.rows);
         //destructuring to make up for silly db design
         let payload = res.rows;
 
@@ -47,14 +47,11 @@ router.delete('/:id', (request, response, next) =>{
 //post new building into table
 router.post('/', (request, response, next) =>{
     console.log('posting new library on backend...')
-    // let { physicalInfo, basicFinInfo, advFinInfo} = request.body;
-    let { library_id, library_name, building_library_ids } = request.body;
-    // console.log(library_id);
-    // console.log(request.body);
-    // console.log('adding new library to database..', building_library_ids)
+    let { library_id, library_name, selected_buildings } = request.body;
+    
     pool.query(
-        "INSERT INTO building_libraries (library_id, library_name, building_library_ids) VALUES ($1, $2, $3)", 
-        [library_id, library_name, building_library_ids], (err, res) => {
+        "INSERT INTO building_libraries (library_id, library_name, selected_buildings) VALUES ($1, $2, $3)", 
+        [library_id, library_name, selected_buildings], (err, res) => {
         if (err) return next(err);
         console.log('successfully added');
         response.json(res.rows);
@@ -64,11 +61,11 @@ router.post('/', (request, response, next) =>{
 
 router.put('/:id', (request, response, next) =>{
     const { id } = request.params;
-    let { library_name, building_library_ids } = request.body;
+    let { library_name, selected_buildings } = request.body;
     console.log('updating building in database..', id)
     // ('UPDATE user SET ? WHERE ?', [{ Name: name }, { UserId: userId }])
-    pool.query("UPDATE building_libraries SET library_name = $1, building_library_ids = $2 WHERE library_id = $3", 
-        [library_name, building_library_ids, id],
+    pool.query("UPDATE building_libraries SET library_name = $1, selected_buildings = $2 WHERE library_id = $3", 
+        [library_name, selected_buildings, id],
         (err, res) => {
         if (err) {
             console.log(err)

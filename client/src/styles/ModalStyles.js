@@ -11,6 +11,11 @@ export default (theme) => ({
       margin: theme.spacing.unit,
       minWidth: 250,
     },
+    list:{
+      overflow: 'auto',
+      position: 'relative', 
+      maxHeight: 400
+    },
     dropzone: {
       width: "100%",
       height: '160px',

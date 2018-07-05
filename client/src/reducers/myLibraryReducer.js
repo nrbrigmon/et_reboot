@@ -79,11 +79,19 @@ function updateBuilding(state, editing, buildingUpdate) {
         selected_buildings: existingArray
     }
 }
+function savedBuildinglibrary(state){
+    return {
+        ...state,
+        library_isNew: false
+    }
+}
 
 let starterLibrary = {
-    library_id: shortid.generate(),
-    library_name: '',
-    selected_buildings: []
+    library_id: shortid.generate()
+    ,library_name: ''
+    ,library_isNew: true
+    ,selected_buildings: []
+    ,user_id: ''
 }
 
 export default function (state = starterLibrary, action) {
@@ -117,6 +125,10 @@ export default function (state = starterLibrary, action) {
             return newLibrary;
         case 'UPDATE_BUILDING':
             newLibrary = updateBuilding(state, action.editing, action.building);
+            localStorage.setItem('myLibrary', JSON.stringify(newLibrary));
+            return newLibrary;
+        case 'SAVED_BUILDING_LIBRARY':
+            newLibrary = savedBuildinglibrary(state)
             localStorage.setItem('myLibrary', JSON.stringify(newLibrary));
             return newLibrary;
         case 'RESET_LIBRARY':

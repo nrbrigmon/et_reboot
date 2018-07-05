@@ -4,7 +4,7 @@ export default (theme) => ({
 		flexGrow: 1,
 		width: '100%',
 		margin: 0,
-		marginTop: '100px'
+		marginTop: '115px'
 	},
 	appbar: {
 		top: '60px'

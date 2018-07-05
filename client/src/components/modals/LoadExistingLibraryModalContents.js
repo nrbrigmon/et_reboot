@@ -9,7 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-class AddLibraryModalContents extends React.Component {
+class LoadExistingLibraryModalContents extends React.Component {
 
   handleToggle = bldgs => () => {
     // console.log(bldgs);
@@ -17,14 +17,14 @@ class AddLibraryModalContents extends React.Component {
     this.props.toggleBuildingModalList(bldgs);
   };
 
-	renderTabContainer = (libraries, modList) => {
-      // console.log(modList, libraries);
-      let err = (libraries === undefined || libraries.code === 'ECONNREFUSED' ) ? true : false;
+	renderTabContainer = (props) => {
+      let { availableLibs, modList, classes } = props;
+      let err = (availableLibs === undefined || availableLibs.code === 'ECONNREFUSED' ) ? true : false;
       // console.log(err);
 			return (
-        <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
+        <List className={classes.list}>
           {
-            !err ? libraries.map( (item, idx) => {
+            !err ? availableLibs.map( (item, idx) => {
               // let id = item.library_id;
               let name = item.library_name;
               let bldgs = item.building_library_ids;
@@ -59,6 +59,7 @@ class AddLibraryModalContents extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     return (
       <Grid container
 					alignItems='center'
@@ -66,7 +67,7 @@ class AddLibraryModalContents extends React.Component {
 					justify='center'>
 				
         	<Grid item xs={12}>
-						{this.renderTabContainer(this.props.availableLibs, this.props.modList)}
+						{this.renderTabContainer(this.props)}
 					</Grid>
 				
 			</Grid>
@@ -75,4 +76,4 @@ class AddLibraryModalContents extends React.Component {
   }
 }
 
-export default AddLibraryModalContents;
+export default LoadExistingLibraryModalContents;

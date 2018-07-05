@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
-
-import _ModalStyles from '../../styles/ModalStyles';
-
-const styles = theme => _ModalStyles(theme);
+import { withStyles } from '@material-ui/core/styles';  
+import ModalStyles from '../../styles/ModalStyles';  
+const styles = theme => ModalStyles(theme);
 
 class SaveBldgLibraryModal extends Component {
 
     myHandleChange = (e) => {
         this.props.updateLibraryName(e.target.value);
+    }
+    confirmSave = (lib) => {
+        //save library in db & state
+        this.props.saveBuildingLibrary(lib);
+        //send toast
+        this.props.toastMessage("Library Saved!")
+        //close modal
+        this.props.closeModal()
     }
 	render() {
         const { classes } = this.props;
@@ -24,7 +30,7 @@ class SaveBldgLibraryModal extends Component {
             <ModalContainer modal={this.props.modal === 'saveLibrary' ? true : false}>
                 <div className={classes.paper}>
                     <Typography type="headline" component="h4">
-                        Workbook Name:
+                        Library Name:
                     </Typography>
 
                     <TextField
@@ -34,7 +40,7 @@ class SaveBldgLibraryModal extends Component {
                         margin="normal"
                     />
                     <Button variant="raised" color="primary" className={classes.button} 
-                        onClick={()=>this.props.closeModal()}>
+                        onClick={()=>this.confirmSave(this.props.myLibrary)}>
                         Confirm
                     </Button>	
                     
@@ -51,9 +57,9 @@ class SaveBldgLibraryModal extends Component {
 
 function mapStateToProps(state) {
     return { 
-        myLibrary: state.myLibrary,
-        modal: state.modal
+        myLibrary: state.myLibrary
+        ,modal: state.modal
+
      };
 }
-const styledApp = withStyles(styles)(SaveBldgLibraryModal);
-export default connect(mapStateToProps, actions)(styledApp);
+export default withStyles(styles)(connect(mapStateToProps, actions)(SaveBldgLibraryModal));

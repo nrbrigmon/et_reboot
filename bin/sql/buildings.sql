@@ -8,11 +8,6 @@ CREATE TABLE building_prototype_inputs (
     attributes jsonb
 );
 
-CREATE TABLE building_prototype_outputs (
-    linked_id character varying(50),
-    attributes jsonb
-);
-
 CREATE TABLE development_type_inputs (
     id serial,
     attributes jsonb
@@ -31,7 +26,7 @@ CREATE TABLE building_libraries (
     id serial,
     library_id text,
     library_name character varying(50),
-    building_library_ids text[]
+    selected_buildings text[]
 );
 
 /* insert process */

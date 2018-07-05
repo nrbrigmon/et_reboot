@@ -9,21 +9,21 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 
-class AddBldgModalContents extends React.Component {
+class LoadExistingBldgModalContents extends React.Component {
 
   handleToggle = id => () => {
     // console.log(id);
     this.props.toggleBuildingModalList(id);
   };
 
-	renderTabContainer = (bldgs, modList) => {
-    // console.log(bldgs);
-    let err  = (bldgs === undefined || bldgs.code === 'ECONNREFUSED' || bldgs.code === 'ENOENT') ? true : false;
+	renderTabContainer = (props) => {
+    let { availableBldgs, modList, classes } = props;
+    let err  = (availableBldgs === undefined || availableBldgs.code === 'ECONNREFUSED' || availableBldgs.code === 'ENOENT') ? true : false;
     
     return (
-        <List style={{overflow: 'auto',position: 'relative', maxHeight: 400}}>
+        <List className={classes.list}>
         {
-           !err ? bldgs.map( (item, idx) => {
+           !err ? availableBldgs.map( (item, idx) => {
             // console.log(item.attributes["physicalInfo"])
             let name = item.physicalInfo.buildingName;
             let id = item.uniqueId;
@@ -68,7 +68,7 @@ class AddBldgModalContents extends React.Component {
 					justify='center'>
           
         	<Grid item xs={12}>
-						{ this.renderTabContainer(this.props.availableBldgs, this.props.modList) }
+						{ this.renderTabContainer(this.props) }
 					</Grid>
 				
 			</Grid>
@@ -77,4 +77,4 @@ class AddBldgModalContents extends React.Component {
   }
 }
 
-export default AddBldgModalContents;
+export default LoadExistingBldgModalContents;

@@ -4,43 +4,45 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import LoadWorkbookModalContents from './LoadWorkbookModalContents';
+import LoadTemplateBldgModalContents from './LoadTemplateBldgModalContents';
 import ModalContainer from './ModalContainer';
 import { withStyles } from '@material-ui/core/styles';  
 import ModalStyles from '../../styles/ModalStyles';  
+import buildingHandler from '../create/buildings/examples/buildingHandler';
+
 const styles = theme => ModalStyles(theme);
 
-
-class LoadWorkbookModal extends Component {
+class LoadTemplateBldgModal extends Component {
     state = {
-        selectedWorkbook: {}
+        selectedBuilding: ''
     }
     queueSelection = (item) => {
         this.setState({
-            selectedWorkbook: item
+            selectedBuilding: item.key
         })
-        // console.log(item);
+        console.log(item);
     }
-    loadWorkbook = () =>{
-        // console.log(this.state.selectedWorkbook);
-        this.props.loadSavedWorkbook(this.state.selectedWorkbook)
+    loadBuildingAttributes = () =>{
+        // console.log("LOADING>>>")
+        // this.props.editBuildingPrototype(true, selection)    
+        let selection = buildingHandler(this.state.selectedBuilding)
+        this.props.editBuildingPrototype(true, selection)
         this.props.closeModal();
     }
 
 	render() {
         const { classes } = this.props;
-        // console.log(this.props);
 		return (
-            <ModalContainer modal={this.props.modal === 'loadWorkbook' ? true : false}>
-                    <h4>Load an Existing Workbook:</h4>
+            <ModalContainer modal={this.props.modal === 'templateBuildings' ? true : false}>
+                    <h4>Load an Existing Template:</h4>
 
-                    <LoadWorkbookModalContents {...this.props} 
-                        localWorkbookChoice={this.queueSelection} />
+                    <LoadTemplateBldgModalContents {...this.props} 
+                        localBuildingChoice={this.queueSelection}/>
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 
-                            onClick={()=>this.loadWorkbook()}>
-                            Load
+                            onClick={()=>this.loadBuildingAttributes()}>
+                            Save
                         </Button>	
                         
                         <Button variant="raised" color="secondary" className={classes.button} 
@@ -56,7 +58,6 @@ class LoadWorkbookModal extends Component {
 function mapStateToProps(state) {
     return {
         modal: state.modal
-        ,availableWkbks: state.availableWkbks
     };
 }
-export default withStyles(styles)(connect(mapStateToProps, actions)(LoadWorkbookModal));
+export default withStyles(styles)(connect(mapStateToProps, actions)(LoadTemplateBldgModal));

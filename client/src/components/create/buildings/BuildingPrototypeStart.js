@@ -17,7 +17,7 @@ import BasicFinFormComponent from './BasicFinFormComponent';
 import AdvancedFinFormComponent from './AdvancedFinFormComponent';
 import BuildingFormReviewComponent from './BuildingFormReviewComponent';
 import BuildingMenu from './menu/BuildingMenu';
-import LoadBldgAttrModal from '../../modals/LoadBldgAttrModal';
+import LoadTemplateBldgModal from '../../modals/LoadTemplateBldgModal';
 import FormStyles from '../../../styles/FormStyles';
 
 const styles = theme => FormStyles(theme);
@@ -112,14 +112,14 @@ const styles = theme => FormStyles(theme);
 					</Tabs>
 				</AppBar>
 				
-				<Grid item md={8} sm={12} className="myContainer">
+				<Grid item md={8} sm={12}>
 					<BuildingMenu  onSave={this.saveBuilding} onSaveAs={this.saveAsBuilding} onCancel={this.cancelBuilding}/>
 					<Route path={`${match.url}/physical-form`} render={()=> <PhysicalFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/basic-financial`} render={()=> <BasicFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/advanced-financial`} render={()=> <AdvancedFinFormComponent attributes={buildingPrototype} {...this.props}/>}/>
 					<Route path={`${match.url}/review`} render={()=> <BuildingFormReviewComponent attributes={buildingPrototype} {...this.props}/>}/>
 					
-					<LoadBldgAttrModal />
+					<LoadTemplateBldgModal />
 				</Grid>
 				
 				<Grid item className={classes.paper} xs={12}>

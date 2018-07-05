@@ -162,9 +162,15 @@ function initializeWorkbook(state, action){
 	newState["workbook_devtypes"] = newArray;
 	return newState;
 }
-
+function updateFirstLevelAttribute(state, key, value){
+    return {
+        ...state,
+        [key]: value
+    }
+}
 let starterDevTypeWorkbook = {
-    workbook_id: shortid.generate(),
+	workbook_id: shortid.generate(),
+	workbook_isNew: true, 
     workbook_name: '',
     workbook_devtypes: []
 }
@@ -193,10 +199,20 @@ export default function(state = starterDevTypeWorkbook, action) {
 			myDevelopmentWorkbook = editDevelopmentTypeMixer(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
-		// case 'UPDATE_DEV_TYPE_NAME':
-		// 	myDevelopmentWorkbook = editDevelopmentTypeName(state, action)
-		// 	localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-		// 	return myDevelopmentWorkbook;
+		case 'LOAD_WORKBOOK':
+			// console.log(action);
+			myDevelopmentWorkbook = action.workbook;
+			myDevelopmentWorkbook = updateFirstLevelAttribute(myDevelopmentWorkbook, "workbook_isNew", false)
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'SAVED_WORKBOOK':
+			myDevelopmentWorkbook = updateFirstLevelAttribute(state, "workbook_isNew", false)
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'UPDATE_WORKBOOK_ATTRIBUTE':
+			myDevelopmentWorkbook = updateFirstLevelAttribute(state, action.key, action.value)
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
 		case 'UPDATE_DEV_TYPE_ATTR':
 			myDevelopmentWorkbook = editDevelopmentTypeAttr(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));

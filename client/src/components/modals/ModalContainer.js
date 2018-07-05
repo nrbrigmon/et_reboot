@@ -4,9 +4,9 @@ import * as actions from '../../actions';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-import _ModalStyles from '../../styles/ModalStyles';
+import ModalStyles from '../../styles/ModalStyles';
 
-const styles = theme => _ModalStyles(theme);
+const styles = theme => ModalStyles(theme);
 
 class ModalContainer extends Component {
 
@@ -24,8 +24,8 @@ class ModalContainer extends Component {
                 open={this.props.modal}
                 onClose={this.cancelModal}
                 >
-                <div className={classes.container}>
-					{children}
+                <div className={classes.container} >
+				    {children}
 				</div>
             </Modal>)
 	}

@@ -1,8 +1,10 @@
 export default [
     {
+        key: "hotel5",
         bldgName: "Hotel 5 Story",
-        siteName: "Site "
+        siteName: "Austin, TX"
       }, {
+        key: "sf3",
         bldgName: "MU 1 01 MU Res Owner 30",
         siteName: "Site "
       }, {

@@ -4,7 +4,8 @@ import activeDevTypeReducer from './activeDevTypeReducer';
 import authReducer from './authReducer';
 import baseMapLayerReducer from './baseMapLayerReducer';
 import bldgPrototypeReducer from './bldgPrototypeReducer';
-import buildingLibReducer from './buildingLibReducer';
+import availableLibsReducer from './availableLibsReducer';
+import availableWkbksReducer from './availableWkbksReducer';
 import buildingReducer from './buildingReducer';
 import devWorkbookReducer from './devWorkbookReducer';
 import leafletDrawReducer from './leafletDrawReducer';
@@ -31,7 +32,8 @@ export default combineReducers({
 	activeDevType: activeDevTypeReducer
 	,auth: authReducer							//user login confirmation
 	,availableBldgs: buildingReducer 			//saved buildings in database
-	,availableLibs: buildingLibReducer			//saved libraries in database
+	,availableLibs: availableLibsReducer		//saved libraries in database
+	,availableWkbks: availableWkbksReducer		//saved libraries in database
 	,baseMapLayer: baseMapLayerReducer			//the baseLayer for scenario planning
 	,bldgType: bldgPrototypeReducer				//the current building being edited
 	,devWorkbook: devWorkbookReducer			//the current development type being edited

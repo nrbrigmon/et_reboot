@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-import LoadBldgAttrModalContents from './LoadBldgAttrModalContents';
+import LoadExistingBldgModalContents from './LoadExistingBldgModalContents';
 import ModalContainer from './ModalContainer';
+import { withStyles } from '@material-ui/core/styles';  
+import ModalStyles from '../../styles/ModalStyles';  
+const styles = theme => ModalStyles(theme);
 
-import _ModalStyles from '../../styles/ModalStyles';
-
-const styles = theme => _ModalStyles(theme);
-
-class LoadBldgAttrModal extends Component {
-    loadBuildingAttributes = () =>{
-        console.log("LOADING>>>")
-        // this.props.editBuildingPrototype(true, selection)
+class LoadExistingBldgModal extends Component {
+    saveBuildings = () =>{
+        this.props.addBuildingArrayToLibrary(this.props.modList, this.props.availableBldgs);
         this.props.closeModal();
     }
 
 	render() {
         const { classes } = this.props;
 		return (
-            <ModalContainer modal={this.props.modal === 'loadAttributes' ? true : false}>
-                    <h4>Load an Existing Template:</h4>
+            <ModalContainer modal={this.props.modal === 'existingBuildings' ? true : false}>
+                    <h4>Select your buildings:</h4>
 
-                    <LoadBldgAttrModalContents {...this.props} />
+                    <LoadExistingBldgModalContents {...this.props}/>
 
                     <div className={classes.paper}>
                         <Button variant="raised" color="primary" className={classes.button} 
-                            onClick={()=>this.loadBuildingAttributes()}>
+                            onClick={()=>this.saveBuildings()}>
                             Save
                         </Button>	
                         
@@ -45,8 +42,10 @@ class LoadBldgAttrModal extends Component {
 
 function mapStateToProps(state) {
     return {
-        modal: state.modal,
+        modList: state.modList
+        ,availableBldgs: state.availableBldgs
+        ,modal: state.modal
     };
 }
-const styledApp = withStyles(styles)(LoadBldgAttrModal);
-export default connect(mapStateToProps, actions)(styledApp);
+
+export default withStyles(styles)(connect(mapStateToProps, actions)(LoadExistingBldgModal));

@@ -49,21 +49,46 @@ export const removeDevTypeFromWorkbook = (devTypeId) => {
 	return action;
 }
 
+export const updateWorkbookProperty = (key, value) => {
+	let action = {
+		type: "UPDATE_WORKBOOK_ATTRIBUTE",
+		key,
+		value
+	}
+	return action;
+}
 export const getExistingWorkbook = ( id) => async dispatch => {
-	const res = await axios.get('/api/devtypes/'+id);
+	const res = await axios.get('/api/dev_workbooks/'+id);
 	// console.log(res);
 	dispatch({ type: 'FETCH_EXISTING_WORKBOOK', payload: res["data"] });
 };
 
-export const saveWorkbook = (status, workbook) => async dispatch => {
-	let { id } = workbook;
-	if (status === true){
-		const res = await axios.put('/api/devtypes/'+id+'', workbook)
-		// console.log(res);
-		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg:"Workbook Updated!", open: true } });
+export const loadSavedWorkbook = (workbook) => {
+	let action = {
+		type: "LOAD_WORKBOOK",
+		workbook
+	}
+	// console.log(action);
+	return action;
+}
+export const saveWorkbook = (workbook) => async dispatch => {
+	let { workbook_id, workbook_isNew } = workbook;
+	if (workbook_isNew === false){
+		const res = await axios.put('/api/dev_workbooks/'+workbook_id+'', workbook)
+		// console.log(res);+
+		dispatch({ type: 'UPDATE_DEV_WORKBOOK', payload: res.data });
+
 	} else {
-		const res = await axios.post('/api/devtypes', workbook)
+		const res = await axios.post('/api/dev_workbooks', workbook)
 		// console.log(res);
-		dispatch({ type: 'SEND_TOAST', payload: { data: res, msg:"Workbook Saved!", open: true } });
+		dispatch({ type: 'POST_DEV_WORKBOOK', payload: res.data });
 	}
 };
+
+export const fetchAllDevWorkbooks = () => async dispatch => {
+	const res = await axios.get('/api/dev_workbooks');
+	// console.log(res);
+	dispatch({ type: 'FETCH_DEV_WORKBOOKS', payload: res.data });
+};
+
+

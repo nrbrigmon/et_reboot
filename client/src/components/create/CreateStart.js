@@ -25,8 +25,8 @@ import Domain from '@material-ui/icons/Domain';
 import Delete from '@material-ui/icons/Delete';
 import Save from '@material-ui/icons/Save';
 
-import AddBldgModal from '../modals/AddBldgModal';
-import AddLibraryModal from '../modals/AddLibraryModal';
+import LoadExistingBldgModal from '../modals/LoadExistingBldgModal';
+import LoadExistingLibraryModal from '../modals/LoadExistingLibraryModal';
 import SaveBldgLibraryModal from '../modals/SaveBldgLibraryModal';
 import UpdateToast from '../modals/UpdateToast';
 import Wrapper900 from '../wrappers/Wrapper900';
@@ -157,11 +157,11 @@ class CreateStart extends Component {
 						tab depending on the click?*/}
 						
 						<Button variant="raised" color="primary" className={classes.button} 
-							onClick={() => this.props.openModal('library')}>
+							onClick={() => this.props.openModal('existingLibrary')}>
 							<CloudDownload className={classes.leftIcon}/>  Load Existing Library
 						</Button>
 						<Button variant="raised" color="primary" className={classes.button} 
-							onClick={() => this.props.openModal('buildings')}>
+							onClick={() => this.props.openModal('existingBuildings')}>
 							<CloudDownload className={classes.leftIcon}/>  Add Existing Building
 						</Button>
 						<Button variant="raised" color="primary" className={classes.button} 
@@ -179,8 +179,8 @@ class CreateStart extends Component {
 					</Grid>
 				</Grid>
 
-				<AddBldgModal   />
-				<AddLibraryModal   />
+				<LoadExistingBldgModal   />
+				<LoadExistingLibraryModal   />
 				<SaveBldgLibraryModal  />
 				<UpdateToast {...this.props} /> 
 			</Wrapper900>	
@@ -190,10 +190,10 @@ class CreateStart extends Component {
 
 function mapStateToProps(state) {
 	return { 
-		uniqueId: state.randomId,
-		myLibrary: state.myLibrary,
-		availableBldgs: state.availableBldgs,
-		toast: state.toast		
+		uniqueId: state.randomId
+		,myLibrary: state.myLibrary
+		,availableBldgs: state.availableBldgs
+		,toast: state.toast		
 	};
 }
   

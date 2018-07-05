@@ -10,10 +10,12 @@ import DevTypeBuildingMix from './DevTypeBuildingMix';
 import DevTypeAttributes from './DevTypeAttributes';
 import DevTypeReview from './DevTypeReview';
 import Wrapper900 from '../../wrappers/Wrapper900';
+import LoadWorkbookModal from '../../modals/LoadWorkbookModal';
+import SaveWorkbookModal from '../../modals/SaveWorkbookModal';
+import DevTypeStyles from '../../../styles/DevTypeStyles';
+import UpdateToast from '../../modals/UpdateToast';
 
-import _DevTypeStyles from '../../../styles/DevTypeStyles';
-
-const styles = theme => _DevTypeStyles(theme);
+const styles = theme => DevTypeStyles(theme);
 
 class DevTypeStart extends Component {
 	state = {
@@ -22,12 +24,15 @@ class DevTypeStart extends Component {
 	componentDidMount(){
 		this.props.startInitalizeWorkbook(this.props.myLibrary.selected_buildings);		
 		//sample development type data until i can get some real stuff going
+		if (this.props.availableWkbks.length === 0) {
+			this.props.fetchAllDevWorkbooks();
+		}
 	}
 	loadWorkbook = () => {
 		this.props.openModal("loadWorkbook");
 	}
 	saveWorkbook = () => {
-		this.props.openModal("saveWorbook")
+		this.props.openModal("saveWorkbook")
 	}
 	render() {
 		let pathHome = this.props.match.isExact;
@@ -55,6 +60,9 @@ class DevTypeStart extends Component {
 						onClick={()=>this.saveWorkbook()}>
 						Save Progress
 					</Button>	
+					<LoadWorkbookModal />
+					<SaveWorkbookModal />
+					<UpdateToast {...this.props} />
 				</div>
 			</Wrapper900>
 		);
@@ -63,9 +71,11 @@ class DevTypeStart extends Component {
 
 function mapStateToProps(state) {  
 	  return { 
-			myLibrary: state.myLibrary,
-			devWorkbook: state.myLibrary,
-			modal: state.modal
+			myLibrary: state.myLibrary
+			,availableWkbks: state.availableWkbks
+			,devWorkbook: state.devWorkbook
+			,modal: state.modal
+			,toast: state.toast		
 		 };
 }
   

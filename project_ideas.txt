@@ -4,7 +4,7 @@
 
 ---- STEPS TO DEMO
         - create manual building types list:
-                - austin list (short-term) (x20)
+                - austin list (short-term) (x18)
                         - get from old projects in ET Folder
                 - brazil list (long-term) (xProject based)
                         - using dev types from KStiphany project board in emails, create custom variations

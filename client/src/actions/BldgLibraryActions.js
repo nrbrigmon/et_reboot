@@ -52,16 +52,17 @@ export const removeBuildingFromLibrary = (bldgId) => {
 	return action;
 };
 
-export const saveBuildingLibrary = (myLibrary, status) => async dispatch => {
-	//does it already exist? if so put, else post	
-	if (status === true){
-		const res = await axios.put('/api/libraries/'+myLibrary.library_id+'', myLibrary)
+export const saveBuildingLibrary = (myLibrary) => async dispatch => {
+	//does it already exist? if so put, else post
+	let { library_id, library_isNew } = myLibrary
+	if (library_isNew === false){
+		const res = await axios.put('/api/libraries/'+library_id+'', myLibrary)
 		// console.log(res);
-		dispatch({ type: 'UPDATE_BUILDING_LIBRARY', payload: res.data });
+		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	} else {
 		const res = await axios.post('/api/libraries', myLibrary)
 		// console.log(res);
-		dispatch({ type: 'POST_BUILDING_LIBRARY', payload: res.data });
+		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	}
 };
 
@@ -77,7 +78,7 @@ export const updateBuildingInLibrary = (editing, building) => {
 /* BUIILDING LIBRARY ACTIONS */
 export const fetchAllBuildingLibraries = () => async dispatch => {
 	const res = await axios.get('/api/libraries');
-	dispatch({ type: 'FETCH_BUILDINGS_LIBRARIES', payload: res.data });
+	dispatch({ type: 'FETCH_BUILDING_LIBRARIES', payload: res.data });
 };
 
 export const toggleBuildingModalList = (id) => {

@@ -1,39 +1,14 @@
 import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import AppBar from '@material-ui/core/AppBar';
+
+import BuildingMenuOptions from './BuildingMenuOptions';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
 
-import AppBar from '@material-ui/core/AppBar';
-
-const MenuItemOptions = (ctx) => {
-  console.log(ctx);
-  return (
-    <span>
-      <MenuItem 
-        onClick={()=> {ctx.props.onSave(); ctx.handleClose()} }>
-        Save...</MenuItem>
-      <MenuItem 
-        onClick={()=> {ctx.props.onSaveAs(); ctx.handleClose()} }>
-        Save As...</MenuItem>
-      <MenuItem 
-        onClick={() => {ctx.props.openModal('loadAttributes'); ctx.handleClose()} }>
-        Load Attributes...</MenuItem>
-      <MenuItem 
-        onClick={ctx.handleClose}>
-        Export As...</MenuItem>
-      <MenuItem 
-        onClick={ctx.handleClose}>
-        Print...</MenuItem>
-      <MenuItem 
-        onClick={()=> {ctx.props.onCancel(); ctx.handleClose()} }>
-        Cancel</MenuItem>
-    </span>
-  )
-}
 
 class BuildingMenu extends Component {
       state = {
@@ -67,7 +42,7 @@ class BuildingMenu extends Component {
               open={Boolean(anchorEl)}
               onClose={this.handleClose}
             >
-              <MenuItemOptions {...this}  />
+              <BuildingMenuOptions {...this}  />
               
             </Menu>
           </AppBar>

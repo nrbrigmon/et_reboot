@@ -6,64 +6,42 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import hotel5 from '../create/buildings/examples/hotelFiveStory';
-import blgSampleList from './_sampleBuildings';
-
 class LoadWorkbookModalContents extends React.Component {
 
   state = {
     selectedValue: 'a'
   };
 
-  handleChange = id => {
-    // console.log(event);
-    this.setState({selectedValue: id});
-    this.props.editBuildingPrototype(true, hotel5)
+  handleChange = item => {
+    // console.log(item);
+    this.setState({selectedValue: item.workbook_name});
+    this.props.localWorkbookChoice(item);
 
   };
 
-  renderTabContainer = () => {
-    // console.log(bldgs); let err  = (bldgs === undefined || bldgs.code ===
-    // 'ECONNREFUSED') ? true : false;
+  renderTabContainer = (props) => {
+    // console.log(props);
+    let { availableWkbks, classes } = props;
+    let err  = (availableWkbks === undefined || availableWkbks.code === 'ECONNREFUSED') ? true : false;
+    // console.log(availableWkbks); 
 
     return (
-      <List
-        style={{
-        overflow: 'auto',
-        position: 'relative',
-        maxHeight: 400
-      }}>
-        {/* {
-           !err ? bldgs.map( (item, idx) => {
-            // console.log(item.attributes["physicalInfo"])
-            // let name = item.physicalInfo.buildingName;
-            // let id = item.uniqueId;
-            // let siteLocation = item.physicalInfo.siteLocation;
-
-            if (name === undefined){
-              name = 'err';
-            }
-            if (siteLocation === undefined){
-              siteLocation = 'err';
+      <List className={classes.list}>
+        {
+           !err ? availableWkbks.map( (item, idx) => {
             return (
-            } */
-        blgSampleList.map((item, idx) => {
-          return (
-            <ListItem
-              key={idx}
-              dense
-              button
-              onClick={() => this.handleChange(item.bldgName)}>
-              <Radio checked={this.state.selectedValue === item.bldgName}/>
-              <ListItemText primary={item.bldgName} secondary={item.siteName + idx}/>
+              <ListItem
+                key={idx}
+                dense
+                button
+                onClick={() => this.handleChange(item)}>
+                <Radio checked={this.state.selectedValue === item.workbook_name}/>
+                <ListItemText primary={item.workbook_name} secondary={"Created by user: "+idx}/>
 
-            </ListItem>
-          )
-        })
-        /* )
+              </ListItem>
+              )
             }) : <ListItem dense>Failed to connect to database</ListItem>
-          } */
-}
+          }
       </List>
     )
   }
@@ -72,11 +50,12 @@ class LoadWorkbookModalContents extends React.Component {
   }
 
   render() {
+    // console.log(this.props);
     return (
       <Grid container alignItems='center' direction='row' justify='center'>
 
         <Grid item xs={12}>
-          {this.renderTabContainer()}
+          {this.renderTabContainer(this.props)}
         </Grid>
 
       </Grid>
