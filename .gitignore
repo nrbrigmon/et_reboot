@@ -6,10 +6,11 @@
 /config/_pdubs.txt
 /config/nates_key.pem
 /config/putty_key.ppk
-/bin/config_db.py
-/bin/_config_test.py
+/bin/py
 /bin/sql
+
 project_ideas.txt
+
 # dependencies
 /node_modules
 /client/node_modules

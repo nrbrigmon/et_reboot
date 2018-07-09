@@ -35,7 +35,11 @@ class DemoStart extends Component {
 						<h2>Demo</h2>
 					</Grid>
 					<Grid item sm={12} >
-
+						{/*
+							1. load (demo) devWorkbook and (demo) myLibrary when component mounts
+							2. also, when component unmounts, empty these states
+							3. add MapStart component... done
+						*/}
 						in perfect world we'd have an international Demo (sau paulo)
 						and a local demo (austin).
 

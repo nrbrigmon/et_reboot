@@ -27,7 +27,7 @@ class AboutStart extends Component {
 						<h2>Software for Urban Planners</h2>
 					</Grid>
 					
-					<Grid item xs={12} className={classes.intro}>
+					<Grid item xs={12} >
 						<Typography component="p" align="left">
 							For	cities, policy-makers, and developers, the ET Reboot App offers
 							planning insight, real time metrics, building visualization and more.	

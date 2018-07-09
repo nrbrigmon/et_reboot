@@ -14,7 +14,7 @@
 	"scripts": {
 		"start": "node ./bin/www",
 		"server": "nodemon ./bin/www",
-		"config": "python ./bin/config_db.py",
+		"config": "python ./bin/py/config_db.py",
 		"client": "npm run start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\" ",
 		"postinstall": "NPM_CONFIG_PRODUCTION=true npm install --prefix client && npm run build --prefix client",

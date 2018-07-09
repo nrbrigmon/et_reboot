@@ -11,26 +11,9 @@ import Send from '@material-ui/icons/Send';
 import Wrapper900 from '../wrappers/Wrapper900';
 import { Link } from 'react-router-dom';
 
-const styles = ({
-  paper: {
-	padding: '0px 20px 20px 20px',
-	margin: '40px 20px 20px 20px',
-	width: '80%'
-  },
-  leftIcon: {
-	marginRight: '10px',
-  },
-  formInput: {
-	width: '100%',
-	margin: '12px'
-  },
-  button: {
-	  margin: '0 auto',
-	  maxWidth: '180px',
-	  marginTop: '10px',
-	  marginBottom: '10px'
-  },
-});
+import GlobalStyles from '../../styles/GlobalStyles';
+
+const styles = theme => GlobalStyles(theme);
 
 
 class ContactStart extends Component {
@@ -55,7 +38,7 @@ class ContactStart extends Component {
 									defaultValue=""
 									label="Name"
 									id="bootstrap-name"
-									className={classes.formInput}
+									className={classes.fullFormInput}
 
 								/>
 								
@@ -63,7 +46,7 @@ class ContactStart extends Component {
 									defaultValue=""
 									label="Email"
 									id="bootstrap-email"
-									className={classes.formInput}
+									className={classes.fullFormInput}
 
 								/>
 							</ListItem>
@@ -74,12 +57,12 @@ class ContactStart extends Component {
 									id="bootstrap-msg"
 									multiline
 									rowsMax="20"
-									className={classes.formInput}
+									className={classes.fullFormInput}
 								/>
 							</ListItem>
 							<ListItem>
-								<Button variant="raised" color="primary" className={classes.button} 
-									onClick={() =>console.log("HELLO")}>
+								<Button variant="raised" color="primary" className={classes.centerButton} 
+									onClick={() =>alert("sorry this isn't set up yet, but you can email:\n\nnrbrigmon@gmail.com")}>
 									<Send  className={classes.leftIcon}/> Send
 								</Button>
 							</ListItem>

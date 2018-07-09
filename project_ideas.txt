@@ -13,8 +13,8 @@
                         - get from old projects in ET folder
                 - brazil list (long-term) (xProject based)
                         - get from KStiphany project board in emails
-        - ALSO worth investigating.... i can load via python scripts... would be worth creating.... 
 
+        - ALSO worth investigating.... i can load devtypes,bldgs, etc via python scripts... would be worth creating.... 
         - create building types (STEP ONE)
         - create development types (STEP TWO) 
 
@@ -23,9 +23,6 @@
                 - should be load and clear library?
                 - create clear and load myDevelopmentWorkbook %s and values button?
                 
-        - create cloned mapping page, which does the following:
-                - loads canned building library
-                - loads canned development types
         - create at least two more metrics
         - show side-by-side before and after page 
         - HOUSECLeaning: i need to decouple my actions page the same way as i have for my reducers
@@ -34,7 +31,7 @@
 ---- GENERAL BUGS
         - We want brazil and austin demo.... does this mean we need to sets of metrics (Hectares and Acres)
         - need loading thingy for when you paint and are waiting for a draw
-        - build contact method for contact page.... (what did my nrbmaps use?)
+        - build contact method for contact page.... (what did my nrbmaps use?). might not be necessary due to larger site
         - instead of VIEW DEMO we could also have a 1.5 minute video that walks through full process
 
 ---- MAPPING BUGS

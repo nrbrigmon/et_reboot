@@ -51,7 +51,10 @@ export const navigateTo = (destination, ctx) => {
 
 export const checkDbError = (conn) => {
 	// console.log(conn)
-	return (conn === undefined || conn.code === 'ECONNREFUSED' || conn.code === 'ENOENT') ? true : false;
+	return (conn === undefined 
+		|| conn.code === 'ECONNREFUSED' 
+		|| conn.code === 'ENOENT') 
+		? true : false;
 }
 
 export const compareBldgArrays = (selectBldgs, devBldgs) => {

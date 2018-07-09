@@ -1,13 +1,11 @@
-import hotel5 from './hotelFiveStory';
-import sf3 from './sfModerateLot';
+import hotel5 from "./hotelFiveStory";
+import sf6000 from "./sf6000SqFtLot";
 
 const BUILDINGS = {
-    hotel5: hotel5,
-    sf3: sf3
-  };
-  
-export default (selection) => {
-    // const Handler = BUILDINGS[selection] || "FourOhFourPage";
+  hotel5: hotel5,
+  sf6000: sf6000
+};
 
-    return BUILDINGS[selection]
+export default selection => {
+  return BUILDINGS[selection];
 };
