@@ -12,8 +12,9 @@ class DevTypeBuildingMixTable extends Component {
 
     render(){
         const { classes } = this.props;
-        const devTypes = this.props.devWorkbook.workbook_devtypes;	
-        const selectedBldgs = this.props.myLibrary.selected_buildings;
+        const { workbook_devtypes } = this.props.devWorkbook;	
+        // console.log(this.props.devWorkbook)
+        const { library_bldgs } = this.props.devWorkbook.workbook_library;
         return (
             <Table className={classes.table}>
             <TableHead>
@@ -21,7 +22,7 @@ class DevTypeBuildingMixTable extends Component {
                     <TableCell>Development Types</TableCell>
                     <TableCell className={classes.header} numeric>Mix Total</TableCell>
                     {
-                        selectedBldgs.map( (col, idx) => {
+                        library_bldgs.map( (col, idx) => {
                             return <TableCell key={idx} className={classes.header} numeric >{ (col.physicalInfo) ? col.physicalInfo.buildingName : '0'}</TableCell>
                         })
                     }
@@ -30,7 +31,7 @@ class DevTypeBuildingMixTable extends Component {
             <TableBody>
                     {
                         
-                        devTypes.map( (row, idx) => {
+                        workbook_devtypes.map( (row, idx) => {
                             return <DevTypeBuildingMixTableRow {...row} {...this.props} key={idx} rowId={idx}/>
                         })
                     }

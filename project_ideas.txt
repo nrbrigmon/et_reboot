@@ -4,8 +4,6 @@
 
 ---- STEPS TO DEMO
         - create manual building types list:
-                - austin list (short-term) (x18)
-                        - get from old projects in ET Folder
                 - brazil list (long-term) (xProject based)
                         - using dev types from KStiphany project board in emails, create custom variations
         - create development types list:
@@ -14,18 +12,15 @@
                 - brazil list (long-term) (xProject based)
                         - get from KStiphany project board in emails
 
-        - ALSO worth investigating.... i can load devtypes,bldgs, etc via python scripts... would be worth creating.... 
         - create building types (STEP ONE)
         - create development types (STEP TWO) 
 
-        - HOW DO I ENSURE I CAN LOAD EVERTYHING at snap of button?
         - HOW DO I REVERT BACK TO ANOTHER PROFILE OR LIBRARY?
                 - should be load and clear library?
                 - create clear and load myDevelopmentWorkbook %s and values button?
                 
         - create at least two more metrics
         - show side-by-side before and after page 
-        - HOUSECLeaning: i need to decouple my actions page the same way as i have for my reducers
         - HOW DO I MIGRATE specific data to PROD instance?
 
 ---- GENERAL BUGS

@@ -1,13 +1,5 @@
 import { getBldgOutputs } from '../components/create/buildings/_updateForDevType';
 
-// let buildingPrototypeSchema = {
-// 	uniqueId: '',
-// 	physicalInfo: {},
-// 	basicFinInfo: {},
-// 	advFinInfo: {},
-// 	forDevType: {}
-// }
-
 function editPrototypeOutputs(updateCopy) {
 	let buildingCopy = {
 		...updateCopy

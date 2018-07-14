@@ -93,7 +93,7 @@ class MapContainer extends Component {
         this.map.on('draw:created', (e) => {
             let { layer } = e;
             let { _bounds } = layer;
-            let { leafletDrawTrigger, activeDevType, baseMapLayer, myLibrary, devWorkbook } = this.props;
+            let { leafletDrawTrigger, activeDevType, baseMapLayer, devWorkbook } = this.props;
             //1. are we creating a base layer OR is this a "painting" situation
             if (leafletDrawTrigger === 'drawBaseLayer') {
                 // this.props.setDrawTrigger('addBaseLayer');
@@ -117,7 +117,7 @@ class MapContainer extends Component {
                 // this.props.setDrawTrigger('updateBaseLayer');
                 let paintLayer = layer.toGeoJSON();
                 this.props.paintDevelopmentType({ baseMapLayer, paintLayer, activeDevType });
-                this.props.updateMetrics(baseMapLayer, myLibrary, devWorkbook);
+                this.props.updateMetrics(baseMapLayer, devWorkbook);
             }
             this.props.setDrawTrigger('');
         });

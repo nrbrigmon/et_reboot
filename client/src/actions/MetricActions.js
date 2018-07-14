@@ -1,9 +1,9 @@
-export const updateMetrics = (baseMapLayer, myLibrary, devWorkbook) => {
+export const updateMetrics = (baseMapLayer, devWorkbook) => {
 	// console.log("metrics receivd...")
 	const action = {
 		type: 'UPDATE_METRICS',
 		payload: {
-			baseMapLayer, myLibrary, devWorkbook
+			baseMapLayer, devWorkbook
 		}
 	}
 	return action;

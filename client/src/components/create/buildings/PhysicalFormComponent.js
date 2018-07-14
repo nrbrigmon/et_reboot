@@ -34,6 +34,7 @@ class PhysicalFormComponent extends Component {
 		let { residentialUsePerc, retailUsePerc, officeUsePerc, industrialUsePerc, publicUsePerc, educationUsePerc, hotelUsePerc, parkingUsePerc } = bldgAttr;
 		let propArea = (bldgAttr.siteArea)*.1;
 		let bldgFootprint = (this.props.attributes.forDevType.rTotalSf / bldgAttr.buildingHeight)*.1;
+		// console.log(bldgAttr)
 		return (
 			<Grid container >
 				<Grid item xs={6}> 

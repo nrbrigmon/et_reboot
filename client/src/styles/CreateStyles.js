@@ -11,10 +11,16 @@ export default (theme) => ({
 		marginBottom: '10px'
 	},
 	leftIcon: {
-	  marginRight: '10px',
+		marginRight: '10px',
 	},
 	libraryWrapper: {
-		minHeight: '300px'
+		minHeight: '300px',
+		maxHeight: '500px',
+		overflowY: 'auto'
+	},
+	libraryItem: {
+		paddingBottom: '9px',
+		paddingTop: '9px'
 	},
 	cardAction: {
 		margin: '0 auto'

@@ -7,3 +7,4 @@ export * from './DrawActions';
 export * from './MetricActions';
 export * from './UserActions';
 export * from './UtilActions';
+export * from './BldgTemplateListActions';

@@ -15,9 +15,10 @@ class SaveBldgLibraryModal extends Component {
     myHandleChange = (e) => {
         this.props.updateLibraryName(e.target.value);
     }
-    confirmSave = (lib) => {
+    confirmSave = (devWorkbook) => {
+        let { workbook_library } = devWorkbook
         //save library in db & state
-        this.props.saveBuildingLibrary(lib);
+        this.props.saveBuildingLibrary(workbook_library);
         //send toast
         this.props.toastMessage("Library Saved!")
         //close modal
@@ -25,7 +26,7 @@ class SaveBldgLibraryModal extends Component {
     }
 	render() {
         const { classes } = this.props;
-        const { library_name } = this.props.myLibrary
+        const { library_name } = this.props.devWorkbook.workbook_library
 		return (
             <ModalContainer modal={this.props.modal === 'saveLibrary' ? true : false}>
                 <div className={classes.paper}>
@@ -40,7 +41,7 @@ class SaveBldgLibraryModal extends Component {
                         margin="normal"
                     />
                     <Button variant="raised" color="primary" className={classes.button} 
-                        onClick={()=>this.confirmSave(this.props.myLibrary)}>
+                        onClick={()=>this.confirmSave(this.props.devWorkbook)}>
                         Confirm
                     </Button>	
                     
@@ -57,7 +58,7 @@ class SaveBldgLibraryModal extends Component {
 
 function mapStateToProps(state) {
     return { 
-        myLibrary: state.myLibrary
+        devWorkbook: state.devWorkbook
         ,modal: state.modal
 
      };

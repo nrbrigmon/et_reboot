@@ -25,7 +25,7 @@ export const resetMyBuildingLibrary = () => {
 
 /* BUILDING ACTIONS */
 export const addBuildingToLibrary = (bldg) => {
-	//myLibraryReducer
+	//workbook_library
 	const action = {
 		type: 'ADD_BUILDING',
 		bldg
@@ -45,7 +45,7 @@ export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
 	// console.log(availableBldgs);
 	// console.log("JERER")
 	// console.log(bldgArray, availableBldgs)
-	//myLibraryReducer
+	//workbook_library
 	const action = {
 		type: 'ADD_BUILDING_ARRAY',
 		bldgArray,
@@ -54,7 +54,7 @@ export const addBuildingArrayToLibrary = (bldgArray, availableBldgs) => {
 	return action;
 }
 export const removeBuildingFromLibrary = (bldgId) => {
-	//myLibraryReducer
+	//workbook_library
 	// console.log(action);
 	const action = {
 		type: 'REMOVE_BUILDING',
@@ -64,15 +64,15 @@ export const removeBuildingFromLibrary = (bldgId) => {
 	return action;
 };
 
-export const saveBuildingLibrary = (myLibrary) => async dispatch => {
+export const saveBuildingLibrary = (workbook_library) => async dispatch => {
 	//does it already exist? if so put, else post
-	let { library_id, library_isNew } = myLibrary
+	let { library_id, library_isNew } = workbook_library
 	if (library_isNew === false){
-		const res = await axios.put('/api/libraries/'+library_id+'', myLibrary)
+		const res = await axios.put('/api/libraries/'+library_id+'', workbook_library)
 		// console.log(res);
 		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	} else {
-		const res = await axios.post('/api/libraries', myLibrary)
+		const res = await axios.post('/api/libraries', workbook_library)
 		// console.log(res);
 		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	}

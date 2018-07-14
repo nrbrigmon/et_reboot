@@ -113,7 +113,6 @@ class MapStart extends Component {
 function mapStateToProps(state) {  
 	return { 
 		  devWorkbook: state.devWorkbook,
-		  myLibrary: state.myLibrary,
 		  baseMapLayer: state.baseMapLayer,
 		  mapRef: state.mapRef,
 		  leafletDrawTrigger: state.leafletDrawTrigger,

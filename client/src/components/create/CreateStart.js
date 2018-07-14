@@ -38,33 +38,24 @@ const styles = theme => CreateStyles(theme);
 class CreateStart extends Component {
 	componentWillMount(){
 		// console.log(this.props);
+		let { availableBldgs, devWorkbook } = this.props;
 		//load all available buildings in the database
-		if (this.props.availableBldgs.length === 0) {
+		if (availableBldgs.length === 0) {
 			this.props.fetchAllBuildings();
 			this.props.fetchAllBuildingLibraries();
-			this.props.initalizeWorkbook(this.props.myLibrary);		
-
+			///need better logic for why i would initialize a workbook?
 		}	
-		let { selected_buildings } = this.props.myLibrary;
-		let { cellData } = this.props.devWorkbook.workbook_devtypes[0];
-		let shouldContinue = helper.compareBldgArrays(selected_buildings, cellData);
-		// console.log("shouldContinue", shouldContinue)
-		if (shouldContinue.resp === false) {
-			// the thing that needs updating is the cellData length in each of the existing workbook dev types
-			this.props.updateAllDevTypeRows(this.props.myLibrary, this.props.devWorkbook)
-		}
+		// if(devWorkbook === undefined || devWorkbook === null){
+		// 	this.props.initalizeWorkbook();		
+		// }
 		this.props.fetchRandomId();
-		console.log(this.props.devWorkbook)
+		// console.log(this.props.devWorkbook)
 
 	}
-	componentDidUpdate(prevProps){
-		// console.log(prevProps, this.props)
-		if(prevProps.myLibrary.selected_buildings.length !== this.props.myLibrary.selected_buildings.length){
-			this.props.updateAllDevTypeRows(this.props.myLibrary, this.props.devWorkbook)
-		}
-	}
+
 	openSaveLibraryModal = () => {
-		let arrayLength = this.props.myLibrary.selected_buildings.length;
+		let { workbook_library } = this.props.devWorkbook;
+		let arrayLength = workbook_library.library_bldgs.length;
 		if (arrayLength > 1){
 			this.props.openModal('saveLibrary')
 		} else {
@@ -75,6 +66,7 @@ class CreateStart extends Component {
 	newItemInList = (uniqueId) => {
 		helper.navigateTo('create/new/'+uniqueId+'/physical-form', this.props);
 		this.props.editBuildingPrototype(false);
+		// this.props.addBuildingToWorkbook(uniqueId);
 	}
 	editItemInList = (selection) => {
 		let _id = selection.uniqueId;
@@ -82,20 +74,21 @@ class CreateStart extends Component {
 		this.props.editBuildingPrototype(true, selection);
 	}
 
-	removeItemFromList = (bldgId) =>{
-		this.props.removeBuildingFromLibrary(bldgId);
+	removeItemFromList = (uniqueId) =>{
+		this.props.removeBuildingFromLibrary(uniqueId);
 	}
 	
 	resetList = () => {
 		this.props.resetMyBuildingLibrary();
 	}
 	
-	renderMyLibrary = (selectedBldgs) => {
-
-		return selectedBldgs.map((item, idx) => {
+	renderLibraryBldgs = (props) => {
+		let { library_bldgs } = props.devWorkbook.workbook_library;
+		let { classes } = props;
+		return library_bldgs.map((item, idx) => {
 			let name = item.physicalInfo.buildingName;
-			let siteLocation = item.physicalInfo.siteLocation;
-			let bldgId = item.uniqueId;
+			let { siteLocation } = item.physicalInfo;
+			let { uniqueId } = item;
 			if (name === undefined){
 			  name = 'err';
 			}
@@ -104,14 +97,14 @@ class CreateStart extends Component {
 			}
 			// console.log(item)
 			return (
-				<ListItem button divider key={idx} 
+				<ListItem button divider key={idx} className={classes.libraryItem}
 					onClick={()=>this.editItemInList(item)}>
 					<ListItemIcon>
 						<Domain />
 					</ListItemIcon>
 					<ListItemText primary={name} secondary={siteLocation}/>
 					
-					<ListItemSecondaryAction  onClick={()=>this.removeItemFromList(bldgId)}>
+					<ListItemSecondaryAction  onClick={()=>this.removeItemFromList(uniqueId)}>
 						<Tooltip id="tooltip-icon" title="Delete">
 								<ListItemIcon aria-label="Delete">
 									<Delete />
@@ -148,7 +141,7 @@ class CreateStart extends Component {
 								}
 							*/}
 							<List className={classes.libraryWrapper}>
-								{this.renderMyLibrary(this.props.myLibrary.selected_buildings)}
+								{this.renderLibraryBldgs(this.props)}
 							</List>
 							
 							<CardActions >
@@ -209,7 +202,6 @@ class CreateStart extends Component {
 function mapStateToProps(state) {
 	return { 
 		uniqueId: state.randomId
-		,myLibrary: state.myLibrary
 		,availableBldgs: state.availableBldgs
 		,devWorkbook: state.devWorkbook
 		,toast: state.toast		

@@ -20,7 +20,9 @@ const styles = theme => _DevTypeStyles(theme);
 
 class DevTypeBuildingMix extends Component {
 	render() {
-		const { classes } = this.props;
+        const { classes } = this.props;
+        const { library_bldgs } = this.props.devWorkbook.workbook_library;
+        // console.log(this.props.devWorkbook);
 		return (
             <Grid item xs={12}  >
                 <h2>Create Development Type Mix</h2>
@@ -42,7 +44,7 @@ class DevTypeBuildingMix extends Component {
                                 <Button 
                                     className={classes.cardButton} variant="raised" 
                                     color="primary" 
-                                    onClick={()=>this.props.addNewDevTypeRow(this.props.myLibrary.selected_buildings)} >
+                                    onClick={()=>this.props.addNewDevTypeRow(library_bldgs)} >
                                     Add Row
                                 </Button>	
                                 <Button 
@@ -68,7 +70,6 @@ class DevTypeBuildingMix extends Component {
                 
 function mapStateToProps(state) {  
     return { 
-            myLibrary: state.myLibrary,
             devTypes: state.devTypes,
             devWorkbook: state.devWorkbook
        };

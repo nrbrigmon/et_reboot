@@ -27,7 +27,6 @@ class LoadWorkbookModal extends Component {
         this.props.loadSavedWorkbook(this.state.selectedWorkbook)
         //also, load the buildings that make up the workbook itself
         let selectedBldgs = helper.getBldgIdsFromWkbk(this.state.selectedWorkbook);
-        console.log(selectedBldgs);
         this.props.loadSelectedBuildings(selectedBldgs, bldgs);
         this.props.closeModal();
     }

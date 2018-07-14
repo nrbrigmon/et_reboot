@@ -13,7 +13,7 @@ export default (ctx) => {
           Save As...</MenuItem>
         <MenuItem 
           onClick={() => {ctx.props.openModal('templateBuildings'); ctx.handleClose()} }>
-          Load Attributes...</MenuItem>
+          Load Template...</MenuItem>
         <MenuItem 
           onClick={ctx.handleClose}>
           Export As...</MenuItem>

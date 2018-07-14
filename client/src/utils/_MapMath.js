@@ -28,7 +28,7 @@ function getSumProduct(array /*other arrays*/) {
 
 
 /* POPULATION */
-export const getPopulation = (devTypes, {selected_buildings}, {workbook_devtypes}) => {
+export const getPopulation = (devTypes, {library_bldgs}, {workbook_devtypes}) => {
     //for each dev type
     let newPopulationObj = devTypes.map( function ( currentDevType) {
         let popCopy = JSON.parse(JSON.stringify(currentDevType));      
@@ -50,7 +50,7 @@ export const getPopulation = (devTypes, {selected_buildings}, {workbook_devtypes
 
         //2. get b_hh_acre array
         let bldgHHAcre = devBldgMix.map(function(obj, idx){
-            let bldg = selected_buildings.filter(function(bldgObj){
+            let bldg = library_bldgs.filter(function(bldgObj){
                 return bldgObj.uniqueId === obj.bldgId
             });
             // console.log(bldg);
@@ -59,7 +59,7 @@ export const getPopulation = (devTypes, {selected_buildings}, {workbook_devtypes
 
         //3. get b_hh_size array
         let bldgHHSize = devBldgMix.map(function(obj, idx){
-            let bldg = selected_buildings.filter(function(bldgArray){
+            let bldg = library_bldgs.filter(function(bldgArray){
               return bldgArray.uniqueId === obj.bldgId
             });
             // console.log(bldg);
@@ -83,7 +83,7 @@ export const getPopulation = (devTypes, {selected_buildings}, {workbook_devtypes
     return newPopulationObj;
 };
 
-export const getHousingUnits = (devTypes, {selected_buildings}, {workbook_devtypes}) => {
+export const getHousingUnits = (devTypes, {library_bldgs}, {workbook_devtypes}) => {
     //for each dev type
     let newHousingObj = devTypes.map( function ( currentDevType) {
         let housingCopy = JSON.parse(JSON.stringify(currentDevType));              
@@ -105,7 +105,7 @@ export const getHousingUnits = (devTypes, {selected_buildings}, {workbook_devtyp
 
         //2. get b_hh_acre array
         let bldgHHAcre = devBldgMix.map(function(obj, idx){
-            let bldg = selected_buildings.filter(function(bldgObj){
+            let bldg = library_bldgs.filter(function(bldgObj){
                 return bldgObj.uniqueId === obj.bldgId
             });
             // console.log(bldg);
@@ -128,7 +128,7 @@ export const getHousingUnits = (devTypes, {selected_buildings}, {workbook_devtyp
     return newHousingObj;
 }
 
-export const getJobCounts =  (devTypes, {selected_buildings}, {workbook_devtypes}) => {
+export const getJobCounts =  (devTypes, {library_bldgs}, {workbook_devtypes}) => {
     //for each dev type
     let newMetricObj = devTypes.map( function ( currentDevType) {
         let jobCopy = JSON.parse(JSON.stringify(currentDevType));      
@@ -150,7 +150,7 @@ export const getJobCounts =  (devTypes, {selected_buildings}, {workbook_devtypes
 
         //2. get b_hh_acre array
         let jobsPerAcre = devBldgMix.map(function(obj, idx){
-            let bldg = selected_buildings.filter(function(bldgObj){
+            let bldg = library_bldgs.filter(function(bldgObj){
                 return bldgObj.uniqueId === obj.bldgId
             });
             // console.log(bldg);

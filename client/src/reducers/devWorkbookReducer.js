@@ -1,5 +1,6 @@
 import * as shortid from 'shortid';
 import * as _ from 'lodash';
+import * as myHelp from './devWorkbookReducerHelp';
 
 function correctDevCells(cellArray, bldgIdArray){
 	/// we need to map through the selected bldg ids
@@ -21,7 +22,7 @@ function correctDevCells(cellArray, bldgIdArray){
 function updateAllDevTypeCells(state, action){
 	let { myLibary, devWorkbook } = action;
 	// console.log(action);
-	let idArray = _.map(myLibary.selected_buildings, "uniqueId"); 
+	let idArray = _.map(myLibary.workbook_library, "uniqueId"); 
 	let { workbook_devtypes } = devWorkbook;
 	//1. loop through workbook_devtypes and update only the cellData
 	const newDevMixer = _.map(workbook_devtypes, (row, idx) => {
@@ -30,7 +31,6 @@ function updateAllDevTypeCells(state, action){
 			cellData: correctDevCells(row["cellData"], idArray)
 		}
 	});
-	console.log(newDevMixer);
 	// 2. for each table Cell, if it has data, skip
 	//3. if there are too many cells, truncate
 	//4. if there are not enough, add the correct buildingID
@@ -64,6 +64,44 @@ function updateItemInArray(array, key, itemId, updateItemCallback) {
     return updatedItems;
 }
 
+function addBuildingToWorkbook(state, {uniqueId}){
+	let devtype_state = state["workbook_devtypes"];
+	// console.log(devtype_state)
+
+	let newDevTypeState = _.map(devtype_state, eachDevType => {
+		return {
+			...eachDevType,
+			cellData: eachDevType["cellData"].concat( newCell(uniqueId) )
+		}
+	})
+	// console.log(newDevTypeState)
+    return newDevTypeState;
+}
+function addBuildingArrayToWorkbook(state, newLibrary){
+	let { library_bldgs } = newLibrary;
+	let devTypeArray = state.workbook_devtypes
+	let devTypeCount = (devTypeArray.length === 0 ? 1 : devTypeArray.length);
+	
+	let newDevTypeState = [];
+	for (let i = 0; i < devTypeCount; i++){
+		newDevTypeState.push(newEmptyDevTypeRow(library_bldgs));
+	}
+	return newDevTypeState;
+}
+function removeBuildingFromWorkbook(state, uniqueId){
+	let devtype_state = state["workbook_devtypes"];
+	let newDevTypeState = _.map(devtype_state, eachDevType => {
+		// console.log(eachDevType["cellData"]);
+		return {
+			...eachDevType,
+			cellData: _.filter(eachDevType["cellData"], bldgType => {
+				return bldgType["bldgId"] !== uniqueId
+			})
+		}
+	})
+	return newDevTypeState;
+}
+
 // Case reducer
 function editDevelopmentTypeMixer(state, {value, rowId, cellId} ) {
 	let devtype_state = state["workbook_devtypes"];
@@ -78,7 +116,7 @@ function editDevelopmentTypeMixer(state, {value, rowId, cellId} ) {
 		}
 	});
 	// debugger;
-	let newState = state;
+	let newState = _.cloneDeep(state);
 	newState["workbook_devtypes"] = newDevMixer;
     return newState;
 }
@@ -101,12 +139,13 @@ function editDevelopmentTypeAttr(state, {value, rowId, attrId} ) {
 // Case reducer
 function addDevelopmentType(state, action) {
 	let devtype_state = state["workbook_devtypes"];
-	let new_devtype_state = devtype_state.concat(devTypeRow(action.selected_buildings));
+	let new_devtype_state = devtype_state.concat(devTypeRow(action.library_bldgs));
 	
 	let newState = state;
 	newState["workbook_devtypes"] = new_devtype_state;
     return newState;
 }
+
 function removeDevTypeRow(state, action) {
 	let currentDevTypes = [...state.workbook_devtypes]; //create array of existing IDs
     let currentDevIds = _.map(state.workbook_devtypes, 'uniqueId'); //create array of existing IDs
@@ -130,13 +169,11 @@ function newCell(id) {
 	}
 }
 //my initial structure for the devType table
-const newEmptyDevTypeRow = (selected_buildings, devTypeArray) => {
+const newEmptyDevTypeRow = (library_bldgs) => {
+	// console.log(library_bldgs);
 	let tableCells = [];
-	//return one tableCell for every cellNum
-	// console.log(selected_buildings)
-
-	for (let i = 0; i < selected_buildings.length; i++) {
-		tableCells.push( newCell(selected_buildings[i]["uniqueId"]) );
+	for (let i = 0; i < library_bldgs.length; i++) {
+		tableCells.push( newCell(library_bldgs[i]["uniqueId"]) );
 	}
 	return {
 		cellData: tableCells,
@@ -158,7 +195,7 @@ const newEmptyDevTypeRow = (selected_buildings, devTypeArray) => {
 		publicRoadsPerc: 0
 	}
 }
-const devTypeRow = (selected_buildings, devTypeArray) => {
+const devTypeRow = (library_bldgs, devTypeArray) => {
 	if (devTypeArray){
 		return {
 			cellData: devTypeArray["cellData"],
@@ -180,13 +217,13 @@ const devTypeRow = (selected_buildings, devTypeArray) => {
 			publicRoadsPerc: devTypeArray["publicRoadsPerc"]
 		};
 	} else {
-		return newEmptyDevTypeRow(selected_buildings, devTypeArray);
+		return newEmptyDevTypeRow(library_bldgs);
 	}
 };
 
 function initializeWorkbook(state, action){
 	//if there are no existing devtypes, we start with a blank one
-	let { selected_buildings } = action.myLibary;
+	let { workbook_library } = action.myLibary;
 
 	let devTypeArray = state["workbook_devtypes"].filter((devTypeRow) => {
 			return devTypeRow.devTypeName.length > 1		
@@ -198,7 +235,7 @@ function initializeWorkbook(state, action){
 	let newState = _.cloneDeep(state);
 	let newArray = [];
 	for (let i = 0; i < devTypeCount; i++){
-		newArray.push(devTypeRow(selected_buildings, devTypeArray[i]));
+		newArray.push(devTypeRow(workbook_library.library_bldgs, devTypeArray[i]));
 	}
 	newState["workbook_devtypes"] = newArray;
 	return newState;
@@ -209,26 +246,33 @@ function updateFirstLevelAttribute(state, key, value){
         [key]: value
     }
 }
-let starterDevTypeWorkbook = {
+let workbook_library_starter = {
+    library_id: shortid.generate()
+    ,library_name: ''
+    ,library_isNew: true
+    ,library_bldgs: []
+    ,user_id: ''
+}
+let myDevelopmentWorkbook = {
 	workbook_id: shortid.generate()
 	,workbook_isNew: true 
     ,workbook_name: ''
     ,workbook_devtypes: []
-    ,user_id: ''
+	,user_id: ''
+	,workbook_library: workbook_library_starter
 }
 
-export default function(state = starterDevTypeWorkbook, action) {
+export default function(state = myDevelopmentWorkbook, action) {
 	//when the devtype reducer page loads, there should be one row only...
-	let myDevelopmentWorkbook = null;
+	let libraryState = null;
+	let newLibrary = null;
+	let newSelectedBuildings = null;
+	let newDevTypes = null;
     if (localStorage.getItem('myDevelopmentWorkbook')){
         state = JSON.parse(localStorage.getItem('myDevelopmentWorkbook'));
     }
 //    console.log(state);
 	switch (action.type) {
-		case 'INITIALIZE_WORKBOOK':
-			myDevelopmentWorkbook = initializeWorkbook(state, action)
-			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-			return myDevelopmentWorkbook;
 		case 'ADD_DEV_TYPE_ROW': 
 			myDevelopmentWorkbook = addDevelopmentType(state, action);
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
@@ -237,16 +281,11 @@ export default function(state = starterDevTypeWorkbook, action) {
 			myDevelopmentWorkbook = removeDevTypeRow(state, action);
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
-		case 'UPDATE_ALL_DEV_TYPE_ROW': 
-			myDevelopmentWorkbook = updateAllDevTypeCells(state, action)
-			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-			return myDevelopmentWorkbook;
 		case 'UPDATE_DEV_TYPE_ROW': 
 			myDevelopmentWorkbook = editDevelopmentTypeMixer(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
 		case 'LOAD_WORKBOOK':
-			// console.log(action);
 			myDevelopmentWorkbook = action.workbook;
 			myDevelopmentWorkbook = updateFirstLevelAttribute(myDevelopmentWorkbook, "workbook_isNew", false)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
@@ -263,6 +302,115 @@ export default function(state = starterDevTypeWorkbook, action) {
 			myDevelopmentWorkbook = editDevelopmentTypeAttr(state, action)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
+		case 'SAVED_BUILDING_LIBRARY':
+		/** 						**/
+		/** BUILDING UPDATES BELOW 	**/
+		/** 						**/
+			libraryState = state.workbook_library
+			newSelectedBuildings = myHelp.savedBuildinglibrary(libraryState)
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: {
+					...state["workbook_library"],
+					library_bldgs: newSelectedBuildings
+				}
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'LOAD_BUILDING_LIBRARY':
+		/** 						**/
+		/** BUILDING UPDATES BELOW 	**/
+		/** 						**/
+			libraryState = state.workbook_library
+			newSelectedBuildings = myHelp.savedBuildinglibrary(libraryState)
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: {
+					...state["workbook_library"],
+					library_bldgs: newSelectedBuildings
+				}
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'UPDATE_LIBRARY_NAME':
+			libraryState = state.workbook_library
+			newLibrary = myHelp.updateLibraryAttribute(libraryState, action.library_name, 'library_name');
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: newLibrary
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+           return newLibrary
+		case 'UPDATE_BUILDING':
+			libraryState = state.workbook_library.library_bldgs
+            newSelectedBuildings = myHelp.updateBuilding(libraryState, action.editing, action.building);			
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: {
+					...state["workbook_library"],
+					library_bldgs: newSelectedBuildings
+				}
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return newLibrary;
+		case 'LOAD_BUILDING_ARRAY':
+            let emptiedState = {
+                ...state,
+                library_bldgs: []
+            }
+            newLibrary = myHelp.addBuildingArray(emptiedState, action);
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: newLibrary
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+			
+		case 'ADD_BUILDING_ARRAY':
+			libraryState = state.workbook_library
+			newLibrary = myHelp.addBuildingArray(libraryState, action);
+			newDevTypes = addBuildingArrayToWorkbook(state, newLibrary)			
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_devtypes: newDevTypes,
+				workbook_library: newLibrary
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'ADD_BUILDING':
+			//if a building already exists in array... it should not be added!!!!
+			libraryState = state.workbook_library
+			newDevTypes = addBuildingToWorkbook(state, action.bldg)
+            newLibrary = myHelp.addBuilding(libraryState, action);
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_devtypes: newDevTypes,
+				workbook_library: newLibrary
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'REMOVE_BUILDING':
+			libraryState = state.workbook_library
+			newDevTypes = removeBuildingFromWorkbook(state, action.bldgId)
+			newLibrary = myHelp.removeBuilding(libraryState, action);
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_devtypes: newDevTypes,
+				workbook_library: newLibrary
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		case 'RESET_LIBRARY':
+			myDevelopmentWorkbook = {
+				...state,
+				workbook_library: {
+					...state["workbook_library"],
+					library_bldgs: []
+				}
+			};
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
+		
 		default:
 			return state;
 	}

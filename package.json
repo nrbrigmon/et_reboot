@@ -48,5 +48,11 @@
 		"shortid": "^2.2.8",
 		"shpjs": "^3.4.2",
 		"turf-clip": "0.0.1"
+	},
+	"devDependencies": {
+		"eslint-config-airbnb": "^17.0.0",
+		"eslint-plugin-import": "^2.13.0",
+		"eslint-plugin-jsx-a11y": "^6.1.0",
+		"eslint-plugin-react": "^7.10.0"
 	}
 }

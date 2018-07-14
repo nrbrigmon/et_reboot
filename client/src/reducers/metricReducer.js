@@ -17,19 +17,20 @@ let defaultState = {
     ,devTypes: []
 }
 
-function updateMetrics({baseMapLayer, myLibrary, devWorkbook}){
+function updateMetrics({baseMapLayer, devWorkbook}){
+    let { workbook_library } = devWorkbook;
 	let acresPerDevType = AcresPerDevType(baseMapLayer);
     let devTypes = helper.getDevTypes(acresPerDevType);
     let developedAcres = helper.getDevAcres(acresPerDevType);
     let colorArray = helper.getColorArray(acresPerDevType);
     let populationMetric = mm.getPopulation(acresPerDevType, 
-                        myLibrary, 
+                        workbook_library, 
                         devWorkbook);
     let housingMetric = mm.getHousingUnits(acresPerDevType, 
-                        myLibrary, 
+                        workbook_library, 
                         devWorkbook);
     let jobsMetric = mm.getJobCounts(acresPerDevType, 
-                        myLibrary, 
+                        workbook_library, 
                         devWorkbook);
 
     return {

@@ -1,28 +1,26 @@
 import axios from 'axios';
 
 /* DEVELOPMENT TYPE ACTIONS */
-export const addNewDevTypeRow = (selected_buildings) => {
+export const addNewDevTypeRow = (library_bldgs) => {
 	const action = {
 		type: 'ADD_DEV_TYPE_ROW',
-		selected_buildings
+		library_bldgs
 	}
 	return action;
 };
-export const removeDevTypeRow = (selected_buildings) => {
+export const removeDevTypeRow = (library_bldgs) => {
 	const action = {
 		type: 'REMOVE_DEV_TYPE_ROW',
-		selected_buildings
+		library_bldgs
 	}
 	return action;
 };
-export const initalizeWorkbook = (myLibary, devWorkbook) => {
-	const action = {
-		type: 'INITIALIZE_WORKBOOK',
-		myLibary, 
-		devWorkbook
-	}
-	return action;
-}
+// export const initalizeWorkbook = () => {
+// 	const action = {
+// 		type: 'INITIALIZE_WORKBOOK'
+// 	}
+// 	return action;
+// }
 export const updateDevTypeRow = (value, rowId, cellId) => {
 	const action = {
 		type: 'UPDATE_DEV_TYPE_ROW',
@@ -32,28 +30,36 @@ export const updateDevTypeRow = (value, rowId, cellId) => {
 	}
 	return action;
 }
-export const updateAllDevTypeRows = (myLibary, devWorkbook) => {
-	const action = {
-		type: 'UPDATE_ALL_DEV_TYPE_ROW',
-		myLibary, 
-		devWorkbook
+// export const addBuildingToWorkbook = (uniqueId) => {
+// 	const action = {
+// 		type: 'ADD_BLDG_TO_WORKBOOK',
+// 		uniqueId
+// 	}
+// 	return action;
+// }
+
+// export const removeBuildingFromWorkbook = (uniqueId) => {
+// 	const action = {
+// 		type: 'REMOVE_BLDG_FROM_WORKBOOK',
+// 		uniqueId
+// 	}
+// 	return action;
+// }
+
+export const removeDevTypeFromWorkbook = (devTypeId) => {
+	let action = {
+		type: 'REMOVE_DEV_TYPE_ROW',
+		devTypeId
 	}
 	return action;
 }
+
 export const updateDevTypeAttr = (value, rowId, attrId) => {
 	const action = {
 		type: 'UPDATE_DEV_TYPE_ATTR',
 		value,
 		rowId,
 		attrId
-	}
-	return action;
-}
-
-export const removeDevTypeFromWorkbook = (devTypeId) => {
-	let action = {
-		type: 'REMOVE_DEV_TYPE_ROW',
-		devTypeId
 	}
 	return action;
 }

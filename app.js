@@ -7,7 +7,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 
 require('./services/myPassport');
-// Set up the express app
+// Set up the express app 
 const app = express();
 
 // Log requests to the console.

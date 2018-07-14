@@ -11,15 +11,15 @@ import devWorkbookReducer from './devWorkbookReducer';
 import leafletDrawReducer from './leafletDrawReducer';
 import modalListReducer from './modalListReducer';
 import modalReducer from './modalReducer';
-import myLibraryReducer from './myLibraryReducer';
 import mapReferenceReducer from './mapReferenceReducer';
 import mapOverlayPanelReducer from './mapOverlayPanelReducer';
 import toastReducer from './toastReducer';
 import s3LayerReducer from './s3LayerReducer';
 import metricReducer from './metricReducer';
+import bldgTemplateListReducer from './bldgTemplateListReducer';
 
 const getRandomId = (state = [], action) => {
-	// console.log('action called');
+	// console.log('action called', action);
 	switch (action.type) {
 		case 'FETCH_RANDOM_ID':
 			return shortid.generate();
@@ -40,11 +40,11 @@ export default combineReducers({
 	,leafletDrawTrigger: leafletDrawReducer
 	,mapRef: mapReferenceReducer
 	,modList: modalListReducer					//the list inside the modal
-	,myLibrary: myLibraryReducer				//the name and properties of my building list
 	,modal: modalReducer						//open or close modal state
 	,randomId: getRandomId						//randomId function
 	,toast: toastReducer						//open or close toast state
 	,mapOverlayPanel: mapOverlayPanelReducer
 	,availableS3Layers: s3LayerReducer
 	,metricData: metricReducer
+	,bldgTemplates: bldgTemplateListReducer
 });

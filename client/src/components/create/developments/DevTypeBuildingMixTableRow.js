@@ -25,16 +25,20 @@ class DevTypeBuildingMixTableRow extends Component {
         this.props.updateDevTypeAttr(e.target.value, e.target.id, "devTypeName");
     }
     getTotal = (cells) => {
-        // console.log(cells);
-        let sum = cells.reduce( (acc, curr, idx) => {
-            // console.log(acc, curr, idx);
-            if (idx === 1) {
-                return Number(acc.percVal) + Number(curr.percVal);
-            }
-            return Number(acc) + Number(curr.percVal);
-        });
-
-        return [sum * 0.01]; //PercentStatusCheck requires an array, also we need percent values
+        // console.log(cells)
+        if (cells.length === 1){
+            return [Number(cells[0].percVal) * 0.01]
+        } else {
+            let sum = cells.reduce( (acc, curr, idx) => {
+                // console.log(acc, curr, idx);
+                if (idx === 1) {
+                    return Number(acc.percVal) + Number(curr.percVal);
+                }
+                return Number(acc) + Number(curr.percVal);
+            });
+    
+            return [sum * 0.01]; //PercentStatusCheck requires an array, also we need percent values
+        }
     }
 	removeDevType = (devTypeId) =>{
 		this.props.removeDevTypeFromWorkbook(devTypeId);
