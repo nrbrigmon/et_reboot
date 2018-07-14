@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as helper from '../../../utils/_helperMethods';
 import * as actions from '../../../actions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';

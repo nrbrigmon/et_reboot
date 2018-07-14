@@ -24,7 +24,6 @@ class MapOverlayPanel extends Component {
         this.props.setActiveDevType({devTypeName: name, devTypeColor: color});
 	}
 	render() {		
-        // console.log(this.props.baseMapLayer);
         //this is palette for dev types, could add a color picker later
 		const sidePalette = [
 			{fill: "#8dd3c7", font: "black"},
@@ -35,14 +34,14 @@ class MapOverlayPanel extends Component {
 		]
         const { classes } = this.props;
         const { activeDevType } = this.props;
-        const devTypes = this.props.devWorkbook.workbook_devtypes;   
+        const { workbook_devtypes } = this.props.devWorkbook;   
         // console.log(this.props.mapOverlayPanel);     
 		return (
             <span className={classes.overlayContainer}>
 			{/*for the panel on left, which is soon to be drawer */	}
             <Paper variant="raised" 
                 color="primary" 
-				className={classes.paper}
+				className={classes.overlayWrapper}
                 >
 
                 { 
@@ -83,7 +82,7 @@ class MapOverlayPanel extends Component {
             
                 <Paper variant="raised" 
                     color="primary" 
-                    className={classes.paper}>
+                    className={classes.overlayWrapper}>
                     Choose Development Type: <br />
                     <Button variant="raised" 
                         className={classes.buttonLayer}
@@ -98,10 +97,8 @@ class MapOverlayPanel extends Component {
                     </Button>
                     {(null === activeDevType.devTypeName ? <MapDrawHelper  {...this.props}/> : '')}
                     {
-                        devTypes.map( (item, idx) => {
-                            if (item.devTypeName.length <= 1){
-                                return <span></span>
-                            } 
+                        workbook_devtypes.map( (item, idx) => {
+                            let localDevTypeName = ( item.devTypeName.length <= 1 ? "<empty>" : item.devTypeName)
                             return (
                                 <div key={idx}>
                                     <Button variant="raised" 
@@ -110,12 +107,12 @@ class MapOverlayPanel extends Component {
                                         style={{ 
                                             color: sidePalette[idx].font,
                                             background: sidePalette[idx].fill,
-                                            outline: (item.devTypeName === activeDevType.devTypeName ? '2px solid #ccc' : '')
+                                            outline: (localDevTypeName === activeDevType.devTypeName ? '2px solid #ccc' : '')
                                         }}
-                                        onClick={()=>this.paintDevelopmentType(item.devTypeName, sidePalette[idx].fill ) } 
-                                        > {item.devTypeName} 
+                                        onClick={()=>this.paintDevelopmentType(localDevTypeName, sidePalette[idx].fill ) } 
+                                        > {localDevTypeName} 
                                     </Button>
-                                    {(item.devTypeName === activeDevType.devTypeName ? <MapDrawHelper  {...this.props}/> : '')}
+                                    {(localDevTypeName === activeDevType.devTypeName ? <MapDrawHelper  {...this.props}/> : '')}
                                 </div>
                             );
                         })

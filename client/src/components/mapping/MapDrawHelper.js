@@ -19,12 +19,12 @@ class MapDrawHelper extends Component {
 	render() {
         const { classes } = this.props;
 		return (
-			<span className={classes.wrapper}>
-                <Button size="small" className={classes.action} onClick={() => this.handleAction('finishLayer')}>
+			<span className={classes.drawWrapper}>
+                <Button size="small" className={classes.drawAction} onClick={() => this.handleAction('finishLayer')}>
                     Finish </Button>
-                <Button size="small" className={classes.action} onClick={() => this.handleAction('deleteLastPoint')}>
+                <Button size="small" className={classes.drawAction} onClick={() => this.handleAction('deleteLastPoint')}>
                     Delete Last Point </Button>
-                <Button size="small" className={classes.action} onClick={() => this.handleAction('closeDrawHelper')}>
+                <Button size="small" className={classes.drawAction} onClick={() => this.handleAction('closeDrawHelper')}>
                     Cancel </Button>
 			</span>
 		);

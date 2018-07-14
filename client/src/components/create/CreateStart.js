@@ -38,16 +38,14 @@ const styles = theme => CreateStyles(theme);
 class CreateStart extends Component {
 	componentWillMount(){
 		// console.log(this.props);
-		let { availableBldgs, devWorkbook } = this.props;
+		let { availableBldgs } = this.props;
 		//load all available buildings in the database
 		if (availableBldgs.length === 0) {
 			this.props.fetchAllBuildings();
 			this.props.fetchAllBuildingLibraries();
 			///need better logic for why i would initialize a workbook?
 		}	
-		// if(devWorkbook === undefined || devWorkbook === null){
-		// 	this.props.initalizeWorkbook();		
-		// }
+		
 		this.props.fetchRandomId();
 		// console.log(this.props.devWorkbook)
 

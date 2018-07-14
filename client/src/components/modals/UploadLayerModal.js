@@ -21,15 +21,16 @@ class UploadLayerModal extends Component {
     componentDidMount(){
         this.props.getAllLayersFromS3();
     }
-    componentDidUpdate(prevProps){
-        //if the modal is closed, we turn off the animation
-        //and restore the initialState
-        if (this.props.modal === false) {
-            this.updateState();        
-        }
-    }
+    // componentDidUpdate(prevProps){
+    //     //if the modal is closed, we turn off the animation
+    //     //and restore the initialState
+    //     if (this.props.modal === false) {
+    //         this.updateState();        
+    //     }
+    // }
     
     updateState = () => {
+        // console.log(this.state.isLoading);
         this.setState({
             isLoading: !this.state.isloading
         })
@@ -46,6 +47,7 @@ class UploadLayerModal extends Component {
     }
 
 	render() {
+        // console.log(this.props);
         const { classes } = this.props;
 		return (
             <ModalContainer modal={this.props.modal === 'uploadLayer' ? true : false}>

@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
-
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
-import Grid from '@material-ui/core/Grid';
-
-import MapContainer from './MapContainer';
-import MapOverlayPanel from './MapOverlayPanel';
-import UploadLayerModal from '../modals/UploadLayerModal';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
+
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+import MapMainComponent from './MapMainComponent';
+import MapOverlayPanel from './MapOverlayPanel';
+import UploadLayerModal from '../modals/UploadLayerModal';
 import UpdateToast from '../modals/UpdateToast';
 import WrapperFull from '../wrappers/WrapperFull';
 import * as helper from "../../utils/_helperMethods";
 import * as MetricConfig from '../metrics/MetricConfig';
 import '../../styles/customLeafletDraw.css';
-import MapStyles from '../../styles/MapStyles';
-
-const styles = theme => MapStyles(theme);
 
 Highcharts.Highcharts.setOptions({
     lang: {
@@ -39,11 +32,11 @@ class MapStart extends Component {
 		return (
 			<WrapperFull >
 				<Grid item sm={12}>
-					<h2>Map the Site</h2>
+					<h2>{this.props.title}</h2>
 				</Grid>
 				<Grid item xs={12} lg={6} style={{padding:'0px'}}>
 					<MapOverlayPanel {...this.props} />	
-					<MapContainer {...this.props} />
+					<MapMainComponent {...this.props} />
 				</Grid>
 				<Grid item xs={12} lg={6}>
 					<Grid container justify="center">
@@ -110,17 +103,4 @@ class MapStart extends Component {
 	}
 }
 
-function mapStateToProps(state) {  
-	return { 
-		  devWorkbook: state.devWorkbook,
-		  baseMapLayer: state.baseMapLayer,
-		  mapRef: state.mapRef,
-		  leafletDrawTrigger: state.leafletDrawTrigger,
-		  activeDevType: state.activeDevType,
-		  toast: state.toast,
-		  mapOverlayPanel: state.mapOverlayPanel,
-		  metricData: state.metricData
-	   }
-}
-
-export default withStyles(styles)(connect(mapStateToProps, actions)(MapStart));
+export default MapStart;

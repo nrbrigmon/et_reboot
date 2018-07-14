@@ -1,6 +1,6 @@
 
 export default (theme) => ({
-    root: {
+    mapRoot: {
 		flexGrow: 1,
 		width: '100%',
 		margin: 0
@@ -12,7 +12,7 @@ export default (theme) => ({
 	buttonNav: {
 		margin: '20px'
 	},  
-	paper: {
+	overlayWrapper: {
         position:'relative',
         zIndex: '1000',
         left: '0px',
@@ -37,7 +37,7 @@ export default (theme) => ({
     icon: {
         marginRight: '6px'
 	},	
-	wrapper: {
+	drawWrapper: {
         left:' 205px',
         width: '210px',
         opacity: 0.8,
@@ -48,7 +48,7 @@ export default (theme) => ({
         margin: '4px 5px',
         padding: '0px'
     },
-    action: {
+    drawAction: {
         padding: '1px',
         margin: '0px',
         fontSize: '10px',

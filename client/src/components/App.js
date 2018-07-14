@@ -10,11 +10,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Welcome from './splash/Welcome';
 import Header from './header/Header';
 import AboutStart from './about/AboutStart';
-import DemoStart from './_demo/DemoStart';
+import DemoContainer from './_demo/DemoContainer';
 import CreateStart from './create/CreateStart';
 import BuildingPrototypeStart from './create/buildings/BuildingPrototypeStart';
 import DevTypeStart from './create/developments/DevTypeStart';
-import MapStart from './mapping/MapStart';
+import MapContainer from './mapping/MapContainer';
 import MetricStart from './metrics/MetricStart';
 import GalleryStart from './gallery/GalleryStart';
 import ContactStart from './contact/ContactStart';
@@ -38,13 +38,13 @@ class App extends Component {
 						<Switch>
 						<Route exact path="/" component={Welcome} />
 						<Route path="/about" component={AboutStart} />
-						<Route path="/demo" component={DemoStart} />
+						<Route path="/demo" component={DemoContainer} />
 						<Route exact path="/create" component={CreateStart} />
 						<Route path="/create/new/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/edit/:id" component={BuildingPrototypeStart} />
 						<Route path="/create/dev-types" component={DevTypeStart} />
 						<Route path="/gallery" component={GalleryStart} />
-						<Route path="/map" component={MapStart} />
+						<Route path="/map" component={MapContainer} />
 						<Route path="/contact" component={ContactStart} />
 						<Route path="/metrics" component={MetricStart} />
 						<Route path="/profile" component={ProfileStart} />
