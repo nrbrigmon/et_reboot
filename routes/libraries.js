@@ -47,11 +47,11 @@ router.delete('/:id', (request, response, next) =>{
 //post new building into table
 router.post('/', (request, response, next) =>{
     console.log('posting new library on backend...')
-    let { library_id, library_name, selected_buildings } = request.body;
+    let { library_id, library_name, library_bldgs } = request.body;
     
     pool.query(
-        "INSERT INTO building_libraries (library_id, library_name, selected_buildings) VALUES ($1, $2, $3)", 
-        [library_id, library_name, selected_buildings], (err, res) => {
+        "INSERT INTO building_libraries (library_id, library_name, library_bldgs) VALUES ($1, $2, $3)", 
+        [library_id, library_name, library_bldgs], (err, res) => {
         if (err) return next(err);
         console.log('successfully added');
         response.json(res.rows);
@@ -61,11 +61,11 @@ router.post('/', (request, response, next) =>{
 
 router.put('/:id', (request, response, next) =>{
     const { id } = request.params;
-    let { library_name, selected_buildings } = request.body;
+    let { library_name, library_bldgs } = request.body;
     console.log('updating building in database..', id)
     // ('UPDATE user SET ? WHERE ?', [{ Name: name }, { UserId: userId }])
-    pool.query("UPDATE building_libraries SET library_name = $1, selected_buildings = $2 WHERE library_id = $3", 
-        [library_name, selected_buildings, id],
+    pool.query("UPDATE building_libraries SET library_name = $1, library_bldgs = $2 WHERE library_id = $3", 
+        [library_name, library_bldgs, id],
         (err, res) => {
         if (err) {
             console.log(err)

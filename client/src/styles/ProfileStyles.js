@@ -1,16 +1,20 @@
 
 export default (theme) => ({
     paper: {
-          padding: '0px 20px 20px 20px',
-          margin: '40px 20px 20px 20px',
-          width: '80%'
+		padding: '0px 20px 20px 20px',
+		margin: '40px 20px 20px 20px',
+		width: '80%'
     },
     avatar: {
-      height: '80px',
-          width: '80px',
-          margin: '0 auto',
-          marginBottom: '20px'
-    },
+      	height: '80px',
+		width: '80px',
+		margin: '0 auto',
+		marginBottom: '20px'
+	},
+	formInputs: {
+		maxWidth: '250px',
+		width: '100%'
+	},
     bio: {
           margin: '20px',
           padding: '20px'

@@ -1,4 +1,4 @@
-import { getBldgOutputs } from '../components/create/buildings/_updateForDevType';
+import { getBldgOutputs } from 'ccomponents/create/buildings/_updateForDevType';
 
 function editPrototypeOutputs(updateCopy) {
 	let buildingCopy = {

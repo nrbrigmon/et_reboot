@@ -1,10 +1,23 @@
 // const http = require('http');
 const passport = require('passport');
+const shortid = require('shortid');
+const moment = require('moment');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const { auth } = require('../config/keys');
-
 
 const pool = require('../db');
+const { auth } = require('../config/keys');
+
+let createUserProfile = function(){
+	return {
+		user_id: shortid.generate(),
+		google_id: '',
+		building_library_ids: [],
+		dev_workbook_ids: [],
+		google_prof: {},
+		date_started: moment().format("YYYY-MM-DD hh:mm:ss A")
+	}
+};
+
 
 passport.serializeUser((user, done) => {
 	console.log('serializing user...');
@@ -15,7 +28,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
 	console.log('de__serializing user...');
 	// console.log(user);
-	pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [user.google_id], (err, res) =>{
+	pool.query('SELECT * FROM chapa_users WHERE user_id = $1;', [user.user_id], (err, res) =>{
 		if (err) return done(err);
 		// console.log(res.rows);
 		let user = res.rows[0];
@@ -31,6 +44,7 @@ passport.use(
 			clientID: auth.googleClientID,
 			clientSecret: auth.googleClientSecret,
 			callbackURL: '/auth/google/callback',
+			failureRedirect: '/',
 			proxy: true
 		},
 		(accessToken, refreshToken, profile, done) => {
@@ -39,7 +53,7 @@ passport.use(
 			let _id_search = profile.id;
 			console.log('using google strategy with ', _id_search);
 
-			const res = pool.query('SELECT * FROM envision_users WHERE google_id = $1;', [_id_search], (err, res) =>{
+			const res = pool.query("SELECT * FROM chapa_users WHERE (attributes ->> 'google_id') = $1;", [_id_search], (err, res) =>{
 				console.log('running query....')
 				if (err) return done(err);
 				// console.log('existing user search: ', res.rows[0]);
@@ -48,13 +62,17 @@ passport.use(
 				if (existingUser) {
 					//record already exists
 					console.log('user already exists');
+					console.log(existingUser);
 					return done(null, existingUser);
 				} else {
 					console.log('user doesnt exist, creating new user');
-					let profileObj = JSON.stringify(profile);
-					let { google_id } = profileObj
-					return pool.query('INSERT INTO envision_users (google_id, building_library_ids, google_prof, date_started)'+
-						'VALUES ($1, $2, $3, CURRENT_TIMESTAMP);',[ google_id, [], profileObj ], (err, res) => {
+					// console.log(profile);
+					let new_attributes = createUserProfile();
+					let { user_id } = new_attributes;
+					new_attributes["google_prof"] = JSON.stringify(profile);
+					new_attributes["google_id"] = profile["id"]
+					return pool.query('INSERT INTO chapa_users (user_id, attributes)'+
+						'VALUES ($1, $2);',[ user_id, new_attributes ], (err, res) => {
 					    if (err) return done(err);
 						
 						let newUser = res.rows[0];

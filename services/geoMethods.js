@@ -18,7 +18,7 @@ var geoMethods = {
                     updatedBaseLayer['features'] = updatedFeatures; //update copy
                     // console.log("done");
                     resolve(updatedBaseLayer);
-                } catch(e) {
+                } catch(e) { 
                     reject(e);
                 }
             });

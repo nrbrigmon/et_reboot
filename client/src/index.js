@@ -6,13 +6,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 
-import App from './components/App';
+import App from './App';
 import reducers from './reducers';
 
 // import registerServiceWorker from './registerServiceWorker';
 // import { unregister } from './registerServiceWorker';
 
-import './styles/index.css';
+// import './styles/index.css';
+import "assets/scss/material-kit-react.css?v=1.1.0";
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 

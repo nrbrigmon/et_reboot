@@ -45,7 +45,8 @@ export const windowToTop = () => {
 
 
 export const navigateTo = (destination, ctx) => {
-	// console.log(ctx);
+	// console.log(ctx.history);
+	// console.log(destination)
 	ctx.history.push('/'+destination+'');
 }
 
@@ -81,4 +82,14 @@ export const compareBldgArrays = (selectBldgs, devBldgs) => {
 		}
 	}
 	
+}
+
+export const getUserFirstName = (auth) => {
+	if (auth){
+		let profile = JSON.parse(auth.attributes.google_prof)
+		let firstName = profile.displayName.split(" ")[0]
+		return firstName
+	} else {
+		return ""
+	}
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import sampleFields from '../components/create/buildings/examples/sampleBuildingInput';
+import sampleFields from 'ccomponents/create/buildings/examples/sampleBuildingInput';
 
 export const editBuildingPrototype = (status, selection) => {
 	let action;

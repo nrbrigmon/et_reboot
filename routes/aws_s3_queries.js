@@ -49,12 +49,13 @@ router.get('/s3', (request, response, next) => {
    });
 })
 
-router.get('/s3/:bucketKey', (request, response, next) => { 
-  const { bucketKey } = request.params;
+/* GET specific OBJECT FROM S3 by objectKey */
+router.get('/s3/:objectKey', (request, response, next) => { 
+  const { objectKey } = request.params;
   // console.log(request.params);
   var params = {
     Bucket: "chapa-s3-repo", 
-    Key: bucketKey
+    Key: objectKey
    };
    s3Bucket.getObject(params, function(err, data) {
     //  console.log(data)

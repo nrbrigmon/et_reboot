@@ -1,7 +1,17 @@
 export default (theme) => ({
-    paper: {
-        textAlign: 'center'
-      },
+	paper: {
+		textAlign: 'center'
+	},
+    loginPaper: {
+		textAlign: 'center',
+		maxWidth: '200px'
+	},
+	loginForm: {
+	  textAlign: 'center'
+	},
+	title:{
+		marginBottom: '0px'
+	},
     button: {
         width: '40%',
         margin: '0 10px 0 10px',
@@ -41,5 +51,27 @@ export default (theme) => ({
       backgroundColor: '#fff',
       boxShadow: '0 5px 15px rgba(0, 0, 0, .5)',
       padding: 8 * 4
-    }
+	},
+	loginGoogle:{
+		background: "#FF5742",
+		backgroundColor: "#FF5742",
+		'&:hover': {
+		  backgroundColor: "#dd4b39",
+		}
+	},
+	loginTwitter:{
+		background: "#00B9FF",
+		backgroundColor: "#00B9FF",
+		'&:hover': {
+		  backgroundColor: "#00aced",
+		}
+	},
+	loginSignup:{
+		marginTop: '10px'
+	},
+	cssButtonRoot: {
+		width: '100%',
+		marginBottom: '5x',
+		marginTop: '5px'
+	}
 })
