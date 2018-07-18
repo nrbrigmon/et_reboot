@@ -17,13 +17,12 @@ import Parallax from "components/Parallax/Parallax.jsx";
 
 import * as _constants from "utils/_constants";
 // Sections for this page
-import ProductSection from "./Sections/ProductSection.jsx";
-import TeamSection from "./Sections/TeamSection.jsx";
-import WorkSection from "./Sections/WorkSection.jsx";
+import ProductSection from "views/LandingPage/Sections/ProductSection.jsx";
+import TeamSection from "views/LandingPage/Sections/TeamSection.jsx";
+import WorkSection from "views/LandingPage/Sections/WorkSection.jsx";
 import * as helper from 'utils/_helperMethods';
 
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
-const dashboardRoutes = [];
 
 class LandingPage extends React.Component {
   render() {
@@ -33,7 +32,6 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand={_constants.APP_NAME}
           rightLinks={<HeaderLinks splash={true} {...rest} />}
           fixed
           changeColorOnScroll={{

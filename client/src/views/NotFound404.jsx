@@ -7,9 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
-// import * as helper from '../utils/_helperMethods';
+import * as helper from 'utils/_helperMethods';
 
-import NotFoundStyles from '../styles/NotFoundStyles';
+import NotFoundStyles from 'styles/NotFoundStyles';
 const styles = theme => NotFoundStyles(theme);
 
 /** NEED TO
@@ -55,11 +55,11 @@ const styles = theme => NotFoundStyles(theme);
                         </Typography>
                         </CardContent>
                         <CardActions>
-                            {/* <Button 
+                            <Button 
                                 variant="raised" color="primary" 
                                 size="small"
                                 onClick={()=>helper.navigateTo('', this.props)}
-                                >Go To Homepage</Button> */}
+                                >Go To Homepage</Button>
                         </CardActions>
                     </Card>
                     </div>

@@ -16,9 +16,10 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
-import team1 from "assets/img/faces/avatar.jpg";
-import team2 from "assets/img/faces/christian.jpg";
-import team3 from "assets/img/faces/kendall.jpg";
+
+import team1 from "assets/img/bios/NB_Bio_Pic_clip.jpg";
+import team2 from "assets/img/bios/KS_Bio_Pic.jpg";
+import team3 from "assets/img/bios/Apollo_Bio_Pic_clip.png";
 
 class TeamSection extends React.Component {
   render() {
@@ -26,7 +27,8 @@ class TeamSection extends React.Component {
     const imageClasses = classNames(
       classes.imgRaised,
       classes.imgRoundedCircle,
-      classes.imgFluid
+      classes.imgFluid,
+      classes.imgSizeRestrict
     );
     return (
       <div className={classes.section}>
@@ -39,16 +41,13 @@ class TeamSection extends React.Component {
                   <img src={team1} alt="..." className={imageClasses} />
                 </GridItem>
                 <h4 className={classes.cardTitle}>
-                  Gigi Hadid
+                  Nathan
                   <br />
-                  <small className={classes.smallTitle}>Model</small>
+                  <small className={classes.smallTitle}>Developer</small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                  Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -82,16 +81,12 @@ class TeamSection extends React.Component {
                   <img src={team2} alt="..." className={imageClasses} />
                 </GridItem>
                 <h4 className={classes.cardTitle}>
-                  Christian Louboutin
+                  Kristine
                   <br />
-                  <small className={classes.smallTitle}>Designer</small>
+                  <small className={classes.smallTitle}>Architect</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                  <p className={classes.description}>Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -118,16 +113,12 @@ class TeamSection extends React.Component {
                   <img src={team3} alt="..." className={imageClasses} />
                 </GridItem>
                 <h4 className={classes.cardTitle}>
-                  Kendall Jenner
+                  Apollo
                   <br />
-                  <small className={classes.smallTitle}>Model</small>
+                  <small className={classes.smallTitle}>Mascot</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                  <p className={classes.description}>Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>

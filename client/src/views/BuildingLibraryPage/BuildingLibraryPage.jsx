@@ -1,40 +1,54 @@
 import React from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
-// chapa components
-// import { connect } from 'react-redux';
-// import * as actions from 'actions';
 
-// import MapStart from './MapStart';
+
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+
+import LoadExistingBldgModal from 'ccomponents/modals/LoadExistingBldgModal';
+import LoadExistingLibraryModal from 'ccomponents/modals/LoadExistingLibraryModal';
+import SaveBldgLibraryModal from 'ccomponents/modals/SaveBldgLibraryModal';
+import UpdateToast from 'ccomponents/modals/UpdateToast';
+import * as helper from 'utils/_helperMethods';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-// @material-ui/icons
-// import Camera from "@material-ui/icons/Camera";
-// import Palette from "@material-ui/icons/Palette";
-// import Favorite from "@material-ui/icons/Favorite";
+
 // core components
-import Header from "components/Header/Header.jsx";
-import Footer from "components/Footer/Footer.jsx";
-// import Button from "components/CustomButtons/Button.jsx";
-// import GridContainer from "components/Grid/GridContainer.jsx";
-// import GridItem from "components/Grid/GridItem.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
-// import NavPills from "components/NavPills/NavPills.jsx";
-// import Parallax from "components/Parallax/Parallax.jsx";
+import Header from "components/Header/Header";
+import HeaderLinks from "components/Header/HeaderLinks";
+import Footer from "components/Footer/Footer";
+import Wrapper900 from "ccomponents/wrappers/Wrapper900"
+import BuildingListSection from "views/BuildingLibraryPage/Sections/BuildingListSection"
+import BuildingActionSection from "views/BuildingLibraryPage/Sections/BuildingActionSection"
 
-import CreateStart from "ccomponents/create/CreateStart";
 
-/** NEED TO
- * ADD SPECIFIC STYLES
- * 
- * / */
-import mappingPage from "assets/jss/chapa/mappingPage.jsx";
+import buildingLibraryPage from "assets/jss/chapa/buildingLibraryPage.jsx";
 
 class BuildingLibraryPage extends React.Component {
+	componentWillMount(){
+		// console.log(this.props);
+		let { availableBldgs } = this.props;
+		//load all available buildings in the database
+		if (availableBldgs.length === 0) {
+			this.props.fetchAllBuildings();
+			this.props.fetchAllBuildingLibraries();
+			///need better logic for why i would initialize a workbook?
+		}	
+		
+		this.props.fetchRandomId();
+		// console.log(this.props.devWorkbook)
+
+	}
+	
   render() {
     const { classes, ...rest } = this.props;
-    // console.log(rest);
     return (
       <div>
         <Header
@@ -45,9 +59,46 @@ class BuildingLibraryPage extends React.Component {
         />
         
         <div className={classes.container}>
-			<CreateStart />
+			<Wrapper900>
+				<Grid item xs={12}>
+					<h2>Create Your Library</h2>
+					<Typography component="p">
+						To build any development, we need structures on which to draw. This is called our <b>library</b>.
+						<br/><br/>
+					</Typography>
+				</Grid>
+				
+				<Card className={classes.card}>
+					<CardContent>
+					<Grid container>
+						{/* COLUMN #1 */}
+						<BuildingListSection {...this.props} />
+
+						{/* COLUMN #2 */}
+						<BuildingActionSection {...this.props} />
+					</Grid>
+					</CardContent>
+				</Card>
+
+					<CardActions >
+						<div className={classes.cardAction}>
+							<Button 
+								className={classes.cardButton} 
+								variant="raised" color="primary" 
+								onClick={() => helper.navigateTo('dev-types/building-mix', this.props)} >
+								Next: Development Types
+							</Button>	
+						</div>
+					</CardActions>
+
+				<LoadExistingBldgModal   />
+				<LoadExistingLibraryModal   />
+				<SaveBldgLibraryModal  />
+				<UpdateToast {...this.props} /> 
+          
+			</Wrapper900>
+			</div>
           {/* <BuildingLibraryAboutSection /> */}
-          </div>
         <Footer />
       </div>
     );
@@ -55,4 +106,14 @@ class BuildingLibraryPage extends React.Component {
 }
 
 
-export default withStyles(mappingPage)(BuildingLibraryPage);
+function mapStateToProps(state) {
+	return { 
+		uniqueId: state.randomId
+		,availableBldgs: state.availableBldgs
+		,devWorkbook: state.devWorkbook
+		,toast: state.toast		
+	};
+}
+  
+const styledApp = withStyles(buildingLibraryPage)(BuildingLibraryPage);
+export default connect(mapStateToProps, actions)(styledApp);

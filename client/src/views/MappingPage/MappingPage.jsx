@@ -1,6 +1,6 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
+// import classNames from "classnames";
 // chapa components
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -16,9 +16,9 @@ import UploadLayerModal from 'ccomponents/modals/UploadLayerModal';
 import UpdateToast from 'ccomponents/modals/UpdateToast';
 
 // @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
+// import Camera from "@material-ui/icons/Camera";
+// import Palette from "@material-ui/icons/Palette";
+// import Favorite from "@material-ui/icons/Favorite";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";

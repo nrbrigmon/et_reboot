@@ -5,10 +5,6 @@ import Highcharts from 'react-highcharts';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-// import MapMainComponent from 'components/Mapping/MapMainComponent';
-// import MapOverlayPanel from 'components/Mapping/MapOverlayPanel';
-
-// import WrapperFull from 'ccomponents/wrappers/WrapperFull';
 import * as helper from "utils/_helperMethods";
 import * as MetricConfig from 'ccomponents/metrics/MetricConfig';
 

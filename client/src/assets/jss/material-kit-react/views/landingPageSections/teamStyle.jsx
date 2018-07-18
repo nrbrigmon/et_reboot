@@ -41,6 +41,10 @@ const teamStyle = {
   },
   margin5: {
     margin: "5px"
+  },
+  imgSizeRestrict: {
+    width: '125px',
+    height: 'auto'
   }
 };
 

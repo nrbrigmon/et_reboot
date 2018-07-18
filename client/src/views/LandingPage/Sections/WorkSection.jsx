@@ -19,7 +19,7 @@ class WorkSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Work with us</h2>
+            <h2 className={classes.title}>Sign Up for Updates</h2>
             <h4 className={classes.description}>
               Divide details about your product or agency work into parts. Write
               a few lines about each one and contact us about any further
@@ -65,7 +65,8 @@ class WorkSection extends React.Component {
                     md={4}
                     className={classes.textCenter}
                   >
-                    <Button color="primary">Send Message</Button>
+                    <Button color="primary" onClick={()=>alert("oops! this isn't set up yet!")} >
+                      Send Message</Button>
                   </GridItem>
                 </GridContainer>
               </GridContainer>
