@@ -4,7 +4,8 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
-// @material-ui/icons
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 // core components
 import Header from "components/Header/Header.jsx";
@@ -71,7 +72,7 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <ProductSection />
             <TeamSection />
-            <WorkSection />
+            <WorkSection {...rest} />
           </div>
         </div>
         <Footer />
@@ -80,4 +81,10 @@ class LandingPage extends React.Component {
   }
 }
 
-export default withStyles(landingPageStyle)(LandingPage);
+function mapStateToProps(state) {  
+	return { 
+		toast: state.toast		
+	};
+}
+
+export default connect(mapStateToProps, actions)(withStyles(landingPageStyle)(LandingPage));

@@ -65,8 +65,7 @@ function Footer({ ...props }) {
           </List>
         </div>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()}, made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
+          &copy; {1900 + new Date().getYear()}, template by{" "}
           <a
             href="https://www.creative-tim.com"
             className={aClasses}

@@ -16,7 +16,8 @@ class UpdateToast extends React.Component {
         // componentDidMount(){
         //     this.props.toastMessage("HELLO BRAVE WORLD!")
         // }
-    render() {;
+	render() {;
+		// console.log(this.props)
         return (
             <div>
                 {/* <Button onClick={this.handleClick}>Open simple snackbar</Button> */}

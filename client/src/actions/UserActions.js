@@ -13,3 +13,9 @@ export const fetchUser = () => async dispatch => {
 // 	// console.log("creating user?", res)	
 // 	dispatch({ type: 'FETCH_USER', payload: res.data });
 // };
+
+export const sendEmail = (form) => async dispatch => {
+	const res = await axios.post('/api/contact_form', form);
+	
+	dispatch({ type: 'SEND_TOAST', payload: { data: res, msg: "Email Sent!", open: true } });
+}

@@ -4,6 +4,7 @@ import LandingPage from 'views/LandingPage/LandingPage';
 import LoginPage from 'views/LoginPage/LoginPage';
 import MappingPage from 'views/MappingPage/MappingPage';
 import DemoPage from 'views/DemoPage/DemoPage';
+import DevelopmentTypePage from 'views/DevelopmentTypePage/DevelopmentTypePage';
 import BuildingLibraryPage from 'views/BuildingLibraryPage/BuildingLibraryPage';
 import BuildingPrototypePage from 'views/BuildingPrototypePage/BuildingPrototypePage';
 
@@ -20,6 +21,7 @@ var indexRoutes = [
 	{ path: "/building", name: "BuildingLibraryPage", component: BuildingLibraryPage, exact: true },
 	{ path: "/building/new/:id", name: "BuildingPrototypePage", component: BuildingPrototypePage, exact: false  },
 	{ path: "/building/edit/:id", name: "BuildingPrototypePage", component: BuildingPrototypePage, exact: false  },
+	{ path: "/dev-types", name: "DevelopmentTypePage", component: DevelopmentTypePage, exact: false  },
 	{ path: false, component: NotFound404 }
 	
 ];
