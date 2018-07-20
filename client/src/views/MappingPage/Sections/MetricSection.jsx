@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import ReactHighcharts from "react-highcharts";
 import Highcharts from 'react-highcharts';
 
-import Button from '@material-ui/core/Button';
+import Button from "components/CustomButtons/Button.jsx";
 import Grid from '@material-ui/core/Grid';
 
 import * as helper from "utils/_helperMethods";
-import * as MetricConfig from 'ccomponents/metrics/MetricConfig';
+import * as MetricConfig from 'utils/_metricConfig';
 
 Highcharts.Highcharts.setOptions({
     lang: {

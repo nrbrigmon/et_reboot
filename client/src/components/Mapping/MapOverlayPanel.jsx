@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Button from '@material-ui/core/Button';
+import Button from "components/CustomButtons/Button.jsx";
 import Paper from '@material-ui/core/Paper';
 import FileUpload from '@material-ui/icons/FileUpload';
 import LayersClear from '@material-ui/icons/LayersClear';

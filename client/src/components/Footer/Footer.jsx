@@ -37,7 +37,7 @@ function Footer({ ...props }) {
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href=""
+                href="http://www.chapa.io/what-is-chapa/"
                 className={classes.block}
                 target="_blank"
               >

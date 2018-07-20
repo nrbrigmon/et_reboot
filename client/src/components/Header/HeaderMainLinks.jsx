@@ -20,7 +20,7 @@ export default [
         popupTitle: '',
         href: '',
         // classLink: 'fab fa-instagram',
-        compLink: 'building',
+        compLink: 'buildings',
         text: "Building"
     }
 ]

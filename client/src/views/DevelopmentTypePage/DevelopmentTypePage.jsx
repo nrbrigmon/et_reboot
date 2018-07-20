@@ -4,16 +4,16 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import Button from "components/CustomButtons/Button.jsx";
 
-import DevTypeBuildingMix from 'ccomponents/create/developments/DevTypeBuildingMix';
-import DevTypeAttributes from 'ccomponents/create/developments/DevTypeAttributes';
-import DevTypeReview from 'ccomponents/create/developments/DevTypeReview';
-import Wrapper900 from 'ccomponents/wrappers/Wrapper900';
-import LoadWorkbookModal from 'ccomponents/modals/LoadWorkbookModal';
-import SaveWorkbookModal from 'ccomponents/modals/SaveWorkbookModal';
+import BuildingMixSection from './Sections/BuildingMixSection';
+import AttributeSection from './Sections/AttributeSection';
+import DevelopmentTypeReview from './Sections/DevelopmentTypeReview';
+import Wrapper900 from "components/Wrappers/Wrapper900"
+import LoadWorkbookModal from 'components/Modals/LoadWorkbookModal';
+import SaveWorkbookModal from 'components/Modals/SaveWorkbookModal';
 import DevTypeStyles from 'styles/DevTypeStyles';
-import UpdateToast from 'ccomponents/modals/UpdateToast';
+import UpdateToast from 'components/Modals/UpdateToast';
 
 // core components
 import Header from "components/Header/Header.jsx";
@@ -54,9 +54,9 @@ class DevelopmentTypePage extends Component {
 			  
 			  <div className={classes.container}>
 			<Wrapper900>
-				<Route path={`/dev-types/building-mix`} render={()=> <DevTypeBuildingMix  />}/>
-				<Route path={`/dev-types/attributes`} render={()=> <DevTypeAttributes   />}/>
-				<Route path={`/dev-types/review`} render={()=> <DevTypeReview   />}/>
+				<Route path={`/dev-types/building-mix`} render={()=> <BuildingMixSection  {...this.props} />} />
+				<Route path={`/dev-types/attributes`} render={()=> <AttributeSection {...this.props}  />} />
+				<Route path={`/dev-types/review`} render={()=> <DevelopmentTypeReview  {...this.props}  />}/>
 				{
 					(pathHome) ? <p>welcome home</p> : <span></span>
 				}

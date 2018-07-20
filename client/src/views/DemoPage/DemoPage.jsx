@@ -22,6 +22,8 @@ import Footer from "components/Footer/Footer.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 // import NavPills from "components/NavPills/NavPills.jsx";
 // import Parallax from "components/Parallax/Parallax.jsx";
+import Grid from '@material-ui/core/Grid';
+import WrapperFull from "components/Wrappers/WrapperFull"
 
 import mappingPage from "assets/jss/chapa/mappingPage.jsx";
 
@@ -30,18 +32,22 @@ class DemoPage extends React.Component {
     const { classes, ...rest } = this.props;
     // console.log(rest);
     return (
-      <div>
-        <Header
-          color="white"
-          rightLinks={<HeaderLinks splash={false} {...rest} />}
-          fixed
-          {...rest}
-        />
-        
+		<WrapperFull>
+			<Header
+			color="white"
+			rightLinks={<HeaderLinks splash={false} {...rest} />}
+			fixed
+			{...rest}
+			/>
+			<Grid item sm={12}>
+			<h1>Coming Soon!</h1>
+			</Grid>
+       		 <Grid item sm={12}>
+			</Grid>
 				{/* <MapStart {...this.props} title={"Demo Mapping"}/> */}
         
         <Footer />
-      </div>
+      </WrapperFull>
     );
   }
 }

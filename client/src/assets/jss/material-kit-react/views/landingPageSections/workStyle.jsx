@@ -12,12 +12,16 @@ const workStyle = {
     textDecoration: "none",
     textAlign: "center"
   },
+  form: {
+	padding: '10px 50px'
+  },
   description: {
     color: "#999",
     textAlign: "center"
   },
-  textCenter: {
-    textAlign: "center"
+  formSubmit: {
+    textAlign: "center",
+	margin: '0 auto'
   },
   textArea: {
     marginRight: "15px",

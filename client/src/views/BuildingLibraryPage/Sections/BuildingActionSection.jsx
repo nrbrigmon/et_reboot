@@ -2,7 +2,7 @@ import React from "react";
 import Grid from '@material-ui/core/Grid';
 
 import * as helper from 'utils/_helperMethods';
-import Button from '@material-ui/core/Button';
+import Button from "components/CustomButtons/Button.jsx";
 
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import AddCircle from '@material-ui/icons/AddCircle';
@@ -23,7 +23,7 @@ class BuildingActionSection extends React.Component {
 	}
 	
 	newItemInList = (uniqueId) => {
-		helper.navigateTo('building/new/'+uniqueId+'/physical-form', this.props);
+		helper.navigateTo('buildings/new/'+uniqueId+'/physical-form', this.props);
 		this.props.editBuildingPrototype(false);
 		// this.props.addBuildingToWorkbook(uniqueId);
 	}

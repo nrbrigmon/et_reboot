@@ -14,7 +14,7 @@ import * as helper from 'utils/_helperMethods';
 class BuildingListSection extends React.Component {
     editItemInList = (selection) => {
 		let _id = selection.uniqueId;
-		helper.navigateTo('building/edit/'+_id+'/physical-form', this.props);
+		helper.navigateTo('buildings/edit/'+_id+'/physical-form', this.props);
 		this.props.editBuildingPrototype(true, selection);
 	}
 

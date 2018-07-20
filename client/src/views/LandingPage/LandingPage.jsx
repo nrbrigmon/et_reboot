@@ -16,7 +16,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-import * as _constants from "utils/_constants";
+import * as _constants from "constants/_landingPage";
 // Sections for this page
 import ProductSection from "views/LandingPage/Sections/ProductSection.jsx";
 import TeamSection from "views/LandingPage/Sections/TeamSection.jsx";
@@ -24,7 +24,7 @@ import WorkSection from "views/LandingPage/Sections/WorkSection.jsx";
 import * as helper from 'utils/_helperMethods';
 
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
-
+const styles = theme => landingPageStyle(theme);
 class LandingPage extends React.Component {
   render() {
     const { classes, ...rest } = this.props;
@@ -41,7 +41,7 @@ class LandingPage extends React.Component {
           }}
           {...rest}
         />
-        <Parallax filter image={require("assets/img/landing-bg.jpg")}>
+        <Parallax className={classes.parallax} filter image={require("assets/img/landing-bg.jpg")}>
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
@@ -87,4 +87,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, actions)(withStyles(landingPageStyle)(LandingPage));
+export default connect(mapStateToProps, actions)(withStyles(styles)(LandingPage));

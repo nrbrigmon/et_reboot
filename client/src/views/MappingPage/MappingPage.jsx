@@ -12,8 +12,8 @@ import * as helper from "utils/_helperMethods";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from '@material-ui/core/Grid';
-import UploadLayerModal from 'ccomponents/modals/UploadLayerModal';
-import UpdateToast from 'ccomponents/modals/UpdateToast';
+import UploadLayerModal from 'components/Modals/UploadLayerModal';
+import UpdateToast from 'components/Modals/UpdateToast';
 
 // @material-ui/icons
 // import Camera from "@material-ui/icons/Camera";
@@ -28,6 +28,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 // import NavPills from "components/NavPills/NavPills.jsx";
 // import Parallax from "components/Parallax/Parallax.jsx";
+import WrapperFull from 'components/Wrappers/WrapperFull';
 
 import mappingPage from "assets/jss/chapa/mappingPage.jsx";
 
@@ -36,33 +37,33 @@ class MappingPage extends React.Component {
     const { classes, ...rest } = this.props;
     // console.log(rest);
     return (
-      <div>
-        <Header
-          color="white"
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks splash={false} {...rest} />}
-          fixed
-          {...rest}
-        />
+		<div>
+		<Header
+			color="white"
+			rightLinks={<HeaderLinks splash={false} {...rest} />}
+			fixed
+			{...rest}
+		/>
+      <WrapperFull>
+		
         <Grid item sm={12}>
             <h2>Demo Mapping</h2>
 		</Grid>
-        <Grid item sm={12}>
-			<MappingSection {...this.props} />
-			<MetricSection {...this.props} />
-		</Grid>
+		<MappingSection {...this.props} />
+		<MetricSection {...this.props} />
 		<Grid item xs={12}>
 			<Button variant="raised" 
 				className={classes.buttonNav}
 				color="primary" 
-				onClick={()=>helper.navigateTo('/create/dev-types/building-mix', this.props)} >
+				onClick={()=>helper.navigateTo('dev-types/building-mix', this.props)} >
 				Edit Development Types
 			</Button>
 		</Grid>
-		<UploadLayerModal {...this.props} />
-		<UpdateToast {...this.props} />
-        <Footer />
-      </div>
+		<UploadLayerModal {...rest} />
+		<UpdateToast {...rest} />
+      </WrapperFull>
+				<Footer />
+		</div>
     );
   }
 }

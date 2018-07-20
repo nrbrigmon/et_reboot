@@ -8,25 +8,20 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from "components/CustomButtons/Button.jsx";
 
-
 import { connect } from 'react-redux';
-import * as actions from 'actions';
+import * as actions from '../../../actions';
 
-import Header from "components/Header/Header";
-import HeaderLinks from "components/Header/HeaderLinks";
-import Footer from "components/Footer/Footer";
-
-import PhysicalFormComponent from 'views/BuildingPrototypePage/SubPages/PhysicalFormComponent';
-import BasicFinFormComponent from 'views/BuildingPrototypePage/SubPages/BasicFinFormComponent';
-import AdvancedFinFormComponent from 'views/BuildingPrototypePage/SubPages/AdvancedFinFormComponent';
-import BuildingFormReviewComponent from 'views/BuildingPrototypePage/SubPages/BuildingFormReviewComponent';
-import BuildingMenu from './SubPages/menu/BuildingMenu';
+import PhysicalFormComponent from './PhysicalFormComponent';
+import BasicFinFormComponent from './BasicFinFormComponent';
+import AdvancedFinFormComponent from './AdvancedFinFormComponent';
+import BuildingFormReviewComponent from './BuildingFormReviewComponent';
+import BuildingMenu from './menu/BuildingMenu';
 import LoadTemplateBldgModal from 'components/Modals/LoadTemplateBldgModal';
 import FormStyles from 'styles/FormStyles';
 
 const styles = theme => FormStyles(theme);
 
-class BuildingPrototypePage extends Component {
+  class BuildingPrototypeStart extends Component {
 	constructor(props) {
 		super(props);
 		// if new building shortid.generate
@@ -59,7 +54,7 @@ class BuildingPrototypePage extends Component {
 		this.props.updateAvailableBuildings(bldgType);
 		this.props.saveBuildingToDb(editing, bldgType);
 		this.props.releaseBuildingPrototype();
-		this.props.history.push('/buildings');
+		this.props.history.push('/create');
 	}
 	saveAsBuilding = () => {
 		let editingState = false;
@@ -77,10 +72,10 @@ class BuildingPrototypePage extends Component {
 		this.props.updateAvailableBuildings(bldgType);
 		this.props.saveBuildingToDb(editingState, bldgType);
 		this.props.releaseBuildingPrototype();
-		this.props.history.push('/buildings');
+		this.props.history.push('/create');
 	}
 	cancelBuilding = () => {
-		this.props.history.push('/buildings');
+		this.props.history.push('/create');
 		this.props.releaseBuildingPrototype();		
 	}
 	
@@ -89,7 +84,7 @@ class BuildingPrototypePage extends Component {
 	}
 	render() {
 		// console.log(this.props);
-		const { classes, match , ...rest} = this.props;
+		const { classes, match } = this.props;
 		const { tabValue } = this.state;
 		const buildingPrototype = this.props.bldgType;
 		
@@ -99,13 +94,6 @@ class BuildingPrototypePage extends Component {
 				alignItems='center'
 				direction='row'
 				justify='center'>
-				
-				<Header
-					color="white"
-					rightLinks={<HeaderLinks splash={false} {...rest} />}
-					fixed
-					{...rest}
-				/>
 				<AppBar position="fixed" color="default"
 					className={classes.appbar}>
 					<Tabs
@@ -150,7 +138,6 @@ class BuildingPrototypePage extends Component {
 						Cancel
 					</Button>	
 				</Grid>
-				<Footer />
 			</Grid>
 		);
 	}
@@ -164,6 +151,6 @@ function mapStateToProps(state) {
 	};
 }
 
-const styledApp = withStyles(styles)(BuildingPrototypePage);
+const styledApp = withStyles(styles)(BuildingPrototypeStart);
 export default connect(mapStateToProps, actions)(styledApp);
 

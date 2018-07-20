@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import Button from "components/CustomButtons/Button.jsx";
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
-import LoadExistingBldgModal from 'ccomponents/modals/LoadExistingBldgModal';
-import LoadExistingLibraryModal from 'ccomponents/modals/LoadExistingLibraryModal';
-import SaveBldgLibraryModal from 'ccomponents/modals/SaveBldgLibraryModal';
-import UpdateToast from 'ccomponents/modals/UpdateToast';
+import LoadExistingBldgModal from 'components/Modals/LoadExistingBldgModal';
+import LoadExistingLibraryModal from 'components/Modals/LoadExistingLibraryModal';
+import SaveBldgLibraryModal from 'components/Modals/SaveBldgLibraryModal';
+import UpdateToast from 'components/Modals/UpdateToast';
 import * as helper from 'utils/_helperMethods';
 
 // @material-ui/core components
@@ -23,7 +23,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Header from "components/Header/Header";
 import HeaderLinks from "components/Header/HeaderLinks";
 import Footer from "components/Footer/Footer";
-import Wrapper900 from "ccomponents/wrappers/Wrapper900"
+import Wrapper900 from "components/Wrappers/Wrapper900"
 import BuildingListSection from "views/BuildingLibraryPage/Sections/BuildingListSection"
 import BuildingActionSection from "views/BuildingLibraryPage/Sections/BuildingActionSection"
 

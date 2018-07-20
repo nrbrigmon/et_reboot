@@ -9,8 +9,9 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import UpdateToast from 'ccomponents/modals/UpdateToast';
-import LoadingComponent from 'ccomponents/global/LoadingComponent';
+
+import UpdateToast from 'components/Modals/UpdateToast';
+import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
 
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
@@ -59,8 +60,8 @@ class WorkSection extends React.Component {
 			</h4>
 			{
                     this.state.isLoading ? <LoadingComponent /> :
-				<form>
-					<GridContainer>
+				<form className={classes.form}>
+					<GridContainer >
 					<GridItem xs={12} sm={12} md={6}>
 						<CustomInput
 						labelText="Your Name"
@@ -75,41 +76,36 @@ class WorkSection extends React.Component {
 					</GridItem>
 					<GridItem xs={12} sm={12} md={6}>
 						<CustomInput
-						labelText="Your Email"
-						id="from_email"
-						formControlProps={{
-							fullWidth: true
-						}}
-						inputProps={{
-							onChange: this.handleChange
-						}}
+							labelText="Your Email"
+							id="from_email"
+							formControlProps={{
+								fullWidth: true
+							}}
+							inputProps={{
+								onChange: this.handleChange
+							}}
 						/>
 					</GridItem>
-					<CustomInput
-						labelText="Your Message"
-						id="email_text"
-						formControlProps={{
-						fullWidth: true,
-						className: classes.textArea
-						}}
-						inputProps={{
-						multiline: true,
-						rows: 5,
-						onChange: this.handleChange
-						}}
-					/>
-					<GridContainer justify="center">
-						<GridItem
-						xs={12}
-						sm={12}
-						md={4}
-						className={classes.textCenter}
-						>
-						<Button color="primary" onClick={()=>this.makeEmailAction()} >
-							Send Message
-						</Button>
-						</GridItem>
-					</GridContainer>
+					<GridItem xs={12} sm={12} md={12}>
+						<CustomInput
+							labelText="Your Message"
+							id="email_text"
+							formControlProps={{
+								fullWidth: true
+							}}
+							inputProps={{
+								multiline: true,
+								rows: 5,
+								onChange: this.handleChange
+							}}
+						/>
+						<div className={classes.formSubmit}>
+							<Button color="primary" 
+							onClick={()=>this.makeEmailAction()} >
+								Send Message
+							</Button>
+						</div>
+					</GridItem>
 					</GridContainer>
 				</form>
 			}

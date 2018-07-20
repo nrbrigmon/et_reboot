@@ -1,4 +1,4 @@
-import _buildingList from 'ccomponents/create/buildings/examples/_buildingList';
+import _buildingList from 'constants/sampleBuildings/_buildingList';
 
 export const fetchBldgTemplates = () => {
 	const action = {
