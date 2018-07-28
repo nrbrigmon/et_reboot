@@ -38,14 +38,14 @@ class UserLoginModalContents extends React.Component {
         <Grid item xs={12} className={classes.loginPaper}>
 			<Button
 				variant="raised" 
-				color="secondary" 
+				color="primary" 
 				className={classnames(classes.loginGoogle, classes.cssButtonRoot)}
 				onClick={()=>this.props.loginSelection("google")} >
 				Google
 			</Button>
 			<Button
 				variant="raised"
-				color="secondary" 
+				color="primary" 
 				disabled={true}
 				className={classnames(classes.loginTwitter, classes.cssButtonRoot)}
 				onClick={()=>this.props.loginSelection("twitter")} >

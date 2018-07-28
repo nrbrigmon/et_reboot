@@ -24,36 +24,40 @@ class BuildingListSection extends React.Component {
     
     renderLibraryBldgs = (props) => {
         let { library_bldgs } = props.devWorkbook.workbook_library;
-        let { classes } = props;
-        return library_bldgs.map((item, idx) => {
-            let name = item.physicalInfo.buildingName;
-            let { siteLocation } = item.physicalInfo;
-            let { uniqueId } = item;
-            if (name === undefined){
-                name = 'err';
-            }
-            if (siteLocation === undefined){
-                siteLocation = 'err';
-            }
-            // console.log(item)
-            return (
-                <ListItem button divider key={idx} className={classes.libraryItem}
-                    onClick={()=>this.editItemInList(item)}>
-                    <ListItemIcon>
-                        <Domain />
-                    </ListItemIcon>
-                    <ListItemText primary={name} secondary={siteLocation}/>
-                    
-                    <ListItemSecondaryAction  onClick={()=>this.removeItemFromList(uniqueId)}>
-                        <Tooltip id="tooltip-icon" title="Delete">
-                                <ListItemIcon aria-label="Delete">
-                                    <Delete />
-                                </ListItemIcon>
-                        </Tooltip>
-                    </ListItemSecondaryAction>
-                </ListItem>
-            );
-        });
+		let { classes } = props;
+		if (library_bldgs){
+			return library_bldgs.map((item, idx) => {
+				let name = item.physicalInfo.buildingName;
+				let { siteLocation } = item.physicalInfo;
+				let { uniqueId } = item;
+				if (name === undefined){
+					name = 'err';
+				}
+				if (siteLocation === undefined){
+					siteLocation = 'err';
+				}
+				// console.log(item)
+				return (
+					<ListItem button divider key={idx} className={classes.libraryItem}
+						onClick={()=>this.editItemInList(item)}>
+						<ListItemIcon>
+							<Domain />
+						</ListItemIcon>
+						<ListItemText primary={name} secondary={siteLocation}/>
+						
+						<ListItemSecondaryAction  onClick={()=>this.removeItemFromList(uniqueId)}>
+							<Tooltip id="tooltip-icon" title="Delete">
+									<ListItemIcon aria-label="Delete">
+										<Delete />
+									</ListItemIcon>
+							</Tooltip>
+						</ListItemSecondaryAction>
+					</ListItem>
+				);
+			});
+		} else {
+			
+		}
     }
     
   render() {

@@ -3,19 +3,16 @@ const passport = require('passport');
 const shortid = require('shortid');
 const moment = require('moment');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const userSchema = require("../client/src/schemas/user");
 
 const pool = require('../db');
 const { auth } = require('../config/keys');
 
 let createUserProfile = function(){
-	return {
-		user_id: shortid.generate(),
-		google_id: '',
-		building_library_ids: [],
-		dev_workbook_ids: [],
-		google_prof: {},
-		date_started: moment().format("YYYY-MM-DD hh:mm:ss A")
-	}
+	let newUser = userSchema;
+	newUser[user_id] = shortid.generate();
+	newUser[date_started] = moment().format("YYYY-MM-DD hh:mm:ss A");
+	return newUser;
 };
 
 

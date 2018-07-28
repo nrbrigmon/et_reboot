@@ -1,17 +1,15 @@
+
 function setNewDevType(state, action){
     return action.payload;
 }
-let activeDevType = {
-    devTypeName: '',
-    devTypeColor: '',
-    acres: 0
-}
-export default function(state = activeDevType, action ) {
+
+export default function(state = {}, action ) {
+	console.log(state);
 	switch (action.type) {
         case 'SET_ACTIVE_DEV_TYPE':
             return setNewDevType(state, action);
         case 'REMOVE_ACTIVE_DEV_TYPE':
-            return activeDevType;
+            return state;
         default:
             return state;
     }

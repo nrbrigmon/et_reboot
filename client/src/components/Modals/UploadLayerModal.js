@@ -67,7 +67,7 @@ class UploadLayerModal extends Component {
                             </Dropzone>
                         </div>
                         <div className={classes.paper}>
-                            <Button variant="raised" color="secondary" className={classes.button} 
+                            <Button variant="raised" color="primary" className={classes.button} 
                                 onClick={()=>this.props.closeModal()}>
                                 Cancel
                             </Button>

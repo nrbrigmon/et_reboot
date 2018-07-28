@@ -1,23 +1,9 @@
 import AcresPerDevType from "../utils/_AcresPerDevType";
 import * as mm from "../utils/_MapMath";
 import * as helper from "../utils/_helperMethods";
+import getSchema from "./initialStates";
 
-let defaultState = {
-    developedAcreage: []
-    ,landUse: []
-    ,population: []
-    ,housingByType: []
-    ,employmentByType: []
-    ,jobTotals: []
-    ,jobsPerAcre: []
-    ,peoplePerAcre: []
-    ,householdTotals: []
-    ,householdSizeAvg: []
-    ,colorArray: []
-    ,devTypes: []
-}
-
-function updateMetrics({baseMapLayer, devWorkbook}){
+function updateMetrics(state, {baseMapLayer, devWorkbook}){
     let { workbook_library } = devWorkbook;
 	let acresPerDevType = AcresPerDevType(baseMapLayer);
     let devTypes = helper.getDevTypes(acresPerDevType);
@@ -34,27 +20,21 @@ function updateMetrics({baseMapLayer, devWorkbook}){
                         devWorkbook);
 
     return {
-        developedAcreage: developedAcres
-        ,landUse: []
+		...state
+        ,developedAcreage: developedAcres
         ,population: populationMetric
         ,housingByType: housingMetric
-        ,employmentByType: []
         ,jobTotals: jobsMetric
-        ,jobsPerAcre: []
-        ,peoplePerAcre: []
-        ,schoolChildren: []
-        ,householdTotals: []
-        ,householdSizeAvg: []
         ,colorArray: colorArray
         ,devTypes: devTypes
     }   
 }
-
-export default function (state = defaultState, { type, payload } ) {
+ 
+export default function (state = getSchema["metricData"] || null, { type, payload } ) {
     switch (type) {
         case 'UPDATE_METRICS':
-            let newState = updateMetrics(payload)
-	console.log("metrics reduced...")
+            let newState = updateMetrics(state, payload)
+			console.log("metrics reduced...")
 
             return newState;
         default:

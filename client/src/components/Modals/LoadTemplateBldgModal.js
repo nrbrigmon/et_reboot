@@ -64,7 +64,7 @@ class LoadTemplateBldgModal extends Component {
                             Load
                         </Button>	
                         
-                        <Button variant="raised" color="secondary" className={classes.button} 
+                        <Button variant="raised" color="primary" className={classes.button} 
                             onClick={()=>this.props.closeModal()}>
                             Cancel
                         </Button>

@@ -1,7 +1,7 @@
 export default [
   {
     key: "_mPPCxXzfUTL8CduJ9sMwtQ",
-    bldgName: "Nate�s New Building",
+    bldgName: "Nate's New Building",
     siteName: "Your City, USA"
   },
   {

@@ -30,7 +30,7 @@ class LoadExistingBldgModal extends Component {
                             Save
                         </Button>	
                         
-                        <Button variant="raised" color="secondary" className={classes.button} 
+                        <Button variant="raised" color="primary" className={classes.button} 
                             onClick={()=>this.props.closeModal()}>
                             Cancel
                         </Button>

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import * as shortid from 'shortid';
-import activeDevTypeReducer from './activeDevTypeReducer';
+import activeDevType from './activeDevTypeReducer';
 import authReducer from './authReducer';
 import baseMapLayerReducer from './baseMapLayerReducer';
 import bldgPrototypeReducer from './bldgPrototypeReducer';
@@ -28,9 +28,10 @@ const getRandomId = (state = [], action) => {
 	}
 }
 
+
 export default combineReducers({
-	activeDevType: activeDevTypeReducer
-	,auth: authReducer							//user login confirmation
+	activeDevType: activeDevType
+	,user: authReducer							//user login confirmation
 	,availableBldgs: buildingReducer 			//saved buildings in database
 	,availableLibs: availableLibsReducer		//saved libraries in database
 	,availableWkbks: availableWkbksReducer		//saved libraries in database

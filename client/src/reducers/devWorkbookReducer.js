@@ -1,7 +1,7 @@
 import * as shortid from 'shortid';
 import * as _ from 'lodash';
 import * as myHelp from './devWorkbookReducerHelp';
-
+import getSchema from "./initialStates";
 
 function updateCellValue(oldObject, newValues) {
     // Encapsulate the idea of passing a new object as the first parameter
@@ -88,7 +88,8 @@ function editDevelopmentTypeAttr(state, {value, rowId, attrId} ) {
     const newDevMixer = updateItemInArray(devtype_state, "uniqueId", rowId, row => {
 		//after we have the right row, use the callback to find the right cell
 		// console.log(attrId, state);
-		return { ...row, 
+		return { 
+			...row, 
 				[attrId]: value		
 			}
 	});
@@ -189,28 +190,14 @@ function updateFirstLevelAttribute(state, key, value){
         [key]: value
     }
 }
-let workbook_library_starter = {
-    library_id: shortid.generate()
-    ,library_name: ''
-    ,library_isNew: true
-    ,library_bldgs: []
-    ,user_id: ''
-}
-let myDevelopmentWorkbook = {
-	workbook_id: shortid.generate()
-	,workbook_isNew: true 
-    ,workbook_name: ''
-    ,workbook_devtypes: []
-	,user_id: ''
-	,workbook_library: workbook_library_starter
-}
 
-export default function(state = myDevelopmentWorkbook, action) {
+export default function(state = getSchema["devWorkbook"], action) {
 	//when the devtype reducer page loads, there should be one row only...
 	let libraryState = null;
 	let newLibrary = null;
 	let newSelectedBuildings = null;
 	let newDevTypes = null;
+	let myDevelopmentWorkbook = null;
     if (localStorage.getItem('myDevelopmentWorkbook')){
         state = JSON.parse(localStorage.getItem('myDevelopmentWorkbook'));
     }

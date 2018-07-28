@@ -48,8 +48,7 @@ class MapOverlayPanel extends Component {
                 { 
                     ( this.props.mapOverlayPanel === "painting"  ) ? 
                         (<Button variant="raised" 
-                            color="secondary" 
-                            size="small"
+                            color="primary" 
                             className={classes.buttonLayer}
                             onClick={()=>this.resestScenarioLayer() } >
         
@@ -58,8 +57,7 @@ class MapOverlayPanel extends Component {
                     :
                         (<span>
                             <Button variant="raised" 
-                                color="secondary" 
-                                size="small"
+                                color="primary" 
                                 className={classes.buttonLayer}
                                 onClick={()=>this.drawScenarioLayer() } > 
                                 
@@ -68,8 +66,7 @@ class MapOverlayPanel extends Component {
                             {(activeDevType.devTypeName === "DRAW_SCENARIO_BASE_LAYER" ? <MapDrawHelper  {...this.props}/> : '')}
                         
                             <Button variant="raised" 
-                                color="secondary" 
-                                size="small"
+                                color="primary" 
                                 className={classes.buttonLayer}
                                 onClick={()=>this.loadScenarioLayer() } >
 
@@ -87,7 +84,6 @@ class MapOverlayPanel extends Component {
                     Choose Development Type: <br />
                     <Button variant="raised" 
                         className={classes.buttonLayer}
-                        size="small"
                         style={{ 
                             color: '#111111',
                             background: '#eeeeee',
@@ -104,7 +100,6 @@ class MapOverlayPanel extends Component {
                                 <div key={idx}>
                                     <Button variant="raised" 
                                         className={classes.buttonLayer}
-                                        size="small"
                                         style={{ 
                                             color: sidePalette[idx].font,
                                             background: sidePalette[idx].fill,

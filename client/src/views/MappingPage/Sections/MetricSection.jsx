@@ -59,7 +59,7 @@ class MappingSection extends Component {
                         <Button 
                             className={classes.buttonNav} 
                             variant="raised" 
-                            color="secondary" 
+                            color="info" 
                             onClick={()=>helper.navigateTo('metrics', this.props)} >
                                 View all Metrics
                         </Button>	
