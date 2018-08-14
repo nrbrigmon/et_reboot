@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import FileUpload from '@material-ui/icons/FileUpload';
 import LayersClear from '@material-ui/icons/LayersClear';
 import Edit from '@material-ui/icons/Edit';
+import Save from '@material-ui/icons/Save';
 import MapDrawHelper from './MapDrawHelper';
 
 class MapOverlayPanel extends Component {
@@ -25,14 +26,25 @@ class MapOverlayPanel extends Component {
         this.props.setDrawTrigger('paintScenarioLayer');
         this.props.setActiveDevType({devTypeName: name, devTypeColor: color});
 	}
+	saveScenarioLayer = () => {
+		this.props.openModal('saveLayer');
+	}
 	render() {		
         //this is palette for dev types, could add a color picker later
 		const sidePalette = [
+			{fill: "#80b1d3", font: "black"},
 			{fill: "#8dd3c7", font: "black"},
 			{fill: "#ffffb3", font: "black"},
 			{fill: "#bebada", font: "black"},
 			{fill: "#fb8072", font: "black"},
-			{fill: "#80b1d3", font: "black"}
+			{fill: "#80b1d3", font: "black"},
+			{fill: "#fdb462", font: "black"},
+			{fill: "#b3de69", font: "black"},
+			{fill: "#fccde5", font: "black"},
+			{fill: "#d9d9d9", font: "black"},
+			{fill: "#bc80bd", font: "black"},
+			{fill: "#ccebc5", font: "black"},
+			{fill: "#ffed6f", font: "black"},
 		]
         const { classes } = this.props;
         const { activeDevType } = this.props;
@@ -47,13 +59,22 @@ class MapOverlayPanel extends Component {
 
                 { 
                     ( this.props.mapOverlayPanel === "painting"  ) ? 
-                        (<Button variant="raised" 
-                            color="primary" 
-                            className={classes.buttonLayer}
-                            onClick={()=>this.resestScenarioLayer() } >
-        
-                            <LayersClear className={classes.icon}/> Reset Base Layer
-                        </Button>)
+                        (<span>
+							<Button variant="raised" 
+							color="primary" 
+							className={classes.buttonLayer}
+							onClick={()=>this.saveScenarioLayer() } >
+		
+								<Save className={classes.icon}/> Save Layer
+							</Button>
+							<Button variant="raised"
+								color="transparent" 
+								className={classes.buttonLayer}
+								onClick={()=>this.resestScenarioLayer() } >
+			
+                           	 	<LayersClear className={classes.icon}/> Reset Base Layer
+                        	</Button>
+						</span>)
                     :
                         (<span>
                             <Button variant="raised" 
@@ -101,11 +122,11 @@ class MapOverlayPanel extends Component {
                                     <Button variant="raised" 
                                         className={classes.buttonLayer}
                                         style={{ 
-                                            color: sidePalette[idx].font,
-                                            background: sidePalette[idx].fill,
+                                            color: sidePalette[idx % sidePalette.length].font,
+                                            background: sidePalette[idx % sidePalette.length].fill,
                                             outline: (localDevTypeName === activeDevType.devTypeName ? '2px solid #ccc' : '')
                                         }}
-                                        onClick={()=>this.paintDevelopmentType(localDevTypeName, sidePalette[idx].fill ) } 
+                                        onClick={()=>this.paintDevelopmentType(localDevTypeName, sidePalette[idx % sidePalette.length].fill ) } 
                                         > {localDevTypeName} 
                                     </Button>
                                     {(localDevTypeName === activeDevType.devTypeName ? <MapDrawHelper  {...this.props}/> : '')}

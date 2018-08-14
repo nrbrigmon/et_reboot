@@ -13,6 +13,7 @@ import * as helper from "utils/_helperMethods";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from '@material-ui/core/Grid';
 import UploadLayerModal from 'components/Modals/UploadLayerModal';
+import SaveLayerModal from 'components/Modals/SaveLayerModal';
 import UpdateToast from 'components/Modals/UpdateToast';
 
 // @material-ui/icons
@@ -47,7 +48,7 @@ class MappingPage extends React.Component {
       <WrapperFull>
 		
         <Grid item sm={12}>
-            <h2>Demo Mapping</h2>
+            <h2>Scenario Mapping</h2>
 		</Grid>
 		<MappingSection {...this.props} />
 		<MetricSection {...this.props} />
@@ -60,6 +61,7 @@ class MappingPage extends React.Component {
 			</Button>
 		</Grid>
 		<UploadLayerModal {...rest} />
+		<SaveLayerModal {...rest} />
 		<UpdateToast {...rest} />
       </WrapperFull>
 				<Footer />

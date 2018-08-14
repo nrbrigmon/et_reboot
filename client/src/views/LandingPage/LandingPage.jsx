@@ -25,6 +25,7 @@ import * as helper from 'utils/_helperMethods';
 
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 const styles = theme => landingPageStyle(theme);
+
 class LandingPage extends React.Component {
   render() {
     const { classes, ...rest } = this.props;
@@ -33,7 +34,7 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          rightLinks={<HeaderLinks splash={true} {...rest} />}
+          rightLinks={<HeaderLinks splash={false} {...rest} />}
           fixed
           changeColorOnScroll={{
             height: 400,
@@ -50,12 +51,10 @@ class LandingPage extends React.Component {
                 <br />
                 <Button
                   color="danger"
-                  size="lg"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                  target="_blank"
-                  rel="noopener noreferrer"
+				  size="lg"
+                  onClick={ ()=>{ helper.navigateTo("video", this.props) } }
                 >
-                  <i className="fas fa-play" />Watch video
+                  <i className="fas fa-play" />Watch Video
                 </Button>
                 <Button
                   color="info"

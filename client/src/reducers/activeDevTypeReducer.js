@@ -4,7 +4,7 @@ function setNewDevType(state, action){
 }
 
 export default function(state = {}, action ) {
-	console.log(state);
+	// console.log(state);
 	switch (action.type) {
         case 'SET_ACTIVE_DEV_TYPE':
             return setNewDevType(state, action);

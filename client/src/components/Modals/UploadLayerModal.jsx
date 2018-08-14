@@ -21,14 +21,7 @@ class UploadLayerModal extends Component {
     componentDidMount(){
         this.props.getAllLayersFromS3();
     }
-    // componentDidUpdate(prevProps){
-    //     //if the modal is closed, we turn off the animation
-    //     //and restore the initialState
-    //     if (this.props.modal === false) {
-    //         this.updateState();        
-    //     }
-    // }
-    
+
     updateState = () => {
         // console.log(this.state.isLoading);
         this.setState({
@@ -62,7 +55,7 @@ class UploadLayerModal extends Component {
                                 multiple={false}
                                 onDrop={(files) => this.onDrop(files)}
                                 className={classes.dropzone} >
-                                <p>Try dropping some files here, or click to select files to upload.</p>
+                                <p>Try dropping a zipped shapefile here.</p>
                                 <FileUpload />
                             </Dropzone>
                         </div>

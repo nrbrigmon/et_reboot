@@ -79,7 +79,12 @@ export const convertFileToLayer = (file) => async dispatch => {
 		  'Content-Type': 'multipart/form-data'
 		}
 	});
-	console.log(res);
+	// console.log(res);
 	dispatch({ type: 'SET_BASE_LAYER', payload: res.data });
+}
 
+export const saveBaseLayerToS3 = (lyr) => async dispatch => {
+	const res = await axios.post('/api/aws_queries/s3/layerToS3', lyr)
+	// send data to node
+	dispatch({ type: 'SAVE_BASE_LAYER', payload: res.data });
 }

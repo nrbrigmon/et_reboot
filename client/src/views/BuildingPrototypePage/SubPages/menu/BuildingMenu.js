@@ -28,7 +28,7 @@ class BuildingMenu extends Component {
         const { anchorEl } = this.state;
         // console.log(this.props);
         return (
-          <AppBar position="static" color="default" style={{border:'1px #ccc solid'}} elevation={0}>
+          <AppBar position="static" color="default" elevation={0}>
             <Button
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"

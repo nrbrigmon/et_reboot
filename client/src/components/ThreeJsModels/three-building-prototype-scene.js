@@ -15,20 +15,23 @@ class ThreeBuildingPrototypeScene extends Component {
     
   }
   
-  handleChange(e){
+  handleChange(){
     this.setState({
       changeCounter: this.state.changeCounter + 1
     }); 
   }
-  
-  // componentDidUpdate(prevProps){
-  //   this.handleChange('update');
-  // this.props === prevProps
-  // }
+  componentDidUpdate(prevProps){
+	  if (this.props !== prevProps){
+		//   console.log("diff")
+		  this.handleChange()
+	  } else {
+		  return
+	  }
+  }
   render() {
     let someVariable = this.state.changeCounter;
     // let sqft = this.props.cubeDim.z * this.props.cubeDim.sqft;
-    // console.log(this.props); 
+    console.log(this.props); 
     return (
 			<Grid >
           <ThreeBuildingPrototype 

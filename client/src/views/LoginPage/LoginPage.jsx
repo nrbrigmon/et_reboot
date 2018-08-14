@@ -45,10 +45,10 @@ class LoginPage extends React.Component {
     return (
       <div>
         <Header
-          absolute
+          fixed
           color="transparent"
           brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<HeaderLinks {...rest} />}
           {...rest}
         />
         <div
@@ -66,6 +66,7 @@ class LoginPage extends React.Component {
                   <form className={classes.form}>
                     <CardHeader color="primary" className={classes.cardHeader}>
                       <h4>Login or Sign Up</h4>
+					  <p>Using Social Media:</p>
                       <div className={classes.socialLine}>
                         <Button
                           justIcon
@@ -147,15 +148,25 @@ class LoginPage extends React.Component {
                       />
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
+                      <Button simple color="primary" size="lg"
+					  	onClick={()=>alert("work in progress! \n\n😎😎😎")}>
                         Get started
                       </Button>
                     </CardFooter>
                   </form>
                 </Card>
               </GridItem>
+			  
+            </GridContainer>
+
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={12} md={4}>
+			  <p>The login process is still being worked on. This page is for display only. However, why would someone sign up? The main advantage is to keep your data private.</p>
+
+			  </GridItem>
             </GridContainer>
           </div>
+		  
           <Footer whiteFont />
         </div>
       </div>

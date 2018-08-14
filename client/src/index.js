@@ -16,7 +16,7 @@ import getSchemas from "./reducers/initialStates";
 // import './styles/index.css';
 import "assets/scss/material-kit-react.css?v=1.1.0";
 const initialState = getSchemas;
-console.log(initialState)
+// console.log(initialState)
 const store = createStore(reducers, initialState, applyMiddleware(reduxThunk));
 
 ReactDOM.render(

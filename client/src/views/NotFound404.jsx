@@ -6,11 +6,17 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 
-import Grid from '@material-ui/core/Grid';
+import Header from "components/Header/Header.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import Footer from "components/Footer/Footer.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 import * as helper from 'utils/_helperMethods';
+import image from "assets/img/sign.jpg";
+import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
-import NotFoundStyles from 'styles/NotFoundStyles';
-const styles = theme => NotFoundStyles(theme);
+// import NotFoundStyles from 'styles/NotFoundStyles';
+// const styles = theme => NotFoundStyles(theme);
 
 /** NEED TO
  * REDO THIS PAGE
@@ -28,18 +34,27 @@ const styles = theme => NotFoundStyles(theme);
         alignItems: 'center',
       };
     render() {
-        // console.log(this.props.toast);
-        let { classes } = this.props;
+		const { classes, ...rest } = this.props;
         return (
-            <Grid
-                container
-                spacing={16}
-                alignItems={this.state.alignItems}
-                direction={this.state.direction}
-                justify={this.state.justify}
-            >
-                <Grid item>
-                   <div>
+			<div>
+			  <Header
+				absolute
+				color="transparent"
+				brand="Material Kit React"
+				rightLinks={<HeaderLinks />}
+				{...rest}
+			  />
+			  <div
+				className={classes.pageHeader}
+				style={{
+				  backgroundImage: "url(" + image + ")",
+				  backgroundSize: "cover",
+				  backgroundPosition: "top center"
+				}}
+			  >
+				<div className={classes.container}>
+				  <GridContainer justify="center">
+					<GridItem xs={12} sm={12} md={4}>
                     <Card className={classes.card}>
                         <CardContent>
                         <Typography className={classes.title}
@@ -55,19 +70,19 @@ const styles = theme => NotFoundStyles(theme);
                         </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button 
-                                variant="raised" color="primary" 
-                                size="small"
+                      		<Button simple color="primary" size="lg"
                                 onClick={()=>helper.navigateTo('', this.props)}
                                 >Go To Homepage</Button>
                         </CardActions>
                     </Card>
-                    </div>
-                
-                </Grid>
-            </Grid>
+              </GridItem>
+            </GridContainer>
+          </div>
+          <Footer whiteFont />
+        </div>
+      </div>
         );
     }
 }
 
-export default withStyles(styles)(NotFound404);
+export default withStyles(loginPageStyle)(NotFound404);

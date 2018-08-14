@@ -14,8 +14,9 @@ class BuildingActionSection extends React.Component {
 
 	openSaveLibraryModal = () => {
 		let { workbook_library } = this.props.devWorkbook;
-		let arrayLength = workbook_library.library_bldgs.length;
-		if (arrayLength > 1){
+		let { library_bldgs } = workbook_library;
+
+		if (library_bldgs.length > 1){
 			this.props.openModal('saveLibrary')
 		} else {
 			alert("You need more than 1 building to save a library.");
@@ -36,9 +37,11 @@ class BuildingActionSection extends React.Component {
   render() {
     const { classes } = this.props;
 	const { uniqueId } = this.props;
+	let buildingCount = this.props.devWorkbook.workbook_library.library_bldgs.length;
     return (
         <Grid item sm={4} xs={12} className={classes.column}>
-            <Grid container 
+			<Grid container 
+				justify="center"
                 alignItems='center'>
                 {/* if you click on either existing libary or building, it
                 should open a modal window with a filterable table 
@@ -65,6 +68,9 @@ class BuildingActionSection extends React.Component {
                     onClick={() => this.resetList()}>
                     <Clear className={classes.leftIcon}/> Reset/Empty Library
                 </Button>
+				<div>
+					<p>Total Buildings: <strong>{buildingCount}</strong></p>
+				</div>
             </Grid>
         </Grid>
                 

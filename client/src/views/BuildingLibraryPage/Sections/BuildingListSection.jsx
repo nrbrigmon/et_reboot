@@ -25,7 +25,10 @@ class BuildingListSection extends React.Component {
     renderLibraryBldgs = (props) => {
         let { library_bldgs } = props.devWorkbook.workbook_library;
 		let { classes } = props;
-		if (library_bldgs){
+		if (library_bldgs === null){
+			console.log("no library")
+			return <p>hi</p>
+		} else {
 			return library_bldgs.map((item, idx) => {
 				let name = item.physicalInfo.buildingName;
 				let { siteLocation } = item.physicalInfo;
@@ -55,13 +58,11 @@ class BuildingListSection extends React.Component {
 					</ListItem>
 				);
 			});
-		} else {
-			
 		}
     }
     
   render() {
-    const { classes } = this.props;
+	const { classes } = this.props;
     return (
         <Grid item sm={8} xs={12} className={classes.column}>
 

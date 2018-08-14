@@ -4,7 +4,8 @@ export default (theme) => ({
 		padding: '20px'
 	},
 	cardAction: {
-		margin: '0 auto'
+		margin: '0 auto',
+		marginTop: '15px'
 	},
 	cardButton: {
 		margin: '0 1px 0 1px'
@@ -20,7 +21,7 @@ export default (theme) => ({
 		padding: '5px'
 	},
 	cell: {
-		padding: '5px 8px',
+		padding: '2px 4px',
 	},
 	field: {
 		width: '90px'

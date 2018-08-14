@@ -47,7 +47,8 @@ class BuildingLibraryPage extends React.Component {
 	}
 	
   render() {
-    const { classes, ...rest } = this.props;
+	const { classes, ...rest } = this.props;
+	// console.log(this.props.devWorkbook)
     return (
       <div>
         <Header

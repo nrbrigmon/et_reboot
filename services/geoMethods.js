@@ -23,7 +23,7 @@ var geoMethods = {
                 }
             });
         })
-    }
+	}
 }
 
 module.exports = geoMethods;

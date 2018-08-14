@@ -11,11 +11,8 @@ class UpdateToast extends React.Component {
             return;
         }
         this.props.closeToast();
-    };
-        //TESTING
-        // componentDidMount(){
-        //     this.props.toastMessage("HELLO BRAVE WORLD!")
-        // }
+	};
+	
 	render() {;
 		// console.log(this.props)
         return (

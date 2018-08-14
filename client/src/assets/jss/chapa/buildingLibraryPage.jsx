@@ -19,8 +19,8 @@ export default (theme) => ({
 		overflowY: 'auto'
 	},
 	libraryItem: {
-		paddingBottom: '9px',
-		paddingTop: '9px'
+		paddingBottom: '5px',
+		paddingTop: '5px'
 	},
 	cardAction: {
 		margin: '0 auto'

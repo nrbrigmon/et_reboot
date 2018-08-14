@@ -9,6 +9,7 @@ export const updateLibraryId = (library_id) => {
 }
 
 export const updateLibraryName = (library_name) => {
+	// console.log(library_name)
 	const action = {
 		type: 'UPDATE_LIBRARY_NAME',
 		library_name
@@ -69,11 +70,11 @@ export const saveBuildingLibrary = (workbook_library) => async dispatch => {
 	let { library_id, library_isNew } = workbook_library
 	if (library_isNew === false){
 		const res = await axios.put('/api/libraries/'+library_id+'', workbook_library)
-		// console.log(res);
+		console.log(res);
 		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	} else {
 		const res = await axios.post('/api/libraries', workbook_library)
-		// console.log(res);
+		console.log(res);
 		dispatch({ type: 'SAVED_BUILDING_LIBRARY', payload: res.data });
 	}
 };

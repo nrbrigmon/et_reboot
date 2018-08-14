@@ -8,7 +8,7 @@ var upload = multer();
 // var upload = multer({ storage: storage })
 
 router.post('/zipToLayer',  upload.single('file'), (request, response, next) =>{
-    //for the shapefiles in the files folder called pandr.shp
+    
     // console.log(request.file);
     geoMethods
     .zipToGeoJSON(request.file.buffer)

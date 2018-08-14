@@ -145,7 +145,7 @@ class BuildingPrototypePage extends Component {
 					</Button>	
 
 					
-					<Button variant="raised" color="secondary"  className={classes.button} 
+					<Button variant="raised" color="warning"  className={classes.button} 
 						onClick={()=>this.cancelBuilding()}>
 						Cancel
 					</Button>	

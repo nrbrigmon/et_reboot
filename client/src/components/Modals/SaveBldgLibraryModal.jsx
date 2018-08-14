@@ -26,7 +26,8 @@ class SaveBldgLibraryModal extends Component {
     }
 	render() {
         const { classes } = this.props;
-        const { library_name } = this.props.devWorkbook.workbook_library
+		const { library_name } = this.props.devWorkbook.workbook_library
+		console.log(library_name)
 		return (
             <ModalContainer modal={this.props.modal === 'saveLibrary' ? true : false}>
                 <div className={classes.paper}>

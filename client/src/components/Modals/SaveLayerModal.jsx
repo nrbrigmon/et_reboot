@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 
 import Button from "components/CustomButtons/Button.jsx";
-import FileUpload from '@material-ui/icons/FileUpload';
-import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import ModalStyles from '../../styles/ModalStyles';
@@ -14,14 +13,23 @@ import ModalStyles from '../../styles/ModalStyles';
 const styles = theme => ModalStyles(theme);
 
 class SaveLayerModal extends Component {
+	state = {
+		_name: ''
+	}
     myHandleChange = (e) => {
         // this function doesn't exist
-        // this.props.updateBaseLayerProperty("layer_name", e.target.value);
+		// this.props.updateBaseLayerProperty("layer_name", e.target.value);
+		this.setState({
+			_name: e.target.value
+		})
+		// console.log(this.state._name)
     }
     confirmSave = (layer) => {
-        //save layer in db & state
-        // this function doesn't exist
-        // this.props.uploadLayerToS3(layer);
+		//save layer in db & state
+		layer.name = this.state._name
+		// this function doesn't exist
+		console.log(layer)
+        this.props.saveBaseLayerToS3(layer);
         //send toast
         this.props.toastMessage("Layer Saved!");
         //close modal
@@ -30,7 +38,7 @@ class SaveLayerModal extends Component {
 	render() {
         // console.log(this.props);
         const { classes } = this.props;
-        let { layer_name } = this.props.devWorkbook
+        const { layer_name } = this.props.devWorkbook
 
 		return (
             <ModalContainer modal={this.props.modal === 'saveLayer' ? true : false}>

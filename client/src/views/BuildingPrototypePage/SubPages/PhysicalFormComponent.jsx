@@ -45,8 +45,11 @@ class PhysicalFormComponent extends Component {
 				<Grid item xs={6}>
 					
 					<ThreeBuildingPrototypeScene 
-							cubeDim={{x: 5, y: 5, z: bldgAttr.buildingHeight, siteArea: propArea, 
-							sqft: bldgFootprint, landscaping: bldgAttr.landscapingPerc }} />
+						cubeDim={{x: 5, y: 5, z: bldgAttr.buildingHeight,  
+							siteArea: propArea, 
+							sqft: bldgFootprint, 
+							landscaping: bldgAttr.landscapingPerc }} 
+					/>
 				</Grid>
 				<Grid item xs={12}>
 					<hr />

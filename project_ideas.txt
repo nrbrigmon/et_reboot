@@ -51,8 +51,7 @@
         - show profile page, ONLY if logged in        
         - list other users and CONTACT/MESSAGE button
 
----- GALLERY BUGS (Priority 5)
-        - gallery should be split between buildings, maps, and development types
+----- 
 
 /************************/
        BUSINESS IDEAS

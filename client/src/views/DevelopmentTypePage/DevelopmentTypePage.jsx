@@ -38,6 +38,9 @@ class DevelopmentTypePage extends Component {
 	saveWorkbook = () => {
 		this.props.openModal("saveWorkbook")
 	}
+	createNewWorkbook = () => {
+		this.props.initializeNewWorkbook();
+	}
 	render() {
 		// console.log(this.props.devWorkbook);
 		let pathHome = this.props.match.isExact;
@@ -72,6 +75,12 @@ class DevelopmentTypePage extends Component {
 						variant="raised" color="primary" 
 						onClick={()=>this.saveWorkbook()}>
 						Save Progress
+					</Button>	
+					<Button  
+						className={classes.cardButton} 
+						variant="raised" color="primary" 
+						onClick={()=>this.createNewWorkbook()}>
+						Create New Workbook
 					</Button>	
 					<LoadWorkbookModal />
 					<SaveWorkbookModal />

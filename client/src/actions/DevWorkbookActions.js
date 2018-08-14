@@ -30,21 +30,7 @@ export const updateDevTypeRow = (value, rowId, cellId) => {
 	}
 	return action;
 }
-// export const addBuildingToWorkbook = (uniqueId) => {
-// 	const action = {
-// 		type: 'ADD_BLDG_TO_WORKBOOK',
-// 		uniqueId
-// 	}
-// 	return action;
-// }
 
-// export const removeBuildingFromWorkbook = (uniqueId) => {
-// 	const action = {
-// 		type: 'REMOVE_BLDG_FROM_WORKBOOK',
-// 		uniqueId
-// 	}
-// 	return action;
-// }
 
 export const removeDevTypeFromWorkbook = (devTypeId) => {
 	let action = {
@@ -91,12 +77,12 @@ export const saveWorkbook = (workbook) => async dispatch => {
 	if (workbook_isNew === false){
 		const res = await axios.put('/api/dev_workbooks/'+workbook_id+'', workbook)
 		// console.log(res);+
-		dispatch({ type: 'UPDATE_DEV_WORKBOOK', payload: res.data });
+		dispatch({ type: 'SAVED_WORKBOOK', payload: res.data });
 
 	} else {
 		const res = await axios.post('/api/dev_workbooks', workbook)
 		// console.log(res);
-		dispatch({ type: 'POST_DEV_WORKBOOK', payload: res.data });
+		dispatch({ type: 'SAVED_WORKBOOK', payload: res.data });
 	}
 };
 
@@ -106,4 +92,11 @@ export const fetchAllDevWorkbooks = () => async dispatch => {
 	dispatch({ type: 'FETCH_DEV_WORKBOOKS', payload: res.data });
 };
 
+export const initializeNewWorkbook = () => {
+	let action = {
+		type: "INITIALIZE_NEW_WORKBOOK"
+	}
+	// console.log(action);
+	return action;
+}
 

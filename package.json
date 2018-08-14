@@ -31,6 +31,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@turf/turf": "^5.1.6",
+		"adm-zip": "^0.4.11",
 		"aws-sdk": "^2.263.1",
 		"body-parser": "^1.18.2",
 		"concurrently": "^3.5.1",

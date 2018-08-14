@@ -32,22 +32,31 @@ class DemoPage extends React.Component {
     const { classes, ...rest } = this.props;
     // console.log(rest);
     return (
-		<WrapperFull>
-			<Header
+		<div>
+		<Header
 			color="white"
 			rightLinks={<HeaderLinks splash={false} {...rest} />}
 			fixed
 			{...rest}
-			/>
+		/>
+		<WrapperFull>
 			<Grid item sm={12}>
 			<h1>Coming Soon!</h1>
 			</Grid>
        		 <Grid item sm={12}>
 			</Grid>
-				{/* <MapStart {...this.props} title={"Demo Mapping"}/> */}
+
+				{/* 
+				load devWorkbook id=HkdS6UBwx8Q
+				and layer where bucketkey = Central Austin TOD
+				udpate devworkbook with new ID and set isNew to true
+					in case anyone tries to Save As a new workbook or edit
+					also need to start new
+				<MapStart {...this.props} title={"Demo Mapping"}/> */}
         
         <Footer />
       </WrapperFull>
+	  </div>
     );
   }
 }

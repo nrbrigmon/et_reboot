@@ -16,6 +16,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
+import * as _constants from "constants/_landingPage";
 
 import team1 from "assets/img/bios/NB_Bio_Pic_clip.jpg";
 import team2 from "assets/img/bios/KS_Bio_Pic.jpg";
@@ -47,7 +48,7 @@ class TeamSection extends React.Component {
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                  Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
+                  {_constants.NATHAN_BIO}
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -86,7 +87,9 @@ class TeamSection extends React.Component {
                   <small className={classes.smallTitle}>Architect</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
+                  <p className={classes.description}>
+				  
+                  {_constants.KRISTINE_BIO}
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -118,7 +121,9 @@ class TeamSection extends React.Component {
                   <small className={classes.smallTitle}>Mascot</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>Lorem ipsum dolor sit amet, partem civibus ea mel, sea ea nullam nostrud. Ut vis nemore scriptorem, duo ne solum lobortis quaerendum. Cu eos harum indoctum temporibus, accusam explicari honestatis in duo, nec in possit copiosae omittantur. Nec tritani definitionem ea, quo brute mollis suscipit ad.
+                  <p className={classes.description}>
+                  {_constants.APOLLO_BIO}
+				  
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>

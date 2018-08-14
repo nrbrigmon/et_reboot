@@ -25,6 +25,10 @@ export const APP_FEATURE_2_ICON = Map;
 export const APP_FEATURE_2_ICONCOL = "success";
 
 export const APP_FEATURE_3_TITLE = "Interactive Metrics";
-export const APP_FEATURE_3_DECRP = "As you, or your users map, you have access to instant analytics and impacts to land use. These can be adjusted if you are a power user OR use leverage templates.";
+export const APP_FEATURE_3_DECRP = "As you, or your users map, you have access to instant analytics and impacts to land use. These can be adjusted if you are a power user OR leverage templates.";
 export const APP_FEATURE_3_ICON = InsertChart;
 export const APP_FEATURE_3_ICONCOL = "danger";
+
+export const NATHAN_BIO = `I've been using scenario planning for many years and have always noticed how difficult the process was from a technical level. I've been seeking to simplify that difficulty for a wider audience. I'm also the sole developer of this application.`
+export const KRISTINE_BIO = `Kristine Stiphany, PhD, AIA established Chapa in the context of a National Science Foundation postdoctoral fellowship at the University of Texas at Austin. Her research examines the interface between technology and design for increased social equity in urban development, a trajectory that has evolved since her tenure as a Fulbright fellow in São Paulo, Brazil (2008). She is currently an assistant professor of architecture at Texas Tech University. `
+export const APOLLO_BIO = `Fierce companion, ball chaser, and enjoyer of stick snacks.`

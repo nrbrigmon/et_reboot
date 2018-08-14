@@ -233,32 +233,29 @@ export default function(state = getSchema["devWorkbook"], action) {
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
 		case 'SAVED_BUILDING_LIBRARY':
-		/** 						**/
-		/** BUILDING UPDATES BELOW 	**/
-		/** 						**/
-			libraryState = state.workbook_library
-			newSelectedBuildings = myHelp.savedBuildinglibrary(libraryState)
-			myDevelopmentWorkbook = {
-				...state,
-				workbook_library: {
-					...state["workbook_library"],
-					library_bldgs: newSelectedBuildings
-				}
-			};
-			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-			return myDevelopmentWorkbook;
+			/** 						**/
+			/** BUILDING UPDATES BELOW 	**/
+			/** 						**/
+			// libraryState = state.workbook_library
+			
+			// newLibrary = myHelp.savedBuildingLibrary(libraryState)
+			// console.log(newSelectedBuildings)
+			// break
+			// myDevelopmentWorkbook = {
+			// 	...state,
+			// 	workbook_library: newLibrary
+			// };
+			// localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return state;
 		case 'LOAD_BUILDING_LIBRARY':
 		/** 						**/
 		/** BUILDING UPDATES BELOW 	**/
 		/** 						**/
 			libraryState = state.workbook_library
-			newSelectedBuildings = myHelp.savedBuildinglibrary(libraryState)
+			newLibrary = myHelp.savedBuildingLibrary(libraryState)
 			myDevelopmentWorkbook = {
 				...state,
-				workbook_library: {
-					...state["workbook_library"],
-					library_bldgs: newSelectedBuildings
-				}
+				workbook_library: newLibrary
 			};
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
@@ -270,7 +267,8 @@ export default function(state = getSchema["devWorkbook"], action) {
 				workbook_library: newLibrary
 			};
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-           return newLibrary
+			// console.log(newLibrary)
+           return myDevelopmentWorkbook
 		case 'UPDATE_BUILDING':
 			libraryState = state.workbook_library.library_bldgs
             newSelectedBuildings = myHelp.updateBuilding(libraryState, action.editing, action.building);			
@@ -282,7 +280,7 @@ export default function(state = getSchema["devWorkbook"], action) {
 				}
 			};
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
-			return newLibrary;
+			return myDevelopmentWorkbook;
 		case 'LOAD_BUILDING_ARRAY':
             let emptiedState = {
                 ...state,
@@ -340,7 +338,11 @@ export default function(state = getSchema["devWorkbook"], action) {
 			};
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
-		
+		case 'INITIALIZE_NEW_WORKBOOK':
+			localStorage.removeItem('myDevelopmentWorkbook');
+			myDevelopmentWorkbook = getSchema["devWorkbook"]
+			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
+			return myDevelopmentWorkbook;
 		default:
 			return state;
 	}
