@@ -111,6 +111,7 @@ export const getHousingUnits = (devTypes, {library_bldgs}, {workbook_devtypes}) 
             // console.log(bldg);
             return bldg[0].forDevType.rResidentialDwellUnit
         });
+		console.log(bldgHHAcre)
 
         //4. get dev streets, civic, park %
         let { civicPerc } = currentWorkbook[0] || 0;
@@ -153,10 +154,10 @@ export const getJobCounts =  (devTypes, {library_bldgs}, {workbook_devtypes}) =>
             let bldg = library_bldgs.filter(function(bldgObj){
                 return bldgObj.uniqueId === obj.bldgId
             });
-            // console.log(bldg);
-            return bldg[0].forDevType.rJobsPerSf / 43560
+            // console.log(bldg[0].forDevType);
+            return bldg[0].forDevType.rJobsPerSf * 43560
         });
-
+		// console.log(jobsPerAcre)
         //4. get dev streets, civic, park %
         let { civicPerc } = currentWorkbook[0] || 0;
         let { openSpacePerc } = currentWorkbook[0] || 0;

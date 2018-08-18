@@ -81,3 +81,17 @@ export const savedBuildingLibrary = (state) => {
         library_isNew: false
     }
 }
+
+export const resetDevTypeCellValues = (state) => {
+	// console.log(state)
+	// loop through all of the dev types and empty out the cell data
+	let newArray = [...state].map( attr => {
+		// console.log(attr)
+		return {
+			...attr,
+			cellData: []
+		}
+	});
+	// console.log(newArray)
+    return newArray;
+}

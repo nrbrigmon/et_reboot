@@ -34,11 +34,11 @@ import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.js
 
 /** NEED TO
  * REDO THIS PAGE
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
  * / */
 class ProfilePage extends React.Component {
   render() {
@@ -51,16 +51,16 @@ class ProfilePage extends React.Component {
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
     return (
       <div>
-      <Header
-        color="transparent"
-        rightLinks={<HeaderLinks splash={true} {...rest} />}
-        fixed
-        changeColorOnScroll={{
-          height: 400,
-          color: "white"
-        }}
-        {...rest}
-      />
+        <Header
+          color="transparent"
+          rightLinks={<HeaderLinks splash={true} {...rest} />}
+          fixed
+          changeColorOnScroll={{
+            height: 400,
+            color: "white"
+          }}
+          {...rest}
+        />
         <Parallax small filter image={require("assets/img/profile-bg.jpg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>

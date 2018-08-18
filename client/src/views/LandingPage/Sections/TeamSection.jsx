@@ -47,9 +47,7 @@ class TeamSection extends React.Component {
                   <small className={classes.smallTitle}>Developer</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>
-                  {_constants.NATHAN_BIO}
-                  </p>
+                  <p className={classes.description}>{_constants.NATHAN_BIO}</p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
                   <Button
@@ -88,8 +86,7 @@ class TeamSection extends React.Component {
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-				  
-                  {_constants.KRISTINE_BIO}
+                    {_constants.KRISTINE_BIO}
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -121,10 +118,7 @@ class TeamSection extends React.Component {
                   <small className={classes.smallTitle}>Mascot</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>
-                  {_constants.APOLLO_BIO}
-				  
-                  </p>
+                  <p className={classes.description}>{_constants.APOLLO_BIO}</p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
                   <Button

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Button from "components/CustomButtons/Button.jsx";
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-
 import LoadTemplateBldgModalContents from './LoadTemplateBldgModalContents';
 import TextField from '@material-ui/core/TextField';
 import ModalContainer from './ModalContainer';
@@ -23,9 +20,6 @@ class LoadTemplateBldgModal extends Component {
         this.setState({
             selectedBuilding: item.key
         })
-    }
-    componentDidMount(){
-        this.props.fetchBldgTemplates()
     }
 	handleChange = event => {
         let textSearch = event.target.value;
@@ -74,10 +68,4 @@ class LoadTemplateBldgModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        modal: state.modal
-        ,bldgTemplates: state.bldgTemplates
-    };
-}
-export default withStyles(styles)(connect(mapStateToProps, actions)(LoadTemplateBldgModal));
+export default withStyles(styles)(LoadTemplateBldgModal);

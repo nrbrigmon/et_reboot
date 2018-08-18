@@ -3,8 +3,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 import { withStyles } from '@material-ui/core/styles';  
 import ModalStyles from '../../styles/ModalStyles';  
@@ -56,10 +54,4 @@ class SaveWorkbookModal extends Component {
                 
 }
 
-function mapStateToProps(state) {  
-    return { 
-          devWorkbook: state.devWorkbook
-          ,modal: state.modal
-       };
-}
-export default withStyles(styles)(connect(mapStateToProps, actions)(SaveWorkbookModal));
+export default withStyles(styles)(SaveWorkbookModal);

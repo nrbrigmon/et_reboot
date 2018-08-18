@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 import Button from "components/CustomButtons/Button.jsx";
 import UserLoginModalContents from './UserLoginModalContents';
@@ -29,13 +27,7 @@ class UserLoginModal extends Component {
         }
         this.props.closeModal()
     }
-    componentDidMount(){
-        if (this.props.modal === false){
-            this.setState({
-                isLoading: false
-            })
-        }
-    }
+
 	render() {
         const { classes } = this.props;
         // console.log(this)
@@ -43,7 +35,7 @@ class UserLoginModal extends Component {
             <ModalContainer
                 modal={this.props.modal === 'userLogin' ? true : false}>
                 {
-                    this.state.isLoading ? <LoadingComponent /> :
+                    this.props.modal !== false ? <LoadingComponent /> :
                     <span className={classes.loginForm}>
                         <h4 className={classes.title}>Sign Up To Save Your Data</h4>
                         <UserLoginModalContents {...this.props} loginSelection={this.handleLogin}/>
@@ -62,10 +54,4 @@ class UserLoginModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        modal: state.modal
-    };
-}
-
-export default withRouter(withStyles(styles)(connect(mapStateToProps, actions)(UserLoginModal)));
+export default withRouter(withStyles(styles)(UserLoginModal));

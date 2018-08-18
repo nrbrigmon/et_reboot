@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Button from "components/CustomButtons/Button.jsx";
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 
 import LoadExistingLibraryModalContents from './LoadExistingLibraryModalContents';
 import ModalContainer from './ModalContainer';
@@ -42,12 +40,4 @@ class LoadExistingLibraryModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return { 
-        modList: state.modList
-        ,availableBldgs: state.availableBldgs
-        ,availableLibs: state.availableLibs
-        ,modal: state.modal
-    };
-}
-export default withStyles(styles)(connect(mapStateToProps, actions)(LoadExistingLibraryModal));
+export default withStyles(styles)(LoadExistingLibraryModal);

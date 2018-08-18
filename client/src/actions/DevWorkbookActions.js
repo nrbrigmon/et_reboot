@@ -58,16 +58,17 @@ export const updateWorkbookProperty = (key, value) => {
 	}
 	return action;
 }
-export const getExistingWorkbook = ( id) => async dispatch => {
+export const getExistingWorkbookById = (id) => async dispatch => {
+	// console.log(id)
 	const res = await axios.get('/api/dev_workbooks/'+id);
-	// console.log(res);
-	dispatch({ type: 'FETCH_EXISTING_WORKBOOK', payload: res["data"] });
+	// console.log(res["data"][0].attributes);
+	dispatch({ type: 'LOAD_WORKBOOK', payload: res["data"][0].attributes });
 };
 
 export const loadSavedWorkbook = (workbook) => {
 	let action = {
 		type: "LOAD_WORKBOOK",
-		workbook
+		payload: workbook
 	}
 	// console.log(action);
 	return action;
@@ -80,9 +81,10 @@ export const saveWorkbook = (workbook) => async dispatch => {
 		dispatch({ type: 'SAVED_WORKBOOK', payload: res.data });
 
 	} else {
+		workbook["workbook_isNew"] = false;
 		const res = await axios.post('/api/dev_workbooks', workbook)
 		// console.log(res);
-		dispatch({ type: 'SAVED_WORKBOOK', payload: res.data });
+		dispatch({ type: 'SAVED_WORKBOOK', payload: workbook, res });
 	}
 };
 

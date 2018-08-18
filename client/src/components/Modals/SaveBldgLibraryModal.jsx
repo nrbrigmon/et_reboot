@@ -3,8 +3,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 import { withStyles } from '@material-ui/core/styles';  
 import ModalStyles from '../../styles/ModalStyles';  
@@ -27,7 +25,7 @@ class SaveBldgLibraryModal extends Component {
 	render() {
         const { classes } = this.props;
 		const { library_name } = this.props.devWorkbook.workbook_library
-		console.log(library_name)
+		// console.log(library_name)
 		return (
             <ModalContainer modal={this.props.modal === 'saveLibrary' ? true : false}>
                 <div className={classes.paper}>
@@ -57,11 +55,4 @@ class SaveBldgLibraryModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return { 
-        devWorkbook: state.devWorkbook
-        ,modal: state.modal
-
-     };
-}
-export default withStyles(styles)(connect(mapStateToProps, actions)(SaveBldgLibraryModal));
+export default withStyles(styles)(SaveBldgLibraryModal);

@@ -762,6 +762,9 @@ export const getHouseholdEstIncome = (physicalInfo, basicFinInfo) =>{
 
 export const getJobsPerSf = (physicalInfo) => {
 	let { siteArea, retailAreaPerEmp, officeAreaPerEmp, industrialAreaPerEmp, publicAreaPerEmp, educationAreaPerEmp, hotelAreaPerEmp, parkingAreaPerEmp } = physicalInfo; 
+	// console.log(hotelAreaPerEmp)
+	// console.log(parkingOptionC_Aid4["industrialSf"])
+	// console.log(siteArea)
 	let g29 = (retailAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["retailSf"]/retailAreaPerEmp)/siteArea);
 	let g30 = (officeAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["officeSf"]/officeAreaPerEmp)/siteArea);
 	let g31 = (industrialAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["industrialSf"]/industrialAreaPerEmp)/siteArea);
@@ -769,8 +772,10 @@ export const getJobsPerSf = (physicalInfo) => {
 	let g33 = (educationAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["educationalSf"]/educationAreaPerEmp)/siteArea);
 	let g34 = (hotelAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["hotelSf"]/hotelAreaPerEmp)/siteArea);
 	let g35 = (parkingAreaPerEmp === 0 ? 0 : (parkingOptionC_Aid4["commercialParkingSf"]/parkingAreaPerEmp)/siteArea);
-
+	
+	// console.log(g31)
 	let jpa = g29+g30+g31+g32+g33+g34+g35;
+	// console.log(jpa)
 	return jpa;
 }
 

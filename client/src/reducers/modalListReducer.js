@@ -7,7 +7,7 @@ export default function(state = [], action ) {
             } else {
                 newState[0] = action.id
             }
-            console.log(newState);
+            // console.log(newState);
             return newState;
         case 'TOGGLE_BUILDING':
             let currentIndex = [...state].indexOf(action.id);

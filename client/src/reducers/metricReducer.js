@@ -34,8 +34,7 @@ export default function (state = getSchema["metricData"] || null, { type, payloa
     switch (type) {
         case 'UPDATE_METRICS':
             let newState = updateMetrics(state, payload)
-			console.log("metrics reduced...")
-
+			// console.log("metrics reduced...")
             return newState;
         default:
             return state;

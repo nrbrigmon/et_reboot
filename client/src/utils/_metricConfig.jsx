@@ -38,9 +38,21 @@ export const chartColumn = ({name, data, categories, colorArray}) => {
 		},
 		series: [
 			{
-				"name": name,
-				"colorByPoint": true,
-				"data": data
+				name: name,
+				colorByPoint: true,
+				data: data,
+				dataLabels: {
+					enabled: true,
+					rotation: -90,
+					color: '#FFFFFF',
+					align: 'right',
+					format: '{point.y:.1f}', // one decimal
+					y: 10, // 10 pixels down from the top
+					style: {
+						fontSize: '11px'
+						// fontFamily: 'Verdana, sans-serif'
+					}
+				}
 			}
 		]
 	}

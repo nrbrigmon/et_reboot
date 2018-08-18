@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone'
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 
 import Button from "components/CustomButtons/Button.jsx";
@@ -15,32 +13,36 @@ import ModalStyles from '../../styles/ModalStyles';
 const styles = theme => ModalStyles(theme);
 
 class UploadLayerModal extends Component {
-    state = {
-        isLoading: false
-    }
-    componentDidMount(){
-        this.props.getAllLayersFromS3();
-    }
+	state = {
+		isLoading: false
+	}
+	componentDidUpdate(prevProps){
+		if (prevProps.baseMapLayer.length !== this.props.baseMapLayer.length){
+			this.setState({
+				isLoading: false
+			})
+			// console.log("State set")
+		} else {
+			return
+		}
+	}
 
-    updateState = () => {
-        // console.log(this.state.isLoading);
-        this.setState({
-            isLoading: !this.state.isloading
-        })
-    }
     layerSelection = (e) =>{
+		this.setState({
+			isLoading: true
+		})
         let bucketKey = e.target.value;
         this.props.getFileFromS3(bucketKey)
-        this.updateState();
     }
     onDrop = (file) => {
+		this.setState({
+			isLoading: true
+		})
         this.props.uploadFileToS3(file[0]);
-        this.updateState();
         this.props.convertFileToLayer(file[0]);
     }
 
-	render() {
-        // console.log(this.props);
+	render() {    
         const { classes } = this.props;
 		return (
             <ModalContainer modal={this.props.modal === 'uploadLayer' ? true : false}>
@@ -73,11 +75,4 @@ class UploadLayerModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        availableS3Layers: state.availableS3Layers
-        ,modal: state.modal
-    };
-}
-
-export default withStyles(styles)(connect(mapStateToProps, actions)(UploadLayerModal));
+export default withStyles(styles)(UploadLayerModal);

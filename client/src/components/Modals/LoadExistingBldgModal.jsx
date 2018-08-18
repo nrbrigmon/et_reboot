@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Button from "components/CustomButtons/Button.jsx";
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-
 import LoadExistingBldgModalContents from './LoadExistingBldgModalContents';
 import ModalContainer from './ModalContainer';
 import { withStyles } from '@material-ui/core/styles';  
@@ -40,12 +37,5 @@ class LoadExistingBldgModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        modList: state.modList
-        ,availableBldgs: state.availableBldgs
-        ,modal: state.modal
-    };
-}
 
-export default withStyles(styles)(connect(mapStateToProps, actions)(LoadExistingBldgModal));
+export default withStyles(styles)(LoadExistingBldgModal);

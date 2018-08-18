@@ -15,13 +15,13 @@ class LoadWorkbookModalContents extends React.Component {
 
   handleChange = item => {
     // console.log(item);
-    this.setState({selectedValue: item.workbook_name});
+    this.setState({selectedValue: item.workbook_id});
     this.props.localWorkbookChoice(item);
 
   };
 
   renderTabContainer = (props) => {
-    console.log(props);
+    // console.log(props);
     let { availableWkbks, classes } = props;
     let err = helper.checkDbError(availableWkbks);
     // console.log(availableWkbks); 
@@ -36,7 +36,7 @@ class LoadWorkbookModalContents extends React.Component {
                 dense
                 button
                 onClick={() => this.handleChange(item)}>
-                <Radio checked={this.state.selectedValue === item.workbook_name}/>
+                <Radio checked={this.state.selectedValue === item.workbook_id}/>
                 <ListItemText primary={item.workbook_name} secondary={"Created by user: "+idx}/>
 
               </ListItem>

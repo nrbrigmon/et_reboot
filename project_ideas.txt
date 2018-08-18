@@ -2,41 +2,10 @@
         BUG TRACKER 
 /************************/ 
 
----- STEPS TO DEMO
-        - create manual building types list:
-                - brazil list (long-term) (xProject based)
-                        - using dev types from KStiphany project board in emails, create custom variations
-        - create development types list:
-                - austin list (short-term) (based on CodeNEXT zoning)
-                        - get from old projects in ET folder
-                - brazil list (long-term) (xProject based)
-                        - get from KStiphany project board in emails
-
-        - create building types (STEP ONE)
-        - create development types (STEP TWO) 
-
-        - HOW DO I REVERT BACK TO ANOTHER PROFILE OR LIBRARY?
-                - should be load and clear library?
-                - create clear and load myDevelopmentWorkbook %s and values button?
-                
-        - create at least two more metrics
-        - show side-by-side before and after page 
-        - HOW DO I MIGRATE specific data to PROD instance?
-
 ---- GENERAL BUGS
-        - We want brazil and austin demo.... does this mean we need to sets of metrics (Hectares and Acres)
         - need loading thingy for when you paint and are waiting for a draw
-        - build contact method for contact page.... (what did my nrbmaps use?). might not be necessary due to larger site
         - instead of VIEW DEMO we could also have a 1.5 minute video that walks through full process
 
----- MAPPING BUGS
-        - basemap needs to be added with toggle between aerial, simple, etc. //openstreetmap tile_servers
-        - combine hillshading and OSM toner for badass base map
-        - test building update and the corresponding metric change in the map
-        - create side by side metrics with WIDER screen, xs=12 sm=8 
-        - upload geojson capability, can we test for file type, model after arcmap upload
-        - where can we store files after geojson upload (e.g. s3)?
-        - charts dont update except on paint ... need to update on ComponentDidMount
 
 ---- BUILDING & DEV TYPES BUGS
         - development types need a visualization of some kind
@@ -88,3 +57,17 @@ FREE        |       BUSINESS        |       ENTERPRISE
 - create messaging forum/system OR harness a third-party messenging system/forum
 - replace lodash with native functions for speed purposes
 - uber.github.io has some awesome geospatial libraries to integrate (kepler, luma, reactviz)
+
+/***/
+emails
+
+thom hilde
+kristine s
+sean moran
+bob paterson
+don jackson
+john laycock
+brian kelsey
+jamie and jennifer
+Maggie McNichols <maggie@launchbyte.io>
+TRC Solutions

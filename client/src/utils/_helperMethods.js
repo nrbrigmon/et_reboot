@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import shortid from "shortid";
 
 export const isEmptyObject = (obj) => {
 	for(var prop in obj) {
@@ -37,6 +38,10 @@ export const getColorArray = (obj) => {
 	return obj.map( function(arr){
 		return arr.color
 	});
+}
+
+export const getRandomId = () => {
+	return shortid.generate();
 }
 
 export const windowToTop = () => {

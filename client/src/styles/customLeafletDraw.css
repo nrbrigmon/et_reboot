@@ -2,7 +2,7 @@ div.leaflet-draw > .leaflet-draw-section:nth-child(2){
     display: none
 }
 div.leaflet-control-container .leaflet-top {
-    z-index: 1100;
+    z-index: 1050;
 }
 div.leaflet-control-container .leaflet-draw{
     display: none;

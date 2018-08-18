@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import ModalContainer from './ModalContainer';
 
 import Button from "components/CustomButtons/Button.jsx";
@@ -69,11 +67,4 @@ class SaveLayerModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        baseMapLayer: state.baseMapLayer
-        ,modal: state.modal
-    };
-}
-
-export default withStyles(styles)(connect(mapStateToProps, actions)(SaveLayerModal));
+export default withStyles(styles)(SaveLayerModal);

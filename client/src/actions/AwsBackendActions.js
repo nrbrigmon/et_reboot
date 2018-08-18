@@ -18,7 +18,7 @@ export const uploadFileToS3 = (file) => async dispatch => {
 }
 
 export const getFileFromS3 = (bucketKey) => async dispatch => {
-	
+	// console.log(bucketKey)
 	const res = await axios.get('/api/aws_queries/s3/'+bucketKey);
 	// console.log(res);
 	dispatch({ type: 'SET_BASE_LAYER', payload: res.data });

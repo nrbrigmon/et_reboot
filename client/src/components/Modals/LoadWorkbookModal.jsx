@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Button from "components/CustomButtons/Button.jsx";
 
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import * as helper from '../../utils/_helperMethods';
 import LoadWorkbookModalContents from './LoadWorkbookModalContents';
 import ModalContainer from './ModalContainer';
@@ -57,11 +55,4 @@ class LoadWorkbookModal extends Component {
                 
 }
 
-function mapStateToProps(state) {
-    return {
-        modal: state.modal
-        ,availableWkbks: state.availableWkbks
-        ,availableBldgs: state.availableBldgs
-    };
-}
-export default withStyles(styles)(connect(mapStateToProps, actions)(LoadWorkbookModal));
+export default withStyles(styles)(LoadWorkbookModal);

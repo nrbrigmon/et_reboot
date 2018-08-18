@@ -216,7 +216,7 @@ export default function(state = getSchema["devWorkbook"], action) {
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
 		case 'LOAD_WORKBOOK':
-			myDevelopmentWorkbook = action.workbook;
+			myDevelopmentWorkbook = action.payload;
 			myDevelopmentWorkbook = updateFirstLevelAttribute(myDevelopmentWorkbook, "workbook_isNew", false)
 			localStorage.setItem('myDevelopmentWorkbook', JSON.stringify(myDevelopmentWorkbook));
 			return myDevelopmentWorkbook;
@@ -331,6 +331,7 @@ export default function(state = getSchema["devWorkbook"], action) {
 		case 'RESET_LIBRARY':
 			myDevelopmentWorkbook = {
 				...state,
+				workbook_devtypes: myHelp.resetDevTypeCellValues(state["workbook_devtypes"]),
 				workbook_library: {
 					...state["workbook_library"],
 					library_bldgs: []
