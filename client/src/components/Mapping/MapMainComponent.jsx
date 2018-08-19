@@ -25,9 +25,9 @@ class MapMainComponent extends Component {
     this._polygonDrawer = new L.Draw.Polygon(this.map);
 
     let baseMaps = {
-      Aerial: _constants.HYBRID_Aerial,
-      OSM: _constants.OSM_Map,
-      "B & W": _constants.BW_Map
+      "<span style='color: gray'>Aerial</span>": _constants.HYBRID_Aerial,
+      "<span style='color: gray'>OSM</span>": _constants.OSM_Map,
+      "<span style='color: gray'>B & W</span>": _constants.BW_Map
       // "Terrain": _constants.HYBRID_Terrain
     };
 
@@ -41,7 +41,7 @@ class MapMainComponent extends Component {
       !helper.isEmptyObject(this.props.baseMapLayer)
     ) {
       // console.log(this.props.baseMapLayer);
-      // console.log('update base layer, no?')
+      // console.log("update base layer, no?");
       _constants.addLayerToMap(this);
     }
 
@@ -133,7 +133,7 @@ class MapMainComponent extends Component {
     );
     /* First check is to see if the base map has changed */
     if (same === false && !helper.isEmptyObject(baseMapLayer)) {
-      console.log("here! should I update?");
+      // console.log("here! should I update?");
       /* if the base polygon is not empty, we remove each layer,
 			if it is empty, we don't need to do anything*/
       if (!helper.isEmptyObject(this.polygon)) {
