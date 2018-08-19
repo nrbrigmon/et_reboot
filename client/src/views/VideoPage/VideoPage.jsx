@@ -64,6 +64,14 @@ class VideoPage extends React.Component {
             </Grid>
             <Grid item sm={12} md={6}>
               <h2>{_constants.APP_NAME}</h2>
+              <iframe
+                width="90%"
+                height="315"
+                src="https://www.youtube.com/embed/ysT2KFgBDeY"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+              />
               <p>
                 The ambition of this application is to globally centralize the
                 data and the functionality of this planning tool. All the
