@@ -82,7 +82,9 @@ class TeamSection extends React.Component {
                 <h4 className={classes.cardTitle}>
                   Kristine
                   <br />
-                  <small className={classes.smallTitle}>Architect</small>
+                  <small className={classes.smallTitle}>
+                    Architect-Planner
+                  </small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>

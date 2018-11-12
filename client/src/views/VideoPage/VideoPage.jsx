@@ -50,9 +50,9 @@ class VideoPage extends React.Component {
                 width="90%"
                 height="315"
                 src="https://www.youtube.com/embed/1BtcykFU2xc?mute=1"
-                frameborder="0"
+                frameBorder="0"
                 allow="autoplay; encrypted-media"
-                allowfullscreen
+                allowFullScreen
               />
               <p>
                 I created this video back in 2014 to show the potential for
@@ -65,12 +65,14 @@ class VideoPage extends React.Component {
             <Grid item sm={12} md={6}>
               <h2>{_constants.APP_NAME}</h2>
               <iframe
+                id="new_way"
+                title="The New Way"
                 width="90%"
                 height="315"
                 src="https://www.youtube.com/embed/ysT2KFgBDeY"
-                frameborder="0"
+                frameBorder="0"
                 allow="autoplay; encrypted-media"
-                allowfullscreen
+                allowFullScreen
               />
               <p>
                 The ambition of this application is to globally centralize the

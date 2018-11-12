@@ -31,7 +31,7 @@ const onEachFeature = (feature, layer) => {
   });
 };
 export const addLayerToMap = ctx => {
-  // console.log(ctx)
+  console.log(ctx.props.baseMapLayer);
   ctx.polygon = new L.geoJson(ctx.props.baseMapLayer, {
     onEachFeature: onEachFeature,
     style: function(feature) {

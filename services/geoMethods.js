@@ -5,7 +5,8 @@ var geoMethods = {
         return new Promise(function(resolve,reject){
             shp(zipFileData).then(function(geojson){
                 try {
-                    //see bellow for whats here this internally call shp.parseZip()
+										//see bellow for whats here this internally call shp.parseZip()
+										console.log(geojson)
                     // return updated baselayer copy
                     var updatedFeatures = geojson['features'].map( elem => {
                         //run through features and empty it out... for science

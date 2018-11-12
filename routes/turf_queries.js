@@ -37,7 +37,7 @@ router.post('/intersects', (request, response, next) =>{
 	var { baseMapLayer } = request.body;
 	var { paintLayer } = request.body;
 	var { activeDevType } = request.body;
-	
+	console.log(baseMapLayer)
 	var __count1 = 0;
 	var __count2 = 0;
 	var updatedFeatures = baseMapLayer['features'].map( elem => {
