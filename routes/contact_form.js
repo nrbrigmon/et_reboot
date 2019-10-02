@@ -5,8 +5,8 @@ const router = Router();
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'nrbrigmon@gmail.com',
-    pass: '!!CHrrsr1'
+    user: '',
+    pass: ''
   }
 });
 
