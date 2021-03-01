@@ -41,7 +41,7 @@
 		"redux": "^3.7.2",
 		"redux-thunk": "^2.2.0",
 		"shortid": "^2.2.8",
-		"three": "^0.89.0"
+		"three": "^0.125.0"
 	},
 	"scripts": {
 		"build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
